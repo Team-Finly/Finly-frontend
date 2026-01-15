@@ -1,10 +1,10 @@
-import "./App.css";
-import AppLayout from "./layouts/AppLayout";
+import './App.css';
+import AppLayout from './layouts/AppLayout';
 
 function App() {
   return (
     <AppLayout>
-      <div>핀리 파이팅~~</div>
+      <div className="text-primary">핀리 파이팅~~</div>
     </AppLayout>
   );
 }

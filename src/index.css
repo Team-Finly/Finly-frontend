@@ -1,5 +1,30 @@
 @import "tailwindcss";
 
+@theme {
+  --color-primary: #1063F1;
+  --color-secondary: #278DFD;
+  --color-blue-bg: #F0F6FF;
+  
+  --color-gray-900: #1F2023;
+  --color-gray-700: #4E5660;
+  --color-gray-500: #6E757D;
+  --color-gray-400: #A1A6AB;
+  --color-gray-300: #C5C8CE;
+  --color-gray-100: #EEEFF0;
+  --color-gray-50: #F4F5F7;
+
+  --color-red: #F04452;
+
+  --color-stock-buy: #E42911;
+  --color-stock-sell: #065DE0;
+
+  --color-emotion-conviction: #EA4860;
+  --color-emotion-greed: #FFE436;
+  --color-emotion-calm: #24B2FF;
+  --color-emotion-anxiety: #BB5FF8;
+  --color-emotion-regret: #747E7F;
+}
+
 @font-face {
   font-family: 'Pretendard';
   src: url('./assets/fonts/Pretendard-Regular.woff') format('woff2');
