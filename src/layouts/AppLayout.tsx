@@ -1,15 +1,12 @@
 import React from 'react';
+import { Outlet } from 'react-router-dom';
 
-interface LayoutProps {
-  children: React.ReactNode;
-}
-
-const AppLayout = ({ children }: LayoutProps) => {
+const AppLayout = () => {
   return (
-    <div className="w-full max-w-[480px] mx-auto min-h-dvh flex flex-col relative shadow-lg">
+    <div className="relative mx-auto flex min-h-dvh w-full max-w-[480px] flex-col shadow-lg">
       {/* <Header /> */}
       <main className="flex-1 overflow-y-auto px-4 pb-20">
-        {children}
+        <Outlet />
       </main>
       {/* <BottomNav /> */}
     </div>
