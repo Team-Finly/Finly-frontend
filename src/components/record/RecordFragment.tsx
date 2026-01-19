@@ -25,7 +25,7 @@ const RecordFragment = ({ data }: RecordFragmentProps) => {
       <div className="flex flex-1 flex-col justify-between">
         <div className="ml-3 flex items-center justify-between">
           <div className="flex items-center gap-1.5">
-            <p className="text-3.75 font-semibold">{data.instrumentName}</p>
+            <p className="text-[15px] font-semibold">{data.instrumentName}</p>
             <div className="flex items-center justify-center rounded-[8.5px] bg-gray-100 px-1.75 py-0.5">
               <p className="text-xs text-gray-700/80">{data.tradeAction}</p>
             </div>
@@ -34,11 +34,11 @@ const RecordFragment = ({ data }: RecordFragmentProps) => {
             {data.unitPrice.toLocaleString()}원
           </p>
         </div>
-        <div className="ml-3 flex items-center justify-between">
+        <div className="ml-3 flex items-end justify-between">
           <div className="flex items-center gap-1 text-xs text-gray-300">
             <p>{formattedDate}</p>
             <p>·</p>
-            <p>{emotion.label}</p>
+            <p>{emotion.label}함 가득</p>
           </div>
           <p className="text-sm text-gray-700/80">
             {getRelativeTime(data.recordedAt)}
