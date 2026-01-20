@@ -8,6 +8,7 @@ import './App.css';
 import AppLayout from './layouts/AppLayout';
 import StatsPage from './pages/stats/StatsPage';
 import AnalysisPage from './pages/stats/AnalysisPage';
+import RecordHomePage from './pages/record/RecordHomePage';
 
 const routes: RouteObject[] = [
   {
@@ -29,6 +30,10 @@ const routes: RouteObject[] = [
       {
         path: 'stats/analysis',
         element: <AnalysisPage />,
+      },
+      {
+        path: 'record',
+        element: <RecordHomePage />,
       },
     ],
   },

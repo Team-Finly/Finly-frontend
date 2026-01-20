@@ -8,7 +8,7 @@ const AppLayout = ({ children }: LayoutProps) => {
   return (
     <div className="relative mx-auto flex h-dvh w-full max-w-[480px] flex-col shadow-lg">
       {/* <Header /> */}
-      <main className="scrollbar-hide flex flex-1 flex-col overflow-y-auto pb-20">
+      <main className="scrollbar-hide flex flex-1 flex-col overflow-y-auto">
         {children}
       </main>
       {/* <BottomNav /> */}
