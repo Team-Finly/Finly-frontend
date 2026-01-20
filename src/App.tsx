@@ -7,9 +7,16 @@ import {
 import './App.css';
 import AppLayout from './layouts/AppLayout';
 import LoginPage from './pages/LoginPage';
+<<<<<<< HEAD
 import SignupPage from './pages/SignupPage';
 //import StatsPage from './pages/stats/StatsPage';
 //import AnalysisPage from './pages/stats/AnalysisPage';
+=======
+import StatsPage from './pages/stats/StatsPage';
+import AnalysisPage from './pages/stats/AnalysisPage';
+import RecordHomePage from './pages/record/RecordHomePage';
+
+>>>>>>> ff48edfbbadc7ee173ea70653f7afce1fc3c902a
 const routes: RouteObject[] = [
   {
     path: '/',
@@ -25,12 +32,21 @@ const routes: RouteObject[] = [
       },
       {
         path: 'stats',
-       // element: <StatsPage />,
+       element: <StatsPage />,
+      },
+   
+      {path: 'login',
+       element: <LoginPage/>
       },
       {
         path: 'stats/analysis',
-        //element: <AnalysisPage />,
+        element: <AnalysisPage />,
       },
+      {
+        path: 'record',
+        element: <RecordHomePage />,
+      },
+<<<<<<< HEAD
 
       {path: 'login',
         element: <LoginPage/>
@@ -39,6 +55,8 @@ const routes: RouteObject[] = [
       {path: 'signup', 
         element: <SignupPage />
       }
+=======
+>>>>>>> ff48edfbbadc7ee173ea70653f7afce1fc3c902a
     ],
   },
 ];
