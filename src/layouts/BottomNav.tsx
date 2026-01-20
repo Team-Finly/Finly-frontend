@@ -41,7 +41,7 @@ const tabs = [
 
 export const BottomNav = () => {
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 flex justify-center">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 flex justify-center border-t border-[#EEEFF0]">
       <div className="flex justify-around items-center w-full max-w-[480px] bg-white">
         {tabs.map((tab) => (
           <NavLink
