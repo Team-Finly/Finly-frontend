@@ -2,6 +2,7 @@ import {
   createBrowserRouter,
   RouterProvider,
   type RouteObject,
+  Outlet,
 } from 'react-router-dom';
 import './App.css';
 import AppLayout from './layouts/AppLayout';
@@ -10,7 +11,11 @@ import RecordHomePage from './pages/record/RecordHomePage';
 const routes: RouteObject[] = [
   {
     path: '/',
-    element: <AppLayout />,
+    element: (
+      <AppLayout>
+        <Outlet />
+      </AppLayout>
+    ),
     children: [
       {
         index: true,
@@ -18,7 +23,7 @@ const routes: RouteObject[] = [
       },
       {
         path: 'record',
-        children: [{ index: true, element: <RecordHomePage /> }],
+        element: <RecordHomePage />,
       },
     ],
   },

@@ -51,15 +51,15 @@ const RecordHomePage = () => {
   });
 
   return (
-    <div>
+    <div className="pb-20">
       <div>
-        <div className="fixed top-0 -mx-4 flex h-15 w-full max-w-120 items-center justify-between bg-white px-4 text-gray-900">
-          <h1 className="text-[22px] font-semibold">기록</h1>
+        <div className="sticky top-0 flex h-15 w-full items-center justify-between bg-white px-4 text-gray-900">
+          <h1 className="text-xl font-semibold">기록</h1>
           <button className="cursor-pointer" onClick={() => navigate('/')}>
             <img src={RecordSearch1} alt="검색 아이콘" />
           </button>
         </div>
-        <div className="-mx-4 bg-gray-50 px-4 pt-17 pb-4">
+        <div className="bg-gray-50 px-4 pt-2 pb-4">
           <div className="mb-2 flex items-center justify-between rounded-[22.5px] bg-white pr-4 pl-2">
             <div className="flex h-9.5 items-center gap-1">
               <img className="w-6" src={FGI} alt="공포탐욕 지수 아이콘" />
@@ -72,7 +72,7 @@ const RecordHomePage = () => {
           </div>
           <Calendar />
         </div>
-        <div>
+        <div className="px-4">
           <h2 className="mt-5 mb-5.5 text-[17px] font-semibold">
             총{' '}
             <span className="text-secondary">
@@ -82,8 +82,8 @@ const RecordHomePage = () => {
           </h2>
           <LinearBar emotions={fragmentSummary.emotionSummary} />
         </div>
-        <div className="-mx-4 h-4 bg-gray-50"></div>
-        <div className="mt-5">
+        <div className="h-4 bg-gray-50"></div>
+        <div className="mt-5 px-4">
           <div className="mb-4 flex items-center justify-between">
             <h2 className="text-[17px] font-semibold text-gray-900">
               TODAY 마음 조각
@@ -106,7 +106,7 @@ const RecordHomePage = () => {
           )}
         </div>
       </div>
-      <div className="sticky top-160 flex justify-end pr-0">
+      <div className="sticky top-160 flex justify-end pr-4">
         <FloatingButton />
       </div>
     </div>
