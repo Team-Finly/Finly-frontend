@@ -6,9 +6,13 @@ import {
 } from 'react-router-dom';
 import './App.css';
 import AppLayout from './layouts/AppLayout';
+import LoginPage from './pages/LoginPage';
+
+import SignupPage from './pages/SignupPage';
 import StatsPage from './pages/stats/StatsPage';
 import AnalysisPage from './pages/stats/AnalysisPage';
 import RecordHomePage from './pages/record/RecordHomePage';
+
 
 const routes: RouteObject[] = [
   {
@@ -25,7 +29,11 @@ const routes: RouteObject[] = [
       },
       {
         path: 'stats',
-        element: <StatsPage />,
+       element: <StatsPage />,
+      },
+   
+      {path: 'login',
+       element: <LoginPage/>
       },
       {
         path: 'stats/analysis',
@@ -35,6 +43,15 @@ const routes: RouteObject[] = [
         path: 'record',
         element: <RecordHomePage />,
       },
+
+      {path: 'login',
+        element: <LoginPage/>
+      },
+
+      {path: 'signup', 
+        element: <SignupPage />
+      }
+
     ],
   },
 ];
