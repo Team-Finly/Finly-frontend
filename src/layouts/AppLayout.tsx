@@ -6,9 +6,9 @@ interface LayoutProps {
 
 const AppLayout = ({ children }: LayoutProps) => {
   return (
-    <div className="w-full max-w-[480px] mx-auto min-h-dvh flex flex-col relative shadow-lg">
+    <div className="relative mx-auto flex h-dvh w-full max-w-[480px] flex-col shadow-lg">
       {/* <Header /> */}
-      <main className="flex-1 overflow-y-auto px-4 pb-20">
+      <main className="scrollbar-hide flex flex-1 flex-col overflow-y-auto pb-20">
         {children}
       </main>
       {/* <BottomNav /> */}

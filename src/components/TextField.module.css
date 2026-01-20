@@ -1,0 +1,9 @@
+/* 비밀번호 input의 브라우저 기본 눈 아이콘 숨기기 */
+.hide-password-eye::-ms-reveal,
+.hide-password-eye::-ms-clear {
+  display: none;
+}
+.hide-password-eye::-webkit-credentials-auto-fill-button,
+.hide-password-eye::-webkit-input-password-toggle-button {
+  display: none !important;
+}
