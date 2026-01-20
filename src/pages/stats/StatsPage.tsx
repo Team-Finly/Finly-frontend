@@ -21,7 +21,7 @@ const StatsPage = () => {
   const [currentTab, setCurrentTab] = useState<TabType>(STATS_TABS[0].id);
 
   return (
-    <div className="flex w-full flex-1 flex-col">
+    <div className="flex w-full flex-1 flex-col pb-20">
       <div className="sticky top-0 z-50 flex flex-none flex-col gap-6 bg-white pt-4">
         <Header />
         <StockSelector
