@@ -1,5 +1,3 @@
-import React from 'react';
-
 const RelationConviction = () => {
   return (
     <div className="rounded-[12px] border-[1.2px] border-gray-100 bg-white p-4">
