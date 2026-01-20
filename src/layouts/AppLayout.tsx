@@ -1,17 +1,19 @@
-import React from 'react';
+import { Outlet, useMatches } from 'react-router-dom';
+import { BottomNav } from './BottomNav';
 
-interface LayoutProps {
-  children: React.ReactNode;
-}
+const AppLayout = () => {
+  const matches = useMatches();
 
-const AppLayout = ({ children }: LayoutProps) => {
+  const showNav = matches.some((match) => 
+    (match.handle as any)?.showNav === true
+  );
+
   return (
     <div className="relative mx-auto flex h-dvh w-full max-w-[480px] flex-col shadow-lg">
-      {/* <Header /> */}
       <main className="scrollbar-hide flex flex-1 flex-col overflow-y-auto">
-        {children}
+        <Outlet />
       </main>
-      {/* <BottomNav /> */}
+      {showNav && <BottomNav />}
     </div>
   );
 };
