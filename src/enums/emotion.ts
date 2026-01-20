@@ -11,7 +11,7 @@ import StatsCardCalmImg from '../assets/images/stats_card_calm.svg';
 
 // 감정 종류
 export const EMOTION_TYPE = {
-  CONVICTION: 'CONVICTION', // 확신
+  CONFIDENCE: 'CONFIDENCE', // 확신
   ANXIETY: 'ANXIETY', // 불안
   GREED: 'GREED', // 탐욕
   REGRET: 'REGRET', // 후회
@@ -23,7 +23,7 @@ export type EmotionType = (typeof EMOTION_TYPE)[keyof typeof EMOTION_TYPE];
 
 // 한글과 매칭
 export const EMOTION_LABEL_MAP: Record<string, EmotionType> = {
-  확신: EMOTION_TYPE.CONVICTION,
+  확신: EMOTION_TYPE.CONFIDENCE,
   불안: EMOTION_TYPE.ANXIETY,
   탐욕: EMOTION_TYPE.GREED,
   후회: EMOTION_TYPE.REGRET,
@@ -32,7 +32,7 @@ export const EMOTION_LABEL_MAP: Record<string, EmotionType> = {
 
 // 통계 페이지용 IMG 매핑
 export const STATS_EMOTION_EMOJI = {
-  [EMOTION_TYPE.CONVICTION]: StatsConvictionImg,
+  [EMOTION_TYPE.CONFIDENCE]: StatsConvictionImg,
   [EMOTION_TYPE.ANXIETY]: StatsAnxietyImg,
   [EMOTION_TYPE.GREED]: StatsGreedImg,
   [EMOTION_TYPE.REGRET]: StatsRegretImg,
@@ -41,7 +41,7 @@ export const STATS_EMOTION_EMOJI = {
 
 // 최근 기록 카드용 IMG 매핑
 export const CARD_EMOTION_IMAGE = {
-  [EMOTION_TYPE.CONVICTION]: StatsCardConvictionImg,
+  [EMOTION_TYPE.CONFIDENCE]: StatsCardConvictionImg,
   [EMOTION_TYPE.ANXIETY]: StatsCardAnxietyImg,
   [EMOTION_TYPE.GREED]: StatsCardGreedImg,
   [EMOTION_TYPE.REGRET]: StatsCardRegretImg,
