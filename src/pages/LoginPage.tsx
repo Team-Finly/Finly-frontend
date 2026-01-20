@@ -30,10 +30,10 @@ const LoginPage = () => {
   };
 
   return (
-    <div className='flex flex-col w-full mt-[78px] px-4'>
+    <div className='flex flex-col w-full mt-[16px] px-4'>
       
       {/* 1. Header */}
-      <header className="relative flex items-center justify-center w-full">
+      <header className="relative flex items-center justify-center w-full h-[60px]">
      <button
       onClick={() => navigate(-1)}
       className="absolute left-2 top-1/2 -translate-y-1/2 "

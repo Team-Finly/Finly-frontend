@@ -7,9 +7,9 @@ import {
 import './App.css';
 import AppLayout from './layouts/AppLayout';
 import LoginPage from './pages/LoginPage';
+import SignupPage from './pages/SignupPage';
 //import StatsPage from './pages/stats/StatsPage';
 //import AnalysisPage from './pages/stats/AnalysisPage';
-
 const routes: RouteObject[] = [
   {
     path: '/',
@@ -32,7 +32,13 @@ const routes: RouteObject[] = [
         //element: <AnalysisPage />,
       },
 
-      {path: 'login', element: <LoginPage/>}
+      {path: 'login',
+        element: <LoginPage/>
+      },
+
+      {path: 'signup', 
+        element: <SignupPage />
+      }
     ],
   },
 ];
