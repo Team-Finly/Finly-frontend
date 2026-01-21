@@ -167,8 +167,12 @@ const Calendar = () => {
                     return (
                       <div
                         key={i}
-                        className={`h-full ${emo?.color || 'bg-gray-200'}`}
-                        style={{ width: `${100 / record.emotions.length}%` }}
+                        className="h-full"
+                        style={{
+                          width: `${100 / record.emotions.length}%`,
+                          backgroundColor:
+                            emo?.color || 'var(--color-gray-200)',
+                        }}
                       />
                     );
                   })}

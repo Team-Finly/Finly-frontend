@@ -1,12 +1,16 @@
 import React from 'react';
 import { EMOTIONS } from '../../constants/emtions';
-import type { EmotionSummary } from './../../types/record';
+import type { EmotionSummary, FragmentSummary } from './../../types/record';
+import { useNavigate } from 'react-router-dom';
 
 interface LinearBarProps {
   emotions: EmotionSummary[];
+  fragmentSummary: FragmentSummary;
 }
 
-const LinearBar = ({ emotions }: LinearBarProps) => {
+const LinearBar = ({ emotions, fragmentSummary }: LinearBarProps) => {
+  const navigate = useNavigate();
+
   if (!emotions || emotions.length === 0) return null;
   const sortedEmotions = [...emotions].sort((a, b) => b.count - a.count);
   const maxEmotion = sortedEmotions[0];
@@ -16,7 +20,10 @@ const LinearBar = ({ emotions }: LinearBarProps) => {
 
   return (
     <div className="w-full">
-      <div className="flex h-6 w-full gap-0.5 overflow-hidden rounded-full">
+      <div
+        className="flex h-6 w-full cursor-pointer gap-0.5 overflow-hidden rounded-full"
+        onClick={() => navigate('/fragment', { state: { fragmentSummary } })}
+      >
         {emotions.map((item) => {
           const emotion = EMOTIONS.find((e) => e.key === item.emotion);
           if (!emotion) return null;
@@ -24,8 +31,11 @@ const LinearBar = ({ emotions }: LinearBarProps) => {
           return (
             <div
               key={item.emotion}
-              className={`${emotion.color} h-full transition-all duration-500`}
-              style={{ width: `${item.ratio}%` }}
+              className="h-full transition-all duration-500"
+              style={{
+                width: `${item.ratio}%`,
+                backgroundColor: emotion.color,
+              }}
             />
           );
         })}
