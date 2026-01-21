@@ -29,6 +29,11 @@
   --color-emotion-bg-calm: #eef9ff;
   --color-emotion-bg-anxiety: #f6ecfc;
   --color-emotion-bg-regret: #e5e7e7;
+
+  --color-emotion-text-greed: #fcc120;
+
+  --shadow-card1: 0 0 6px 0 rgba(223, 226, 232, 0.1);
+  --shadow-card2: 0 0 6px 0 rgba(223, 226, 232, 0.2);
 }
 
 @font-face {
