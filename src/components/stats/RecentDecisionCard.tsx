@@ -1,4 +1,4 @@
-import { CARD_EMOTION_IMAGE, type EmotionType } from '@/enums/emotion';
+import { EMOTION_CHART_MAP } from '@/constants/emtions';
 
 export interface DecisionItem {
   stockName: string;
@@ -16,7 +16,8 @@ interface Props {
 
 const RecentDecisionCard = ({ data }: Props) => {
   const { stockName, emotion, tradeType, price, date, decisionResult } = data;
-  const emotionImg = CARD_EMOTION_IMAGE[emotion as EmotionType];
+  const emotionConfig = EMOTION_CHART_MAP[emotion];
+  const emotionImg = emotionConfig?.cardImage;
 
   // 날짜 처리
   const dateObj = new Date(date);
