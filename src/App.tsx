@@ -11,6 +11,8 @@ import PersonaTestPage from './pages/onboarding/PersonaTestPage';
 import StatsPage from './pages/stats/StatsPage';
 import AnalysisPage from './pages/stats/AnalysisPage';
 import RecordHomePage from './pages/record/RecordHomePage';
+import FragmentPage from './pages/record/FragmentPage';
+import FragmentDetailPage from './pages/record/FragmentDetailPage';
 
 const routes: RouteObject[] = [
   {
@@ -21,6 +23,16 @@ const routes: RouteObject[] = [
         index: true,
         element: <></>,
         handle: { showNav: true }
+      },
+      {
+        path: 'login',
+        element: <LoginPage />,
+        handle: { showNav: false }
+      },
+      {
+        path: 'signup',
+        element: <SignupPage />,
+        handle: { showNav: false }
       },
       {
         path: 'stats',
@@ -38,13 +50,13 @@ const routes: RouteObject[] = [
         handle: { showNav: true }
       },
       {
-        path: 'login',
-        element: <LoginPage />,
+        path: 'fragment',
+        element: <FragmentPage />,
         handle: { showNav: false }
       },
       {
-        path: 'signup',
-        element: <SignupPage />,
+        path: 'fragment/detail',
+        element: <FragmentDetailPage />,
         handle: { showNav: false }
       },
       {

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import TextField from "../../components/auth/TextField"; //컴포넌트 불러오기
+import TextField from "../../components/auth/TextField";
 import backIcon from "../../assets/icons/Vector.svg";
 
 

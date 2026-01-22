@@ -1,7 +1,6 @@
 import React from 'react';
 import type { DailyFragment } from './../../types/record';
 import { EMOTIONS } from '../../constants/emtions';
-import { getRelativeTime } from '@/utils/date';
 
 interface RecordFragmentProps {
   data: DailyFragment;
@@ -18,7 +17,7 @@ const RecordFragment = ({ data }: RecordFragmentProps) => {
     <div className="flex h-21.5 w-full items-center justify-between rounded-xl border border-gray-100 px-3.25 py-5">
       <div
         className="flex h-12.5 w-12.5 items-center justify-center rounded-[10px]"
-        style={{ backgroundColor: emotion.bg }}
+        style={{ backgroundColor: emotion.bgColor }}
       >
         <img className="h-5.5 w-5.5" src={emotion.icon} alt={emotion.label} />
       </div>
@@ -26,7 +25,7 @@ const RecordFragment = ({ data }: RecordFragmentProps) => {
         <div className="ml-3 flex items-center justify-between">
           <div className="flex items-center gap-1.5">
             <p className="text-[15px] font-semibold">{data.instrumentName}</p>
-            <div className="flex items-center justify-center rounded-[8.5px] bg-gray-100 px-1.75 py-0.5">
+            <div className="flex items-center justify-center rounded-full bg-gray-100 px-1.75 py-0.5">
               <p className="text-xs text-gray-700/80">{data.tradeAction}</p>
             </div>
           </div>
@@ -40,9 +39,7 @@ const RecordFragment = ({ data }: RecordFragmentProps) => {
             <p>·</p>
             <p>{emotion.label}함 가득</p>
           </div>
-          <p className="text-sm text-gray-700/80">
-            {getRelativeTime(data.recordedAt)}
-          </p>
+          <p className="text-sm text-gray-700/80">2주</p>
         </div>
       </div>
     </div>

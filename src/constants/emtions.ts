@@ -41,6 +41,7 @@ export const EMOTIONS = [
     label: '탐욕',
     color: 'var(--color-emotion-greed)',
     bgColor: 'var(--color-emotion-bg-greed)',
+    textColor: 'var(--color-emotion-text-greed)',
     icon: Greed,
     chartImage: StatsGreedImg,
     cardImage: StatsCardGreedImg,

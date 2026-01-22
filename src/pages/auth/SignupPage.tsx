@@ -1,4 +1,3 @@
-// src/pages/SignupPage.tsx
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import TextField from "../../components/auth/TextField";
@@ -16,33 +15,28 @@ const SignupPage = () => {
   // 단계 관리 (이메일 입력 후 -> 비밀번호 입력)
   const [step, setStep] = useState<"email" | "password" | "nickname">("email");
 
-  // ==========================================
-  // 🔍 1. 이메일 검사 로직
-  // ==========================================
+  //이메일 검사 로직
   const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
-  const isEmailFormatValid = emailRegex.test(email); // 형식 검사
+  const isEmailFormatValid = emailRegex.test(email);
   
-  // (가정) 이미 가입된 이메일인지 확인하는 변수 (나중에 서버 연동 시 교체)
+  //이미 가입된 이메일인지 확인하는 변수 (테스트)
   const isEmailTaken = email === "finly@finly.com"; 
 
-  // TextField에 넘겨줄 상태 결정
+  // TextField에 넘겨줄 상태
   // 중복이거나 형식이 틀리면 false, 아니면 true
   const emailStatus = isEmailTaken ? false : isEmailFormatValid; 
   
-  // 에러 메시지 결정
+  // 이메일 에러 메시지
   let emailHelperText = "";
   if (isEmailTaken) emailHelperText = "이미 가입된 회원입니다. 로그인 해주세요.";
   else if (!isEmailFormatValid) emailHelperText = "유효한 이메일을 입력해 주세요.";
 
-
-  // ==========================================
-  // 🔍 2. 비밀번호 검사 로직
-  // ==========================================
+  // 비밀번호 검사 로직
   const isPwValid = password.length >= 6;
   const isMatch = pwConfirm.length > 0 && password === pwConfirm;
 
   const nicknameRegex = /^[가-힣a-zA-Z0-9]{2,}$/;
-const isNicknameValid = nicknameRegex.test(nickname);
+  const isNicknameValid = nicknameRegex.test(nickname);
   
 
 
@@ -53,8 +47,7 @@ const isNicknameValid = nicknameRegex.test(nickname);
         <button
           onClick={() => {
             if (step === "email") {
-              // 온보딩 등 다른 페이지로 이동 (예시: navigate("/onboarding"))
-              navigate(-1); // 임시로 이전 페이지로 이동, 필요시 수정
+              navigate(-1); // 임시로 이전 페이지로 이동
             } else if (step === "password") {
               setStep("email");
             } else if (step === "nickname") {
@@ -68,9 +61,9 @@ const isNicknameValid = nicknameRegex.test(nickname);
         <h1 className="text-[18px] leading-none font-semibold text-gray-900">회원가입</h1>
       </header>
 
-      {/* 입력폼 영역 - 모든 step을 동일한 부모 div 안에 포함 */}
+      
       <div className="flex flex-col flex-1  mt-[30px]">
-        {/* === 이메일 입력 섹션 === */}
+        {/* === 이메일 페이지 === */}
         {step === "email" && (
           <>
             <h2 className="text-xl font-semibold leading-[26px]">로그인에 사용할<br/><span className="text-secondary font-semibold">이메일</span>을 입력해 주세요</h2>
@@ -94,12 +87,10 @@ const isNicknameValid = nicknameRegex.test(nickname);
           </>
         )}
 
-        {/* === 비밀번호 입력 섹션 === */}
+        {/* === 비밀번호 입력 페이지 === */}
         {step === "password" && (
           <>
             <h2 className="text-xl font-semibold leading-[26px] mb-[41px]">로그인에 사용할<br/><span className="text-secondary font-semibold">비밀번호</span>를 입력해 주세요</h2>
-            
-            
             <div className=' mb-[46px]'>
               <TextField 
               label="비밀번호 입력"
@@ -131,7 +122,7 @@ const isNicknameValid = nicknameRegex.test(nickname);
           </>
         )}
 
-        {/* === 닉네임 입력 섹션 === */}
+        {/* === 닉네임 입력 페이지 === */}
         {step === "nickname" && (
           <>
             <h2 className="text-xl font-semibold leading-[26px]">사용할 <span className="text-secondary font-semibold">닉네임</span>을 입력해 주세요</h2>

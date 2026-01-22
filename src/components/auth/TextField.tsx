@@ -5,12 +5,12 @@ import Validicon from "../../assets/icons/isvalid.svg";
 
 
 interface TextFieldProps {
-  label: string;          // "이메일" or "비밀번호"
-  value: string;          // 상태 값 (email, password)
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void; // 입력 함수
-  onClear: () => void;    // 초기화 함수
-  type?: string;          // "text", "password", "email" 등 (선택사항)
-  placeholder?: string;   // 안내 문구
+  label: string;          
+  value: string;          
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void; 
+  onClear: () => void;    
+  type?: string;         
+  placeholder?: string;   
   isValid?: boolean;  
   helperText?: string; 
   
@@ -19,9 +19,10 @@ interface TextFieldProps {
 const TextField = ({ label, value, onChange, onClear, type = "text", placeholder, isValid, helperText }: TextFieldProps) => {
   const [isFocused, setIsFocused] = useState(false);
   
-  // 조건에 따라 테두리 색상 및 배경
+//테두리 색상 및 배경
 let borderClass = "border-gray-300 bg-white";
-// helperText가 있거나, focus 상태에서 helperText가 있으면 무조건 빨간 테두리
+
+// helperText가 있거나, focus 상태에서 helperText시 빨간 테두리
 if ((helperText && isFocused) || helperText) {
   borderClass = "border-red-500 bg-white";
 } else if (isValid === false && value.length > 0) {
@@ -32,13 +33,10 @@ if ((helperText && isFocused) || helperText) {
   borderClass = "border-secondary bg-white";
 }
 
-  // 아이콘 조건: 유효성 체크가 false면 isvalid, true면 isvalid, undefined면 X
+  // 아이콘
  let currentIcon = CloseIcon;
-  let isCheckIcon = false; // 현재 아이콘이 체크인지 X인지 구분
+ let isCheckIcon = false; 
 
-
-  
-  // 조건: "값이 있고" && "유효하며(true)" && "입력을 마쳤을 때(Focus 아님)"
   if (value.length > 0 && isValid === true && !isFocused) {
     currentIcon = Validicon;
     
@@ -76,7 +74,6 @@ if ((helperText && isFocused) || helperText) {
         {value.length > 0 && (
           <button 
             type="button"
-            // ✅ 5. 체크 아이콘일 때는 클릭해도 지워지지 않게 막음 (선택사항)
             // X 아이콘일 때만 onClear 실행
             onClick={isCheckIcon ? undefined : onClear} 
             className={`absolute right-3 top-1/2 -translate-y-1/2 flex items-center justify-center 
