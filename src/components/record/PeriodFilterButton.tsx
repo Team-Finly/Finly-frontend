@@ -17,7 +17,7 @@ const PeriodFilterButton = ({
       className={`flex cursor-pointer items-center justify-center rounded-full px-3.5 py-1.5 text-sm ${
         isSelected
           ? 'bg-secondary font-medium text-white'
-          : 'font-regular border border-gray-100 bg-white text-gray-500'
+          : 'bg-white font-normal text-gray-500 ring-1 ring-gray-100 ring-inset'
       } `}
     >
       <p>{label}</p>

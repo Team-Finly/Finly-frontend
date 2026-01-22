@@ -12,6 +12,8 @@ import AnalysisPage from './pages/stats/AnalysisPage';
 import RecordHomePage from './pages/record/RecordHomePage';
 import FragmentPage from './pages/record/FragmentPage';
 import FragmentDetailPage from './pages/record/FragmentDetailPage';
+import SearchPage from './pages/record/SearchPage';
+import SearchResultPage from './pages/record/SearchResultPage';
 
 const routes: RouteObject[] = [
   {
@@ -21,42 +23,52 @@ const routes: RouteObject[] = [
       {
         index: true,
         element: <></>,
-        handle: { showNav: true }
+        handle: { showNav: true },
       },
       {
         path: 'login',
         element: <LoginPage />,
-        handle: { showNav: false }
+        handle: { showNav: false },
       },
       {
         path: 'signup',
         element: <SignupPage />,
-        handle: { showNav: false }
+        handle: { showNav: false },
       },
       {
         path: 'stats',
         element: <StatsPage />,
-        handle: { showNav: true }
+        handle: { showNav: true },
       },
       {
         path: 'stats/analysis',
         element: <AnalysisPage />,
-        handle: { showNav: false }
+        handle: { showNav: false },
       },
       {
         path: 'record',
         element: <RecordHomePage />,
-        handle: { showNav: true }
+        handle: { showNav: true },
       },
       {
         path: 'fragment',
         element: <FragmentPage />,
-        handle: { showNav: false }
+        handle: { showNav: false },
       },
       {
         path: 'fragment/detail',
         element: <FragmentDetailPage />,
-        handle: { showNav: false }
+        handle: { showNav: false },
+      },
+      {
+        path: 'search',
+        element: <SearchPage />,
+        handle: { showNav: false },
+      },
+      {
+        path: 'search/result',
+        element: <SearchResultPage />,
+        handle: { showNav: false },
       },
     ],
   },

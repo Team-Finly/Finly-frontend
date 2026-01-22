@@ -19,15 +19,6 @@ import StatsCardCalmImg from '../assets/images/stats_card_calm.svg';
 
 export const EMOTIONS = [
   {
-    key: 'CONFIDENCE',
-    label: '확신',
-    color: 'var(--color-emotion-confidence)',
-    bgColor: 'var(--color-emotion-bg-confidence)',
-    icon: Confidence,
-    chartImage: StatsConvictionImg,
-    cardImage: StatsCardConvictionImg,
-  },
-  {
     key: 'ANXIETY',
     label: '불안',
     color: 'var(--color-emotion-anxiety)',
@@ -47,15 +38,6 @@ export const EMOTIONS = [
     cardImage: StatsCardGreedImg,
   },
   {
-    key: 'REGRET',
-    label: '후회',
-    color: 'var(--color-emotion-regret)',
-    bgColor: 'var(--color-emotion-bg-regret)',
-    icon: Regret,
-    chartImage: StatsRegretImg,
-    cardImage: StatsCardRegretImg,
-  },
-  {
     key: 'CALM',
     label: '평온',
     color: 'var(--color-emotion-calm)',
@@ -63,6 +45,24 @@ export const EMOTIONS = [
     icon: Calm,
     chartImage: StatsCalmImg,
     cardImage: StatsCardCalmImg,
+  },
+  {
+    key: 'CONFIDENCE',
+    label: '확신',
+    color: 'var(--color-emotion-confidence)',
+    bgColor: 'var(--color-emotion-bg-confidence)',
+    icon: Confidence,
+    chartImage: StatsConvictionImg,
+    cardImage: StatsCardConvictionImg,
+  },
+  {
+    key: 'REGRET',
+    label: '후회',
+    color: 'var(--color-emotion-regret)',
+    bgColor: 'var(--color-emotion-bg-regret)',
+    icon: Regret,
+    chartImage: StatsRegretImg,
+    cardImage: StatsCardRegretImg,
   },
 ] as const;
 
