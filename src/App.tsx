@@ -63,7 +63,7 @@ const routes: RouteObject[] = [
         path: 'onboarding/persona',
         element: <PersonaTestPage />,
         handle: { showNav: false }
-      }
+      },
     ],
   },
 ];
