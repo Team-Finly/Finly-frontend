@@ -77,7 +77,7 @@ const SignupPage = () => {
               helperText={
                 email.length > 0
                   ? isEmailTaken
-                    ? "이미 가입된 이메일입니다.
+                    ? "이미 가입된 이메일입니다."
                     : !isEmailFormatValid
                       ? "유효한 이메일을 입력해 주세요."
                       : ""
