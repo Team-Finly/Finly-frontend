@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import TextField from "../components/TextField"; //컴포넌트 불러오기
-import backIcon from "../assets/icons/Vector.svg";
+import TextField from "../../components/auth/TextField";
+import backIcon from "../../assets/icons/Vector.svg";
 
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState(""); 
-  const [loginError, setLoginError] = useState(true); // 로그인 실패 상태
+  const [loginError, setLoginError] = useState(false); // 로그인 실패 상태
 
   // 이메일 유효성 검사 함수
   const isEmailValid = (email: string) => {
@@ -69,7 +69,7 @@ const LoginPage = () => {
             isValid={isPasswordInputValid && password.length > 0}
           />
           {loginError && (
-            <div className="mt-[10px] text-xs text-[#F04452] font-medium">
+            <div className="mt-[10px]  text-[#F04452] font-normal">
               이메일과 비밀번호가 일치하지 않습니다
             </div>
           )}

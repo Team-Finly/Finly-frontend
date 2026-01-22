@@ -5,8 +5,9 @@ import {
 } from 'react-router-dom';
 import './App.css';
 import AppLayout from './layouts/AppLayout';
-import LoginPage from './pages/LoginPage';
-import SignupPage from './pages/SignupPage';
+import LoginPage from './pages/auth/LoginPage';
+import SignupPage from './pages/auth/SignupPage';
+import PersonaTestPage from './pages/onboarding/PersonaTestPage';
 import StatsPage from './pages/stats/StatsPage';
 import AnalysisPage from './pages/stats/AnalysisPage';
 import RecordHomePage from './pages/record/RecordHomePage';
@@ -56,6 +57,11 @@ const routes: RouteObject[] = [
       {
         path: 'fragment/detail',
         element: <FragmentDetailPage />,
+        handle: { showNav: false }
+      },
+      {
+        path: 'onboarding/persona',
+        element: <PersonaTestPage />,
         handle: { showNav: false }
       },
     ],
