@@ -77,7 +77,7 @@ const SignupPage = () => {
               helperText={
                 email.length > 0
                   ? isEmailTaken
-                    ? "이미 가입된 회원입니다. 로그인 해주세요."
+                    ? "이미 가입된 이메일입니다.
                     : !isEmailFormatValid
                       ? "유효한 이메일을 입력해 주세요."
                       : ""
@@ -136,9 +136,9 @@ const SignupPage = () => {
               isValid={nickname.length > 0 ? nickname.length >= 2 : undefined}
               helperText={
                 /[^ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9]/.test(nickname)
-                  ? "특수문자는 들어갈 수 없습니다"
+                  ? "특수문자는 들어갈 수 없어요"
                   : nickname.length > 0 && nickname.length < 2
-                    ? "닉네임은 2글자 이상이어야 합니다"
+                    ? "최소 2자 이상 입력해 주세요"
                     : undefined
             }
             />
