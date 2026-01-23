@@ -55,7 +55,10 @@ const RecordHomePage = () => {
       <div>
         <div className="absolute top-0 flex h-15 w-full items-center justify-between bg-white px-4 pt-4 text-gray-900">
           <h1 className="text-xl font-semibold">기록</h1>
-          <button className="cursor-pointer" onClick={() => navigate('/')}>
+          <button
+            className="cursor-pointer"
+            onClick={() => navigate('/search')}
+          >
             <img src={RecordSearch1} alt="검색 아이콘" />
           </button>
         </div>
