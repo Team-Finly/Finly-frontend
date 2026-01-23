@@ -16,7 +16,7 @@ import FragmentDetailPage from './pages/record/FragmentDetailPage';
 import SearchPage from './pages/record/SearchPage';
 import SearchResultPage from './pages/record/SearchResultPage';
 import HomePage from './pages/home/HomePage';
-import AlarmPage from './pages/home/AlarmPage';
+import AlarmPage from './pages/home/NotificationPage';
 
 const routes: RouteObject[] = [
   {

@@ -1,5 +1,5 @@
 import TelescopeIcon from '@/assets/images/Telescope.svg';
-import Bell from '@/assets/images/Vector.svg';
+import Bell from '@/assets/icons/bell.svg';
 import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
