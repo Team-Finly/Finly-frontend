@@ -15,6 +15,7 @@ import FragmentPage from './pages/record/FragmentPage';
 import FragmentDetailPage from './pages/record/FragmentDetailPage';
 import SearchPage from './pages/record/SearchPage';
 import SearchResultPage from './pages/record/SearchResultPage';
+import HomePage from './pages/home/HomePage';
 
 const routes: RouteObject[] = [
   {
@@ -23,7 +24,7 @@ const routes: RouteObject[] = [
     children: [
       {
         index: true,
-        element: <></>,
+        element: <HomePage />,
         handle: { showNav: true },
       },
       {
