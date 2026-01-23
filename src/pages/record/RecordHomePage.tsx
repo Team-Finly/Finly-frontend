@@ -51,11 +51,14 @@ const RecordHomePage = () => {
   });
 
   return (
-    <div className="pb-20">
+    <div className="pt-4 pb-20">
       <div>
-        <div className="sticky top-0 flex h-15 w-full items-center justify-between bg-white px-4 text-gray-900">
+        <div className="absolute top-0 flex h-15 w-full items-center justify-between bg-white px-4 pt-4 text-gray-900">
           <h1 className="text-xl font-semibold">기록</h1>
-          <button className="cursor-pointer" onClick={() => navigate('/')}>
+          <button
+            className="cursor-pointer"
+            onClick={() => navigate('/search')}
+          >
             <img src={RecordSearch1} alt="검색 아이콘" />
           </button>
         </div>
@@ -80,7 +83,10 @@ const RecordHomePage = () => {
             </span>
             개의 마음 조각을 모았어요!
           </h2>
-          <LinearBar emotions={fragmentSummary.emotionSummary} />
+          <LinearBar
+            emotions={fragmentSummary.emotionSummary}
+            fragmentSummary={fragmentSummary}
+          />
         </div>
         <div className="h-4 bg-gray-50"></div>
         <div className="mt-5 px-4">
