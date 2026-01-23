@@ -1,7 +1,9 @@
 import { useMemo } from 'react';
 import { AreaChart, Area, XAxis, YAxis, ResponsiveContainer } from 'recharts';
 import { useNavigate } from 'react-router-dom';
-import { STATS_EMOTION_EMOJI, EMOTION_LABEL_MAP } from '../../enums/emotion';
+import { EMOTIONS } from '@/constants/emtions';
+
+type EmotionConfigType = (typeof EMOTIONS)[number];
 
 interface DailyPrice {
   date: string;
@@ -71,15 +73,17 @@ const RelationChart = () => {
   const chartData = useMemo(() => {
     return MOCK_DATA.daily_prices.map((priceItem) => {
       const emotionItem = MOCK_DATA.emotions_summary.find(
-        (e) => e.date === priceItem.date,
+        (e: EmotionSummary) => e.date === priceItem.date,
       );
 
       let emotionImg = null;
 
       if (emotionItem) {
-        const emotionType = EMOTION_LABEL_MAP[emotionItem.emotion];
-        if (emotionType) {
-          emotionImg = STATS_EMOTION_EMOJI[emotionType];
+        const matchedConfig = EMOTIONS.find(
+          (e: EmotionConfigType) => e.label === emotionItem.emotion,
+        );
+        if (matchedConfig) {
+          emotionImg = matchedConfig.chartImage;
         }
       }
 
