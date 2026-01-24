@@ -92,7 +92,7 @@ const RecordHomePage = () => {
           />
         </div>
         <div className="h-4 bg-gray-50"></div>
-        <div className="mt-5 px-4">
+        <div className="mt-5 mb-[102px] px-4">
           <div className="mb-4 flex items-center justify-between">
             <h2 className="text-[17px] font-semibold text-gray-900">
               TODAY 마음 조각
