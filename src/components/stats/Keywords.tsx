@@ -1,20 +1,38 @@
 const MOCK_DATA = {
   topKeywords: [
-    '#급등주',
-    '#유튜브추천',
+    '#단어',
     '#가슴철렁',
     '#삼전본전',
+    '#급등주',
+    '#냠',
+    '#핀리',
     '#뉴스공시',
-    '#최대다섯글자?',
+    '#가나다라',
   ],
 };
 
 const Keywords = () => {
   const { topKeywords } = MOCK_DATA;
-  const row1 = topKeywords.slice(0, 3);
-  const row2 = topKeywords.slice(3, 6);
+  const reorderedKeywords = (() => {
+    const top3 = topKeywords.slice(0, 3);
+    const others = topKeywords.slice(3, 8);
+    const result = new Array(8).fill('');
+    result[2] = top3[0];
+    result[4] = top3[1];
+    result[6] = top3[2];
+    let otherIdx = 0;
+    for (let i = 0; i < 8; i++) {
+      if (!result[i]) {
+        result[i] = others[otherIdx++] || '';
+      }
+    }
+    return result;
+  })();
+
+  const row1 = reorderedKeywords.slice(0, 4);
+  const row2 = reorderedKeywords.slice(4, 8);
   const baseStyle =
-    'flex items-center justify-center rounded-[16px] text-[13px] font-medium px-3 py-2';
+    'flex items-center justify-center rounded-[16px] text-[13px] font-medium px-2 py-1';
   const blueStyle = 'bg-blue-bg/50 text-secondary font-semibold';
   const grayStyle = 'bg-gray-50 text-gray-500 font-medium';
 
@@ -24,15 +42,16 @@ const Keywords = () => {
         나를 흔든 키워드
       </div>
       <div className="mb-6 text-[12px] font-medium text-gray-300">
-        일기에 가장 많이 쓴 단어들이에요
+        메모에 가장 많이 쓴 단어들이에요
       </div>
       <div className="flex flex-col gap-4 px-1">
-        <div className="flex flex-row gap-3">
-          {row1.map((keyword, index) => {
-            const isBlue = index === 2;
+        <div className="flex flex-row justify-start gap-2">
+          {row1.map((keyword, i) => {
+            const isBlue = i === 2;
+            if (!keyword) return null;
             return (
               <div
-                key={`${keyword}-${index}`}
+                key={`row1-${i}`}
                 className={`${baseStyle} ${isBlue ? blueStyle : grayStyle}`}
               >
                 {keyword}
@@ -40,12 +59,13 @@ const Keywords = () => {
             );
           })}
         </div>
-        <div className="ml-6 flex flex-row gap-3">
-          {row2.map((keyword, index) => {
-            const isBlue = index === 1;
+        <div className="flex flex-row justify-start gap-2">
+          {row2.map((keyword, i) => {
+            const isBlue = i === 0 || i === 2;
+            if (!keyword) return null;
             return (
               <div
-                key={`${keyword}-${index}`}
+                key={`row2-${i}`}
                 className={`${baseStyle} ${isBlue ? blueStyle : grayStyle}`}
               >
                 {keyword}
