@@ -9,7 +9,7 @@ const AnalysisPage = () => {
 
   return (
     <div className="flex w-full flex-1 flex-col">
-      <header className="relative flex h-[50px] w-full flex-row items-center justify-center border-b border-gray-100">
+      <header className="relative flex h-[60px] w-full flex-row items-center justify-center border-b border-gray-100 pt-4">
         <div className="px-4 text-[18px] font-semibold text-gray-900">
           심층 분석
         </div>

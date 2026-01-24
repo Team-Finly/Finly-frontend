@@ -12,7 +12,10 @@ const AnalysisCard = () => {
         </div>
         <div className="text-[18px] font-semibold text-gray-900">72,400원</div>
       </div>
-      <div className="mt-4 mb-2 text-[12px] font-semibold text-gray-300">
+      <div className="mt-1 mb-2 flex flex-row justify-end text-[12px] font-semibold text-gray-300">
+        2주 매도 · 1주 당 72,400원
+      </div>
+      <div className="mb-2 text-[12px] font-semibold text-gray-300">
         오전 11시 12분 기록
       </div>
       <div className="rounded-[12px] border-[1.2px] border-gray-100 bg-gray-50/60 p-3.5 text-[14px] leading-[1.6] text-gray-700">
