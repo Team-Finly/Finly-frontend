@@ -1,19 +1,18 @@
 import { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import TextField from "../../components/auth/TextField";
 import backIcon from "../../assets/icons/Vector.svg";
 
 const SignupPage = () => {
   const navigate = useNavigate();
-  
+  const location = useLocation();
   // 상태 관리
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [pwConfirm, setPwConfirm] = useState("");
-  const [nickname, setNickname] = useState("");
-  
+  const [nickname, setNickname] = useState(() => (location.state?.nickname || ""));
   // 단계 관리 (이메일 입력 후 -> 비밀번호 입력)
-  const [step, setStep] = useState<"email" | "password" | "nickname">("email");
+  const [step, setStep] = useState<"email" | "password" | "nickname">(() => (location.state?.step === 'nickname' ? 'nickname' : 'email'));
 
   //이메일 검사 로직
   const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
