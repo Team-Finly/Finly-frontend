@@ -16,7 +16,7 @@ import FragmentDetailPage from './pages/record/FragmentDetailPage';
 import SearchPage from './pages/record/SearchPage';
 import SearchResultPage from './pages/record/SearchResultPage';
 import HomePage from './pages/home/HomePage';
-import AlarmPage from './pages/home/NotificationPage';
+import NotificationPage from './pages/home/NotificationPage';
 
 const routes: RouteObject[] = [
   {
@@ -79,8 +79,8 @@ const routes: RouteObject[] = [
         handle: { showNav: false }
       },
       {
-        path: 'alarm',
-        element: <AlarmPage />,
+        path: 'notification',
+        element: <NotificationPage />,
         handle: { showNav: false }
       }
     ],
