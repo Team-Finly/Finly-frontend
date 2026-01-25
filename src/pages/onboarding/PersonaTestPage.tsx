@@ -1,13 +1,119 @@
-import React from 'react'
+import OptionCard from '../../components/onboarding/OptionCard';
+import Button from '../../components/onboarding/Button'; 
+import ProgressBar from '../../components/onboarding/ProgressBar';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { MOCK_QUESTIONS } from '../../types/persona';
+import backIcon from "../../assets/icons/Vector.svg";
 
 const PersonaTestPage = () => {
-  return (
-    <div>
-      페르소나 페이지
+const navigate = useNavigate();
+const [step, setStep] = useState(0);
+const[answers, setAnswers] = useState<Record<number, number>>({});
+const currentQ = MOCK_QUESTIONS[step];
+
+//옵션 선택 함수 정의
+  const handleSelect = (optionId: number) => {
+    setAnswers((prev) => ({
+      ...prev,
+      [currentQ.id]: optionId, 
+    }));
+  };
+
+  //다음 버튼 함수 정의
+  const handleNext = () => {
+    if (step < MOCK_QUESTIONS.length - 1) {
+      setStep(step + 1); // 다음 문제 이동
+    } else {
+      console.log("최종 제출 데이터:", answers);
+      // navigate('/result'); // 나중에 결과 페이지 생기면 수정
+    }
+  };
+
+  // 뒤로가기 함수 정의
+  const handleBack = () => {
+    if (step === 0) {
+      navigate(-1); 
+    } else {
+      setStep(step - 1);
+    }
+  };
+
+  return ( 
+    <div className='flex flex-col w-full mt-[16px] px-4'>
+      
+      {/* 1. Header */}
+      <header className="relative flex items-center justify-center w-full h-[60px]">
+        
+        <button
+      onClick={() => {
+        if (step === 0) {
+          // 닉네임 값을 localStorage에서 읽거나, props/state로 받아서 전달해야 함
+          // 예시: localStorage.getItem('signup-nickname') 사용
+          const nickname = localStorage.getItem('signup-nickname') || '';
+          navigate('/signup', { state: { step: 'nickname', nickname } }); // 닉네임 값도 함께 전달
+        } else {
+          setStep(step - 1); // 이전 질문으로 이동
+        }
+      }}
+      className="absolute left-2 top-1/2 -translate-y-1/2 ">
+      <img src={backIcon} alt="뒤로가기" className="w-[8px] h-[16px]" />
+        </button>
+
+        <h1 className="text-lg font-semibold leading-none text-gray-900">
+          투자 페르소나 테스트
+        </h1>
+
+      </header>
+      
+    <div className="flex flex-col">
+       <ProgressBar current={step + 1} total={3} />
     </div>
+    
+  <div>
+
+    {/*질문 번호*/}
+    <div className='mb-[50px]'>
+    <span className="block text-[24px] font-semibold w-[32px] h-[26px] text-secondary mb-[10px] mt-[30px]">
+      {currentQ.questionCode}
+    </span>
+    
+    {/*질문 내용*/}
+    <h1 className="whitespace-pre-wrap mb-[40px]">
+    <span className="text-[20px] font-semibold leading-[30px] text-[#1F2023]">
+      {currentQ.content}
+    </span>
+    </h1>
+
+    {/*옵션*/}
+      {currentQ.options.map((opt) => (
+         <OptionCard
+         key={opt.id} 
+         content={`${opt.choiceCode}. ${opt.content}`}
+         isSelected={answers[currentQ.id] === opt.id}
+         onClick={() => handleSelect(opt.id)}
+          />
+      ))}
+  </div>
+
+    {/*다음 버튼*/}
+      <div>
+        <Button 
+          onClick={handleNext}
+          disabled={!answers[currentQ.id]}>
+
+          다음
+          
+        </Button>
+      </div>
+
+    </div>
+
+</div>
+    
   )
 }
 
-export default PersonaTestPage
+export default PersonaTestPage;
 
-
+  
