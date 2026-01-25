@@ -3,30 +3,37 @@ import NotificationItem from "@/components/home/Notification/NotificationItem";
 import TitleHeader from "@/components/record/TitleHeader";
 
 const NotificationPage = () => {
-  const alarms = []; // API 결과
+  const notifications = [
+  {
+    id: 1,
+    title: "2월 첫째 주 위클리 리포트가 도착했어요!",
+    isRead: false,
+    createdAt: "21시간 전",
+    },
+    {
+    id: 2,
+    title: "1월 넷째 주 위클리 리포트가 도착했어요!",
+    isRead: true,
+    createdAt: "7일 전",
+  },
+]; 
 
-  const hasNewAlarm = alarms.some(a => !a.isRead);
   return (
     <>
       <TitleHeader title="알림" />
-
-      {alarms.length === 0 ? (
-        <EmptyNotification />
-      ) : (
-        <div>
-          {hasNewAlarm && (
-            <p className="px-4 py-2 text-xs text-blue-600">
-              새로운 알림이 있어요
-            </p>
-          )}
-
-          {alarms.map(alarm => (
-            <NotificationItem key={alarm.id} alarm={alarm} />
-          ))}
-        </div>
-      )}
+      <div className="pt-[77px]">
+        {notifications.length === 0 ? (
+          <EmptyNotification />
+        ) : (
+          <div>
+            {notifications.map(notification => (
+              <NotificationItem key={notification.id} notification={notification} />
+            ))}
+          </div>
+        )}
+      </div>
     </>
-  )
+  );
 }
 
 export default NotificationPage;
