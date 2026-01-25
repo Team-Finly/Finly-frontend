@@ -90,8 +90,9 @@ const SignupPage = () => {
         {step === "password" && (
           <>
             <h2 className="text-xl font-semibold leading-[26px] mb-[41px]">로그인에 사용할<br/><span className="text-secondary font-semibold">비밀번호</span>를 입력해 주세요</h2>
-            <div className=' mb-[46px]'>
-              <TextField 
+            <div className="flex flex-col gap-[24px] min-h-[148px]">
+              <TextField
+              
               label="비밀번호 입력"
               type="password"
               placeholder="6자리 이상의 비밀번호"
@@ -135,7 +136,7 @@ const SignupPage = () => {
               isValid={nickname.length > 0 ? nickname.length >= 2 : undefined}
               helperText={
                 /[^ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9]/.test(nickname)
-                  ? "특수문자는 들어갈 수 없어요"
+                  ? "특수문자는 사용할 수 없어요"
                   : nickname.length > 0 && nickname.length < 2
                     ? "최소 2자 이상 입력해 주세요"
                     : undefined
