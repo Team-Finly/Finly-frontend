@@ -47,7 +47,7 @@ if ((helperText && isFocused) || helperText) {
       <label className="text-[15px] font-semibold leading-none text-gray-500 mb-[10px]">
         {label}
       </label>
-      <div className="relative w-full h-[50px]">
+      <div className="relative w-full h-[50px] ">
         <input
           type={type}
           placeholder={placeholder}
