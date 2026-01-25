@@ -16,6 +16,7 @@ import FragmentDetailPage from './pages/record/FragmentDetailPage';
 import SearchPage from './pages/record/SearchPage';
 import SearchResultPage from './pages/record/SearchResultPage';
 import HomePage from './pages/home/HomePage';
+import NotificationPage from './pages/home/NotificationPage';
 
 const routes: RouteObject[] = [
   {
@@ -77,6 +78,11 @@ const routes: RouteObject[] = [
         element: <PersonaTestPage />,
         handle: { showNav: false }
       },
+      {
+        path: 'notification',
+        element: <NotificationPage />,
+        handle: { showNav: false }
+      }
     ],
   },
 ];
