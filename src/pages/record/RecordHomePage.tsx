@@ -51,16 +51,19 @@ const RecordHomePage = () => {
   });
 
   return (
-    <div className="pt-4 pb-20">
+    <div>
       <div>
-        <div className="absolute top-0 flex h-15 w-full items-center justify-between bg-white px-4 pt-4 text-gray-900">
-          <h1 className="text-xl font-semibold">기록</h1>
-          <button
-            className="cursor-pointer"
-            onClick={() => navigate('/search')}
-          >
-            <img src={RecordSearch1} alt="검색 아이콘" />
-          </button>
+        <div className="sticky top-0 z-1 bg-white">
+          <div className="h-4 w-full bg-white" />
+          <div className="flex h-15 w-full items-center justify-between bg-white px-4 text-gray-900">
+            <h1 className="text-xl font-semibold">기록</h1>
+            <button
+              className="cursor-pointer"
+              onClick={() => navigate('/search')}
+            >
+              <img src={RecordSearch1} alt="검색 아이콘" />
+            </button>
+          </div>
         </div>
         <div className="bg-gray-50 px-4 pt-2 pb-4">
           <div className="mb-2 flex items-center justify-between rounded-[22.5px] bg-white pr-4 pl-2">
@@ -89,7 +92,7 @@ const RecordHomePage = () => {
           />
         </div>
         <div className="h-4 bg-gray-50"></div>
-        <div className="mt-5 px-4">
+        <div className="mt-5 mb-[102px] px-4">
           <div className="mb-4 flex items-center justify-between">
             <h2 className="text-[17px] font-semibold text-gray-900">
               TODAY 마음 조각
@@ -112,9 +115,9 @@ const RecordHomePage = () => {
           )}
         </div>
       </div>
-      <div className="sticky top-160 flex justify-end pr-4">
-        <FloatingButton />
-      </div>
+      {/* <div className="fixed right-4 bottom-6 z-100"> */}
+      <FloatingButton />
+      {/* </div> */}
     </div>
   );
 };
