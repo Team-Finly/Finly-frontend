@@ -14,7 +14,7 @@ const Header = () => {
         </div>
       <button
         className="relative px-[4px]"
-        onClick={() => navigate('/alarm')}
+        onClick={() => navigate('/notification')}
       >
           <img src={Bell} alt="알림 아이콘" className="w-6 h-6" />
           <span className="absolute top-[-6px] right-[2px] w-2.5 h-2.5 bg-red rounded-full border-2 border-white"></span>
