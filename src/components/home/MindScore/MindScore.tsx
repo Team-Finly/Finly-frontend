@@ -1,12 +1,8 @@
 import { SCORE_CONFIG } from '@/constants/mindScore.ts';
+import CircularScore from '@/components/home/MindScore/CircularScore.tsx';
 
 export const MindScore = ({ score = 80 }) => {
   const config = SCORE_CONFIG.find(c => score >= c.min && score <= c.max) || SCORE_CONFIG[1];
-
-  // SVG 프로그레스 계산
-  const radius = 40;
-  const circumference = 2 * Math.PI * radius;
-  const offset = circumference - (score / 100) * circumference;
 
   const renderDesc = () => {
     const parts = config.desc.split(config.highlight);
@@ -34,24 +30,7 @@ export const MindScore = ({ score = 80 }) => {
           {renderDesc()}
         </div>
         
-        {/* 원형 프로그레스 바 */}
-        <div className="relative w-[94px] h-[94px] flex-shrink-0 flex items-center justify-center">
-          <svg className="w-full h-full transform -rotate-270">
-            <circle cx="48" cy="48" r={radius} stroke="#EEEFF0" strokeWidth="11" fill="transparent" />
-            <circle 
-              cx="48" cy="48" r={radius} 
-              stroke={config.color} 
-              strokeWidth="11" fill="transparent"
-              strokeDasharray={circumference} 
-              strokeDashoffset={offset} 
-              strokeLinecap="round" 
-              className="transition-all duration-500 ease-out"
-            />
-          </svg>
-          <span className="absolute text-gray-900 text-[26px] font-semibold">
-            {score}<span className="text-gray-500 text-[14px]">점</span>
-          </span>
-        </div>
+        <CircularScore score={score} color={config.color} />
       </section>
 
       <div className="flex justify-end mt-[12px]">

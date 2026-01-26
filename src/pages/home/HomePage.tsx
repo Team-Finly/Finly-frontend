@@ -1,4 +1,4 @@
-import { MindScore } from '@/components/home/MindScore';
+import { MindScore } from '@/components/home/MindScore/MindScore';
 import { WeeklyMood } from '@/components/home/WeeklyMood';
 import { RecentRecordList } from '@/components/home/RecentRecordList';
 import { RealtimeInsight } from '@/components/home/RealtimeInsight';
