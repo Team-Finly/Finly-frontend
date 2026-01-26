@@ -17,7 +17,7 @@ import SearchPage from './pages/record/SearchPage';
 import SearchResultPage from './pages/record/SearchResultPage';
 import HomePage from './pages/home/HomePage';
 import NotificationPage from './pages/home/NotificationPage';
-import { MindScoreDetailPage } from './pages/home/MindScoreDetailPage';
+import MindScoreDetailPage from './pages/home/MindScoreDetailPage';
 
 const routes: RouteObject[] = [
   {

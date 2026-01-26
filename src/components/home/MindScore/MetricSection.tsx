@@ -13,7 +13,7 @@ type MetricSectionProps = {
 
 const MetricSection = ({ metrics }: MetricSectionProps) => {
   return (
-    <section className="px-[16px] mt-[32px] space-y-[16px]">
+    <section className="px-[32px] mt-[32px]">
       {metrics.map(metric => (
         <MetricCard
           key={metric.key}
