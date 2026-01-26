@@ -15,14 +15,58 @@ const CircularScore = ({ score, color, size = 94 }: Props) => {
       style={{ width: size, height: size }}
     >
       <svg viewBox="0 0 96 96" className="w-full h-full transform -rotate-270">
-        <circle cx="48" cy="48" r={radius} stroke="#EEEFF0" strokeWidth="11" fill="transparent" />
+        <defs>
+          <radialGradient
+            id="inner-shadow"
+            cx="50%"
+            cy="50%"
+            r="50%"
+          >
+            <stop
+              offset="0%"
+              stopColor="rgba(0,0,0,0.18)"
+            />
+            <stop
+              offset="45%"
+              stopColor="rgba(0,0,0,0.12)"
+            />
+            <stop
+              offset="70%"
+              stopColor="rgba(0,0,0,0)"
+            />
+          </radialGradient>
+        </defs>
+
+        <circle
+          cx="48"
+          cy="48"
+          r={radius}
+          stroke="#EEEFF0"
+          strokeWidth="11"
+          fill="none"
+        />
+
+        {/* 베이스 색 */}
         <circle
           cx="48"
           cy="48"
           r={radius}
           stroke={color}
           strokeWidth="11"
-          fill="transparent"
+          fill="none"
+          strokeDasharray={circumference}
+          strokeDashoffset={offset}
+          strokeLinecap="round"
+        />
+
+        {/* 안쪽 음영 */}
+        <circle
+          cx="48"
+          cy="48"
+          r={radius}
+          stroke="url(#inner-shadow)"
+          strokeWidth="11"
+          fill="none"
           strokeDasharray={circumference}
           strokeDashoffset={offset}
           strokeLinecap="round"
