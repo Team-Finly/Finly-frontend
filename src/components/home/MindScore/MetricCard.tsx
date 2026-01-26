@@ -5,6 +5,8 @@ type MetricCardProps = {
 };
 
 const MetricCard = ({ title, score, desc }: MetricCardProps) => {
+  const clampedScore = Math.min(100, Math.max(0, score));
+
   return (
     <div className="mb-[20px]">
       <div className="flex justify-between items-center mb-[20px]">
@@ -25,7 +27,7 @@ const MetricCard = ({ title, score, desc }: MetricCardProps) => {
       <div className="w-full h-[10px] bg-gray-100 rounded-full overflow-hidden">
         <div
           className="h-full bg-[#278DFD] rounded-full transition-all duration-500"
-          style={{ width: `${score}%` }}
+          style={{ width: `${clampedScore}%` }}
         />
       </div>
 
