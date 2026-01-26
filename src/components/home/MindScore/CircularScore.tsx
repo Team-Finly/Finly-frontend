@@ -14,7 +14,7 @@ const CircularScore = ({ score, color, size = 94 }: Props) => {
       className="relative flex-shrink-0 flex items-center justify-center"
       style={{ width: size, height: size }}
     >
-      <svg className="w-full h-full transform -rotate-270">
+      <svg viewBox="0 0 96 96" className="w-full h-full transform -rotate-270">
         <circle cx="48" cy="48" r={radius} stroke="#EEEFF0" strokeWidth="11" fill="transparent" />
         <circle
           cx="48"

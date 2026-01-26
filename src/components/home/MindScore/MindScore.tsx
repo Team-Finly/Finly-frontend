@@ -1,19 +1,9 @@
 import { SCORE_CONFIG } from '@/constants/mindScore.ts';
 import CircularScore from '@/components/home/MindScore/CircularScore.tsx';
+import HighlightText from './HighlightText';
 
 export const MindScore = ({ score = 80 }) => {
   const config = SCORE_CONFIG.find(c => score >= c.min && score <= c.max) || SCORE_CONFIG[1];
-
-  const renderDesc = () => {
-    const parts = config.desc.split(config.highlight);
-    return (
-      <p className="text-[13px] text-gray-700 mt-[10px]">
-        {parts[0]}
-        <span className="font-bold">{config.highlight}</span>
-        {parts[1]}
-      </p>
-    );
-  };
   
   return (
     <div>
@@ -27,7 +17,12 @@ export const MindScore = ({ score = 80 }) => {
           <span className="bg-gray-100 px-[10px] py-[4px] rounded-full text-[14px] text-gray-500 font-semibold">
             {config.label}
           </span>
-          {renderDesc()}
+
+          <HighlightText
+            text={config.desc}
+            highlight={config.highlight}
+            className="text-[13px] text-gray-700 mt-[10px]"
+          />
         </div>
         
         <CircularScore score={score} color={config.color} />
@@ -43,5 +38,5 @@ export const MindScore = ({ score = 80 }) => {
         </button>
       </div>
     </div>
-  )
+  );
 };
