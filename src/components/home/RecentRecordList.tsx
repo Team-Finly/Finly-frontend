@@ -58,10 +58,13 @@ export const RecentRecordList = () => {
             />
           </button>
         </div>
-        <div className="flex gap-[8px] overflow-x-auto pb-2 scrollbar-hide">
-          {records.map((record) => (
-            <RecentRecordCard key={record.id} record={record} />
-          ))}
+        <div className="-mx-[16px] overflow-x-auto scrollbar-hide">
+          <div className="flex gap-2 px-[16px]">
+            {records.map(record => (
+              <RecentRecordCard key={record.id} record={record} />
+            ))}
+            <div className="min-w-[8px] flex-shrink-0" />
+          </div>
         </div>
       </section>
     </div>

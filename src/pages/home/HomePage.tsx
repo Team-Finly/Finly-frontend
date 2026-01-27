@@ -10,7 +10,7 @@ const HomePage = () => {
   return (
     <div className="flex flex-col h-full bg-gray-50">
       <Header />
-      <main className="flex-1 overflow-y-auto scrollbar-hide pt-[20px] px-[16px] ">
+      <main className="flex-1 overflow-y-auto scrollbar-hide pt-[20px] px-[16px]">
         <button
           onClick={() => navigate('/mindscore')}
           className="block w-full text-left bg-transparent"
