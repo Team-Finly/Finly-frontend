@@ -6,10 +6,14 @@ import type { MonthlyRecordResponse } from '@/types/record';
 
 const Calendar = () => {
   const calendarRef = useRef<HTMLDivElement>(null);
-  const isScrolling = useRef(false);
-  const touchStart = useRef({ x: 0, y: 0 });
+  const dragStart = useRef({ x: 0, y: 0, time: 0 });
 
-  const [monthData, setMonthData] = useState<MonthlyRecordResponse>({
+  const [baseDate, setBaseDate] = useState(() => {
+    const now = new Date();
+    return new Date(now.getFullYear(), now.getMonth(), 1);
+  });
+
+  const [monthData] = useState<MonthlyRecordResponse>({
     year: 2026,
     month: 1,
     days: [
@@ -28,81 +32,80 @@ const Calendar = () => {
     return monthData.days.find((d) => d.date === dateStr);
   };
 
-  // 오늘이 포함된 주의 토요일
-  const [baseDate, setBaseDate] = useState(() => {
-    const date = new Date();
-    const day = date.getDay();
-    date.setDate(date.getDate() + (6 - day));
-    return date;
-  });
+  const moveMonth = (offset: number) => {
+    setBaseDate(
+      (prev) => new Date(prev.getFullYear(), prev.getMonth() + offset, 1),
+    );
+  };
+
+  const onStart = (clientX: number, clientY: number) => {
+    dragStart.current = { x: clientX, y: clientY, time: Date.now() };
+  };
+
+  const onEnd = (clientX: number, clientY: number) => {
+    const deltaX = dragStart.current.x - clientX;
+    const deltaY = dragStart.current.y - clientY;
+    const deltaTime = Date.now() - dragStart.current.time;
+
+    if (
+      Math.abs(deltaX) > Math.abs(deltaY) &&
+      Math.abs(deltaX) > 40 &&
+      deltaTime < 500
+    ) {
+      if (deltaX > 0) moveMonth(1);
+      else moveMonth(-1);
+    }
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    onStart(e.touches[0].clientX, e.touches[0].clientY);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    onEnd(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
+  };
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    onStart(e.clientX, e.clientY);
+  };
+
+  const handleMouseUp = (e: React.MouseEvent) => {
+    onEnd(e.clientX, e.clientY);
+  };
+
+  useEffect(() => {
+    const el = calendarRef.current;
+    if (!el) return;
+    const handleTouchMove = (e: TouchEvent) => {
+      const dX = Math.abs(dragStart.current.x - e.touches[0].clientX);
+      const dY = Math.abs(dragStart.current.y - e.touches[0].clientY);
+      if (dX > dY && dX > 10) {
+        if (e.cancelable) e.preventDefault();
+      }
+    };
+    el.addEventListener('touchmove', handleTouchMove, { passive: false });
+    return () => el.removeEventListener('touchmove', handleTouchMove);
+  }, []);
 
   const getDisplayedDays = () => {
+    const year = baseDate.getFullYear();
+    const month = baseDate.getMonth();
+    const firstDayOfWeek = new Date(year, month, 1).getDay();
     const days = [];
-    const startDay = new Date(baseDate); // startDay는 3주 분량 날짜 중 첫 번째 날
-    startDay.setDate(baseDate.getDate() - 20);
-
-    for (let i = 0; i < 21; i++) {
-      const day = new Date(startDay);
-      day.setDate(startDay.getDate() + i);
-      days.push(day);
-    }
+    for (let i = firstDayOfWeek; i > 0; i--)
+      days.push(new Date(year, month, 1 - i));
+    const lastDayOfMonth = new Date(year, month + 1, 0).getDate();
+    for (let i = 1; i <= lastDayOfMonth; i++)
+      days.push(new Date(year, month, i));
+    const remainingSlots = (7 - (days.length % 7)) % 7;
+    for (let i = 1; i <= remainingSlots; i++)
+      days.push(new Date(year, month + 1, i));
     return days;
   };
 
   const displayedDays = getDisplayedDays();
-
-  const moveWeek = (offset: number) => {
-    const newDate = new Date(baseDate);
-    newDate.setDate(baseDate.getDate() + offset * 7);
-    setBaseDate(newDate);
-  };
-
-  const moveMonth = (offset: number) => {
-    const newDate = new Date(baseDate);
-    newDate.setMonth(baseDate.getMonth() + offset);
-    newDate.setDate(1);
-    const day = newDate.getDay();
-    newDate.setDate(newDate.getDate() + (6 - day) + 14);
-    setBaseDate(newDate);
-  };
-
-  const handleWheel = (e: WheelEvent) => {
-    if (e.cancelable) e.preventDefault();
-    if (isScrolling.current) return;
-    isScrolling.current = true;
-
-    const offset = e.deltaY < 0 ? -1 : 1;
-    moveWeek(offset);
-    setTimeout(() => {
-      isScrolling.current = false;
-    }, 200);
-  };
-
-  useEffect(() => {
-    const calendarEl = calendarRef.current;
-    if (!calendarEl) return;
-    calendarEl.addEventListener('wheel', handleWheel, { passive: false });
-    return () => {
-      calendarEl.removeEventListener('wheel', handleWheel);
-    };
-  }, [baseDate]);
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStart.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-  };
-
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    const deltaX = touchStart.current.x - e.changedTouches[0].clientX;
-    const deltaY = touchStart.current.y - e.changedTouches[0].clientY;
-
-    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
-      moveMonth(deltaX > 0 ? 1 : -1);
-    }
-  };
-
   const displayYear = baseDate.getFullYear();
   const displayMonth = baseDate.getMonth() + 1;
-
   const daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
 
   return (
@@ -110,7 +113,10 @@ const Calendar = () => {
       ref={calendarRef}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
-      className="rounded-xl bg-white transition-all duration-300 select-none"
+      onMouseDown={handleMouseDown}
+      onMouseUp={handleMouseUp}
+      style={{ touchAction: 'pan-y', cursor: 'grab' }}
+      className="overflow-hidden rounded-xl bg-white transition-all duration-300 select-none active:cursor-grabbing"
     >
       <div className="flex h-14 items-center justify-between p-4">
         <h2 className="text-lg font-semibold text-gray-900">
@@ -120,12 +126,22 @@ const Calendar = () => {
           <button onClick={() => moveMonth(-1)} className="cursor-pointer p-1">
             <img src={ArrowLeft} alt="이전 월" />
           </button>
-          <p className="px-2 text-sm text-gray-500">Today</p>
+          <p
+            className="cursor-pointer px-2 text-sm text-gray-500"
+            onClick={(e) => {
+              e.stopPropagation();
+              const now = new Date();
+              setBaseDate(new Date(now.getFullYear(), now.getMonth(), 1));
+            }}
+          >
+            Today
+          </p>
           <button onClick={() => moveMonth(1)} className="cursor-pointer p-1">
             <img src={ArrowRight} alt="다음 월" />
           </button>
         </div>
       </div>
+
       <div className="flex h-7.5 w-full items-start px-5 py-2">
         {daysOfWeek.map((day) => (
           <div
@@ -136,46 +152,47 @@ const Calendar = () => {
           </div>
         ))}
       </div>
-      <div className="grid grid-cols-7 gap-y-0.75 px-5 pt-2">
+      <div className="grid grid-cols-7 px-5 pt-2">
         {displayedDays.map((date, index) => {
           const isToday = date.toDateString() === new Date().toDateString();
-          const isFuture = date > new Date();
+          const dateMonthValue = date.getFullYear() * 12 + date.getMonth();
+          const baseMonthValue =
+            baseDate.getFullYear() * 12 + baseDate.getMonth();
+          const isPrevMonth = dateMonthValue < baseMonthValue;
+          const isNextMonth = dateMonthValue > baseMonthValue;
           const record = getDayRecord(date);
+
           return (
             <div
               key={index}
-              className="relative flex min-h-12 flex-col items-center"
+              className="relative flex min-h-11.5 flex-col items-center"
             >
               {isToday && (
-                <div className="bg-secondary/4 border-secondary absolute top-0 z-0 h-12 w-full max-w-10 rounded-lg border-2" />
+                <div className="bg-secondary/6 border-primary absolute top-0 z-0 h-11.5 w-full max-w-10 rounded-lg border" />
               )}
               <span
-                className={`z-10 flex h-8 items-center justify-center font-semibold ${
-                  isToday
-                    ? 'text-blue-500'
-                    : isFuture
-                      ? 'text-gray-200'
-                      : 'text-gray-900'
+                className={`flex h-8 items-center justify-center font-semibold ${
+                  isPrevMonth || isNextMonth
+                    ? 'text-gray-300/80'
+                    : 'text-gray-900'
                 }`}
               >
                 {date.getDate()}
               </span>
-              {record && record.hasRecord && (
-                <div className="z-10 mt-1 mb-2 flex h-1 w-full max-w-8 overflow-hidden rounded-full bg-gray-50">
-                  {record.emotions.map((emotion, i) => {
-                    const emo = EMOTIONS.find((e) => e.key === emotion);
-                    return (
-                      <div
-                        key={i}
-                        className="h-full"
-                        style={{
-                          width: `${100 / record.emotions.length}%`,
-                          backgroundColor:
-                            emo?.color || 'var(--color-gray-200)',
-                        }}
-                      />
-                    );
-                  })}
+              {!isPrevMonth && !isNextMonth && record && record.hasRecord && (
+                <div className="mt-1 mb-0.5 flex h-1 w-full max-w-8 overflow-hidden rounded-full bg-gray-50">
+                  {record.emotions.map((emotion, i) => (
+                    <div
+                      key={i}
+                      className="h-full"
+                      style={{
+                        width: `${100 / record.emotions.length}%`,
+                        backgroundColor:
+                          EMOTIONS.find((e) => e.key === emotion)?.color ||
+                          'var(--color-gray-200)',
+                      }}
+                    />
+                  ))}
                 </div>
               )}
             </div>
@@ -185,7 +202,10 @@ const Calendar = () => {
       <div className="flex items-center justify-center gap-1.25 py-2">
         {EMOTIONS.map((emotion) => (
           <div key={emotion.key} className="flex items-center gap-1">
-            <div className={`${emotion.color} h-1.25 w-1.25 rounded-full`} />
+            <div
+              className="h-1.25 w-1.25 rounded-full"
+              style={{ backgroundColor: emotion.color }}
+            />
             <p className="text-[8px] font-semibold text-gray-300">
               {emotion.label}
             </p>

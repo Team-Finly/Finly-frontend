@@ -1,19 +1,18 @@
 import { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import TextField from "../../components/auth/TextField";
 import backIcon from "../../assets/icons/Vector.svg";
 
 const SignupPage = () => {
   const navigate = useNavigate();
-  
+  const location = useLocation();
   // 상태 관리
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [pwConfirm, setPwConfirm] = useState("");
-  const [nickname, setNickname] = useState("");
-  
+  const [nickname, setNickname] = useState(() => (location.state?.nickname || ""));
   // 단계 관리 (이메일 입력 후 -> 비밀번호 입력)
-  const [step, setStep] = useState<"email" | "password" | "nickname">("email");
+  const [step, setStep] = useState<"email" | "password" | "nickname">(() => (location.state?.step === 'nickname' ? 'nickname' : 'email'));
 
   //이메일 검사 로직
   const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
@@ -91,8 +90,9 @@ const SignupPage = () => {
         {step === "password" && (
           <>
             <h2 className="text-xl font-semibold leading-[26px] mb-[41px]">로그인에 사용할<br/><span className="text-secondary font-semibold">비밀번호</span>를 입력해 주세요</h2>
-            <div className=' mb-[46px]'>
-              <TextField 
+            <div className="flex flex-col gap-[24px] min-h-[148px]">
+              <TextField
+              
               label="비밀번호 입력"
               type="password"
               placeholder="6자리 이상의 비밀번호"
@@ -136,7 +136,7 @@ const SignupPage = () => {
               isValid={nickname.length > 0 ? nickname.length >= 2 : undefined}
               helperText={
                 /[^ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9]/.test(nickname)
-                  ? "특수문자는 들어갈 수 없어요"
+                  ? "특수문자는 사용할 수 없어요"
                   : nickname.length > 0 && nickname.length < 2
                     ? "최소 2자 이상 입력해 주세요"
                     : undefined

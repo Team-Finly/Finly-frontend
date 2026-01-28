@@ -16,9 +16,9 @@ export const RecentRecordCard = ({ record }: { record: Record }) => {
   const emotion = EMOTION_CHART_MAP[record.status];
 
   return (
-    <div className="min-w-[256px] rounded-xl border border-[#F2F4F6] bg-white p-[12px] shadow-sm shadow-[#DFE2E81A]">
-      <p className="pb-[6px] text-[12px] text-[#4E566066]">{record.date}</p>
-
+    <div className="min-w-[256px] bg-white rounded-xl shadow-[#DFE2E81A] shadow-sm border border-[#F2F4F6] p-[12px]">
+      <p className="text-[12px] pb-[6px] text-[#4E566066]">{record.date}</p>
+  
       <div className="flex items-center">
         <div className="mb-[10px] flex items-center gap-2">
           <span className="">{record.logo}</span>
