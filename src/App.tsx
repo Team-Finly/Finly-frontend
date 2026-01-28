@@ -8,6 +8,7 @@ import AppLayout from './layouts/AppLayout';
 import LoginPage from './pages/auth/LoginPage';
 import SignupPage from './pages/auth/SignupPage';
 import PersonaTestPage from './pages/onboarding/PersonaTestPage';
+import PersonaResultPage from './pages/onboarding/PersonaResultPage';
 import StatsPage from './pages/stats/StatsPage';
 import AnalysisPage from './pages/stats/AnalysisPage';
 import RecordHomePage from './pages/record/RecordHomePage';
@@ -85,10 +86,15 @@ const routes: RouteObject[] = [
         handle: { showNav: false }
       },
       {
+        path: 'onboarding/persona/result',
+        element: <PersonaResultPage />,
+        handle: { showNav: false }
+      },
+      {
         path: 'mindscore',
         element: <MindScoreDetailPage />,
         handle: { showNav: false }
-      }
+       }
     ],
   },
 ];
