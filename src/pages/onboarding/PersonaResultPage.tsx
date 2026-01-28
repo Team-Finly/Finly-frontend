@@ -57,7 +57,7 @@ const PERSONA_UI_DATA = {
   };
 
   const handleNext = () => {
-    console.log("다음으로 이동!");
+    navigate('/terms');
   };
 
   return (
@@ -66,7 +66,6 @@ const PERSONA_UI_DATA = {
       {/* 헤더 */}
       <header className="relative flex items-center shrink-0 w-full h-[60px]">
         <h1 className="text-[18px] font-semibold text-gray-900">페르소나 결과</h1>
-       
       </header>
       
       {/* 이름표 */}
@@ -99,13 +98,15 @@ const PERSONA_UI_DATA = {
         bg-gradient-to-b ${currentUI.bgGradient}`}>
         {resultData.description}
       </div>
+
+      {/* 안내 문구 */}
       <div>
         <p className='text-[12px] font-regular text-gray-300 mt-[103px] mb-[12px]'>결과는 마이페이지에서 언제든 다시 볼 수 있어요</p>
       </div>
 
       {/*  다음 버튼  */}
       <div className="w-full">
-        <Button onClick={() => console.log("이동")}>
+        <Button onClick={() => { handleNext(); }} >
           다음
         </Button>
       </div>
