@@ -26,7 +26,7 @@ const currentQ = MOCK_QUESTIONS[step];
       setStep(step + 1); // 다음 문제 이동
     } else {
       console.log("최종 제출 데이터:", answers);
-      // navigate('/result'); // 나중에 결과 페이지 생기면 수정
+      navigate('/onboarding/personaresult');
     }
   };
 
