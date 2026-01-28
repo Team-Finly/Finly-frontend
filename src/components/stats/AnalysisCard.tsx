@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import { EMOTION_CHART_MAP } from '@/constants/emotions';
 import { formatTime } from '@/utils/date';
 
@@ -7,16 +6,12 @@ interface AnalysisCardProps {
 }
 
 const AnalysisCard = ({ data }: AnalysisCardProps) => {
-  const emotionData = useMemo(() => {
-    if (!data?.record?.emotion) return null;
-    return EMOTION_CHART_MAP[data.record.emotion];
-  }, [data?.record?.emotion]);
-
   if (!data || !data.record) {
     return <div className="h-[200px]" />;
   }
 
   const { record } = data;
+  const emotionData = EMOTION_CHART_MAP[record.emotion];
 
   if (!emotionData) {
     console.log('emotionData 없음:', record.emotion);
