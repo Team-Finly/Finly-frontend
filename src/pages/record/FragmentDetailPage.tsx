@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import CloseHeader from '@/components/record/CloseHeader';
 import RecordDetailFragment from '@/components/record/RecordDetailFragment';
 import { useLocation } from 'react-router-dom';
-import { EMOTIONS } from '@/constants/emtions';
+import { EMOTIONS } from '@/constants/emotions';
 import PeriodFilterButton from '@/components/record/PeriodFilterButton';
 
 const FragmentDetailPage = () => {

@@ -3,7 +3,7 @@ import Before from '../../assets/icons/before.svg';
 import EmotionFilterButton from '@/components/record/EmotionFilterButton';
 import RecordDetailFragment from '@/components/record/RecordDetailFragment';
 import { useNavigate } from 'react-router-dom';
-import { EMOTIONS } from '@/constants/emtions';
+import { EMOTIONS } from '@/constants/emotions';
 
 const MOCK_DATA = [
   {
