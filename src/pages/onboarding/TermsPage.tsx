@@ -49,7 +49,7 @@ const handleAllClick = () => {
       <div className="text-left mt-[30px] mb-[32px]">
         <p className ="font-semibold text-[20px] leading-[26px] text-gray-900">Finly
         <br />
-        <span className="font-bold text-[20px] leading-[26px] text-secondary">약관 동의</span>가 필요해요 </p>
+        <span className="font-semibold text-[20px] leading-[26px] text-secondary">약관 동의</span>가 필요해요 </p>
       </div>
 
 
@@ -68,7 +68,7 @@ const handleAllClick = () => {
          alt="체크 아이콘"
          className="w-[15px] h-[12px]" />
 
-        <span className="text-[17px] font-medium ">서비스 이용약관 전체 동의</span>
+        <span className="text-[17px] font-semibold ">서비스 이용약관 전체 동의</span>
     </button>
 
     <div className="flex flex-row items-center text-left w-full mt-[30px] gap-[8px]">
