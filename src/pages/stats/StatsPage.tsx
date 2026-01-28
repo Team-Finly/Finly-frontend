@@ -1,15 +1,15 @@
-import { useEffect, useState } from 'react';
-import Header from '../../components/stats/Header';
-import StockSelector from '../../components/stats/StockSelector';
-import Tabbar from '../../components/stats/Tabbar';
-import StockImg from '../../assets/images/stats_stockExam.svg';
-import type { Stock } from '../../types/stats';
-import { STATS_TABS, type TabType } from '../../types/stats';
+import { useState } from 'react';
+import Header from '@/components/stats/Header';
+import StockSelector from '@/components/stats/StockSelector';
+import Tabbar from '@/components/stats/Tabbar';
+import StockImg from '@/assets/images/stats_stockExam.svg';
+import type { Stock } from '@/types/stats';
+import { STATS_TABS, type TabType } from '@/types/stats';
 import RelationTab from './RelationTab';
 import StockTab from './StockTab';
 import EmotionTab from './EmotionTab';
 import EmptyTab from './EmptyTab';
-import NoStock from '../../components/stats/NoStock';
+import NoStock from '@/components/stats/NoStock';
 
 // 임시 더미 데이터 (API 연결 시 삭제 예정)
 const MOCK_STOCKS = [
@@ -43,6 +43,22 @@ const StatsPage = () => {
 
   return (
     <div className="flex w-full flex-1 flex-col pb-20">
+      <style>{`
+        .recharts-wrapper,
+        .recharts-wrapper *,
+        .recharts-surface,
+        .recharts-layer {
+          outline: none !important;
+          box-shadow: none !important;
+          -webkit-tap-highlight-color: transparent !important;
+          -webkit-touch-callout: none !important;
+          -webkit-user-select: none !important;
+          user-select: none !important;
+        }
+        *:focus {
+          outline: none !important;
+        }
+      `}</style>
       <div className="sticky top-0 z-50 flex flex-none flex-col gap-6 bg-white pt-4">
         <Header />
         {CURRENT_TEST_STATUS === 'ACTIVE' ? (

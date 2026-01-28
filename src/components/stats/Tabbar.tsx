@@ -1,4 +1,4 @@
-import { STATS_TABS, type TabType } from '../../types/stats';
+import { STATS_TABS, type TabType } from '@/types/stats';
 
 interface Props {
   currentTab: TabType;

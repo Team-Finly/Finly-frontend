@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { AreaChart, Area, XAxis, YAxis, ResponsiveContainer } from 'recharts';
 import { useNavigate } from 'react-router-dom';
-import { EMOTIONS } from '@/constants/emtions';
+import { EMOTIONS } from '@/constants/emotions';
 
 type EmotionConfigType = (typeof EMOTIONS)[number];
 
@@ -56,12 +56,11 @@ const CustomEmojiDot = (props: any) => {
         strokeDasharray="3 3"
       />
       <image
-        x={cx - 12}
-        y={cy - 12}
-        width={24}
-        height={24}
+        x={cx - 14}
+        y={cy - 14}
+        width={28}
+        height={28}
         href={payload.emotionImg}
-        style={{ filter: 'drop-shadow(0px 2px 2px rgba(0,0,0,0.1))' }}
       />
     </g>
   );
@@ -133,6 +132,7 @@ const RelationChart = () => {
             />
             <YAxis hide domain={['auto', 'auto']} />
             <Area
+              activeDot={false}
               type="linear"
               dataKey="close_price"
               stroke="#278DFD"

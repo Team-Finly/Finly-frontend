@@ -1,7 +1,7 @@
-import RelationChart from '../../components/stats/RelationChart';
-import RelationFear from '../../components/stats/RelationFear';
-import RelationConviction from '../../components/stats/RelationConviction';
-import RelationPattern from '../../components/stats/RelationPattern';
+import RelationChart from '@/components/stats/RelationChart';
+import RelationFear from '@/components/stats/RelationFear';
+import RelationConviction from '@/components/stats/RelationConviction';
+import RelationPattern from '@/components/stats/RelationPattern';
 
 const RelationTab = () => {
   return (

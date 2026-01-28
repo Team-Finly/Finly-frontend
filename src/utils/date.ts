@@ -15,3 +15,32 @@ export const getRelativeTime = (dateString: string): string => {
   const diffInWeeks = Math.floor(diffInDays / 7);
   return `${diffInWeeks}주 전`;
 };
+
+// 오늘 날짜 -> YYYY-MM-DD
+export const getTodayString = () => {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+
+// "YYYY-MM-DD" -> "M월 D일"
+export const formatDateDisplay = (dateString: string) => {
+  if (!dateString) return '';
+  const [, month, day] = dateString.split('-');
+  return `${parseInt(month)}월 ${parseInt(day)}일`;
+};
+
+// ISO 시간 문자열 -> "오후 0시 00분 기록"
+export const formatTime = (isoString: string) => {
+  if (!isoString) return '';
+  const date = new Date(isoString);
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const ampm = hours >= 12 ? '오후' : '오전';
+  const displayHours = hours % 12 || 12;
+  const displayMinutes = minutes.toString().padStart(2, '0');
+
+  return `${ampm} ${displayHours}시 ${displayMinutes}분 기록`;
+};
