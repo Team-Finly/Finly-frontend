@@ -1,6 +1,6 @@
-import UpIcon from '../../assets/images/stats_up.svg';
-import DownIcon from '../../assets/images/stats_down.svg';
-import FlatIcon from '../../assets/images/stats_flat.svg';
+import UpIcon from '@/assets/images/stats_up.svg';
+import DownIcon from '@/assets/images/stats_down.svg';
+import FlatIcon from '@/assets/images/stats_flat.svg';
 
 const RelationFear = () => {
   return (

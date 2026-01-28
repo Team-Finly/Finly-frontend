@@ -1,5 +1,5 @@
 import React from 'react';
-import { EMOTIONS } from '@/constants/emtions'; // 정의하신 상수 사용
+import { EMOTIONS } from '@/constants/emotions'; // 정의하신 상수 사용
 
 interface DonutChartProps {
   totalCount: number;

@@ -1,4 +1,4 @@
-import PatternBg from '../../assets/images/stats_pattern.svg';
+import PatternBg from '@/assets/images/pattern_bg.png';
 
 const RelationPattern = () => {
   return (

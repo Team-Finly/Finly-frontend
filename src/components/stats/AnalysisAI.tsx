@@ -5,7 +5,7 @@ const AnalysisAI = () => {
         AI 피드백
       </div>
       <div className="rounded-[12px] border-[1.2px] border-gray-100 bg-gray-50/60 p-3.5 text-[14px] leading-[1.6] text-gray-700">
-        AI 피드백 내용...
+        AI 피드백 내용 추후 추가 예정
       </div>
     </div>
   );

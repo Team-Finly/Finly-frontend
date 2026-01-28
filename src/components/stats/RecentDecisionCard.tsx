@@ -1,4 +1,4 @@
-import { EMOTION_CHART_MAP } from '@/constants/emtions';
+import { EMOTION_CHART_MAP } from '@/constants/emotions';
 
 export interface DecisionItem {
   stockName: string;
@@ -15,7 +15,15 @@ interface Props {
 }
 
 const RecentDecisionCard = ({ data }: Props) => {
-  const { stockName, emotion, tradeType, price, date, decisionResult } = data;
+  const {
+    stockName,
+    emotion,
+    tradeType,
+    price,
+    date,
+    decisionResult,
+    quantity,
+  } = data;
   const emotionConfig = EMOTION_CHART_MAP[emotion];
   const emotionImg = emotionConfig?.cardImage;
 
@@ -25,22 +33,6 @@ const RecentDecisionCard = ({ data }: Props) => {
   const formattedDate = `${dateObj.getMonth() + 1}월 ${dateObj.getDate()}일`;
   const diffTime = now.getTime() - dateObj.getTime();
   const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-
-  let relativeTime = '';
-  if (diffDays === 0) {
-    relativeTime = '오늘';
-  } else if (diffDays < 7) {
-    relativeTime = `${diffDays}일 전`;
-  } else if (diffDays < 30) {
-    const weeks = Math.floor(diffDays / 7);
-    relativeTime = `${weeks}주 전`;
-  } else if (diffDays < 365) {
-    const months = Math.floor(diffDays / 30);
-    relativeTime = `${months}달 전`;
-  } else {
-    const years = Math.floor(diffDays / 365);
-    relativeTime = `${years}년 전`;
-  }
 
   // 수익률 처리
   const isPositive = decisionResult > 0;
@@ -67,7 +59,7 @@ const RecentDecisionCard = ({ data }: Props) => {
         </div>
         <div className="flex flex-row items-center justify-between">
           <div className="text-[12px] font-medium text-gray-300">
-            {formattedDate} · {relativeTime}
+            {formattedDate} · {quantity}주
           </div>
           <div className={`text-[16px] font-medium ${resultColor}`}>
             {resultSign}

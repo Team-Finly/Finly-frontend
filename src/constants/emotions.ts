@@ -1,0 +1,77 @@
+// 감정 단일 이미지
+import Calm from '@/assets/images/calm.png';
+import Anxiety from '@/assets/images/anxiety.png';
+import Confidence from '@/assets/images/confidence.png';
+import Greed from '@/assets/images/greed.png';
+import Regret from '@/assets/images/regret.png';
+// 감정 차트 이미지
+import StatsConvictionImg from '@/assets/images/stats_conviction.png';
+import StatsAnxietyImg from '@/assets/images/stats_anxiety.png';
+import StatsGreedImg from '@/assets/images/stats_greed.png';
+import StatsRegretImg from '@/assets/images/stats_regret.png';
+import StatsCalmImg from '@/assets/images/stats_calm.png';
+// 감정 카드 이미지
+import StatsCardConvictionImg from '@/assets/images/stats_card_conviction.png';
+import StatsCardAnxietyImg from '@/assets/images/stats_card_anxiety.png';
+import StatsCardGreedImg from '@/assets/images/stats_card_greed.png';
+import StatsCardRegretImg from '@/assets/images/stats_card_regret.png';
+import StatsCardCalmImg from '@/assets/images/stats_card_calm.png';
+
+export const EMOTIONS = [
+  {
+    key: 'ANXIETY',
+    label: '불안',
+    color: 'var(--color-emotion-anxiety)',
+    bgColor: 'var(--color-emotion-bg-anxiety)',
+    icon: Anxiety,
+    chartImage: StatsAnxietyImg,
+    cardImage: StatsCardAnxietyImg,
+  },
+  {
+    key: 'GREED',
+    label: '탐욕',
+    color: 'var(--color-emotion-greed)',
+    bgColor: 'var(--color-emotion-bg-greed)',
+    textColor: 'var(--color-emotion-text-greed)',
+    icon: Greed,
+    chartImage: StatsGreedImg,
+    cardImage: StatsCardGreedImg,
+  },
+  {
+    key: 'CALM',
+    label: '평온',
+    color: 'var(--color-emotion-calm)',
+    bgColor: 'var(--color-emotion-bg-calm)',
+    icon: Calm,
+    chartImage: StatsCalmImg,
+    cardImage: StatsCardCalmImg,
+  },
+  {
+    key: 'CONFIDENCE',
+    label: '확신',
+    color: 'var(--color-emotion-confidence)',
+    bgColor: 'var(--color-emotion-bg-confidence)',
+    icon: Confidence,
+    chartImage: StatsConvictionImg,
+    cardImage: StatsCardConvictionImg,
+  },
+  {
+    key: 'REGRET',
+    label: '후회',
+    color: 'var(--color-emotion-regret)',
+    bgColor: 'var(--color-emotion-bg-regret)',
+    icon: Regret,
+    chartImage: StatsRegretImg,
+    cardImage: StatsCardRegretImg,
+  },
+] as const;
+
+export const CHART_ORDER = ['CONFIDENCE', 'CALM', 'REGRET', 'GREED', 'ANXIETY'];
+
+export const EMOTION_CHART_MAP = EMOTIONS.reduce(
+  (acc, cur) => {
+    acc[cur.key] = cur;
+    return acc;
+  },
+  {} as Record<string, (typeof EMOTIONS)[number]>,
+);
