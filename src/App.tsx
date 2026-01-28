@@ -95,7 +95,6 @@ const routes: RouteObject[] = [
         element: <MindScoreDetailPage />,
         handle: { showNav: false }
        }
-      }
     ],
   },
 ];
