@@ -46,7 +46,7 @@ const LoginPage = () => {
       </header>
 
       {/* 2. 입력 폼 영역 */}
-      <div className="flex flex-col gap-[24px]">
+      <div className="flex flex-col gap-[26px]">
         <div className="mt-[72px]">
           <TextField 
             label="이메일"
@@ -58,7 +58,7 @@ const LoginPage = () => {
             isValid={isEmailInputValid && email.length > 0}
           />
         </div>
-        <div className="mt-[26px]">
+        <div >
           <TextField 
             label="비밀번호"
             value={password}
@@ -91,11 +91,11 @@ const LoginPage = () => {
       </button>
 
       {/* 4. 회원가입 링크 */}
-      <div className="mt-[34px] text-center text-xs text-gray-500">
+      <div className="mt-[34px] text-center text-gray-500 font-regular leading-[26px]">
         아직 계정이 없으신가요?
         <span
           onClick={() => navigate('/signup')}
-          className="ml-2 font-medium text-primary cursor-pointer hover:underline"
+          className="ml-[10px] font-medium text-secondary cursor-pointer hover:underline leading-[26px]"
         >
           회원가입하기
         </span>

@@ -18,6 +18,7 @@ import SearchPage from './pages/record/SearchPage';
 import SearchResultPage from './pages/record/SearchResultPage';
 import HomePage from './pages/home/HomePage';
 import NotificationPage from './pages/home/NotificationPage';
+import MindScoreDetailPage from './pages/home/MindScoreDetailPage';
 
 const routes: RouteObject[] = [
   {
@@ -88,6 +89,12 @@ const routes: RouteObject[] = [
         path: 'onboarding/persona/result',
         element: <PersonaResultPage />,
         handle: { showNav: false }
+      },
+      {
+        path: 'mindscore',
+        element: <MindScoreDetailPage />,
+        handle: { showNav: false }
+       }
       }
     ],
   },
