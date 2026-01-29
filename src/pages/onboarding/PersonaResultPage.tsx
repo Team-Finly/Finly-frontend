@@ -61,7 +61,7 @@ const PERSONA_UI_DATA = {
   };
 
   return (
-    <div className='flex flex-col items-center w-full px-4 bg-white'>
+    <div className='flex flex-col items-center w-full px-4 mt-[16px] bg-white'>
 
       {/* 헤더 */}
       <header className="relative flex items-center shrink-0 w-full h-[60px]">
