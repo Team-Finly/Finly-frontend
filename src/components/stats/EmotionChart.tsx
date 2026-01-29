@@ -6,7 +6,7 @@ import {
   PolarRadiusAxis,
   ResponsiveContainer,
 } from 'recharts';
-import { EMOTION_CHART_MAP, CHART_ORDER } from '@/constants/emtions';
+import { EMOTION_CHART_MAP, CHART_ORDER } from '@/constants/emotions';
 import { useMemo } from 'react';
 
 interface EmotionChartProps {

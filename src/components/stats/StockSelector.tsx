@@ -1,5 +1,5 @@
-import SelectBtn from '../../assets/images/stats_stockSelect.svg';
-import type { Stock } from '../../types/stats';
+import SelectBtn from '@/assets/images/stats_stockSelect.svg';
+import type { Stock } from '@/types/stats';
 
 interface Props {
   stocks: Stock[];

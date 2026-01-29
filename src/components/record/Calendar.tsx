@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import ArrowLeft from '../../assets/icons/arrow-left.svg';
 import ArrowRight from '../../assets/icons/arrow-right.svg';
-import { EMOTIONS } from '../../constants/emtions';
+import { EMOTIONS } from '../../constants/emotions';
 import type { MonthlyRecordResponse } from '@/types/record';
 
 const Calendar = () => {
