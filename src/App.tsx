@@ -20,6 +20,7 @@ import SearchResultPage from './pages/record/SearchResultPage';
 import HomePage from './pages/home/HomePage';
 import NotificationPage from './pages/home/NotificationPage';
 import MindScoreDetailPage from './pages/home/MindScoreDetailPage';
+import ReportDetailPage from './pages/home/ReportDetailPage';
 
 const routes: RouteObject[] = [
   {
@@ -99,6 +100,11 @@ const routes: RouteObject[] = [
        {
         path: 'terms',
         element: <TermsPage />,
+        handle: { showNav: false }
+      },
+      {
+        path: 'reports/:yearMonth',
+        element: <ReportDetailPage />,
         handle: { showNav: false }
       }
     ],
