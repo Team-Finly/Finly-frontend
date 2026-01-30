@@ -56,6 +56,7 @@ const LoginPage = () => {
             placeholder="abc@email.com"
             type="email"
             isValid={isEmailInputValid && email.length > 0}
+            showValidIcon={false}
           />
         </div>
         <div >
@@ -67,6 +68,7 @@ const LoginPage = () => {
             placeholder="6자리 이상의 비밀번호"
             type="password"
             isValid={isPasswordInputValid && password.length > 0}
+            showValidIcon={false}
           />
           {loginError && (
             <div className="mt-[10px]  text-[#F04452] font-normal">

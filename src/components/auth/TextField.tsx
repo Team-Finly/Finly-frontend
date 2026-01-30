@@ -12,11 +12,12 @@ interface TextFieldProps {
   type?: string;         
   placeholder?: string;   
   isValid?: boolean;  
-  helperText?: string; 
+  helperText?: string;
+  showValidIcon?: boolean;
   
 }
 
-const TextField = ({ label, value, onChange, onClear, type = "text", placeholder, isValid, helperText }: TextFieldProps) => {
+const TextField = ({ label, value, onChange, onClear, type = "text", placeholder, isValid, helperText, showValidIcon = true }: TextFieldProps) => {
   const [isFocused, setIsFocused] = useState(false);
   
 //테두리 색상 및 배경
@@ -34,13 +35,7 @@ if ((helperText && isFocused) || helperText) {
 }
 
   // 아이콘
- let currentIcon = CloseIcon;
- let isCheckIcon = false; 
-
-  if (value.length > 0 && isValid === true && !isFocused) {
-    currentIcon = Validicon;
-    
-  }
+ const isSuccess = value.length > 0 && isValid === true && showValidIcon === true;
 
   return (
     <div className="flex flex-col relative">
@@ -70,22 +65,32 @@ if ((helperText && isFocused) || helperText) {
             ${type === 'password' ? styles['hide-password-eye'] : ''}
           `}
         />
-        {/* 값이 있을 때만 아이콘 표시 */}
-        {value.length > 0 && (
+       
+        {isSuccess && (
+          <span className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center justify-center">
+            <img
+              src={Validicon}
+              alt="유효함"
+              className="w-5 h-5"
+            />
+          </span>
+        )}
+
+        {value.length > 0 && !isSuccess && !isValid &&(
           <button 
             type="button"
-            // X 아이콘일 때만 onClear 실행
-            onClick={isCheckIcon ? undefined : onClear} 
-            className={`absolute right-3 top-1/2 -translate-y-1/2 flex items-center justify-center 
-              ${isCheckIcon ? "cursor-default" : "cursor-pointer"}`}
+            onClick={onClear} 
+            className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center justify-center cursor-pointer"
           >
             <img 
-              src={currentIcon} 
-              alt={isCheckIcon ? "유효함" : "지우기"}
+              src={CloseIcon} 
+              alt="X아이콘"
               className="w-5 h-5"
             />
           </button>
         )}
+        
+  
       </div>
       {helperText && (
         <p className="mt-[8px] text-xs text-red-500">{helperText}</p>
