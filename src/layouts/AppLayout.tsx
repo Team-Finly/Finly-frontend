@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 const AppLayout = () => {
   const matches = useMatches();
-  const [open, setOpen] = useState(false); // ReportModal 임의로 꺼둠
+  const [open, setOpen] = useState(true); // ReportModal 임의로 꺼둠
   const navigate = useNavigate();
 
   const showNav = matches.some((match) => 
