@@ -19,23 +19,22 @@ interface TextFieldProps {
 
 const TextField = ({ label, value, onChange, onClear, type = "text", placeholder, isValid, helperText, showValidIcon = true }: TextFieldProps) => {
   const [isFocused, setIsFocused] = useState(false);
-  
+  const isError = !!helperText || (isValid === false && value.length > 0);
+  const isSuccess = value.length > 0 && isValid === true;
 //테두리 색상 및 배경
 let borderClass = "border-gray-300 bg-white";
 
 // helperText가 있거나, focus 상태에서 helperText시 빨간 테두리
-if ((helperText && isFocused) || helperText) {
-  borderClass = "border-red-500 bg-white";
-} else if (isValid === false && value.length > 0) {
-  borderClass = "border-red-500 bg-white";
-} else if (isValid === true && value.length > 0) {
-  borderClass = "border-secondary bg-blue-bg";
+if (isError) {
+  borderClass = "border-red-500 focus:border-red-500 bg-white";
+} else if (isSuccess) {
+  borderClass = "border-secondary focus:border-secondary bg-blue-bg";
 } else if (value.length > 0) {
-  borderClass = "border-secondary bg-white";
+  borderClass = "border-secondary focus:border-secondary bg-white";
 }
 
   // 아이콘
- const isSuccess = value.length > 0 && isValid === true && showValidIcon === true;
+ const shouldShowValidIcon = showValidIcon && isSuccess;
 
   return (
     <div className="flex flex-col relative">
@@ -48,15 +47,12 @@ if ((helperText && isFocused) || helperText) {
           placeholder={placeholder}
           value={value}
           onChange={onChange}
-
           onFocus={() => setIsFocused(true)}  // 클릭해서 입력 시작하면 true
           onBlur={() => setIsFocused(false)}  // 다른 곳 눌러서 입력 끝나면 false
-
           className={`
             font-normal w-full h-full rounded-[12px] px-4 outline-none transition-colors duration-200
             border-[1.2px] 
             ${borderClass}
-            ${!helperText ? "focus:border-secondary" : ""}
             text-[17px]
             font-normal
             text-gray-900
@@ -66,7 +62,7 @@ if ((helperText && isFocused) || helperText) {
           `}
         />
        
-        {isSuccess && (
+        {shouldShowValidIcon && (
           <span className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center justify-center">
             <img
               src={Validicon}
@@ -76,7 +72,7 @@ if ((helperText && isFocused) || helperText) {
           </span>
         )}
 
-        {value.length > 0 && !isSuccess && !isValid &&(
+        {value.length > 0 && !shouldShowValidIcon && !isValid &&(
           <button 
             type="button"
             onClick={onClear} 
@@ -89,8 +85,6 @@ if ((helperText && isFocused) || helperText) {
             />
           </button>
         )}
-        
-  
       </div>
       {helperText && (
         <p className="mt-[8px] text-xs text-red-500">{helperText}</p>
