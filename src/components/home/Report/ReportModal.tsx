@@ -4,7 +4,7 @@ import LetterBox from '@/assets/icons/letterbox.svg';
 interface ReportModalProps {
   name: string;
   isOpen: boolean;
-  month?: string; 
+  month: string; 
   onConfirm: () => void;
   onClose: () => void;
 }
