@@ -20,6 +20,7 @@ import SearchResultPage from './pages/record/SearchResultPage';
 import HomePage from './pages/home/HomePage';
 import NotificationPage from './pages/home/NotificationPage';
 import MindScoreDetailPage from './pages/home/MindScoreDetailPage';
+import RecordDetailPage from './pages/record/RecordDetailPage';
 
 const routes: RouteObject[] = [
   {
@@ -55,6 +56,11 @@ const routes: RouteObject[] = [
         path: 'record',
         element: <RecordHomePage />,
         handle: { showNav: true },
+      },
+      {
+        path: 'record/:date',
+        element: <RecordDetailPage />,
+        handle: { showNav: false },
       },
       {
         path: 'fragment',
