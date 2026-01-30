@@ -115,9 +115,7 @@ const RecordHomePage = () => {
           )}
         </div>
       </div>
-      {/* <div className="fixed right-4 bottom-6 z-100"> */}
       <FloatingButton />
-      {/* </div> */}
     </div>
   );
 };
