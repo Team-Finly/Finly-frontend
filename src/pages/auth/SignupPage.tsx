@@ -24,10 +24,7 @@ const SignupPage = () => {
   const isEmailFormatValid = REGEX.EMAIL.test(email);
   const isEmailTaken = email === "finly@finly.com"; //이미 가입된 이메일인지 확인하는 변수 (테스트)
   const emailStatus = email.length > 0 ? (isEmailTaken ? false : isEmailFormatValid) : undefined ; // TextField에 넘겨줄 상태, 중복이거나 형식이 틀리면 false, 아니면 true
-  // 이메일 에러 메시지
-  let emailHelperText = "";
-  if (isEmailTaken) emailHelperText = "이미 가입된 회원입니다. 로그인 해주세요.";
-  else if (!isEmailFormatValid) emailHelperText = "유효한 이메일을 입력해 주세요.";
+
 
   // 비밀번호 검사 로직
   const isPwValid = REGEX.PASSWORD.test(password);

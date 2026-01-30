@@ -18,7 +18,6 @@ interface TextFieldProps {
 }
 
 const TextField = ({ label, value, onChange, onClear, type = "text", placeholder, isValid, helperText, showValidIcon = true }: TextFieldProps) => {
-  const [isFocused, setIsFocused] = useState(false);
   const isError = !!helperText || (isValid === false && value.length > 0);
   const isSuccess = value.length > 0 && isValid === true;
 //테두리 색상 및 배경
@@ -47,8 +46,6 @@ if (isError) {
           placeholder={placeholder}
           value={value}
           onChange={onChange}
-          onFocus={() => setIsFocused(true)}  // 클릭해서 입력 시작하면 true
-          onBlur={() => setIsFocused(false)}  // 다른 곳 눌러서 입력 끝나면 false
           className={`
             font-normal w-full h-full rounded-[12px] px-4 outline-none transition-colors duration-200
             border-[1.2px] 
