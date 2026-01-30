@@ -31,12 +31,14 @@ const SignupPage = () => {
   else if (!isEmailFormatValid) emailHelperText = "유효한 이메일을 입력해 주세요.";
 
   // 비밀번호 검사 로직
-  const isPwValid = password.length >= 6;
+  const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{6,}$/;
+  const isPwValid = passwordRegex.test(password);
   const isMatch = pwConfirm.length > 0 && password === pwConfirm;
 
   const nicknameRegex = /^[가-힣a-zA-Z0-9]{2,}$/;
-  const isNicknameValid = nicknameRegex.test(nickname);
-  
+  const isNicknameValid = (nickname: string) => {
+  return /^[a-zA-Z0-9가-힣]+$/.test(nickname) && nickname.length > 1;
+};
 
 
   return (
@@ -101,8 +103,8 @@ const SignupPage = () => {
               onClear={() => setPassword("")}
               isValid={password.length > 0 ? isPwValid : undefined}
               helperText={
-                password.length < 6 && password.length > 0
-                  ? "6자리 이상 입력해주세요"
+                password.length < 6 && password.length > 0 && !isPwValid
+                  ? "영문 + 숫자 포함 6자리 이상 입력해주세요"
                   : ""
               }
             />
@@ -133,7 +135,7 @@ const SignupPage = () => {
               value={nickname}
               onChange={(e) => setNickname(e.target.value)}
               onClear={() => setNickname("")}
-              isValid={nickname.length > 0 ? nickname.length >= 2 : undefined}
+              isValid={nickname.length > 0 ? isNicknameValid(nickname) : undefined}
               helperText={
                 /[^ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9]/.test(nickname)
                   ? "특수문자는 사용할 수 없어요"
