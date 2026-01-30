@@ -103,7 +103,7 @@ const SignupPage = () => {
               onClear={() => setPassword("")}
               isValid={password.length > 0 ? isPwValid : undefined}
               helperText={
-                password.length < 6 && password.length > 0 && !isPwValid
+                password.length > 0 && !isPwValid
                   ? "영문 + 숫자 포함 6자리 이상 입력해주세요"
                   : ""
               }
