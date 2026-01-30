@@ -35,7 +35,7 @@ const SignupPage = () => {
   const isPwValid = passwordRegex.test(password);
   const isMatch = pwConfirm.length > 0 && password === pwConfirm;
 
-  const nicknameRegex = /^[가-힣a-zA-Z0-9]{2,}$/;
+
   const isNicknameValid = (nickname: string) => {
   return /^[a-zA-Z0-9가-힣]+$/.test(nickname) && nickname.length > 1;
 };
