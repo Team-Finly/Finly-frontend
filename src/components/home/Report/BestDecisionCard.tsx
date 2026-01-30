@@ -7,7 +7,6 @@ interface BestDecisionCardProps {
   holdingWeeks: number;
   price: string;        // 152,400원
   rate: string;         // 50%
-  rateColor?: string;   // 기본 red
 }
 
 const BestDecisionCard = ({
