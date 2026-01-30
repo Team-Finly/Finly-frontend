@@ -39,6 +39,7 @@ const ReportModal: React.FC<ReportModalProps> = ({
         <img
           src={LetterBox}
           className="mt-[30px] mb-[20px] w-[79px] h-[79px] items-center mx-auto"
+          alt="편지함 아이콘"
         />
 
         <button
