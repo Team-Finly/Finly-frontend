@@ -1,12 +1,15 @@
 import TimeLineIcon from '@/assets/icons/stats_time.svg'
 import { EMOTIONS } from '@/constants/emotions';
 import type { SessionType, TimelineSection } from '@/types/record';
+import { useState } from 'react';
+import TimeLineModal from './TimeLineModal';
 
 interface Props {
   sections?: TimelineSection[];
 }
 
 const DailyRecordTimeLine = ({ sections }: Props) => {
+  const [isTimeLineOpen, setIsTimeLineOpen] = useState(false);
   const getEmotionData = (key: string) => EMOTIONS.find((e) => e.key === key);
 
   const sessionMap: Record<SessionType, string> = {
@@ -20,7 +23,7 @@ const DailyRecordTimeLine = ({ sections }: Props) => {
     const hours = date.getHours();
     const minutes = date.getMinutes();
     const ampm = hours >= 12 ? '오후' : '오전';
-    const displayHours = hours % 12 || 12; // 0시를 12시로 표시
+    const displayHours = hours % 12 || 12; 
   
     return `${ampm} ${displayHours}시 ${minutes.toString().padStart(2, '0')}분`;
   };
@@ -29,7 +32,13 @@ const DailyRecordTimeLine = ({ sections }: Props) => {
     <section className="flex-1 flex flex-col min-h-0">
       <div className="p-[16px] pt-[40px] flex items-center gap-1 text-[16px] font-semibold text-gray-700">
         타임라인
-        <img src={TimeLineIcon} alt="timeline icon" className="h-[15px] w-[15px]" />
+        <button onClick={() => setIsTimeLineOpen(true)}>
+          <img
+            src={TimeLineIcon}
+            alt="timeline icon"
+            className="h-[15px] w-[15px]"
+          />
+        </button>
       </div>
 
       <div className="relative bg-white w-full rounded-t-[20px] px-[16px] pt-[20px]  min-h-[calc(100dvh-120px)] overflow-hidden flex-1 pb-[20px]">
@@ -99,14 +108,16 @@ const DailyRecordTimeLine = ({ sections }: Props) => {
               );
             })}
           </div>
-
   
-            <div className="relative left-[-49px] -bottom-0 flex h-[32px] w-[32px] items-center justify-center rounded-full bg-[#F4F5F7] text-[11px] text-[#C5C8CE]">
+          <div className="relative left-[-49px] -bottom-0 flex h-[32px] w-[32px] items-center justify-center rounded-full bg-[#F4F5F7] text-[11px] text-[#C5C8CE]">
             장 후
           </div>
           
         </div>
       </div>
+      {isTimeLineOpen && (
+        <TimeLineModal onClose={() => setIsTimeLineOpen(false)} />
+      )}
     </section>
   );
 }
