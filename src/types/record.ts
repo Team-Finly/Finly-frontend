@@ -46,3 +46,29 @@ export interface DailyFragmentResponse {
   date: string;
   records: DailyFragment[];
 }
+
+// 해당 일 기록 
+export type SessionType = 'MORNING' | 'AFTERNOON' | 'CLOSE';
+
+export interface TradeItem {
+  recordId: number;
+  instrumentId: number;
+  instrumentName: string;
+  emotionCode: string;     
+  emotionDisplay: string;  
+  tradeAction: 'BUY' | 'SELL';
+  unitPrice: number;
+  quantity: number;
+  memoPreview: string;
+  recordedAt: string;     
+}
+
+export interface TimelineSection {
+  session: SessionType;
+  items: TradeItem[];
+}
+
+export interface RecordDetailResponse {
+  date: string;           
+  sections: TimelineSection[];
+}

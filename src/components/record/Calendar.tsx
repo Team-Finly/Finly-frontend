@@ -5,7 +5,11 @@ import { EMOTIONS } from '../../constants/emotions';
 import type { MonthlyRecordResponse } from '@/types/record';
 import { useNavigate } from 'react-router-dom';
 
-const Calendar = () => {
+interface CalendarProps {
+  onClose?: () => void;
+}
+
+const Calendar = ({ onClose }: CalendarProps) => {
   const calendarRef = useRef<HTMLDivElement>(null);
   const dragStart = useRef({ x: 0, y: 0, time: 0 });
   const navigate = useNavigate();
@@ -116,6 +120,8 @@ const Calendar = () => {
     const day = String(date.getDate()).padStart(2, '0');
 
     navigate(`/record/${year}-${month}-${day}`);
+    
+    if (onClose) onClose();
   };
 
   return (

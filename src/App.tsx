@@ -20,7 +20,8 @@ import SearchResultPage from './pages/record/SearchResultPage';
 import HomePage from './pages/home/HomePage';
 import NotificationPage from './pages/home/NotificationPage';
 import MindScoreDetailPage from './pages/home/MindScoreDetailPage';
-import RecordDetailPage from './pages/record/RecordDetailPage';
+import ReportDetailPage from './pages/home/ReportDetailPage';
+import DailyRecordPage from './pages/record/DailyRecordPage';
 
 const routes: RouteObject[] = [
   {
@@ -59,7 +60,7 @@ const routes: RouteObject[] = [
       },
       {
         path: 'record/:date',
-        element: <RecordDetailPage />,
+        element: <DailyRecordPage />,
         handle: { showNav: false },
       },
       {
@@ -105,6 +106,11 @@ const routes: RouteObject[] = [
        {
         path: 'terms',
         element: <TermsPage />,
+        handle: { showNav: false }
+      },
+      {
+        path: 'reports/:yearMonth',
+        element: <ReportDetailPage />,
         handle: { showNav: false }
       }
     ],
