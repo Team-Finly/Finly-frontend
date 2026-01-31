@@ -49,10 +49,7 @@ const currentQ = MOCK_QUESTIONS[step];
         
         onClick={() => {
         if (step === 0) {
-          // 닉네임 값을 localStorage에서 읽거나, props/state로 받아서 전달해야 함
-          // 예시: localStorage.getItem('signup-nickname') 사용
-          const nickname = localStorage.getItem('signup-nickname') || '';
-          navigate('/signup', { state: { step: 'nickname', nickname } }); // 닉네임 값도 함께 전달
+          navigate('/signup', { state: { step: 'nickname' } });
         } else {
           setStep(step - 1); // 이전 질문으로 이동
         }
