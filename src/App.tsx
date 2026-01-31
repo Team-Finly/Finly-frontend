@@ -17,6 +17,7 @@ import FragmentPage from './pages/record/FragmentPage';
 import FragmentDetailPage from './pages/record/FragmentDetailPage';
 import SearchPage from './pages/record/SearchPage';
 import SearchResultPage from './pages/record/SearchResultPage';
+import RecordCreatePage from './pages/record/RecordCreatePage';
 import HomePage from './pages/home/HomePage';
 import NotificationPage from './pages/home/NotificationPage';
 import MindScoreDetailPage from './pages/home/MindScoreDetailPage';
@@ -78,35 +79,40 @@ const routes: RouteObject[] = [
         handle: { showNav: false },
       },
       {
+        path: 'record/create',
+        element: <RecordCreatePage />,
+        handle: { showNav: false },
+      },
+      {
         path: 'onboarding/persona',
         element: <PersonaTestPage />,
-        handle: { showNav: false }
+        handle: { showNav: false },
       },
       {
         path: 'notification',
         element: <NotificationPage />,
-        handle: { showNav: false }
+        handle: { showNav: false },
       },
       {
         path: 'onboarding/personaresult',
         element: <PersonaResultPage />,
-        handle: { showNav: false }
+        handle: { showNav: false },
       },
       {
         path: 'mindscore',
         element: <MindScoreDetailPage />,
-        handle: { showNav: false }
-       },
-       {
+        handle: { showNav: false },
+      },
+      {
         path: 'terms',
         element: <TermsPage />,
-        handle: { showNav: false }
+        handle: { showNav: false },
       },
       {
         path: 'reports/:yearMonth',
         element: <ReportDetailPage />,
-        handle: { showNav: false }
-      }
+        handle: { showNav: false },
+      },
     ],
   },
 ];

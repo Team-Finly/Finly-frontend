@@ -5,6 +5,8 @@ export type EmotionType =
   | 'GREED'
   | 'REGRET';
 
+export type TradeActionType = 'BUY' | 'SELL' | 'WATCH';
+
 // 캘린더 기록
 export interface DailyRecord {
   date: string;
