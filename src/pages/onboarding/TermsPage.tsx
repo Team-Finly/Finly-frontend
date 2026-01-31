@@ -11,7 +11,6 @@ import { useEffect } from 'react';
 
 const TermsPage = () => {
 const navigate = useNavigate();
-const [active] = useState(false);
 const [allAgreed, setAllAgreed] = useState(false);
 const [require1, setRequire1] = useState(false);
 const [require2, setRequire2] = useState(false);
@@ -57,12 +56,12 @@ const handleRequire3 = () => {
 };
   
   return (
-    <div className='flex flex-col w-full mt-[16px] px-4'>
+    <div className='flex flex-col w-full mt-[16px] px-4 h-dvh'>
 
       <header className="relative flex items-center justify-center w-full h-[60px]">
         <button
             onClick={() => navigate(-1)}
-            className="absolute left-2 top-1/2 -translate-y-1/2 ">
+            className="absolute left-0 top-1/2 -translate-y-1/2 ">
             <img src={backIcon} alt="뒤로가기" className="w-[8px] h-[16px]" />
         </button>
         <h1 className="text-lg font-semibold leading-none text-gray-900">
@@ -116,7 +115,7 @@ const handleRequire3 = () => {
         <img src={rightarrow} alt="오른쪽 화살표" className='ml-auto' />
     </div>
 
-    <div className="w-full mt-[325px] mb-[52px]">
+    <div className="w-full mt-auto mb-[52px]">
         <Button disabled={!(require1 && require2)}
         onClick={() => { handleNext('/onboarding/personaresult'); }} >
           다음
