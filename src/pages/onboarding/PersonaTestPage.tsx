@@ -46,7 +46,8 @@ const currentQ = MOCK_QUESTIONS[step];
       <header className="relative flex items-center justify-center w-full h-[60px]">
         
         <button
-      onClick={() => {
+        
+        onClick={() => {
         if (step === 0) {
           // 닉네임 값을 localStorage에서 읽거나, props/state로 받아서 전달해야 함
           // 예시: localStorage.getItem('signup-nickname') 사용
@@ -56,16 +57,14 @@ const currentQ = MOCK_QUESTIONS[step];
           setStep(step - 1); // 이전 질문으로 이동
         }
       }}
-      className="absolute left-2 top-1/2 -translate-y-1/2 ">
-      <img src={backIcon} alt="뒤로가기" className="w-[8px] h-[16px]" />
+      className="absolute left-0 top-1/2 -translate-y-1/2 ">
+      <img src={backIcon} alt="뒤로가기" className="w-[8px] h-[16px] left-0" />
         </button>
 
         <h1 className="text-lg font-semibold leading-none text-gray-900">
           투자 페르소나 테스트
         </h1>
-
       </header>
-      
     <div className="flex flex-col">
        <ProgressBar current={step + 1} total={3} />
     </div>
