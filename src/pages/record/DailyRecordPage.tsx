@@ -1,7 +1,9 @@
+import CalendarModal from '@/components/record/CalendarModal';
 import DailyRecordHeader from '@/components/record/DailyRecordHeader';
 import DailyRecordTimeLine from '@/components/record/DailyRecordTimeLine';
 import DailyRecordTitle from '@/components/record/DailyRecordTitle';
 import type { TimelineSection } from '@/types/record';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 const MOCK_SECTIONS: TimelineSection[] = [
@@ -59,15 +61,19 @@ const MOCK_SECTIONS: TimelineSection[] = [
 
 const DailyRecordPage = () => {
   const { date } = useParams<{ date: string }>();  
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
   return (
     <div className="h-screen  bg-[#F4F5F7] pt-[76px]">
-      <DailyRecordHeader title={`${date}`} />
+      <DailyRecordHeader title={`${date}`} onCalendarClick={() => setIsCalendarOpen(true)} />
       
       <DailyRecordTitle />
  
       <DailyRecordTimeLine sections={MOCK_SECTIONS} />
       
+      {isCalendarOpen && (
+        <CalendarModal onClose={() => setIsCalendarOpen(false)} />
+      )}
     </div>
   );
 };
