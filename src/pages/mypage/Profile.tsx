@@ -46,13 +46,14 @@ const Profile = () => {
 
     <div >
       <div className='flex flex-row bg-[#E9F0FA99] rounded-[12px] h-[78px] px-[12px] mt-[20px] mx-[16px] border-gray-100 border-[1.2px]'>
-        <div className='flex flex-col w-full mt-[20px] justify-left gap-[4px]'>
+        <div className='flex flex-col w-full mt-[20px] justify-start gap-[4px]'>
           <p className='font-bold text-[17px] text-secondary'>124개<span className='font-semibold text-[17px] text-gray-900'>의 조각</span></p>
           <p className= 'font-semibold text-[12px] text-gray-300'>나의 감정 기록 확인하기</p>
         </div>
 
         <div className='justify-center items-center mt-[6px]'>
           <button 
+            type="button"
             onClick={() => navigate('/fragment')} 
             className='bg-white h-[26px] w-[71px] rounded-[6px] px-[8px] py-[6px] mt-[20px] whitespace-nowrap'
             >

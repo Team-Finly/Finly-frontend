@@ -11,9 +11,9 @@ const ProfileMenu = () => {
   return (
     <div className="flex flex-col bg-white rounded-[12px] border-gray-100 border-[1.2px] mx-[16px] mt-[26px] px-[20px] py-[24px]">
       
-      {/* 1. AI 리포트 보관함 */}
       <button 
-        onClick={() => navigate('/report-archive')} // 이동할 주소
+        type="button"
+        onClick={() => navigate('/report-archive')} //임시주소
         className="flex items-center justify-between w-full text-left mb-[24px]"
       >
         <div className="flex flex-col gap-[4px]">
@@ -23,9 +23,10 @@ const ProfileMenu = () => {
         <img src={rightarrow} alt="Right Arrow" />
       </button>
 
-      {/* 2. 페르소나 연구소 */}
+      
       <button 
-        onClick={() => navigate('/persona-lab')} 
+        type="button"
+        onClick={() => navigate('/persona-lab')} //임시주소
         className="flex items-center justify-between w-full text-left mb-[33px]"
       >
         <div className="flex flex-col gap-[4px]">
@@ -35,9 +36,10 @@ const ProfileMenu = () => {
         <img src={rightarrow} alt="Right Arrow" />
       </button>
 
-      {/* 3. 프로필 및 계정 설정 (설명글 없음) */}
-      <button 
-        onClick={() => navigate('/settings')}
+      
+      <button
+        type="button"
+        onClick={() => navigate('/settings')} //임시주소
         className="flex items-center justify-between w-full text-left mb-[42px]"
       >
         <div className="flex flex-col gap-[4px]">
@@ -46,19 +48,20 @@ const ProfileMenu = () => {
         <img src={rightarrow} alt="Right Arrow" />
       </button>
 
-      {/* 4. 알림 설정 (토글 스위치) */}
+      
       <div className="flex items-center justify-between w-full pt-[4px]">
          <p className="text-[16px] font-semibold text-gray-900">알림 설정</p>
          
          <button 
+           type="button"
            onClick={() => setIsNotiOn(!isNotiOn)}
-           className="w-[37px] h-[20px]" // 버튼 크기 잡아주기 (필요시 조정)
+           className="w-[37px] h-[20px]" 
          >
            
            <img 
              src={isNotiOn ? onIcon : offIcon} 
              alt={isNotiOn ? "알림 켜짐" : "알림 꺼짐"} 
-             className="w-full h-full object-contain" // 이미지 비율 유지하며 꽉 채우기
+             className="w-full h-full object-contain" 
            />
          </button>
       </div>
