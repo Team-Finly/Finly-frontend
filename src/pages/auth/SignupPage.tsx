@@ -50,7 +50,7 @@ const SignupPage = () => {
               setStep("password");
             }
           }}
-          className="absolute left-2 top-1/2 -translate-y-1/2"
+          className="absolute left-0 top-1/2 -translate-y-1/2"
         >
           <img src={backIcon} alt="뒤로가기" className="w-[8px] h-[16px]" />
         </button>
