@@ -53,6 +53,7 @@ const RecordCreatePage = () => {
       setIsCalendarOpen(false);
     } else {
       setIsToday(false);
+      setSelectedDate(null);
     }
   };
 
