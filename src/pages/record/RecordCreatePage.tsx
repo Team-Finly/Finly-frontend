@@ -9,6 +9,7 @@ import EmotionLevelSlider from '@/components/record/EmotionLevelSlider';
 import Button from '@/components/record/Button';
 import MiniCalendar from '@/components/record/MiniCalendar';
 import { useNavigate } from 'react-router-dom';
+import Modal from '@/components/record/Modal';
 
 const RecordCreatePage = () => {
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ const RecordCreatePage = () => {
   const [emotionLevel, setEmotionLevel] = useState(7);
   const [memo, setMemo] = useState<string>('');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleDateSelect = (date: Date) => {
     setSelectedDate(date);
@@ -111,6 +113,7 @@ const RecordCreatePage = () => {
         title="기록하기"
         border={false}
         desc="지금 내 투자 마음은 어떤가요?"
+        onClick={() => setIsModalOpen(true)}
       />
       <div className="mt-24 flex flex-col px-4">
         <div className="mt-7.5 flex flex-col gap-4">
@@ -120,11 +123,11 @@ const RecordCreatePage = () => {
               <button
                 onClick={() => setIsCalendarOpen(!isCalendarOpen)}
                 className={`flex h-12.5 w-full cursor-pointer items-center rounded-xl border-[1.2px] border-gray-100/60 bg-gray-50/60 px-[15px] ${
-                  isCalendarOpen ? 'border-primary' : 'border-gray-100'
+                  selectedDate ? 'border-secondary' : 'border-gray-100'
                 }`}
               >
                 <p
-                  className={`text-[15px] ${selectedDate ? 'text-gray-900' : 'text-gray-500'}`}
+                  className={`text-[15px] ${selectedDate ? 'text-gray-900' : 'text-gray-500/80'}`}
                 >
                   {selectedDate ? formatDate(selectedDate) : '날짜 선택'}
                 </p>
@@ -256,6 +259,15 @@ const RecordCreatePage = () => {
           />
         </div>
       </div>
+      {isModalOpen && (
+        <Modal
+          text="기록을 취소할까요?"
+          desc="작성된 내용은 저장되지 않아요"
+          onClickLeft={() => navigate(-1)}
+          onClickRight={() => setIsModalOpen(false)}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
     </div>
   );
 };
