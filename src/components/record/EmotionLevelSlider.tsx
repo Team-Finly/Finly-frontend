@@ -29,7 +29,7 @@ const EmotionLevelSlider = ({
               step="1"
               value={level}
               onChange={(e) => onChange(Number(e.target.value))}
-              className="accent-secondary [&::-webkit-slider-thumb]:bg-secondary h-1.5 w-full cursor-pointer appearance-none rounded-[7.5px] bg-gray-100 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full"
+              className="accent-secondary [&::-webkit-slider-thumb]:bg-secondary [&::-moz-range-thumb]:bg-secondary h-1.5 w-full cursor-pointer appearance-none rounded-[7.5px] bg-gray-100 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:appearance-none [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-0"
             />
           </div>
           <div className="mt-[13px] flex justify-end">
