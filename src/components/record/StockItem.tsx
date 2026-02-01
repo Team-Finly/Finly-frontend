@@ -12,12 +12,13 @@ const StockItem = ({ stock, onClick, keyword }: StockItemProps) => {
     if (!highlight.trim()) {
       return text;
     }
-    const parts = text.split(new RegExp(`(${highlight})`, 'gi'));
+    const escaped = highlight.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const parts = text.split(new RegExp(`(${escaped})`, 'gi'));
 
     return (
       <span>
         {parts.map((part, index) =>
-          part.toLocaleLowerCase() === highlight.toLocaleLowerCase() ? (
+          part.toLowerCase() === highlight.toLowerCase() ? (
             <span key={index} className="text-secondary">
               {part}
             </span>
