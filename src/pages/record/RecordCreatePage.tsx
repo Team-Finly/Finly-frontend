@@ -265,7 +265,9 @@ const RecordCreatePage = () => {
               placeholder={
                 '왜 그런 감정이 들었나요? 당시 상황을 짧게 적어주세요.\n(AI 분석에 활용돼요)'
               }
-              className="scrollbar-hide focus:border-secondary h-[74px] resize-none overflow-y-auto rounded-xl border-[1.2px] border-gray-100/60 bg-gray-50/60 p-4 text-sm whitespace-pre-line outline-none placeholder:text-gray-500/80"
+              className={`scrollbar-hide h-[74px] resize-none overflow-y-auto rounded-xl border-[1.2px] bg-gray-50/60 p-4 text-sm whitespace-pre-line outline-none placeholder:text-gray-500/80 ${
+                memo.length > 0 ? 'border-secondary' : 'border-gray-100/60'
+              }`}
               ref={textareaRef}
             />
             {memo.length > 0 && (
