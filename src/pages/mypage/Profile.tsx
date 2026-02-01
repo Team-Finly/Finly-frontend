@@ -55,7 +55,7 @@ const Profile = () => {
           <button 
             type="button"
             onClick={() => navigate('/fragment')} 
-            className='bg-white h-[26px] w-[71px] rounded-[6px] px-[8px] py-[6px] mt-[20px] whitespace-nowrap'
+            className='bg-white h-[26px] w-[71px] rounded-[6px] px-[8px] py-[6px] mt-[20px] whitespace-nowrap cursor-pointer'
             >
             <p className='font-semibold text-[12px] text-gray-700'>모음함 열기</p>
           </button>

@@ -14,7 +14,7 @@ const ProfileMenu = () => {
       <button 
         type="button"
         onClick={() => navigate('/report-archive')} //임시주소
-        className="flex items-center justify-between w-full text-left mb-[24px]"
+        className="flex items-center justify-between w-full text-left mb-[24px] cursor-pointer"
       >
         <div className="flex flex-col gap-[4px]">
           <p className="text-[16px] font-semibold text-gray-900">AI 리포트 보관함</p>
@@ -27,7 +27,7 @@ const ProfileMenu = () => {
       <button 
         type="button"
         onClick={() => navigate('/persona-lab')} //임시주소
-        className="flex items-center justify-between w-full text-left mb-[33px]"
+        className="flex items-center justify-between w-full text-left mb-[33px] cursor-pointer"
       >
         <div className="flex flex-col gap-[4px]">
           <p className="text-[16px] font-semibold text-gray-900">페르소나 연구소</p>
@@ -40,7 +40,7 @@ const ProfileMenu = () => {
       <button
         type="button"
         onClick={() => navigate('/settings')} //임시주소
-        className="flex items-center justify-between w-full text-left mb-[42px]"
+        className="flex items-center justify-between w-full text-left mb-[42px] cursor-pointer"
       >
         <div className="flex flex-col gap-[4px]">
           <p className="text-[16px] font-semibold text-gray-900">프로필 및 계정 설정</p>
@@ -55,13 +55,13 @@ const ProfileMenu = () => {
          <button 
            type="button"
            onClick={() => setIsNotiOn(!isNotiOn)}
-           className="w-[37px] h-[20px]" 
+           className="w-[37px] h-[20px] cursor-pointer" 
          >
            
            <img 
              src={isNotiOn ? onIcon : offIcon} 
              alt={isNotiOn ? "알림 켜짐" : "알림 꺼짐"} 
-             className="w-full h-full object-contain" 
+             className="w-full h-full object-contain cursor-pointer" 
            />
          </button>
       </div>
