@@ -7,7 +7,8 @@ type Props = {
 const CircularScore = ({ score, color, size = 76 }: Props) => {
   const radius = 40;
   const circumference = 2 * Math.PI * radius;
-  const offset = circumference - (score / 100) * circumference;
+  const clampedScore = Math.min(100, Math.max(0, score));
+  const offset = circumference - (clampedScore / 100) * circumference;
 
   return (
     <div
@@ -74,7 +75,7 @@ const CircularScore = ({ score, color, size = 76 }: Props) => {
       </svg>
 
       <span className="absolute text-gray-900 text-[18px] font-bold">
-        {score}
+        {clampedScore}
         <span className="text-gray-900 font-medium text-[18px]">점</span>
       </span>
     </div>
