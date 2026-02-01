@@ -18,6 +18,7 @@ import FragmentDetailPage from './pages/record/FragmentDetailPage';
 import SearchPage from './pages/record/SearchPage';
 import SearchResultPage from './pages/record/SearchResultPage';
 import RecordCreatePage from './pages/record/RecordCreatePage';
+import StockSearchPage from './pages/record/StockSearchPage';
 import HomePage from './pages/home/HomePage';
 import NotificationPage from './pages/home/NotificationPage';
 import MindScoreDetailPage from './pages/home/MindScoreDetailPage';
@@ -81,6 +82,11 @@ const routes: RouteObject[] = [
       {
         path: 'record/create',
         element: <RecordCreatePage />,
+        handle: { showNav: false },
+      },
+      {
+        path: 'stock/search',
+        element: <StockSearchPage />,
         handle: { showNav: false },
       },
       {

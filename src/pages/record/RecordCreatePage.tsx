@@ -8,16 +8,18 @@ import { EMOTIONS } from '@/constants/emotions';
 import EmotionLevelSlider from '@/components/record/EmotionLevelSlider';
 import Button from '@/components/record/Button';
 import MiniCalendar from '@/components/record/MiniCalendar';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Modal from '@/components/record/Modal';
 
 const RecordCreatePage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [isToday, setIsToday] = useState(false);
   const calendarRef = useRef<HTMLDivElement>(null);
-  const [stockId, setStockId] = useState<string | null>('123');
+  const [stockId, setStockId] = useState<number | null>(null);
+  const [stockName, setStockName] = useState<string | null>(null);
   const [selectedTradeAction, setSelectedTradeAction] =
     useState<TradeActionType | null>(null);
   const [unitPrice, setUnitPrice] = useState<string>('72400');
@@ -53,6 +55,14 @@ const RecordCreatePage = () => {
       setIsToday(false);
     }
   };
+
+  useEffect(() => {
+    if (location.state?.selectedStock) {
+      const { id, name } = location.state.selectedStock;
+      setStockId(id);
+      setStockName(name);
+    }
+  }, [location.state]);
 
   const tradeActions: { id: TradeActionType; label: string }[] = [
     { id: 'BUY', label: '매수' },
@@ -103,7 +113,7 @@ const RecordCreatePage = () => {
     !stockId ||
     !selectedTradeAction ||
     !unitPrice ||
-    !quantity ||
+    (selectedTradeAction !== 'WATCH' && !quantity) ||
     !clickedEmotion ||
     memo.trim().length === 0;
 
@@ -133,7 +143,7 @@ const RecordCreatePage = () => {
                 </p>
               </button>
               {isCalendarOpen && (
-                <div className="animate-in fade-in slide-in-from-top-2 absolute top-14 left-0 z-20 w-full duration-200">
+                <div className="animate-in fade-in slide-in-from-top-2 absolute left-0 z-20 w-full duration-200">
                   <MiniCalendar
                     selectedDate={selectedDate}
                     onSelect={handleDateSelect}
@@ -154,17 +164,33 @@ const RecordCreatePage = () => {
         </div>
         <div className="mt-7.5 flex flex-col">
           <h3 className="text-secondary text-sm font-bold">STEP2</h3>
-          <button className="my-4 flex h-12.5 w-full items-center justify-between rounded-xl border-[1.2px] border-gray-100 bg-gray-50/60 px-[15px]">
-            <p className="text-[15px] text-gray-500/60">
-              종목명 검색 (예: 삼성전자)
-            </p>
-            <img src={RecordSearch} alt="검색 아이콘" />
+          <button
+            onClick={() => navigate('/stock/search')}
+            className={`my-4 flex h-12.5 w-full cursor-pointer items-center justify-between rounded-xl border-[1.2px] bg-gray-50/60 px-[15px] ${
+              stockName ? 'border-secondary' : 'border-gray-100'
+            }`}
+          >
+            {stockName ? (
+              <div className="text-[15px] text-gray-900">{stockName}</div>
+            ) : (
+              <>
+                <p className="text-[15px] text-gray-500/60">
+                  종목명 검색 (예: 삼성전자)
+                </p>
+                <img src={RecordSearch} alt="검색 아이콘" />
+              </>
+            )}
           </button>
           <div className="flex gap-3.5">
             {tradeActions.map((tradeAction) => (
               <button
                 key={tradeAction.id}
-                onClick={() => setSelectedTradeAction(tradeAction.id)}
+                onClick={() => {
+                  setSelectedTradeAction(tradeAction.id);
+                  if (tradeAction.id === 'WATCH') {
+                    setQuantity(null);
+                  }
+                }}
                 className={`h-[39px] w-full cursor-pointer rounded-lg border text-sm transition-all ${
                   selectedTradeAction === tradeAction.id
                     ? `${
@@ -254,7 +280,7 @@ const RecordCreatePage = () => {
         <div className="bg-white/60 px-4 pt-2 pb-13 backdrop-blur-[5px]">
           <Button
             text="완료"
-            onClick={() => navigate('/')}
+            onClick={() => navigate('/record')}
             disabled={isButtonDisabled}
           />
         </div>
@@ -263,7 +289,7 @@ const RecordCreatePage = () => {
         <Modal
           text="기록을 취소할까요?"
           desc="작성된 내용은 저장되지 않아요"
-          onClickLeft={() => navigate(-1)}
+          onClickLeft={() => navigate('/record')}
           onClickRight={() => setIsModalOpen(false)}
           onClose={() => setIsModalOpen(false)}
         />

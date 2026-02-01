@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import CloseHeader from '@/components/record/CloseHeader';
 import RecordDetailFragment from '@/components/record/RecordDetailFragment';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { EMOTIONS } from '@/constants/emotions';
 import PeriodFilterButton from '@/components/record/PeriodFilterButton';
 
 const FragmentDetailPage = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { selectedEmotion } = location.state || {};
   const [clickedPeriod, setClickedPeriod] = useState('ALL');
 
@@ -17,7 +18,10 @@ const FragmentDetailPage = () => {
 
   return (
     <div>
-      <CloseHeader title={`${emotion.label} 조각함`} />
+      <CloseHeader
+        title={`${emotion.label} 조각함`}
+        onClick={() => navigate(-1)}
+      />
       <div className="px-4 pt-19">
         <div className="mt-7.5 mb-5 flex flex-col gap-0.5 text-[22px]">
           <p className="font-semibold">

@@ -17,8 +17,8 @@ const Modal = ({
 }: ModalProps) => {
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4"
       onClick={onClose}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4"
     >
       <div className="shadow-modal flex flex-col items-center rounded-[20px] bg-white px-4 py-5">
         <h4 className="mb-2 text-sm font-semibold text-gray-900">{text}</h4>

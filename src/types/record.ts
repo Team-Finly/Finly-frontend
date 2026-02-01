@@ -48,3 +48,12 @@ export interface DailyFragmentResponse {
   date: string;
   records: DailyFragment[];
 }
+
+// 주식 종목
+export interface Stock {
+  id: number;
+  symbol: string;
+  name: string;
+  marketType: 'KOSPI' | 'KOSDAQ';
+  logoUrl: string;
+}
