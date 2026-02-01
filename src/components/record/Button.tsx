@@ -9,6 +9,7 @@ interface ButtonProps {
 const Button = ({ text, onClick, disabled }: ButtonProps) => {
   return (
     <button
+      type="button"
       onClick={onClick}
       disabled={disabled}
       className={`h-[50px] w-full rounded-xl text-[18px] ${
