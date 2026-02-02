@@ -14,7 +14,7 @@ const TimeLineModal = ({ onClose }: Props) => {
         className="rounded-[16px] bg-white px-[25px] py-[30px] shadow-xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="pt-[-4px] mb-[11px] flex items-center justify-center gap-2">
+        <div className="mt-[-4px] mb-[11px] flex items-center justify-center gap-2">
           <img
             src={TimeLineIcon}
             alt="timeline"
