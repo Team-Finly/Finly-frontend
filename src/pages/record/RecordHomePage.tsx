@@ -67,7 +67,7 @@ const RecordHomePage = () => {
         </div>
         <div className="bg-gray-50 px-4 pt-2 pb-4">
           <div className="mb-2 flex items-center justify-between rounded-[22.5px] bg-white pr-4 pl-2">
-            <div className="flex h-9.5 items-center gap-1">
+            <div className="flex h-9.5 items-center gap-2">
               <img className="w-6" src={FGI} alt="공포탐욕 지수 아이콘" />
               <p className="text-[13px] text-gray-700">공포탐욕 지수(FGI)</p>
             </div>
@@ -115,9 +115,7 @@ const RecordHomePage = () => {
           )}
         </div>
       </div>
-      {/* <div className="fixed right-4 bottom-6 z-100"> */}
       <FloatingButton />
-      {/* </div> */}
     </div>
   );
 };

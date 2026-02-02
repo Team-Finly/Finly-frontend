@@ -3,6 +3,12 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import TextField from "../../components/auth/TextField";
 import backIcon from "../../assets/icons/Vector.svg";
 
+const REGEX = {
+  EMAIL: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
+  PASSWORD: /^(?=.*[a-zA-Z])(?=.*[0-9]).{6,}$/,
+  NICKNAME: /^[a-zA-Z0-9가-힣]+$/
+};
+
 const SignupPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -15,28 +21,19 @@ const SignupPage = () => {
   const [step, setStep] = useState<"email" | "password" | "nickname">(() => (location.state?.step === 'nickname' ? 'nickname' : 'email'));
 
   //이메일 검사 로직
-  const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
-  const isEmailFormatValid = emailRegex.test(email);
-  
-  //이미 가입된 이메일인지 확인하는 변수 (테스트)
-  const isEmailTaken = email === "finly@finly.com"; 
+  const isEmailFormatValid = REGEX.EMAIL.test(email);
+  const isEmailTaken = email === "finly@finly.com"; //이미 가입된 이메일인지 확인하는 변수 (테스트)
+  const emailStatus = email.length > 0 ? (isEmailTaken ? false : isEmailFormatValid) : undefined ; // TextField에 넘겨줄 상태, 중복이거나 형식이 틀리면 false, 아니면 true
 
-  // TextField에 넘겨줄 상태
-  // 중복이거나 형식이 틀리면 false, 아니면 true
-  const emailStatus = isEmailTaken ? false : isEmailFormatValid; 
-  
-  // 이메일 에러 메시지
-  let emailHelperText = "";
-  if (isEmailTaken) emailHelperText = "이미 가입된 회원입니다. 로그인 해주세요.";
-  else if (!isEmailFormatValid) emailHelperText = "유효한 이메일을 입력해 주세요.";
 
   // 비밀번호 검사 로직
-  const isPwValid = password.length >= 6;
+  const isPwValid = REGEX.PASSWORD.test(password);
   const isMatch = pwConfirm.length > 0 && password === pwConfirm;
-
-  const nicknameRegex = /^[가-힣a-zA-Z0-9]{2,}$/;
-  const isNicknameValid = nicknameRegex.test(nickname);
   
+  // 닉네임 검사 로직
+  const isNicknameValid = (nickname: string) => {
+    return REGEX.NICKNAME.test(nickname) && nickname.length >= 2;
+  };
 
 
   return (
@@ -53,7 +50,7 @@ const SignupPage = () => {
               setStep("password");
             }
           }}
-          className="absolute left-2 top-1/2 -translate-y-1/2"
+          className="absolute left-0 top-1/2 -translate-y-1/2"
         >
           <img src={backIcon} alt="뒤로가기" className="w-[8px] h-[16px]" />
         </button>
@@ -101,8 +98,8 @@ const SignupPage = () => {
               onClear={() => setPassword("")}
               isValid={password.length > 0 ? isPwValid : undefined}
               helperText={
-                password.length < 6 && password.length > 0
-                  ? "6자리 이상 입력해주세요"
+                password.length > 0 && !isPwValid
+                  ? "영문 + 숫자 포함 6자리 이상 입력해주세요"
                   : ""
               }
             />
@@ -115,7 +112,7 @@ const SignupPage = () => {
               value={pwConfirm}
               onChange={(e) => setPwConfirm(e.target.value)}
               onClear={() => setPwConfirm("")}
-              isValid={pwConfirm.length > 0 ? isMatch : undefined}
+              isValid={pwConfirm.length > 0 ? (isPwValid && isMatch) : undefined}
               //helptext 디자인 추가되면 넣기
             />
             </div>
@@ -133,9 +130,9 @@ const SignupPage = () => {
               value={nickname}
               onChange={(e) => setNickname(e.target.value)}
               onClear={() => setNickname("")}
-              isValid={nickname.length > 0 ? nickname.length >= 2 : undefined}
+              isValid={nickname.length > 0 ? isNicknameValid(nickname) : undefined}
               helperText={
-                /[^ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9]/.test(nickname)
+                nickname.length > 0 && !REGEX.NICKNAME.test(nickname)
                   ? "특수문자는 사용할 수 없어요"
                   : nickname.length > 0 && nickname.length < 2
                     ? "최소 2자 이상 입력해 주세요"
@@ -172,10 +169,10 @@ const SignupPage = () => {
         )}
         {step === "nickname" && (
           <button
-            disabled={nickname.length < 2}
+            disabled={!isNicknameValid(nickname)}
             onClick={() => navigate("/onboarding/persona")}
             className={`w-full h-[50px] rounded-[12px] font-medium text-lg text-white transition-colors
-              ${nickname.length >= 2 ? "bg-secondary" : "bg-gray-200 text-gray-400 cursor-not-allowed"}
+              ${isNicknameValid(nickname) ? "bg-secondary" : "bg-gray-200 text-gray-400 cursor-not-allowed"}
             `}
           >
             다음

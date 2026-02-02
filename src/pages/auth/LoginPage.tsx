@@ -36,7 +36,7 @@ const LoginPage = () => {
       <header className="relative flex items-center justify-center w-full h-[60px]">
      <button
       onClick={() => navigate(-1)}
-      className="absolute left-2 top-1/2 -translate-y-1/2 "
+      className="absolute left-0 top-1/2 -translate-y-1/2 "
     >
       <img src={backIcon} alt="뒤로가기" className="w-[8px] h-[16px]" />
     </button>
@@ -56,6 +56,7 @@ const LoginPage = () => {
             placeholder="abc@email.com"
             type="email"
             isValid={isEmailInputValid && email.length > 0}
+            showValidIcon={false}
           />
         </div>
         <div >
@@ -67,6 +68,7 @@ const LoginPage = () => {
             placeholder="6자리 이상의 비밀번호"
             type="password"
             isValid={isPasswordInputValid && password.length > 0}
+            showValidIcon={false}
           />
           {loginError && (
             <div className="mt-[10px]  text-[#F04452] font-normal">

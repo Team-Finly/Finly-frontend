@@ -5,6 +5,8 @@ export type EmotionType =
   | 'GREED'
   | 'REGRET';
 
+export type TradeActionType = 'BUY' | 'SELL' | 'WATCH';
+
 // 캘린더 기록
 export interface DailyRecord {
   date: string;
@@ -45,6 +47,15 @@ export interface DailyFragment {
 export interface DailyFragmentResponse {
   date: string;
   records: DailyFragment[];
+}
+
+// 주식 종목
+export interface Stock {
+  id: number;
+  symbol: string;
+  name: string;
+  marketType: 'KOSPI' | 'KOSDAQ';
+  logoUrl: string;
 }
 
 // 해당 일 기록 
