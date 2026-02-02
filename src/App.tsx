@@ -25,6 +25,7 @@ import MindScoreDetailPage from './pages/home/MindScoreDetailPage';
 import ReportDetailPage from './pages/home/ReportDetailPage';
 import MyPage from './pages/mypage/Profile';
 import Profile from './pages/mypage/Profile';
+import DailyRecordPage from './pages/record/DailyRecordPage';
 
 const routes: RouteObject[] = [
   {
@@ -60,6 +61,11 @@ const routes: RouteObject[] = [
         path: 'record',
         element: <RecordHomePage />,
         handle: { showNav: true },
+      },
+      {
+        path: 'record/:date',
+        element: <DailyRecordPage />,
+        handle: { showNav: false },
       },
       {
         path: 'fragment',

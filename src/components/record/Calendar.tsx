@@ -3,10 +3,16 @@ import ArrowLeft from '../../assets/icons/arrow-left.svg';
 import ArrowRight from '../../assets/icons/arrow-right.svg';
 import { EMOTIONS } from '../../constants/emotions';
 import type { MonthlyRecordResponse } from '@/types/record';
+import { useNavigate } from 'react-router-dom';
 
-const Calendar = () => {
+interface CalendarProps {
+  onClose?: () => void;
+}
+
+const Calendar = ({ onClose }: CalendarProps) => {
   const calendarRef = useRef<HTMLDivElement>(null);
   const dragStart = useRef({ x: 0, y: 0, time: 0 });
+  const navigate = useNavigate();
 
   const [baseDate, setBaseDate] = useState(() => {
     const now = new Date();
@@ -108,6 +114,16 @@ const Calendar = () => {
   const displayMonth = baseDate.getMonth() + 1;
   const daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
 
+  const handleDayClick = (date: Date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+
+    navigate(`/record/${year}-${month}-${day}`);
+    
+    if (onClose) onClose();
+  };
+
   return (
     <div
       ref={calendarRef}
@@ -162,20 +178,26 @@ const Calendar = () => {
           const isNextMonth = dateMonthValue > baseMonthValue;
           const record = getDayRecord(date);
 
+          const isClickable = !isPrevMonth && !isNextMonth;
+
           return (
             <div
               key={index}
-              className="relative flex min-h-11.5 flex-col items-center"
+              onClick={() => {
+                if (isClickable) handleDayClick(date);
+              }}
+              className={`relative flex min-h-11.5 flex-col items-center
+                ${!isPrevMonth && !isNextMonth ? 'cursor-pointer' : 'pointer-events-none'}
+              `}
             >
               {isToday && (
                 <div className="bg-secondary/6 border-primary absolute top-0 z-0 h-11.5 w-full max-w-10 rounded-lg border" />
               )}
               <span
-                className={`flex h-8 items-center justify-center font-semibold ${
-                  isPrevMonth || isNextMonth
-                    ? 'text-gray-300/80'
-                    : 'text-gray-900'
-                }`}
+                className={`flex h-8 items-center justify-center font-semibold ${isPrevMonth || isNextMonth
+                  ? 'text-gray-300/80'
+                  : 'text-gray-900'
+                  }`}
               >
                 {date.getDate()}
               </span>
