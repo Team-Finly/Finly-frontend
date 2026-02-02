@@ -23,8 +23,9 @@ import HomePage from './pages/home/HomePage';
 import NotificationPage from './pages/home/NotificationPage';
 import MindScoreDetailPage from './pages/home/MindScoreDetailPage';
 import ReportDetailPage from './pages/home/ReportDetailPage';
-import MyPage from './pages/mypage/Profile';
 import Profile from './pages/mypage/Profile';
+import MyPersona from './pages/mypage/MyPersona';
+import ProfileSettings from './pages/mypage/ProfileSettings';
 
 const routes: RouteObject[] = [
   {
@@ -124,6 +125,16 @@ const routes: RouteObject[] = [
       {
         path: 'profile',
         element: <Profile/>,
+        handle: { showNav: true },
+      },
+      {
+        path: 'mypersona',
+        element: <MyPersona/>,
+        handle: { showNav: true },
+      },
+      {
+        path: 'profilesettings',
+        element: <ProfileSettings/>,
         handle: { showNav: true },
       }
     ],
