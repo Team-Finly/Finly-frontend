@@ -27,6 +27,7 @@ import ReportDetailPage from './pages/home/ReportDetailPage';
 import MyPage from './pages/mypage/Profile';
 import Profile from './pages/mypage/Profile';
 import DailyRecordPage from './pages/record/DailyRecordPage';
+import ErrorPage from './pages/home/ErrorPage';
 
 const routes: RouteObject[] = [
   {
@@ -137,6 +138,11 @@ const routes: RouteObject[] = [
         path: 'profile',
         element: <Profile />,
         handle: { showNav: true },
+      },
+      {
+        path: '*',
+        element: <ErrorPage />,
+        handle: { showNav: false },
       },
     ],
   },
