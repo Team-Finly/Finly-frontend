@@ -130,7 +130,7 @@ const routes: RouteObject[] = [
       {
         path: 'mypersona',
         element: <MyPersona/>,
-        handle: { showNav: true },
+        
       },
       {
         path: 'profilesettings',
