@@ -32,6 +32,21 @@ export const formatDateDisplay = (dateString: string) => {
   return `${parseInt(month)}월 ${parseInt(day)}일`;
 };
 
+// "YYYY-MM-DD" -> "YYYY년 M월 D일 (요일)"
+export const formatRecordDate = (dateString: string): string => {
+  if (!dateString) return '';
+  const date = new Date(dateString.replace(/\./g, '-'));
+  if (isNaN(date.getTime())) return dateString;
+
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  const weekDays = ['일', '월', '화', '수', '목', '금', '토'];
+  const dayOfWeek = weekDays[date.getDay()];
+
+  return `${year}. ${month}. ${day} (${dayOfWeek})`;
+};
+
 // ISO 시간 문자열 -> "오후 0시 00분 기록"
 export const formatTime = (isoString: string) => {
   if (!isoString) return '';

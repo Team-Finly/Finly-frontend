@@ -2,6 +2,7 @@ import FinlyTalk from '@/components/FinlyTalk';
 import DailyDetailHeader from '@/components/record/DailyDetailHeader';
 import DailyRecordDetailCard from '@/components/record/DailyRecordDetailCard';
 import { EMOTIONS } from '@/constants/emotions';
+import { formatRecordDate } from '@/utils/date';
 import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -106,7 +107,7 @@ const DailyRecordDetailPage = () => {
 
       <div className="flex flex-col items-center mt-[30px]">
         <span className="text-gray-700 text-[16px] font-semibold mb-[16px]">
-          {currentRecord.recordDate}
+          {formatRecordDate(currentRecord.recordDate)}
         </span>
         {emotion && (
           <div
