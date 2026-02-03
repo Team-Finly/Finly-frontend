@@ -14,7 +14,7 @@ const GoldenTime = () => {
         <img
           src={TimeIcon}
           alt="가격대 설정 설명"
-          className="h-[18px] w-[18px]"
+          className="h-[18px] w-[18px] cursor-pointer"
           onClick={() => setIsModalOpen(true)}
         />
       </div>
