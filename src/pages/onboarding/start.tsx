@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSignupStore } from '@/store/signupStore'; 
-import { authApi } from '@/types/auth'; 
+import { authApi } from '../../apis/authApi'; 
 import logo from '@/assets/icons/icon.svg';
 import text from '@/assets/icons/finly.svg' 
 

@@ -23,6 +23,7 @@ const authRoutes: RouteObject[] = [
   {
     path: 'start',
     element: <Start />,
+    handle: { showNav: false },
   }
 ];
 

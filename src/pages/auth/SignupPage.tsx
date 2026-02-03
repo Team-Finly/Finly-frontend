@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import TextField from "../../components/auth/TextField";
-import backIcon from "../../assets/icons/Vector.svg";
-import { useSignupStore } from "../../store/signupStore";
-import { authApi } from "../../types/auth";
+import TextField from "@/components/auth/TextField";
+import backIcon from "@/assets/icons/Vector.svg";
+import { useSignupStore } from "@/store/signupStore";
+import { authApi } from "../../apis/authApi";
 
 
 const REGEX = {

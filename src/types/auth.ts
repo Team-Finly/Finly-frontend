@@ -1,5 +1,9 @@
-import { api } from "./client";
-import type { ApiResponse } from "./types";
+export interface ApiResponse<T> {
+  isSuccess: boolean;
+  code: string;
+  message: string;
+  result: T;
+}
 
 export type CheckEmailResult = { available: boolean };
 
@@ -25,23 +29,4 @@ export type SignupResult = {
   email: string;
   nickname: string;
   personaId: number;
-};
-
-export const authApi = {
-  async checkEmail(email: string) {
-    const res = await api.get<ApiResponse<CheckEmailResult>>("/auth/check-email", {
-      params: { email },
-    });
-    return res.data;
-  },
-
-  async login(payload: LoginRequest) {
-    const res = await api.post<ApiResponse<LoginResult>>("/auth/login", payload);
-    return res.data;
-  },
-
-  async signup(payload: SignupRequest) {
-    const res = await api.post<ApiResponse<SignupResult>>("/auth/signup", payload);
-    return res.data;
-  },
 };

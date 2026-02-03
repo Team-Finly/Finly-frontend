@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import TextField from "@/components/auth/TextField";
 import backIcon from "@/assets/icons/Vector.svg";
-import { authApi } from "@/types/auth";
+import { authApi } from "@/apis/authApi";
+import { authService } from "@/services/authService";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -34,12 +35,8 @@ const handleLogin = async (e: React.FormEvent) => {
 
       if (res.isSuccess) {
         // 2. 토큰 저장 
-        const accessToken = res.result.accessToken;
-        localStorage.setItem("accessToken", accessToken);
-
-        // 3. 성공 알림 및 홈 이동
         alert(`${res.result.member.nickname}님, 환영합니다!`);
-        navigate('/'); 
+        navigate('/');
       }
     } catch (error: any) {
       console.error("❌ 로그인 실패:", error);
