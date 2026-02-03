@@ -1,5 +1,5 @@
 import React from 'react';
-import ErrorIcon from '../../assets/images/error.svg';
+import ErrorIcon from '@/assets/images/error.svg';
 import { useNavigate } from 'react-router-dom';
 
 const ErrorPage = () => {
