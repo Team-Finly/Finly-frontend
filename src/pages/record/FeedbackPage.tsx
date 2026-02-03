@@ -58,7 +58,7 @@ const FeedbackPage = () => {
   return (
     <div className="flex flex-1 flex-col items-center bg-[#F8F9FA] px-4">
       <div className="mb-25 flex h-19 w-full items-center justify-end pt-[25px] pb-[9px]">
-        <button onClick={() => navigate('/record')}>
+        <button onClick={() => navigate(-1)}>
           <img src={Close} alt="닫기 아이콘" className="cursor-pointer" />
         </button>
       </div>
@@ -69,7 +69,7 @@ const FeedbackPage = () => {
         </span>
       </div>
       <div className="w-[339px] rounded-[20px] bg-[#ffffff]/60 p-6 shadow-[0px_3px_10px_0px_rgba(191,195,209,0.2)]">
-        <div className="mb-6 flex justify-center gap-1 font-semibold text-gray-500/80">
+        <div className="mb-6 flex justify-center gap-1 text-[13px] font-semibold text-gray-500/80">
           <p>삼성 전자 매수</p>
           <p>·</p>
           <p>불안 Lv.7</p>
