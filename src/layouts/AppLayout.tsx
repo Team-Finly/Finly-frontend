@@ -1,5 +1,5 @@
 import { Outlet, useMatches, useNavigate } from 'react-router-dom';
-import { BottomNav } from './BottomNav';
+import { BottomNav } from '@/layouts/BottomNav';
 import ReportModal from '@/components/home/Report/ReportModal';
 import { useState } from 'react';
 
@@ -8,8 +8,8 @@ const AppLayout = () => {
   const [open, setOpen] = useState(false); // ReportModal 임의로 꺼둠
   const navigate = useNavigate();
 
-  const showNav = matches.some((match) => 
-    (match.handle as any)?.showNav === true
+  const showNav = matches.some(
+    (match) => (match.handle as any)?.showNav === true,
   );
 
   return (

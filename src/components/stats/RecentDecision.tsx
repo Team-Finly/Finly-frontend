@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import RecentDecisionCard from './RecentDecisionCard';
-import CalculationInfoModal from './CalculationInfoModal';
+import RecentDecisionCard from '@/components/stats/RecentDecisionCard';
+import CalculationInfoModal from '@/components/stats/CalculationInfoModal';
 import CautionIcon from '@/assets/images/stats_caution.svg';
 import NoIcon from '@/assets/images/stats_no_card_icon.svg';
 
