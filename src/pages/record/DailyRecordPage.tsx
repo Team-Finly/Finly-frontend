@@ -2,9 +2,9 @@ import CalendarModal from '@/components/record/CalendarModal';
 import DailyRecordHeader from '@/components/record/DailyRecordHeader';
 import DailyRecordTimeLine from '@/components/record/DailyRecordTimeLine';
 import DailyRecordTitle from '@/components/record/DailyRecordTitle';
-import type { TimelineSection } from '@/types/record';
-import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import type { RecordDetailResponse, TimelineSection } from '@/types/record';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const MOCK_SECTIONS: TimelineSection[] = [
   {
@@ -59,17 +59,41 @@ const MOCK_SECTIONS: TimelineSection[] = [
   }
 ];
 
+const MOCK_RESPONSE: RecordDetailResponse = {
+  date: '2026-01-06',
+  sections: MOCK_SECTIONS,
+};
+
 const DailyRecordPage = () => {
+  const navigate = useNavigate();
   const { date } = useParams<{ date: string }>();  
+  const targetDate = date ?? MOCK_RESPONSE.date;
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+  const [data, setData] = useState<RecordDetailResponse | null>(null);
+
+  useEffect(() => {
+    setData({ ...MOCK_RESPONSE, date: targetDate }); // 나중에 API로 교체
+  }, [targetDate]);
+
+  if (!data) {
+    return <div className="h-screen bg-[#F4F5F7]" />;
+  }
 
   return (
     <div className="h-screen  bg-[#F4F5F7] pt-[76px]">
-      <DailyRecordHeader title={`${date}`} onCalendarClick={() => setIsCalendarOpen(true)} />
+      <DailyRecordHeader
+        title={targetDate}
+        onCalendarClick={() => setIsCalendarOpen(true)}
+      />
       
       <DailyRecordTitle />
  
-      <DailyRecordTimeLine sections={MOCK_SECTIONS} />
+      <DailyRecordTimeLine
+        sections={data.sections}
+        onItemClick={(recordId: number) => {
+          navigate(`/record/${targetDate}/${recordId}`);
+        }}
+      />
       
       {isCalendarOpen && (
         <CalendarModal onClose={() => setIsCalendarOpen(false)} />

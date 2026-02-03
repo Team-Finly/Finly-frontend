@@ -28,7 +28,6 @@ useEffect(() => {
 const handleNext = (path: string) => {
     // 필수 약관인 require1과 require2가 동의된 경우에만 진행
     if (require1 && require2) {
-      // 1. 서버 전송 규격에 맞게 데이터 가공 (termId는 서버 API 명세에 맞춰 조정하세요)
       const agreements = [
         { termId: 1, agreed: require1 },
         { termId: 2, agreed: require2 },
@@ -38,10 +37,10 @@ const handleNext = (path: string) => {
       // 2. Zustand 스토어에 데이터 저장
       setTermAgreements(agreements);
 
-      // 3. 디버깅용 로그 (개발자 도구에서 확인 가능)
+      // 3. 디버깅용 로그 
       console.log("📍 스토어 저장 데이터:", agreements);
 
-      // 4. 다음 페이지로 이동
+      // 4. 다음 페이지
       navigate(path);
     } else {
       alert("필수 약관에 동의해 주세요.");

@@ -1,6 +1,6 @@
 import React from 'react';
-import type { DailyFragment } from './../../types/record';
-import { EMOTIONS } from '../../constants/emotions';
+import type { DailyFragment } from '@/types/record';
+import { EMOTIONS } from '@/constants/emotions';
 
 interface RecordFragmentProps {
   data: DailyFragment;

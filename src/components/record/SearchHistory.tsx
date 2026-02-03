@@ -1,5 +1,5 @@
 import React from 'react';
-import Close from '../../assets/icons/close-bright.svg';
+import Close from '@/assets/icons/close-bright.svg';
 
 const SearchHistory = () => {
   return (

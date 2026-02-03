@@ -61,7 +61,7 @@ const PERSONA_UI_DATA: any = {
   const navigate = useNavigate();
   const location = useLocation();
 
-// ✅ 1. 스토어 데이터 가져오기
+//1. 스토어 데이터 가져오기
   const signupData = useSignupStore();
   
   // 상태 관리

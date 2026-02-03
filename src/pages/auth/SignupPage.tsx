@@ -1,14 +1,15 @@
-import { useState } from "react";
+import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import TextField from "../../components/auth/TextField";
 import backIcon from "../../assets/icons/Vector.svg";
 import { useSignupStore } from "../../store/signupStore";
 import { authApi } from "../../types/auth";
 
+
 const REGEX = {
   EMAIL: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
   PASSWORD: /^(?=.*[a-zA-Z])(?=.*[0-9]).{6,}$/,
-  NICKNAME: /^[a-zA-Z0-9가-힣]+$/
+  NICKNAME: /^[a-zA-Z0-9가-힣]+$/,
 };
 
 type Step = "email" | "password" | "nickname";
@@ -22,12 +23,14 @@ const SignupPage = () => {
   const [pwConfirm, setPwConfirm] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+
   // 이메일 서버 체크 상태
   const [emailChecked, setEmailChecked] = useState<"idle" | "ok" | "taken" | "error">("idle");
   const [serverError, setServerError] = useState("");
 
   // ===== 검증 =====
   const isEmailFormatValid = REGEX.EMAIL.test(email);
+
   const isPwValid = REGEX.PASSWORD.test(password);
   const isMatch = pwConfirm.length > 0 && password === pwConfirm;
   const isNicknameValid = (name: string) => REGEX.NICKNAME.test(name) && name.length >= 2;
@@ -92,34 +95,43 @@ const SignupPage = () => {
     navigate("/onboarding/persona"); 
   };
 
+
   return (
-    <div className='flex flex-col w-full h-dvh mt-[16px] px-4'>
+    <div className="mt-[16px] flex h-dvh w-full flex-col px-4">
       {/* 헤더 */}
-      <header className="relative flex items-center justify-center w-full h-[60px]">
+      <header className="relative flex h-[60px] w-full items-center justify-center">
         <button
           onClick={() => {
+
             if (step === "email") {
               navigate(-1); 
             } else if (step === "password") {
               setStep("email");
             } else if (step === "nickname") {
               setStep("password");
+
             }
           }}
-          className="absolute left-0 top-1/2 -translate-y-1/2"
+          className="absolute top-1/2 left-0 -translate-y-1/2"
         >
-          <img src={backIcon} alt="뒤로가기" className="w-[8px] h-[16px]" />
+          <img src={backIcon} alt="뒤로가기" className="h-[16px] w-[8px]" />
         </button>
-        <h1 className="text-[18px] leading-none font-semibold text-gray-900">회원가입</h1>
+        <h1 className="text-[18px] leading-none font-semibold text-gray-900">
+          회원가입
+        </h1>
       </header>
 
-      
-      <div className="flex flex-col flex-1  mt-[30px]">
+      <div className="mt-[30px] flex flex-1 flex-col">
         {/* === 이메일 페이지 === */}
-        {step === "email" && (
+        {step === 'email' && (
           <>
-            <h2 className="text-xl font-semibold leading-[26px]">로그인에 사용할<br/><span className="text-secondary font-semibold">이메일</span>을 입력해 주세요</h2>
-            <TextField 
+            <h2 className="text-xl leading-[26px] font-semibold">
+              로그인에 사용할
+              <br />
+              <span className="text-secondary font-semibold">이메일</span>을
+              입력해 주세요
+            </h2>
+            <TextField
               label=""
               placeholder="finly@finly.com"
               value={email}
@@ -139,105 +151,121 @@ const SignupPage = () => {
         )}
 
         {/* === 비밀번호 입력 페이지 === */}
-        {step === "password" && (
+        {step === 'password' && (
           <>
-            <h2 className="text-xl font-semibold leading-[26px] mb-[41px]">로그인에 사용할<br/><span className="text-secondary font-semibold">비밀번호</span>를 입력해 주세요</h2>
-            <div className="flex flex-col gap-[24px] min-h-[148px]">
+            <h2 className="mb-[41px] text-xl leading-[26px] font-semibold">
+              로그인에 사용할
+              <br />
+              <span className="text-secondary font-semibold">비밀번호</span>를
+              입력해 주세요
+            </h2>
+            <div className="flex min-h-[148px] flex-col gap-[24px]">
               <TextField
-              
-              label="비밀번호 입력"
-              type="password"
-              placeholder="6자리 이상의 비밀번호"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              onClear={() => setPassword("")}
-              isValid={password.length > 0 ? isPwValid : undefined}
-              helperText={
-                password.length > 0 && !isPwValid
-                  ? "영문 + 숫자 포함 6자리 이상 입력해주세요"
-                  : ""
-              }
-            />
+                label="비밀번호 입력"
+                type="password"
+                placeholder="6자리 이상의 비밀번호"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                onClear={() => setPassword('')}
+                isValid={password.length > 0 ? isPwValid : undefined}
+                helperText={
+                  password.length > 0 && !isPwValid
+                    ? '영문 + 숫자 포함 6자리 이상 입력해주세요'
+                    : ''
+                }
+              />
             </div>
             <div>
-              <TextField 
-              label="비밀번호 확인"
-              type="password"
-              placeholder="비밀번호 재입력"
-              value={pwConfirm}
-              onChange={(e) => setPwConfirm(e.target.value)}
-              onClear={() => setPwConfirm("")}
-              isValid={pwConfirm.length > 0 ? (isPwValid && isMatch) : undefined}
-              //helptext 디자인 추가되면 넣기
-            />
+              <TextField
+                label="비밀번호 확인"
+                type="password"
+                placeholder="비밀번호 재입력"
+                value={pwConfirm}
+                onChange={(e) => setPwConfirm(e.target.value)}
+                onClear={() => setPwConfirm('')}
+                isValid={
+                  pwConfirm.length > 0 ? isPwValid && isMatch : undefined
+                }
+                //helptext 디자인 추가되면 넣기
+              />
             </div>
           </>
         )}
 
         {/* === 닉네임 입력 페이지 === */}
-        {step === "nickname" && (
+        {step === 'nickname' && (
           <>
-            <h2 className="text-xl font-semibold leading-[26px]">사용할 <span className="text-secondary font-semibold">닉네임</span>을 입력해 주세요</h2>
-            <p className="text-[13px] font-medium text-gray-500 mt-[12px] mb-[30px]">추후에 언제든지 변경할 수 있어요</p>
+            <h2 className="text-xl leading-[26px] font-semibold">
+              사용할{' '}
+              <span className="text-secondary font-semibold">닉네임</span>을
+              입력해 주세요
+            </h2>
+            <p className="mt-[12px] mb-[30px] text-[13px] font-medium text-gray-500">
+              추후에 언제든지 변경할 수 있어요
+            </p>
             <TextField
               label=""
               placeholder="2자 이상 입력"
               value={nickname}
               onChange={(e) => setNickname(e.target.value)}
-              onClear={() => setNickname("")}
-              isValid={nickname.length > 0 ? isNicknameValid(nickname) : undefined}
+              onClear={() => setNickname('')}
+              isValid={
+                nickname.length > 0 ? isNicknameValid(nickname) : undefined
+              }
               helperText={
                 nickname.length > 0 && !REGEX.NICKNAME.test(nickname)
-                  ? "특수문자는 사용할 수 없어요"
+                  ? '특수문자는 사용할 수 없어요'
                   : nickname.length > 0 && nickname.length < 2
-                    ? "최소 2자 이상 입력해 주세요"
+                    ? '최소 2자 이상 입력해 주세요'
                     : undefined
-            }
+              }
             />
           </>
         )}
       </div>
 
       {/* 버튼 영역 */}
-      <div className="w-full mb-[52px]">
-        {step === "email" && (
+      <div className="mb-[52px] w-full">
+        {step === 'email' && (
           <button
+
             disabled={!isEmailFormatValid || isLoading}
             onClick={handleEmailNext}
             className={`w-full h-[50px] rounded-[12px] font-medium text-lg text-white transition-colors
               ${isEmailFormatValid && !isLoading ? "bg-secondary" : "bg-gray-200 text-gray-400 cursor-not-allowed"}
             `}
+
           >
             {isLoading ? "확인 중..." : "다음"}
           </button>
         )}
-        {step === "password" && (
+        {step === 'password' && (
           <button
             disabled={!isPwValid || !isMatch}
             onClick={handlePasswordNext}
             className={`w-full h-[50px] rounded-[12px] font-medium text-lg text-white transition-colors
               ${isPwValid && isMatch ? "bg-secondary" : "bg-gray-200 text-gray-400 cursor-not-allowed"}
             `}
+
           >
             다음
           </button>
         )}
-        {step === "nickname" && (
+        {step === 'nickname' && (
           <button
             disabled={!isNicknameValid(nickname)}
             onClick={handleNicknameNext}
             className={`w-full h-[50px] rounded-[12px] font-medium text-lg text-white transition-colors
               ${isNicknameValid(nickname) ? "bg-secondary" : "bg-gray-200 text-gray-400 cursor-not-allowed"}
             `}
+
           >
             다음
           </button>
         )}
       </div>
-
     </div>
   );
-  
 };
 
 export default SignupPage;
