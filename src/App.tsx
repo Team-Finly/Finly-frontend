@@ -19,6 +19,7 @@ import SearchPage from './pages/record/SearchPage';
 import SearchResultPage from './pages/record/SearchResultPage';
 import RecordCreatePage from './pages/record/RecordCreatePage';
 import StockSearchPage from './pages/record/StockSearchPage';
+import FeedbackPage from './pages/record/FeedbackPage';
 import HomePage from './pages/home/HomePage';
 import NotificationPage from './pages/home/NotificationPage';
 import MindScoreDetailPage from './pages/home/MindScoreDetailPage';
@@ -26,6 +27,7 @@ import ReportDetailPage from './pages/home/ReportDetailPage';
 import MyPage from './pages/mypage/Profile';
 import Profile from './pages/mypage/Profile';
 import DailyRecordPage from './pages/record/DailyRecordPage';
+import ErrorPage from './pages/home/ErrorPage';
 import DailyRecordDetailPage from './pages/record/DailyRecordDetailPage';
 
 const routes: RouteObject[] = [
@@ -97,6 +99,11 @@ const routes: RouteObject[] = [
         handle: { showNav: false },
       },
       {
+        path: 'feedback',
+        element: <FeedbackPage />,
+        handle: { showNav: false },
+      },
+      {
         path: 'stock/search',
         element: <StockSearchPage />,
         handle: { showNav: false },
@@ -135,7 +142,12 @@ const routes: RouteObject[] = [
         path: 'profile',
         element: <Profile />,
         handle: { showNav: true },
-      }
+      },
+      {
+        path: '*',
+        element: <ErrorPage />,
+        handle: { showNav: false },
+      },
     ],
   },
 ];

@@ -42,7 +42,7 @@ const StatsPage = () => {
   };
 
   return (
-    <div className="flex w-full flex-1 flex-col pb-20">
+    <div className="flex w-full flex-1 flex-col bg-gray-50 pb-25">
       <style>{`
         .recharts-wrapper,
         .recharts-wrapper *,

@@ -47,7 +47,7 @@ const MOCK_DATA = {
 const StockTab = () => {
   const data = MOCK_DATA.result;
   return (
-    <div className="flex w-full flex-1 flex-col gap-5 bg-gray-50 px-4 py-5">
+    <div className="flex w-full flex-1 flex-col gap-5 px-4 py-5">
       <div className="grid grid-cols-2 gap-4 rounded-[12px] border-[1.2px] border-gray-100 bg-white p-4">
         {SUMMARY_CONFIG.map((config) => {
           const rawValue = data[config.key as keyof StockSummaryResult];

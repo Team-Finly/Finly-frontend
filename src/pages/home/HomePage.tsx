@@ -18,6 +18,17 @@ const HomePage = () => {
         >
           <MindScore />
         </button>
+
+        <div className="flex justify-end mt-[12px]">
+        <button
+          type="button"
+          onClick={() => { }}
+          className="text-[12px] text-gray-500 underline underline-offset-2 transition-colors"
+        >
+          금융 마음 지수란?
+        </button>
+        </div>
+        
         <WeeklyMood />
         <RecentRecordList />
         <RealtimeInsight />
