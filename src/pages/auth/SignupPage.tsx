@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import TextField from "../../components/auth/TextField";
 import backIcon from "../../assets/icons/Vector.svg";
+import { useSignupStore } from "../../store/signupStore";
+import { authApi } from "../../types/auth";
 
 const REGEX = {
   EMAIL: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
@@ -9,32 +11,87 @@ const REGEX = {
   NICKNAME: /^[a-zA-Z0-9가-힣]+$/
 };
 
+type Step = "email" | "password" | "nickname";
+
 const SignupPage = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  // 상태 관리
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { email, setEmail, password, setPassword, nickname, setNickname } = useSignupStore();
+  // 2. 로컬 전용 상태 관리 (서버 체크 결과 및 로딩)
+
+  const [step, setStep] = useState<Step>("email");
   const [pwConfirm, setPwConfirm] = useState("");
-  const [nickname, setNickname] = useState(() => (location.state?.nickname || ""));
-  // 단계 관리 (이메일 입력 후 -> 비밀번호 입력)
-  const [step, setStep] = useState<"email" | "password" | "nickname">(() => (location.state?.step === 'nickname' ? 'nickname' : 'email'));
+  const [isLoading, setIsLoading] = useState(false);
 
-  //이메일 검사 로직
+  // 이메일 서버 체크 상태
+  const [emailChecked, setEmailChecked] = useState<"idle" | "ok" | "taken" | "error">("idle");
+  const [serverError, setServerError] = useState("");
+
+  // ===== 검증 =====
   const isEmailFormatValid = REGEX.EMAIL.test(email);
-  const isEmailTaken = email === "finly@finly.com"; //이미 가입된 이메일인지 확인하는 변수 (테스트)
-  const emailStatus = email.length > 0 ? (isEmailTaken ? false : isEmailFormatValid) : undefined ; // TextField에 넘겨줄 상태, 중복이거나 형식이 틀리면 false, 아니면 true
-
-
-  // 비밀번호 검사 로직
   const isPwValid = REGEX.PASSWORD.test(password);
   const isMatch = pwConfirm.length > 0 && password === pwConfirm;
-  
-  // 닉네임 검사 로직
-  const isNicknameValid = (nickname: string) => {
-    return REGEX.NICKNAME.test(nickname) && nickname.length >= 2;
+  const isNicknameValid = (name: string) => REGEX.NICKNAME.test(name) && name.length >= 2;
+
+ 
+  const emailIsValidForUI =
+    email.length === 0
+      ? undefined
+      : !isEmailFormatValid
+        ? false
+        : emailChecked === "taken" || emailChecked === "error"
+          ? false
+          : emailChecked === "ok"
+            ? true
+            : undefined;
+
+  const emailHelperText =
+    email.length === 0
+      ? ""
+      : !isEmailFormatValid
+        ? "유효한 이메일을 입력해 주세요."
+        : emailChecked === "taken"
+          ? "이미 가입된 이메일입니다."
+          : emailChecked === "error"
+            ? "이메일 확인 중 오류가 발생했어요."
+            : serverError
+              ? serverError
+              : "";
+
+
+ const handleEmailNext = async () => {
+    if (!isEmailFormatValid) return;
+
+    setIsLoading(true);
+    setServerError("");
+
+    try {
+      
+      const res = await authApi.checkEmail(email);
+
+      
+      if (res?.isSuccess && res?.result?.available) {
+        setEmailChecked("ok");
+        setStep("password");
+      } else {
+        setEmailChecked("taken");
+      }
+    } catch (e) {
+      setEmailChecked("error");
+      setServerError("서버 통신 중 오류가 발생했습니다.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
+  const handlePasswordNext = () => {
+    if (!isPwValid || !isMatch) return;
+    setStep("nickname");
+  };
+
+  const handleNicknameNext = () => {
+    if (!isNicknameValid(nickname)) return;
+    navigate("/onboarding/persona"); 
+  };
 
   return (
     <div className='flex flex-col w-full h-dvh mt-[16px] px-4'>
@@ -43,7 +100,7 @@ const SignupPage = () => {
         <button
           onClick={() => {
             if (step === "email") {
-              navigate(-1); // 임시로 이전 페이지로 이동
+              navigate(-1); 
             } else if (step === "password") {
               setStep("email");
             } else if (step === "nickname") {
@@ -67,18 +124,17 @@ const SignupPage = () => {
               label=""
               placeholder="finly@finly.com"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              onClear={() => setEmail("")}
-              isValid={email.length > 0 ? emailStatus : undefined}
-              helperText={
-                email.length > 0
-                  ? isEmailTaken
-                    ? "이미 가입된 이메일입니다."
-                    : !isEmailFormatValid
-                      ? "유효한 이메일을 입력해 주세요."
-                      : ""
-                  : ""
-              }
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setEmailChecked("idle"); 
+                setServerError("");
+              }}
+              onClear={() => { setEmail("");
+                setEmailChecked("idle");
+                setServerError("");}}
+              isValid={emailIsValidForUI}
+              helperText={emailHelperText}
+              
             />
           </>
         )}
@@ -147,19 +203,19 @@ const SignupPage = () => {
       <div className="w-full mb-[52px]">
         {step === "email" && (
           <button
-            disabled={!emailStatus || email.length === 0}
-            onClick={() => setStep("password")}
+            disabled={!isEmailFormatValid || isLoading}
+            onClick={handleEmailNext}
             className={`w-full h-[50px] rounded-[12px] font-medium text-lg text-white transition-colors
-              ${emailStatus ? "bg-secondary" : "bg-gray-200 text-gray-400 cursor-not-allowed"}
+              ${isEmailFormatValid && !isLoading ? "bg-secondary" : "bg-gray-200 text-gray-400 cursor-not-allowed"}
             `}
           >
-            다음
+            {isLoading ? "확인 중..." : "다음"}
           </button>
         )}
         {step === "password" && (
           <button
             disabled={!isPwValid || !isMatch}
-            onClick={() => setStep("nickname")}
+            onClick={handlePasswordNext}
             className={`w-full h-[50px] rounded-[12px] font-medium text-lg text-white transition-colors
               ${isPwValid && isMatch ? "bg-secondary" : "bg-gray-200 text-gray-400 cursor-not-allowed"}
             `}
@@ -170,7 +226,7 @@ const SignupPage = () => {
         {step === "nickname" && (
           <button
             disabled={!isNicknameValid(nickname)}
-            onClick={() => navigate("/onboarding/persona")}
+            onClick={handleNicknameNext}
             className={`w-full h-[50px] rounded-[12px] font-medium text-lg text-white transition-colors
               ${isNicknameValid(nickname) ? "bg-secondary" : "bg-gray-200 text-gray-400 cursor-not-allowed"}
             `}

@@ -8,9 +8,10 @@ import rightarrow from '../../assets/icons/rightarrow.svg'
 import { useNavigate } from 'react-router-dom';
 import  { useState } from 'react';
 import { useEffect } from 'react';
-
+import { useSignupStore } from '../../store/signupStore';
 const TermsPage = () => {
 const navigate = useNavigate();
+const { setTermAgreements } = useSignupStore();
 const [allAgreed, setAllAgreed] = useState(false);
 const [require1, setRequire1] = useState(false);
 const [require2, setRequire2] = useState(false);
@@ -25,36 +26,46 @@ useEffect(() => {
 }, [require1, require2, require3]);
 
 const handleNext = (path: string) => {
-  if (allAgreed) {
-    navigate(path);
-  } else {
-    alert("약관에 동의해 주세요.");
-  }
-}
+    // 필수 약관인 require1과 require2가 동의된 경우에만 진행
+    if (require1 && require2) {
+      // 1. 서버 전송 규격에 맞게 데이터 가공 (termId는 서버 API 명세에 맞춰 조정하세요)
+      const agreements = [
+        { termId: 1, agreed: require1 },
+        { termId: 2, agreed: require2 },
+        { termId: 3, agreed: require3 },
+      ];
 
+      // 2. Zustand 스토어에 데이터 저장
+      setTermAgreements(agreements);
 
-const handleAllClick = () => {
+      // 3. 디버깅용 로그 (개발자 도구에서 확인 가능)
+      console.log("📍 스토어 저장 데이터:", agreements);
+
+      // 4. 다음 페이지로 이동
+      navigate(path);
+    } else {
+      alert("필수 약관에 동의해 주세요.");
+    }
+  };
+
+  const handleAllClick = () => {
     const newState = !allAgreed;
     setRequire1(newState);
     setRequire2(newState);
     setRequire3(newState);
-};
-const handleRequire1 = () => {
-  setRequire1(prev => {
-    return !prev;
-  });
-};
-const handleRequire2 = () => {
-  setRequire2(prev => {
-    return !prev;
-  });
-};
-const handleRequire3 = () => {
-  setRequire3(prev => {
-    return !prev;
-  });
-};
-  
+  };
+
+  const handleRequire1 = () => {
+    setRequire1((prev) => !prev);
+  };
+
+  const handleRequire2 = () => {
+    setRequire2((prev) => !prev);
+  };
+
+  const handleRequire3 = () => {
+    setRequire3((prev) => !prev);
+  };
   return (
     <div className='flex flex-col w-full mt-[16px] px-4 h-dvh'>
 
@@ -117,7 +128,7 @@ const handleRequire3 = () => {
 
     <div className="w-full mt-auto mb-[52px]">
         <Button disabled={!(require1 && require2)}
-        onClick={() => { handleNext('/onboarding/personaresult'); }} >
+        onClick={() => { handleNext('/start'); }} >
           다음
         </Button>
     </div>

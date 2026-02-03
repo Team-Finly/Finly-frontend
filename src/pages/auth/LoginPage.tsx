@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import TextField from "../../components/auth/TextField";
 import backIcon from "../../assets/icons/Vector.svg";
+import { authApi } from "../../types/auth";
 
 
 const LoginPage = () => {
@@ -9,6 +10,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState(""); 
   const [loginError, setLoginError] = useState(false); // 로그인 실패 상태
+  const [isLoading, setIsLoading] = useState(false);
 
   // 이메일 유효성 검사 함수
   const isEmailValid = (email: string) => {
@@ -18,15 +20,34 @@ const LoginPage = () => {
   const isPasswordInputValid = password.length >= 6;
   const isFormValid = isEmailInputValid && isPasswordInputValid;
 
-  // 로그인 버튼 클릭시 실행되는 함수
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    // 실제 로그인 로직에서 실패 시 setLoginError(true) 호출
-    // 실패 시 setLoginError(true);
-    // 성공 시 setLoginError(false);
 
-    //연동시 이부분 수정 필요
+const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!isFormValid) return;
+
+    setIsLoading(true);
+    setLoginError(false);
+
+    try {
+      // 1. API 호출 (명세: email, password 전송)
+      const res = await authApi.login({ email, password });
+
+      if (res.isSuccess) {
+        // 2. 토큰 저장 (명세의 result.accessToken 저장)
+        const accessToken = res.result.accessToken;
+        localStorage.setItem("accessToken", accessToken);
+
+        // 3. 성공 알림 및 홈 이동
+        alert(`${res.result.member.nickname}님, 환영합니다!`);
+        navigate('/'); // 메인 페이지 경로로 수정하세요
+      }
+    } catch (error: any) {
+      console.error("❌ 로그인 실패:", error);
+      // 4. 에러 처리: 401(비밀번호 틀림) 또는 404(가입 안됨) 등
+      setLoginError(true);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (

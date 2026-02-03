@@ -5,9 +5,11 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MOCK_QUESTIONS } from '../../types/persona';
 import backIcon from "../../assets/icons/Vector.svg";
+import { useSignupStore } from "../../store/signupStore";
 
 const PersonaTestPage = () => {
 const navigate = useNavigate();
+const setPersonaAnswers = useSignupStore((state) => state.setPersonaAnswers);
 const [step, setStep] = useState(0);
 const[answers, setAnswers] = useState<Record<number, number>>({});
 const currentQ = MOCK_QUESTIONS[step];
@@ -25,7 +27,14 @@ const currentQ = MOCK_QUESTIONS[step];
     if (step < MOCK_QUESTIONS.length - 1) {
       setStep(step + 1); // 다음 문제 이동
     } else {
+      const formattedAnswers = Object.entries(answers).map(([qId, optId]) => ({
+        questionId: Number(qId),
+        optionId: optId
+      }));
       console.log("최종 제출 데이터:", answers);
+      
+      console.log("📦 스토어에 데이터 저장 중...", formattedAnswers);
+      setPersonaAnswers(formattedAnswers);
       navigate('/onboarding/personaresult');
     }
   };

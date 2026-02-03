@@ -19,15 +19,14 @@ import SearchPage from './pages/record/SearchPage';
 import SearchResultPage from './pages/record/SearchResultPage';
 import RecordCreatePage from './pages/record/RecordCreatePage';
 import StockSearchPage from './pages/record/StockSearchPage';
-import FeedbackPage from './pages/record/FeedbackPage';
 import HomePage from './pages/home/HomePage';
 import NotificationPage from './pages/home/NotificationPage';
 import MindScoreDetailPage from './pages/home/MindScoreDetailPage';
 import ReportDetailPage from './pages/home/ReportDetailPage';
-import MyPage from './pages/mypage/Profile';
 import Profile from './pages/mypage/Profile';
-import DailyRecordPage from './pages/record/DailyRecordPage';
-import ErrorPage from './pages/home/ErrorPage';
+import OnboardingStart from './pages/onboarding/start';
+
+
 
 const routes: RouteObject[] = [
   {
@@ -65,11 +64,6 @@ const routes: RouteObject[] = [
         handle: { showNav: true },
       },
       {
-        path: 'record/:date',
-        element: <DailyRecordPage />,
-        handle: { showNav: false },
-      },
-      {
         path: 'fragment',
         element: <FragmentPage />,
         handle: { showNav: false },
@@ -92,11 +86,6 @@ const routes: RouteObject[] = [
       {
         path: 'record/create',
         element: <RecordCreatePage />,
-        handle: { showNav: false },
-      },
-      {
-        path: 'feedback',
-        element: <FeedbackPage />,
         handle: { showNav: false },
       },
       {
@@ -136,14 +125,13 @@ const routes: RouteObject[] = [
       },
       {
         path: 'profile',
-        element: <Profile />,
+        element: <Profile/>,
         handle: { showNav: true },
       },
       {
-        path: '*',
-        element: <ErrorPage />,
-        handle: { showNav: false },
-      },
+        path: 'start',
+        element: <OnboardingStart />,
+      }
     ],
   },
 ];
