@@ -14,7 +14,7 @@ const HomePage = () => {
       <main className="flex-1 overflow-y-auto scrollbar-hide pt-[20px] px-[16px]">
         <button
           onClick={() => navigate('/mindscore')}
-          className="block w-full text-left bg-transparent"
+          className="block w-full text-left bg-transparent cursor-pointer"
         >
           <MindScore />
         </button>
@@ -23,7 +23,7 @@ const HomePage = () => {
         <button
           type="button"
           onClick={() => { }}
-          className="text-[12px] text-gray-500 underline underline-offset-2 transition-colors"
+          className="text-[12px] text-gray-500 underline underline-offset-2 transition-colors cursor-pointer"
         >
           금융 마음 지수란?
         </button>

@@ -13,7 +13,7 @@ export const WeeklyMood = () => {
         <div className="flex justify-between bg-white p-[13px] rounded-xl shadow-[#DFE2E81A] shadow-sm relative overflow-hidden">
           <div className="flex flex-1 overflow-x-auto scrollbar-hide pr-2 relative">
             {days.map((day, index) => (
-              <div key={day} className="flex items-center">
+              <div key={day} className="flex items-center cursor-pointer">
                 <div className="flex flex-col items-center justify-between min-w-[50px] h-[72px] bg-[#E9EBEE75] rounded-md py-2 relative">
                   <div className="flex items-center justify-center flex-1">
                     {moodData[day] ? (
@@ -34,7 +34,7 @@ export const WeeklyMood = () => {
 
           <div className="flex items-center justify-center relative z-10">
             <button
-              className="ml-0.5 min-w-[31px] h-[43px] bg-blue-bg rounded-lg flex items-center justify-center z-10"
+              className="ml-0.5 min-w-[31px] h-[43px] bg-blue-bg rounded-lg flex items-center justify-center z-10 cursor-pointer"
               onClick={() => navigate('/record')}
             >
               <img src={plusIcon} alt="기분 추가 아이콘" className="w-[14px] h-[14px]" />
