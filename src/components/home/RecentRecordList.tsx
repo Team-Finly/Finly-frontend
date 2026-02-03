@@ -50,7 +50,7 @@ export const RecentRecordList = () => {
             className="flex items-center text-[13px] text-gray-500"
             onClick={() => navigate('/record')}
           >
-            <span className="leading-none">전체 보기</span>
+            <span className="leading-none cursor-pointer">전체 보기</span>
             <img
               src={RightIcon}
               alt="오른쪽 화살표"
@@ -58,7 +58,7 @@ export const RecentRecordList = () => {
             />
           </button>
         </div>
-        <div className="scrollbar-hide -mx-[16px] overflow-x-auto">
+        <div className="scrollbar-hide -mx-[16px] overflow-x-auto cursor-pointer">
           <div className="flex gap-2 px-[16px]">
             {records.map((record) => (
               <RecentRecordCard key={record.id} record={record} />

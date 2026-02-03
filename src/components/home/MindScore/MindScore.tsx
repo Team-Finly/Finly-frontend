@@ -30,16 +30,6 @@ export const MindScore = ({ score = 80 }) => {
 
         <CircularScore score={score} color={config.color} />
       </section>
-
-      <div className="mt-[12px] flex justify-end">
-        <button
-          type="button"
-          onClick={() => {}}
-          className="text-[12px] text-gray-500 underline underline-offset-2 transition-colors"
-        >
-          금융 마음 지수란?
-        </button>
-      </div>
     </div>
   );
 };

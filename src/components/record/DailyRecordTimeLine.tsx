@@ -6,9 +6,10 @@ import TimeLineModal from '@/components/record/TimeLineModal';
 
 interface Props {
   sections?: TimelineSection[];
+  onItemClick: (recordId: number) => void;
 }
 
-const DailyRecordTimeLine = ({ sections }: Props) => {
+const DailyRecordTimeLine = ({ sections, onItemClick }: Props) => {
   const [isTimeLineOpen, setIsTimeLineOpen] = useState(false);
   const getEmotionData = (key: string) => EMOTIONS.find((e) => e.key === key);
 
@@ -71,7 +72,11 @@ const DailyRecordTimeLine = ({ sections }: Props) => {
                           </div>
                         )}
 
-                        <div className="mb-[6px] rounded-xl border-[1.2px] border-gray-100 bg-white p-[16px] shadow-md shadow-[#DFE2E833]">
+                        <div
+                          className="mb-[6px] rounded-xl border-[1.2px] border-gray-100 bg-white p-[16px] shadow-md shadow-[#DFE2E833] cursor-pointer"
+                          key={item.recordId}
+                          onClick={() => onItemClick(item.recordId)}
+                        >
                           <div className="mb-[14px] flex items-center justify-between">
                             <div className="flex items-center gap-[6px]">
                               <span className="text-[14px] font-semibold text-gray-900">

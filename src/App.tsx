@@ -27,6 +27,7 @@ import ReportDetailPage from '@/pages/home/ReportDetailPage';
 import Profile from '@/pages/mypage/Profile';
 import DailyRecordPage from '@/pages/record/DailyRecordPage';
 import ErrorPage from '@/pages/home/ErrorPage';
+import DailyRecordDetailPage from '@/pages/record/DailyRecordDetailPage';
 
 const routes: RouteObject[] = [
   {
@@ -66,7 +67,10 @@ const routes: RouteObject[] = [
       {
         path: 'record/:date',
         element: <DailyRecordPage />,
-        handle: { showNav: false },
+      },
+      {
+        path: 'record/:date/:recordId',
+        element: <DailyRecordDetailPage />,
       },
       {
         path: 'fragment',
