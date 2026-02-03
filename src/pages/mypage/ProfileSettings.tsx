@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Before from "@/assets/icons/before.svg";
 import profileIcon from "../../assets/icons/profile.svg";
 import cameraIcon from "../../assets/icons/camera.svg";
-import line from "../../assets/icons/Line 50.svg";
+import line from "../../assets/icons/line50.svg";
 const ProfileSettings = () => {
   const navigate = useNavigate();
   
