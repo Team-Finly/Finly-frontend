@@ -4,7 +4,6 @@ import TextField from "@/components/auth/TextField";
 import backIcon from "@/assets/icons/Vector.svg";
 import { authApi } from "@/types/auth";
 
-
 const LoginPage = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -23,6 +22,7 @@ const LoginPage = () => {
 
 const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+
     if (!isFormValid) return;
 
     setIsLoading(true);

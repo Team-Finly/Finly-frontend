@@ -5,6 +5,7 @@ import checkblue from '@/assets/icons/checkblue.svg'
 import Button from '@/components/onboarding/Button';
 import Unchecked from '@/assets/icons/unchecked.svg'
 import rightarrow from '@/assets/icons/rightarrow.svg'
+
 import { useNavigate } from 'react-router-dom';
 import  { useState } from 'react';
 import { useEffect } from 'react';
@@ -53,6 +54,7 @@ const handleNext = (path: string) => {
     setRequire2(newState);
     setRequire3(newState);
   };
+
 
   const handleRequire1 = () => {
     setRequire1((prev) => !prev);
@@ -128,6 +130,7 @@ const handleNext = (path: string) => {
     <div className="w-full mt-auto mb-[52px]">
         <Button disabled={!(require1 && require2)}
         onClick={() => { handleNext('/start'); }} >
+
           다음
         </Button>
     </div>

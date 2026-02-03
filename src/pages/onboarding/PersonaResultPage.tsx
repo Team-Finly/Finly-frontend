@@ -22,6 +22,7 @@ const PERSONA_ID_MAP: Record<number, string> = {
 };
 
 const PERSONA_UI_DATA: any = {
+
   TURTLE: {
     nameTag: turtleImg,
     character: turtleChar,
@@ -60,8 +61,6 @@ const PERSONA_UI_DATA: any = {
   const PersonaResultPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-
-//1. 스토어 데이터 가져오기
   const signupData = useSignupStore();
   
   // 상태 관리
@@ -130,6 +129,7 @@ const PERSONA_UI_DATA: any = {
         <h1 className="text-[18px] font-semibold text-gray-900">페르소나 결과</h1>
       </header>
 
+
       <div className="flex-1 flex flex-col items-center mt-[67px] w-full">
       <div className="flex flex-col items-center ">
       {/* 이름표 */}
@@ -138,6 +138,7 @@ const PERSONA_UI_DATA: any = {
         alt="이름표"
         className="block  mb-[10px] object-contain h-[31px]" 
       />
+
 
       {/* 닉네임 */}
       <div className="flex flex-col items-center">
@@ -193,10 +194,4 @@ const PERSONA_UI_DATA: any = {
 
 export default PersonaResultPage;
 
-function setStep(arg0: any) {
-  throw new Error('Function not implemented.');
-}
-function setPersonaAnswers(formattedAnswers: { questionId: number; optionId: unknown; }[]) {
-  throw new Error('Function not implemented.');
-}
 

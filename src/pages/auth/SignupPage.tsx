@@ -16,6 +16,7 @@ type Step = "email" | "password" | "nickname";
 
 const SignupPage = () => {
   const navigate = useNavigate();
+
   const { email, setEmail, password, setPassword, nickname, setNickname } = useSignupStore();
   // 2. 로컬 전용 상태 관리 (서버 체크 결과 및 로딩)
 
@@ -109,7 +110,6 @@ const SignupPage = () => {
               setStep("email");
             } else if (step === "nickname") {
               setStep("password");
-
             }
           }}
           className="absolute top-1/2 left-0 -translate-y-1/2"
@@ -145,7 +145,10 @@ const SignupPage = () => {
                 setServerError("");}}
               isValid={emailIsValidForUI}
               helperText={emailHelperText}
+
               
+
+
             />
           </>
         )}
