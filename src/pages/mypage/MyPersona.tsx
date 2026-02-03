@@ -1,8 +1,5 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TitleHeader from '../../components/record/TitleHeader';
-
-// 이미지 import
 import turtle from '../../assets/icons/turtle.svg';
 import turtlebg from '../../assets/icons/turtlebg.svg';
 import deer from '../../assets/icons/deer.svg';
@@ -12,6 +9,7 @@ import eaglebg from '../../assets/icons/eaglebg.svg';
 import lion from '../../assets/icons/lion.svg';
 import lionbg from '../../assets/icons/lionbg.svg';
 import light from '../../assets/icons/light.svg'
+
 const PERSONA_DATA = {
   TURTLE: {
     name: "신중한 거북이",
@@ -19,19 +17,11 @@ const PERSONA_DATA = {
     image: turtle,  
     bgImage: turtlebg, 
     bgStyle: "w-[150px] h-[150px]", 
-    advice: (
-      <>
-    <span className="text-gray-500 font-medium whitespace-nowrap block">
-      충분히 고민했어요. 이제는 <span className="text-secondary font-semibold">기준을 정하고</span> 한 번 움직여보세요.
-    </span>
-    <span className="text-gray-500 font-medium whitespace-nowrap block">
-      모든 선택을 확신할 수는 없기에, 기록하며 <span className="text-secondary font-semibold">조정</span>하면 돼요.
-    </span>
-    <span className="text-gray-500 font-medium whitespace-nowrap block">
-      핀리는 망설임이 길어질 때 행동 타이밍을 알려줄게요!
-    </span>
-    </>
-    ),
+    advice: [
+      <>충분히 고민했어요. 이제는 <span className="text-secondary font-semibold">기준을 정하고</span>한 번 움직여보세요<br /> </>, 
+      <>모든 선택을 확신할 수는 없기에, 기록하며 <span className="text-secondary font-semibold">조정</span>하면 돼요.<br /> </>, 
+      <>핀리는 망설임이 길어질 때 행동 타이밍을 알려줄게요!<br /></>
+    ]
   },
   DEER: {
     name: "걱정 많은 사슴",
@@ -39,19 +29,12 @@ const PERSONA_DATA = {
     image: deer,
     bgImage: deerbg,
     bgStyle: "w-[150px] h-[150px]", 
-    advice: (
-      <>
-    <span className="text-gray-500 font-medium">불안할수록 감정만 보지 말고, </span>
-    <span className="text-secondary font-semibold">기록된 사실</span>
-    <span className="text-gray-500 font-medium">을 함께 보세요.</span>
-    <br />
-    <span className="text-gray-500 font-medium">감정이 판단을 대신하게 두지 마세요. 숫자는 늘 솔직해요.</span>
-    <br />
-    <span className="text-gray-500 font-medium">핀리는 불안이 커질 때, 지금 </span>
-    <span className="text-secondary font-semibold">멈춰야 할지 아닌지</span>
-    <span className="text-gray-500 font-medium"> 정리해줄게요!</span>
-  </>
-    )
+     advice: [
+      <>불안할수록 감정만 보지 말고, <span className="text-secondary font-semibold">기록된 사실</span>을 함께 보세요.<br /> </>, 
+      <>감정이 판단을 대신하게 두지 마세요. 숫자는 늘 솔직해요.<br /> </>, 
+      <>핀리는 불안이 커질 때, 지금 <span className="text-secondary font-semibold">멈춰야 할지 아닌지</span> 정리해줄게요!<br /></>
+    ]
+    
   },
   EAGLE: {
     name: "날카로운 독수리",
@@ -60,19 +43,12 @@ const PERSONA_DATA = {
     bgImage: eaglebg,
     
     bgStyle: "w-[150px] h-[150px]", 
-    advice: (
-      <>
-    <span className="text-gray-500 font-medium">빠른 판단은 강점이지만, </span>
-    <span className="text-secondary font-semibold">이유 없는 확신</span>
-    <span className="text-gray-500 font-medium">은 위험해요.</span>
-    <br />
-    <span className="text-gray-500 font-medium">결정 전 한 번만 감정 기록을 확인하는 습관을 가져보세요.</span>
-    <br />
-    <span className="text-gray-500 font-medium">핀리는 당신의 선택이 </span>
-    <span className="text-secondary font-semibold">충동인지 전략인지</span>
-    <span className="text-gray-500 font-medium"> 구분해줄게요!</span>
-  </>
-    )
+    advice: [
+      <>빠른 판단은 강점이지만, <span className="text-secondary font-semibold">이유 없는 확신</span>은 위험해요.<br /></>,
+      <>결정 전 한 번만 감정 기록을 확인하는 습관을 가져보세요.<br /></>,
+      <>핀리는 당신의 선택이 <span className="text-secondary font-semibold">충동인지 전략인지</span> 구분해줄게요!<br /></>
+    ]
+    
   },
   LION: {
     name: "불타는 사자",
@@ -81,20 +57,11 @@ const PERSONA_DATA = {
     bgImage: lionbg,
     
     bgStyle: "w-[150px] h-[150px]", 
-    advice: (
-      <>
-    <span className="text-gray-500 font-medium">과감함은 좋지만, 모든 판에 전력을 다할 필요는 없어요.</span>
-    <br />
-    <span className="text-gray-500 font-medium">확신이 강할수록 </span>
-    <span className="text-secondary font-semibold">손실 기준</span>
-    <span className="text-gray-500 font-medium">을 먼저 정해두세요.</span>
-    <br />
-    <span className="text-gray-500 font-medium">핀리는 큰 승부 전에 </span>
-    <span className="text-secondary font-semibold">리스크</span>
-    <span className="text-gray-500 font-medium">부터 점검해줄게요!</span>
-  </>
-      
-    )
+    advice: [
+      <>과감함은 좋지만, 모든 판에 전력을 다할 필요는 없어요.</>,
+      <>확신이 강할수록 <span className="text-secondary font-semibold">손실 기준</span>을 먼저 정해두세요.</>,
+      <>핀리는 큰 승부 전에 <span className="text-secondary font-semibold">리스크</span>부터 점검해줄게요!</>
+    ]
   },
 };
 
@@ -102,7 +69,7 @@ const MyPersona = () => {
   const navigate = useNavigate();
 
 //테스트
-  const mockPersonaType = 'DEER'; // TURTLE, DEER, EAGLE, LION 중 하나로 변경해가며 테스트 가능
+  const mockPersonaType = "LION"; 
   const data = PERSONA_DATA[mockPersonaType] || PERSONA_DATA.TURTLE;
 
   return (
@@ -110,10 +77,9 @@ const MyPersona = () => {
       <div className="relative z-50 bg-white">
         <TitleHeader title="나의 페르소나" />
       </div>
-      <main className="flex-1 overflow-y-auto scrollbar-hide pb-[60px]">
+      <main className="flex-1 overflow-y-auto scrollbar-hide">
       <div className="w-full flex flex-col items-center justify-center mt-[110px] ">
-        
-        {/* 캐릭터 + 배경 그룹 */}
+      
         <div className="relative w-[77px] h-[70px] flex items-center justify-center mt-[42px] mb-[31px]">
           <img 
             src={data.bgImage} 
@@ -144,16 +110,17 @@ const MyPersona = () => {
                 </p>
               </div>
             </div>
-
-            {/* 이동: 회색 박스를 px-[30px]를 가진 부모 div 안으로 옮겼습니다 */}
-            <div className="w-full min-h-[114px] bg-[#F7F8FA] rounded-[20px] py-[24px] px-[12px] flex flex-col justify-center">
-            <div className="w-full text-center text-[#505050] font-medium leading-[22px] tracking-[-0.5px] text-[12px]">
-              {data.advice}
-              </div>
-
+            <div className="w-full min-h-[114px] bg-[#F7F8FA] rounded-[20px] py-[24px] px-[12px] flex flex-col items-center justify-center ">
+                {data.advice.map((line, index) => (
+                <p 
+                 key={index} 
+                  className="text-center text-[#505050] font-medium leading-[22px] tracking-[-0.5px] text-[13px] break-keep w-full"
+                >
+                {line}
+                </p>
+              ))}
+            </div>
           </div>
-          </div> {/* px-[30px]를 가진 div 끝 */}
-          
         </div>
         
         <div className="w-full px-[16px] mt-[125px]">
