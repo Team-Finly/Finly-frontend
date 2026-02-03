@@ -1,4 +1,3 @@
-import ErrorPage from "@/pages/home/ErrorPage";
 import HomePage from "@/pages/home/HomePage";
 import MindScoreDetailPage from "@/pages/home/MindScoreDetailPage";
 import NotificationPage from "@/pages/home/NotificationPage";

@@ -28,8 +28,6 @@ const routes: RouteObject[] = [
           ...userRoutes,
         ],
       },
-
-      // 🚫 정의되지 않은 모든 경로는 에러 페이지로
       {
         path: '*',
         element: <ErrorPage />,
