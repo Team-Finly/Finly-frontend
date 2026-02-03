@@ -1,3 +1,4 @@
+import FinlyTalk from '@/components/FinlyTalk';
 import DailyDetailHeader from '@/components/record/DailyDetailHeader';
 import DailyRecordDetailCard from '@/components/record/DailyRecordDetailCard';
 import { EMOTIONS } from '@/constants/emotions';

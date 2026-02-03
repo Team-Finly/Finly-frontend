@@ -1,3 +1,5 @@
+import FinlyTalk from "../FinlyTalk";
+
 interface CardProps {
   record: {
     recordId: number;
@@ -34,7 +36,7 @@ const DailyRecordDetailCard = ({ record }: CardProps) => {
         style={{ boxShadow: '0px 10px 30px rgba(0, 0, 0, 0.05)' }}
       >
         <div className="flex items-center gap-[8px] mb-[20px]">
-          <div className="w-8 h-8 bg-[#034EA2] rounded-full flex items-center justify-center text-white text-[8px] font-bold overflow-hidden">
+          <div className="w-[24px] h-[24px] bg-[#034EA2] rounded-full flex items-center justify-center text-white text-[8px] font-bold overflow-hidden">
             {record.instrumentName.substring(0, 2)} {/* 종목 로고 들어갈 자리 */}
           </div>
           <span className="text-[18px] font-bold text-gray-700">
@@ -71,6 +73,10 @@ const DailyRecordDetailCard = ({ record }: CardProps) => {
         <p className="text-gray-700 text-[14px] leading-relaxed">
           “{record.memo}”
         </p>
+      </div>
+
+      <div className="mx-[-16px] mt-[-4px]">
+        <FinlyTalk />
       </div>
     </div>
   );
