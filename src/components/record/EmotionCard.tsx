@@ -1,5 +1,5 @@
 import React from 'react';
-import { EMOTIONS } from '../../constants/emotions';
+import { EMOTIONS } from '@/constants/emotions';
 import type { EmotionSummary } from '@/types/record';
 
 interface EmotionCardProps {

@@ -1,5 +1,5 @@
 import React from 'react';
-import Message from '../../assets/icons/message.svg';
+import Message from '@/assets/icons/message.svg';
 
 const EmptyFragment = () => {
   return (

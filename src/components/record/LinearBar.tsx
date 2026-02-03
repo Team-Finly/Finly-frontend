@@ -1,6 +1,6 @@
 import React from 'react';
-import { EMOTIONS } from '../../constants/emotions';
-import type { EmotionSummary, FragmentSummary } from './../../types/record';
+import { EMOTIONS } from '@/constants/emotions';
+import type { EmotionSummary, FragmentSummary } from '@/types/record';
 import { useNavigate } from 'react-router-dom';
 
 interface LinearBarProps {
