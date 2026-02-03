@@ -2,9 +2,9 @@ import CalendarModal from '@/components/record/CalendarModal';
 import DailyRecordHeader from '@/components/record/DailyRecordHeader';
 import DailyRecordTimeLine from '@/components/record/DailyRecordTimeLine';
 import DailyRecordTitle from '@/components/record/DailyRecordTitle';
-import type { RecordDetailResponse, TimelineSection, TradeItem } from '@/types/record';
-import { useEffect, useMemo, useState } from 'react';
-import { Outlet, useNavigate, useParams } from 'react-router-dom';
+import type { RecordDetailResponse, TimelineSection } from '@/types/record';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const MOCK_SECTIONS: TimelineSection[] = [
   {
@@ -73,11 +73,6 @@ const DailyRecordPage = () => {
   useEffect(() => {
     setData(MOCK_RESPONSE); // 나중에 API로 교체
   }, [date]);
-
-  const flatRecords = useMemo(() => {
-    if (!data) return [];
-    return data.sections.flatMap(section => section.items);
-  }, [data]);
 
   if (!data) {
     return <div className="h-screen bg-[#F4F5F7]" />;
