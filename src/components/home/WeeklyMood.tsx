@@ -1,8 +1,10 @@
 import plusIcon from '@/assets/icons/plusblue.svg';
+import { useNavigate } from 'react-router-dom';
 
 export const WeeklyMood = () => {
   const days = ['월', '화', '수', '목', '금', '토', '일'];
   const moodData = { '월': '😓' };
+  const navigate = useNavigate();
 
   return (
     <div>
@@ -31,7 +33,10 @@ export const WeeklyMood = () => {
           </div>
 
           <div className="flex items-center justify-center relative z-10">
-            <button className="ml-0.5 min-w-[31px] h-[43px] bg-blue-bg rounded-lg flex items-center justify-center z-10">
+            <button
+              className="ml-0.5 min-w-[31px] h-[43px] bg-blue-bg rounded-lg flex items-center justify-center z-10"
+              onClick={() => navigate('/record')}
+            >
               <img src={plusIcon} alt="기분 추가 아이콘" className="w-[14px] h-[14px]" />
             </button>
           </div>
