@@ -13,7 +13,7 @@ const Header = () => {
         <span>코스닥 852</span>
       </div>
       <button
-        className="relative px-[4px]"
+        className="relative px-[4px] cursor-pointer"
         onClick={() => navigate('/notification')}
       >
         <img src={Bell} alt="알림 아이콘" className="w-6 h-6" />

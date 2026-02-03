@@ -1,17 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import RecordSearch1 from '../../assets/icons/record_search1.svg';
-import FGI from '../../assets/images/fgi.png';
-import ArrowRightThin from '../../assets/icons/arrow-right-thin.svg';
-import Calendar from '../../components/record/Calendar';
-import LinearBar from '../../components/record/LinearBar';
-import EmptyFragment from '../../components/record/EmptyFragment';
-import RecordFragment from '../../components/record/RecordFragment';
-import FloatingButton from '../../components/record/FloatingButton';
-import type {
-  FragmentSummary,
-  DailyFragmentResponse,
-} from './../../types/record';
+import RecordSearch1 from '@/assets/icons/record_search1.svg';
+import FGI from '@/assets/images/fgi.png';
+import ArrowRightThin from '@/assets/icons/arrow-right-thin.svg';
+import Calendar from '@/components/record/Calendar';
+import LinearBar from '@/components/record/LinearBar';
+import EmptyFragment from '@/components/record/EmptyFragment';
+import RecordFragment from '@/components/record/RecordFragment';
+import FloatingButton from '@/components/record/FloatingButton';
+import type { FragmentSummary, DailyFragmentResponse } from '@/types/record';
 
 const RecordHomePage = () => {
   const navigate = useNavigate();

@@ -1,12 +1,14 @@
 import backIcon from '@/assets/icons/Vector.svg';
+
 import checkIcon from '@/assets/icons/isvalid.svg'
 import checkgray from '@/assets/icons/checkgray.svg'
 import checkblue from '@/assets/icons/checkblue.svg'
 import Button from '@/components/onboarding/Button';
 import Unchecked from '@/assets/icons/unchecked.svg'
 import rightarrow from '@/assets/icons/rightarrow.svg'
+
 import { useNavigate } from 'react-router-dom';
-import  { useState } from 'react';
+import { useState } from 'react';
 import { useEffect } from 'react';
 import { useSignupStore } from '@/store/signupStore';
 const TermsPage = () => {
@@ -17,13 +19,14 @@ const [require1, setRequire1] = useState(false);
 const [require2, setRequire2] = useState(false);
 const [require3, setRequire3] = useState(false);
 
-useEffect(() => {
-  if (require1 && require2 && require3) {
-    setAllAgreed(true);
-  } else {
-    setAllAgreed(false);
-  }
-}, [require1, require2, require3]);
+  useEffect(() => {
+    if (require1 && require2 && require3) {
+      setAllAgreed(true);
+    } else {
+      setAllAgreed(false);
+    }
+  }, [require1, require2, require3]);
+
 
 const handleNext = (path: string) => {
     // 필수 약관인 require1과 require2가 동의된 경우에만 진행
@@ -55,6 +58,7 @@ const handleNext = (path: string) => {
     setRequire3(newState);
   };
 
+
   const handleRequire1 = () => {
     setRequire1((prev) => !prev);
   };
@@ -69,74 +73,93 @@ const handleNext = (path: string) => {
   return (
     <div className='flex flex-col w-full mt-[16px] px-4 h-dvh'>
 
-      <header className="relative flex items-center justify-center w-full h-[60px]">
+
+  return (
+    <div className="mt-[16px] flex h-dvh w-full flex-col px-4">
+      <header className="relative flex h-[60px] w-full items-center justify-center">
         <button
-            onClick={() => navigate(-1)}
-            className="absolute left-0 top-1/2 -translate-y-1/2 ">
-            <img src={backIcon} alt="뒤로가기" className="w-[8px] h-[16px]" />
+          onClick={() => navigate(-1)}
+          className="absolute top-1/2 left-0 -translate-y-1/2"
+        >
+          <img src={backIcon} alt="뒤로가기" className="h-[16px] w-[8px]" />
         </button>
-        <h1 className="text-lg font-semibold leading-none text-gray-900">
+        <h1 className="text-lg leading-none font-semibold text-gray-900">
           약관 동의
         </h1>
       </header>
 
-      <div className="text-left mt-[30px] mb-[32px]">
-        <p className ="font-semibold text-[20px] leading-[26px] text-gray-900">Finly
-        <br />
-        <span className="font-semibold text-[20px] leading-[26px] text-secondary">약관 동의</span>가 필요해요 </p>
+      <div className="mt-[30px] mb-[32px] text-left">
+        <p className="text-[20px] leading-[26px] font-semibold text-gray-900">
+          Finly
+          <br />
+          <span className="text-secondary text-[20px] leading-[26px] font-semibold">
+            약관 동의
+          </span>
+          가 필요해요{' '}
+        </p>
       </div>
-    
-    <button 
+
+      <button
         onClick={() => handleAllClick()}
-        className={`justify-center border-[1.2px] rounded-[12px] w-full h-[50px] px-4 border-gray-300 flex items-center gap-[10px]
-        ${allAgreed
-        ? 'border-secondary bg-blue-bg/80 text-secondary'
-        : 'border-gray-300 bg-white text-gray-300'
+        className={`flex h-[50px] w-full items-center justify-center gap-[10px] rounded-[12px] border-[1.2px] border-gray-300 px-4 ${
+          allAgreed
+            ? 'border-secondary bg-blue-bg/80 text-secondary'
+            : 'border-gray-300 bg-white text-gray-300'
         }`}
-        >
+      >
+        <img
+          src={allAgreed ? checkblue : checkgray}
+          alt="체크 아이콘"
+          className="h-[12px] w-[15px]"
+        />
 
-        <img src={allAgreed ? checkblue : checkgray}
-         alt="체크 아이콘"
-         className="w-[15px] h-[12px]" />
+        <span className="text-[17px] font-semibold">
+          서비스 이용약관 전체 동의
+        </span>
+      </button>
 
-        <span className="text-[17px] font-semibold ">서비스 이용약관 전체 동의</span>
-    </button>
-
-    <div className="flex flex-row items-center text-left w-full mt-[30px] gap-[8px]">
+      <div className="mt-[30px] flex w-full flex-row items-center gap-[8px] text-left">
         <button onClick={handleRequire1}>
-        <img src={!require1 ? Unchecked : checkIcon} alt="" />
+          <img src={!require1 ? Unchecked : checkIcon} alt="" />
         </button>
-        <p className=" text-[16px] font-medium text-gray-900"> (필수) 이용약관 동의</p>
-        <img src={rightarrow} alt="오른쪽 화살표" className='ml-auto' />
-    </div>
+        <p className="text-[16px] font-medium text-gray-900">
+          {' '}
+          (필수) 이용약관 동의
+        </p>
+        <img src={rightarrow} alt="오른쪽 화살표" className="ml-auto" />
+      </div>
 
-    <div className="flex flex-row items-center text-left w-full mt-[30px] gap-[8px]">
+      <div className="mt-[30px] flex w-full flex-row items-center gap-[8px] text-left">
         <button onClick={handleRequire2}>
-        <img src={!require2 ? Unchecked : checkIcon} alt="" />
+          <img src={!require2 ? Unchecked : checkIcon} alt="" />
         </button>
-        <p className=" text-[16px] font-medium text-gray-900"> (필수) 개인정보 처리방침 동의</p>
-        <img src={rightarrow} alt="오른쪽 화살표" className='ml-auto' />
-    </div>
+        <p className="text-[16px] font-medium text-gray-900">
+          {' '}
+          (필수) 개인정보 처리방침 동의
+        </p>
+        <img src={rightarrow} alt="오른쪽 화살표" className="ml-auto" />
+      </div>
 
-    <div className="flex flex-row items-center text-left w-full mt-[30px] gap-[8px]">
+      <div className="mt-[30px] flex w-full flex-row items-center gap-[8px] text-left">
         <button onClick={handleRequire3}>
-        <img src={!require3 ? Unchecked : checkIcon} alt="" />
+          <img src={!require3 ? Unchecked : checkIcon} alt="" />
         </button>
-        <p className=" text-[16px] font-medium text-gray-900"> (선택) 마케팅 정보수신 동의</p>
-        <img src={rightarrow} alt="오른쪽 화살표" className='ml-auto' />
-    </div>
+        <p className="text-[16px] font-medium text-gray-900">
+          {' '}
+          (선택) 마케팅 정보수신 동의
+        </p>
+        <img src={rightarrow} alt="오른쪽 화살표" className="ml-auto" />
+      </div>
+
 
     <div className="w-full mt-auto mb-[52px]">
         <Button disabled={!(require1 && require2)}
         onClick={() => { handleNext('/start'); }} >
+
           다음
         </Button>
+      </div>
     </div>
-    
-    
-    </div>
-    
-    
   );
 };
 

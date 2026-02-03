@@ -1,4 +1,4 @@
-import SimpleProgressBar from './SimpleProgressBar';
+import SimpleProgressBar from '@/components/stats/SimpleProgressBar';
 
 interface DistributionItem {
   range: string;

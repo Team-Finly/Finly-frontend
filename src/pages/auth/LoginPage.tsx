@@ -1,14 +1,12 @@
-import { useState } from "react";
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TextField from "@/components/auth/TextField";
 import backIcon from "@/assets/icons/Vector.svg";
 import { authApi } from "@/types/auth";
-
-
 const LoginPage = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState(""); 
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState(false); // 로그인 실패 상태
   const [isLoading, setIsLoading] = useState(false);
 
@@ -23,6 +21,7 @@ const LoginPage = () => {
 
 const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+
     if (!isFormValid) return;
 
     setIsLoading(true);
@@ -51,17 +50,16 @@ const handleLogin = async (e: React.FormEvent) => {
   };
 
   return (
-    <div className='flex flex-col w-full mt-[16px] px-4'>
-      
+    <div className="mt-[16px] flex w-full flex-col px-4">
       {/* 1. Header */}
-      <header className="relative flex items-center justify-center w-full h-[60px]">
-     <button
-      onClick={() => navigate(-1)}
-      className="absolute left-0 top-1/2 -translate-y-1/2 "
-    >
-      <img src={backIcon} alt="뒤로가기" className="w-[8px] h-[16px]" />
-    </button>
-        <h1 className="text-lg font-semibold leading-none text-gray-900">
+      <header className="relative flex h-[60px] w-full items-center justify-center">
+        <button
+          onClick={() => navigate(-1)}
+          className="absolute top-1/2 left-0 -translate-y-1/2"
+        >
+          <img src={backIcon} alt="뒤로가기" className="h-[16px] w-[8px]" />
+        </button>
+        <h1 className="text-lg leading-none font-semibold text-gray-900">
           로그인
         </h1>
       </header>
@@ -69,30 +67,30 @@ const handleLogin = async (e: React.FormEvent) => {
       {/* 2. 입력 폼 영역 */}
       <div className="flex flex-col gap-[26px]">
         <div className="mt-[72px]">
-          <TextField 
+          <TextField
             label="이메일"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            onClear={() => setEmail("")}
+            onClear={() => setEmail('')}
             placeholder="abc@email.com"
             type="email"
             isValid={isEmailInputValid && email.length > 0}
             showValidIcon={false}
           />
         </div>
-        <div >
-          <TextField 
+        <div>
+          <TextField
             label="비밀번호"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            onClear={() => setPassword("")}
+            onClear={() => setPassword('')}
             placeholder="6자리 이상의 비밀번호"
             type="password"
             isValid={isPasswordInputValid && password.length > 0}
             showValidIcon={false}
           />
           {loginError && (
-            <div className="mt-[10px]  text-[#F04452] font-normal">
+            <div className="mt-[10px] font-normal text-[#F04452]">
               이메일과 비밀번호가 일치하지 않습니다
             </div>
           )}
@@ -103,22 +101,21 @@ const handleLogin = async (e: React.FormEvent) => {
       <button
         disabled={!isFormValid}
         onClick={handleLogin}
-        className={`w-full h-[50px] mt-[45px] rounded-[12px] font-medium text-lg transition-colors duration-200
-          ${isFormValid
-            ? "bg-secondary text-white cursor-pointer"
-            : "bg-gray-100 text-gray-300 cursor-not-allowed"
-          }
-        `}
+        className={`mt-[45px] h-[50px] w-full rounded-[12px] text-lg font-medium transition-colors duration-200 ${
+          isFormValid
+            ? 'bg-secondary cursor-pointer text-white'
+            : 'cursor-not-allowed bg-gray-100 text-gray-300'
+        } `}
       >
         로그인
       </button>
 
       {/* 4. 회원가입 링크 */}
-      <div className="mt-[34px] text-center text-gray-500 font-regular leading-[26px]">
+      <div className="font-regular mt-[34px] text-center leading-[26px] text-gray-500">
         아직 계정이 없으신가요?
         <span
           onClick={() => navigate('/signup')}
-          className="ml-[10px] font-medium text-secondary cursor-pointer hover:underline leading-[26px]"
+          className="text-secondary ml-[10px] cursor-pointer leading-[26px] font-medium hover:underline"
         >
           회원가입하기
         </span>

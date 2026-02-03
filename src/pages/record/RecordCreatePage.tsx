@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import CloseHeader from '@/components/record/CloseHeader';
-import RecordSearch from '../../assets/icons/record_search3.svg';
+import RecordSearch from '@/assets/icons/record_search3.svg';
 import type { TradeActionType } from '@/types/record';
 import TradeDetailInput from '@/components/record/TradeDetailInput';
 import EmotionFilterButton from '@/components/record/EmotionFilterButton';

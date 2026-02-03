@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { AreaChart, Area, XAxis, YAxis, ResponsiveContainer } from 'recharts';
 import { useNavigate } from 'react-router-dom';
 import { EMOTIONS } from '@/constants/emotions';
+import { Tooltip } from 'react-tooltip';
 
 type EmotionConfigType = (typeof EMOTIONS)[number];
 
@@ -102,6 +103,8 @@ const RelationChart = () => {
     <div
       className="cursor-pointer rounded-[12px] border-[1.2px] border-gray-100 bg-white p-5"
       onClick={() => navigate('/stats/analysis')}
+      data-tooltip-id="analysis-tooltip"
+      data-tooltip-content="눌러서 심층 분석 보러가기"
     >
       <div className="mb-1 text-[16px] font-semibold text-gray-700">
         주가 & 감정 흐름
@@ -144,6 +147,19 @@ const RelationChart = () => {
           </AreaChart>
         </ResponsiveContainer>
       </div>
+      <Tooltip
+        id="analysis-tooltip"
+        place="top"
+        offset={1}
+        style={{
+          backgroundColor: '#278DFD',
+          color: '#FFFFFF',
+          borderRadius: '8px',
+          zIndex: 100,
+        }}
+        className="!rounded-lg !px-3 !py-1.5 !text-[12px]"
+        noArrow={false}
+      />
     </div>
   );
 };
