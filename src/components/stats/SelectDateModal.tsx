@@ -133,11 +133,11 @@ const SelectDateModal = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4"
+      className="fixed inset-0 z-100 flex items-center justify-center bg-black/40 px-4"
       onClick={onClose}
     >
       <div
-        className="animate-fadeIn relative w-full rounded-[20px] bg-white p-2 shadow-xl"
+        className="animate-fadeIn relative w-full max-w-79 rounded-[20px] bg-white p-2 shadow-xl"
         onClick={(e) => e.stopPropagation()}
       >
         {renderHeader()}

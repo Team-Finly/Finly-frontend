@@ -6,7 +6,7 @@ interface Props {
 
 const EmptyTab = ({ status }: Props) => {
   return (
-    <div className="flex w-full flex-1 flex-col items-center gap-6 bg-gray-50 px-4">
+    <div className="flex w-full flex-1 flex-col items-center gap-6 px-4">
       {status === 'LOADING' ? (
         <div className="mt-[136px] flex flex-col items-center gap-2 text-[14px] font-semibold text-gray-300">
           통계 화면을 생성 중이에요
