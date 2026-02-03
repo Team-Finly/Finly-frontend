@@ -135,7 +135,6 @@ const routes: RouteObject[] = [
       {
         path: 'profilesettings',
         element: <ProfileSettings/>,
-        handle: { showNav: true },
       }
     ],
   },
