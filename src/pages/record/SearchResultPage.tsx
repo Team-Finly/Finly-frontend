@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Before from '../../assets/icons/before.svg';
+import Before from '@/assets/icons/before.svg';
 import EmotionFilterButton from '@/components/record/EmotionFilterButton';
 import RecordDetailFragment from '@/components/record/RecordDetailFragment';
 import { useNavigate } from 'react-router-dom';

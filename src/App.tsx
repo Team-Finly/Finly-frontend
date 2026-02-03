@@ -4,31 +4,31 @@ import {
   type RouteObject,
 } from 'react-router-dom';
 import './App.css';
-import AppLayout from './layouts/AppLayout';
-import Onboarding from './pages/onboarding/OnboardingPage';
-import LoginPage from './pages/auth/LoginPage';
-import SignupPage from './pages/auth/SignupPage';
-import PersonaTestPage from './pages/onboarding/PersonaTestPage';
-import PersonaResultPage from './pages/onboarding/PersonaResultPage';
-import TermsPage from './pages/onboarding/TermsPage';
-import StatsPage from './pages/stats/StatsPage';
-import AnalysisPage from './pages/stats/AnalysisPage';
-import RecordHomePage from './pages/record/RecordHomePage';
-import FragmentPage from './pages/record/FragmentPage';
-import FragmentDetailPage from './pages/record/FragmentDetailPage';
-import SearchPage from './pages/record/SearchPage';
-import SearchResultPage from './pages/record/SearchResultPage';
-import RecordCreatePage from './pages/record/RecordCreatePage';
-import StockSearchPage from './pages/record/StockSearchPage';
-import FeedbackPage from './pages/record/FeedbackPage';
-import HomePage from './pages/home/HomePage';
-import NotificationPage from './pages/home/NotificationPage';
-import MindScoreDetailPage from './pages/home/MindScoreDetailPage';
-import ReportDetailPage from './pages/home/ReportDetailPage';
-import MyPage from './pages/mypage/Profile';
-import Profile from './pages/mypage/Profile';
-import DailyRecordPage from './pages/record/DailyRecordPage';
-import ErrorPage from './pages/home/ErrorPage';
+import AppLayout from '@/layouts/AppLayout';
+import Onboarding from '@/pages/onboarding/OnboardingPage';
+import LoginPage from '@/pages/auth/LoginPage';
+import SignupPage from '@/pages/auth/SignupPage';
+import PersonaTestPage from '@/pages/onboarding/PersonaTestPage';
+import PersonaResultPage from '@/pages/onboarding/PersonaResultPage';
+import TermsPage from '@/pages/onboarding/TermsPage';
+import StatsPage from '@/pages/stats/StatsPage';
+import AnalysisPage from '@/pages/stats/AnalysisPage';
+import RecordHomePage from '@/pages/record/RecordHomePage';
+import FragmentPage from '@/pages/record/FragmentPage';
+import FragmentDetailPage from '@/pages/record/FragmentDetailPage';
+import SearchPage from '@/pages/record/SearchPage';
+import SearchResultPage from '@/pages/record/SearchResultPage';
+import RecordCreatePage from '@/pages/record/RecordCreatePage';
+import StockSearchPage from '@/pages/record/StockSearchPage';
+import FeedbackPage from '@/pages/record/FeedbackPage';
+import HomePage from '@/pages/home/HomePage';
+import NotificationPage from '@/pages/home/NotificationPage';
+import MindScoreDetailPage from '@/pages/home/MindScoreDetailPage';
+import ReportDetailPage from '@/pages/home/ReportDetailPage';
+import Profile from '@/pages/mypage/Profile';
+import DailyRecordPage from '@/pages/record/DailyRecordPage';
+import ErrorPage from '@/pages/home/ErrorPage';
+import DailyRecordDetailPage from '@/pages/record/DailyRecordDetailPage';
 
 const routes: RouteObject[] = [
   {
@@ -73,7 +73,10 @@ const routes: RouteObject[] = [
       {
         path: 'record/:date',
         element: <DailyRecordPage />,
-        handle: { showNav: false },
+      },
+      {
+        path: 'record/:date/:recordId',
+        element: <DailyRecordDetailPage />,
       },
       {
         path: 'fragment',

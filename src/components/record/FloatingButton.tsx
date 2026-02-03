@@ -1,5 +1,5 @@
 import React from 'react';
-import PlusWhite from '../../assets/icons/plus-white.svg';
+import PlusWhite from '@/assets/icons/plus-white.svg';
 import { useNavigate } from 'react-router-dom';
 
 const FloatingButton = () => {

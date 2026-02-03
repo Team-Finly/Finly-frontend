@@ -1,6 +1,6 @@
 import React from 'react';
-import Before from '../../assets/icons/before.svg';
-import RecordSearch2 from '../../assets/icons/record_search2.svg';
+import Before from '@/assets/icons/before.svg';
+import RecordSearch2 from '@/assets/icons/record_search2.svg';
 import SearchHistory from '@/components/record/SearchHistory';
 import { useNavigate } from 'react-router-dom';
 
