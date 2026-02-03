@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
-import ArrowLeft from '../../assets/icons/arrow-left.svg';
-import ArrowRight from '../../assets/icons/arrow-right.svg';
+import ArrowLeft from '@/assets/icons/arrow-left.svg';
+import ArrowRight from '@/assets/icons/arrow-right.svg';
 
 interface CalendarProps {
   selectedDate: Date | null;

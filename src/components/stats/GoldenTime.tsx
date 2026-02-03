@@ -1,5 +1,5 @@
 import TimeIcon from '@/assets/icons/stats_time.svg';
-import TimeModal from './TimeModal';
+import TimeModal from '@/components/stats/TimeModal';
 import { useState } from 'react';
 
 const GoldenTime = () => {

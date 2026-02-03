@@ -1,8 +1,8 @@
 import React from 'react';
-import Gradient from '../../assets/images/gradient.svg';
-import { EMOTIONS } from '../../constants/emotions';
-import Light from '../../assets/images/light.png';
-import Close from '../../assets/icons/close-dark.svg';
+import Gradient from '@/assets/images/gradient.svg';
+import { EMOTIONS } from '@/constants/emotions';
+import Light from '@/assets/images/light.png';
+import Close from '@/assets/icons/close-dark.svg';
 import { useNavigate } from 'react-router-dom';
 
 const MOCK_DATA = {

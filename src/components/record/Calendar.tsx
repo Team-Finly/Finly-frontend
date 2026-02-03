@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import ArrowLeft from '../../assets/icons/arrow-left.svg';
-import ArrowRight from '../../assets/icons/arrow-right.svg';
-import { EMOTIONS } from '../../constants/emotions';
+import ArrowLeft from '@/assets/icons/arrow-left.svg';
+import ArrowRight from '@/assets/icons/arrow-right.svg';
+import { EMOTIONS } from '@/constants/emotions';
 import type { MonthlyRecordResponse } from '@/types/record';
 import { useNavigate } from 'react-router-dom';
 
@@ -120,7 +120,7 @@ const Calendar = ({ onClose }: CalendarProps) => {
     const day = String(date.getDate()).padStart(2, '0');
 
     navigate(`/record/${year}-${month}-${day}`);
-    
+
     if (onClose) onClose();
   };
 
@@ -186,18 +186,17 @@ const Calendar = ({ onClose }: CalendarProps) => {
               onClick={() => {
                 if (isClickable) handleDayClick(date);
               }}
-              className={`relative flex min-h-11.5 flex-col items-center
-                ${!isPrevMonth && !isNextMonth ? 'cursor-pointer' : 'pointer-events-none'}
-              `}
+              className={`relative flex min-h-11.5 flex-col items-center ${!isPrevMonth && !isNextMonth ? 'cursor-pointer' : 'pointer-events-none'} `}
             >
               {isToday && (
                 <div className="bg-secondary/6 border-primary absolute top-0 z-0 h-11.5 w-full max-w-10 rounded-lg border" />
               )}
               <span
-                className={`flex h-8 items-center justify-center font-semibold ${isPrevMonth || isNextMonth
-                  ? 'text-gray-300/80'
-                  : 'text-gray-900'
-                  }`}
+                className={`flex h-8 items-center justify-center font-semibold ${
+                  isPrevMonth || isNextMonth
+                    ? 'text-gray-300/80'
+                    : 'text-gray-900'
+                }`}
               >
                 {date.getDate()}
               </span>
