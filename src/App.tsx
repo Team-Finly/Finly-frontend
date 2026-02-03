@@ -5,6 +5,7 @@ import {
 } from 'react-router-dom';
 import './App.css';
 import AppLayout from '@/layouts/AppLayout';
+import Onboarding from '@/pages/onboarding/OnboardingPage';
 import LoginPage from '@/pages/auth/LoginPage';
 import SignupPage from '@/pages/auth/SignupPage';
 import PersonaTestPage from '@/pages/onboarding/PersonaTestPage';
@@ -38,6 +39,11 @@ const routes: RouteObject[] = [
         index: true,
         element: <HomePage />,
         handle: { showNav: true },
+      },
+      {
+        path: 'onboarding',
+        element: <Onboarding />,
+        handle: { showNav: false },
       },
       {
         path: 'login',
