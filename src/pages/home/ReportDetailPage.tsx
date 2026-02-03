@@ -63,7 +63,7 @@ const ReportDetailPage = () => {
           <img
             src={ReportImage}
             alt="report background"
-            className="absolute bottom- right-0 w-[253.73px] pointer-events-none z-0"
+            className="absolute bottom-2 right-0 w-[253.73px] pointer-events-none z-0"
           />
         </div>
       </main>
