@@ -3,7 +3,7 @@ import CalIcon from '@/assets/icons/stats_cal.svg';
 import WCalIcon from '@/assets/icons/stats_cal_w.svg';
 import AnalysisChart from '@/components/stats/AnalysisChart';
 import AnalysisCard from '@/components/stats/AnalysisCard';
-import AnalysisAI from '@/components/stats/AnalysisAI';
+import FinlyTalk from '@/components/FinlyTalk';
 import SelectDateModal from '@/components/stats/SelectDateModal';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
@@ -227,7 +227,7 @@ const AnalysisPage = () => {
       {hasRecords ? (
         <>
           <AnalysisCard data={selectedData} />
-          <AnalysisAI />
+          <FinlyTalk />
         </>
       ) : (
         <div className="mt-11.25 flex flex-col items-center gap-11.5 px-4">

@@ -110,7 +110,7 @@ const RelationChart = () => {
         종목 가격 변동 시점의 내 마음
       </div>
 
-      <div className="h-[184px] rounded-[10px] bg-gray-50 p-4">
+      <div className="h-[184px] min-h-[184px] rounded-[10px] bg-gray-50 p-4">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart
             data={chartData}
