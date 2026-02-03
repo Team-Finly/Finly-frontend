@@ -32,7 +32,7 @@ export const formatDateDisplay = (dateString: string) => {
   return `${parseInt(month)}월 ${parseInt(day)}일`;
 };
 
-// "YYYY-MM-DD" -> "YYYY년 M월 D일 (요일)"
+// "YYYY-MM-DD" -> "YYYY.M.D (요일)"
 export const formatDate = (dateString: string): string => {
   if (!dateString) return '';
   const date = new Date(dateString.replace(/\./g, '-'));
