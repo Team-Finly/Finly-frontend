@@ -1,5 +1,6 @@
 import Before from '@/assets/icons/before.svg';
 import CalendarIcon from '@/assets/icons/calendar.svg';
+import { formatDate } from '@/utils/date';
 import { useNavigate } from 'react-router-dom';
 
 interface HeaderProps {
@@ -19,7 +20,7 @@ const DailyRecordHeader = ({ title, onCalendarClick }: HeaderProps) => {
         >
           <img className="h-4 w-2" src={Before} alt="이전" />
         </button>
-        <h1 className="text-lg font-semibold text-gray-900">{title}</h1>
+        <h1 className="text-lg font-semibold text-gray-900">{formatDate(title)}</h1>
         <button
           className="absolute right-4 cursor-pointer"
           onClick={onCalendarClick}

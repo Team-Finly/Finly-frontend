@@ -33,7 +33,7 @@ export const formatDateDisplay = (dateString: string) => {
 };
 
 // "YYYY-MM-DD" -> "YYYY년 M월 D일 (요일)"
-export const formatRecordDate = (dateString: string): string => {
+export const formatDate = (dateString: string): string => {
   if (!dateString) return '';
   const date = new Date(dateString.replace(/\./g, '-'));
   if (isNaN(date.getTime())) return dateString;
