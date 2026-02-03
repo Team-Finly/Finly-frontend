@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import TextField from "../../components/auth/TextField";
-import backIcon from "../../assets/icons/Vector.svg";
-import { authApi } from "../../types/auth";
+import TextField from "@/components/auth/TextField";
+import backIcon from "@/assets/icons/Vector.svg";
+import { authApi } from "@/types/auth";
 
 
 const LoginPage = () => {
@@ -29,21 +29,21 @@ const handleLogin = async (e: React.FormEvent) => {
     setLoginError(false);
 
     try {
-      // 1. API 호출 (명세: email, password 전송)
+      // 1. API 호출 
       const res = await authApi.login({ email, password });
 
       if (res.isSuccess) {
-        // 2. 토큰 저장 (명세의 result.accessToken 저장)
+        // 2. 토큰 저장 
         const accessToken = res.result.accessToken;
         localStorage.setItem("accessToken", accessToken);
 
         // 3. 성공 알림 및 홈 이동
         alert(`${res.result.member.nickname}님, 환영합니다!`);
-        navigate('/'); // 메인 페이지 경로로 수정하세요
+        navigate('/'); 
       }
     } catch (error: any) {
       console.error("❌ 로그인 실패:", error);
-      // 4. 에러 처리: 401(비밀번호 틀림) 또는 404(가입 안됨) 등
+      
       setLoginError(true);
     } finally {
       setIsLoading(false);

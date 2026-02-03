@@ -1,14 +1,14 @@
-import backIcon from '../../assets/icons/Vector.svg';
-import checkIcon from '../../assets/icons/isvalid.svg'
-import checkgray from '../../assets/icons/checkgray.svg'
-import checkblue from '../../assets/icons/checkblue.svg'
-import Button from '../../components/onboarding/Button';
-import Unchecked from '../../assets/icons/unchecked.svg'
-import rightarrow from '../../assets/icons/rightarrow.svg'
+import backIcon from '@/assets/icons/Vector.svg';
+import checkIcon from '@/assets/icons/isvalid.svg'
+import checkgray from '@/assets/icons/checkgray.svg'
+import checkblue from '@/assets/icons/checkblue.svg'
+import Button from '@/components/onboarding/Button';
+import Unchecked from '@/assets/icons/unchecked.svg'
+import rightarrow from '@/assets/icons/rightarrow.svg'
 import { useNavigate } from 'react-router-dom';
 import  { useState } from 'react';
 import { useEffect } from 'react';
-import { useSignupStore } from '../../store/signupStore';
+import { useSignupStore } from '@/store/signupStore';
 const TermsPage = () => {
 const navigate = useNavigate();
 const { setTermAgreements } = useSignupStore();

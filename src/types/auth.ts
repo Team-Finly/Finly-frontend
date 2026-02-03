@@ -1,5 +1,5 @@
 import { api } from "./client";
-import type { ApiResponse } from "../apis/types";
+import type { ApiResponse } from "./types";
 
 export type CheckEmailResult = { available: boolean };
 

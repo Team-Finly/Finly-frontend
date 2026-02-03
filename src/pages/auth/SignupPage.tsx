@@ -40,9 +40,8 @@ const SignupPage = () => {
         ? false
         : emailChecked === "taken" || emailChecked === "error"
           ? false
-          : emailChecked === "ok"
-            ? true
-            : undefined;
+          : true
+           
 
   const emailHelperText =
     email.length === 0

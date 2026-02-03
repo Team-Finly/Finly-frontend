@@ -1,18 +1,18 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import Button from '../../components/onboarding/Button';
-import turtleImg from '../../assets/icons/nametag1.svg';
-import deerImg from '../../assets/icons/nametag2.svg';
-import eagleImg from '../../assets/icons/nametag3.svg';
-import lionImg from '../../assets/icons/nametag4.svg';
-import turtleChar from '../../assets/icons/turtle.svg';
-import deerChar from '../../assets/icons/deer.svg';
-import eagleChar from '../../assets/icons/eagle.svg';
-import lionChar from '../../assets/icons/lion.svg';
-import shadow from '../../assets/images/shadow.png';
-import BackgroundEffect from '../../components/onboarding/BackgroundEffect';
+import Button from '@/components/onboarding/Button';
+import turtleImg from '@/assets/icons/nametag1.svg';
+import deerImg from '@/assets/icons/nametag2.svg';
+import eagleImg from '@/assets/icons/nametag3.svg';
+import lionImg from '@/assets/icons/nametag4.svg';
+import turtleChar from '@/assets/icons/turtle.svg';
+import deerChar from '@/assets/icons/deer.svg';
+import eagleChar from '@/assets/icons/eagle.svg';
+import lionChar from '@/assets/icons/lion.svg';
+import shadow from '@/assets/images/shadow.png';
+import BackgroundEffect from '@/components/onboarding/BackgroundEffect';
 import { useState, useEffect } from 'react';
-import { useSignupStore } from '../../store/signupStore';
-import { submitPersonaAnswers } from '../../types/personaTest' ;
+import { useSignupStore } from '@/store/signupStore';
+import { submitPersonaAnswers } from '@/types/personaTest' ;
 
 const PERSONA_ID_MAP: Record<number, string> = {
   1: 'TURTLE',
