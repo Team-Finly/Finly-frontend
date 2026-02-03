@@ -26,6 +26,7 @@ import ReportDetailPage from './pages/home/ReportDetailPage';
 import MyPage from './pages/mypage/Profile';
 import Profile from './pages/mypage/Profile';
 import DailyRecordPage from './pages/record/DailyRecordPage';
+import DailyRecordDetailPage from './pages/record/DailyRecordDetailPage';
 
 const routes: RouteObject[] = [
   {
@@ -65,7 +66,10 @@ const routes: RouteObject[] = [
       {
         path: 'record/:date',
         element: <DailyRecordPage />,
-        handle: { showNav: false },
+      },
+      {
+        path: 'record/:date/:recordId',
+        element: <DailyRecordDetailPage />,
       },
       {
         path: 'fragment',
@@ -129,7 +133,7 @@ const routes: RouteObject[] = [
       },
       {
         path: 'profile',
-        element: <Profile/>,
+        element: <Profile />,
         handle: { showNav: true },
       }
     ],
