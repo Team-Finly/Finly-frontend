@@ -1,4 +1,4 @@
-import FinlyTalk from "../FinlyTalk";
+import FinlyTalk from "@/components/FinlyTalk";
 
 interface CardProps {
   record: {
