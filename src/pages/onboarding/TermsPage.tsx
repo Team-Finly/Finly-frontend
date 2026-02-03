@@ -104,7 +104,7 @@ const handleNext = (path: string) => {
     </button>
 
     <div className="flex flex-row items-center text-left w-full mt-[30px] gap-[8px]">
-        <button onClick={handleRequire1}>
+       <button onClick={handleRequire1} aria-pressed={require1} aria-label="(필수) 이용약관 동의">
         <img src={!require1 ? Unchecked : checkIcon} alt="" />
         </button>
         <p className=" text-[16px] font-medium text-gray-900"> (필수) 이용약관 동의</p>
@@ -112,7 +112,7 @@ const handleNext = (path: string) => {
     </div>
 
     <div className="flex flex-row items-center text-left w-full mt-[30px] gap-[8px]">
-        <button onClick={handleRequire2}>
+        <button onClick={handleRequire2} aria-pressed={require2} aria-label="(필수) 개인정보 처리방침 동의">
         <img src={!require2 ? Unchecked : checkIcon} alt="" />
         </button>
         <p className=" text-[16px] font-medium text-gray-900"> (필수) 개인정보 처리방침 동의</p>
@@ -120,7 +120,7 @@ const handleNext = (path: string) => {
     </div>
 
     <div className="flex flex-row items-center text-left w-full mt-[30px] gap-[8px]">
-        <button onClick={handleRequire3}>
+        <button onClick={handleRequire3} aria-pressed={require3} aria-label="(선택) 마케팅 정보수신 동의">
         <img src={!require3 ? Unchecked : checkIcon} alt="" />
         </button>
         <p className=" text-[16px] font-medium text-gray-900"> (선택) 마케팅 정보수신 동의</p>
