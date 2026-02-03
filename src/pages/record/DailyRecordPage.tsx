@@ -67,12 +67,13 @@ const MOCK_RESPONSE: RecordDetailResponse = {
 const DailyRecordPage = () => {
   const navigate = useNavigate();
   const { date } = useParams<{ date: string }>();  
+  const targetDate = date ?? MOCK_RESPONSE.date;
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [data, setData] = useState<RecordDetailResponse | null>(null);
 
   useEffect(() => {
-    setData(MOCK_RESPONSE); // 나중에 API로 교체
-  }, [date]);
+    setData({ ...MOCK_RESPONSE, date: targetDate }); // 나중에 API로 교체
+  }, [targetDate]);
 
   if (!data) {
     return <div className="h-screen bg-[#F4F5F7]" />;
@@ -81,7 +82,7 @@ const DailyRecordPage = () => {
   return (
     <div className="h-screen  bg-[#F4F5F7] pt-[76px]">
       <DailyRecordHeader
-        title={data.date}
+        title={targetDate}
         onCalendarClick={() => setIsCalendarOpen(true)}
       />
       
@@ -90,7 +91,7 @@ const DailyRecordPage = () => {
       <DailyRecordTimeLine
         sections={data.sections}
         onItemClick={(recordId: number) => {
-          navigate(`/record/${data.date}/${recordId}`);
+          navigate(`/record/${targetDate}/${recordId}`);
         }}
       />
       
