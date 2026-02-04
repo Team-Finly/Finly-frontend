@@ -6,7 +6,7 @@ export interface MarketIndex {
   updatedAt: string;
 }
 
-export interface MarketIndexApiResponse {
+export interface MarketApiResponse {
   isSuccess: boolean;
   code: string;
   message: string;
