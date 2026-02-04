@@ -74,7 +74,7 @@ const ProfileSettings = () => {
         </div>
       </div>
       <div className="flex-1 overflow-y-auto scrollbar-hide pt-[75px] px-[16px]">
-        <div className="flex flex-col items-center min-h-full pb-10">
+        <div className="flex flex-col items-center min-h-full pb-[52px]">
             
           <div className="relative mb-[30px] mt-[49px]">
             <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center overflow-hidden">
@@ -133,7 +133,7 @@ const ProfileSettings = () => {
                 <button
                   onClick={handleComplete}
                   disabled={!!errorMessage}
-                  className="w-full py-4 bg-blue-500 text-white rounded-[12px] font-bold"
+                  className="w-full py-4 bg-blue-500 text-white rounded-[12px] font-bold mt-[240px]"
                 >
                   완료
                 </button>
