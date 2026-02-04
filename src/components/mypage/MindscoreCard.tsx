@@ -7,18 +7,15 @@ type Props = {
 };
 
 const MindscoreCard = ({ score, color, size = 76 }: Props) => {
-  // ----------------------------------------------------------------
-  // [요청하신 원본 변수 및 로직 유지]
-  // ----------------------------------------------------------------
   const radius = 40;
   const circumference = 2 * Math.PI * radius;
   const clampedScore = Math.min(100, Math.max(0, score));
   const offset = circumference - (clampedScore / 100) * circumference;
-  // ----------------------------------------------------------------
+
 
   return (
     
-    <div className="flex w-full flex-1 flex-col items-center justify-center rounded-[12px] bg-white border border-gray-50">
+    <div className=" h-[176px] flex w-full flex-1 flex-col items-center justify-center rounded-[12px] bg-white border border-gray-50">
       
       <h3 className="mb-[12px] mt-[24px] text-[14px] font-semibold text-gray-800">
         금융 마음 지수

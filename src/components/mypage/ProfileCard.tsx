@@ -4,7 +4,7 @@ import profileImg from '@/assets/icons/profile.svg';
 const ProfileCard = () => {
 
   return (
-    <div className="flex flex-1 flex-col items-center justify-center rounded-[12px] border border-gray-50 bg-white py-6">
+    <div className="h-[176px] flex flex-1 flex-col items-center justify-center rounded-[12px] border border-gray-50 bg-white py-6">
             <img
                 src={profileImg}
                 alt="Profile"
