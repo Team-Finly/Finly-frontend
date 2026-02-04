@@ -13,7 +13,6 @@ const [isSubmitting, setIsSubmitting] = React.useState(false);
 const handleSignupSubmit = async () => {
     try {
         setIsSubmitting(true);
-      // 1. 서버 전송용 데이터
       const payload = {
         email: signupData.email,
         password: signupData.password,

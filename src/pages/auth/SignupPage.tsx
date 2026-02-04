@@ -5,7 +5,6 @@ import backIcon from "@/assets/icons/Vector.svg";
 import { useSignupStore } from "@/store/signupStore";
 import { authApi } from "../../apis/authApi";
 
-
 const REGEX = {
   EMAIL: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
   PASSWORD: /^(?=.*[a-zA-Z])(?=.*[0-9]).{6,}$/,
@@ -16,10 +15,8 @@ type Step = "email" | "password" | "nickname";
 
 const SignupPage = () => {
   const navigate = useNavigate();
-
   const { email, setEmail, password, setPassword, nickname, setNickname } = useSignupStore();
   // 2. 로컬 전용 상태 관리 (서버 체크 결과 및 로딩)
-
   const [step, setStep] = useState<Step>("email");
   const [pwConfirm, setPwConfirm] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -31,7 +28,6 @@ const SignupPage = () => {
 
   // ===== 검증 =====
   const isEmailFormatValid = REGEX.EMAIL.test(email);
-
   const isPwValid = REGEX.PASSWORD.test(password);
   const isMatch = pwConfirm.length > 0 && password === pwConfirm;
   const isNicknameValid = (name: string) => REGEX.NICKNAME.test(name) && name.length >= 2;
@@ -44,9 +40,7 @@ const SignupPage = () => {
         ? false
         : emailChecked === "taken" || emailChecked === "error"
           ? false
-          : true
-           
-
+          : true;
   const emailHelperText =
     email.length === 0
       ? ""
@@ -59,8 +53,6 @@ const SignupPage = () => {
             : serverError
               ? serverError
               : "";
-
-
  const handleEmailNext = async () => {
     if (!isEmailFormatValid) return;
 
@@ -72,11 +64,17 @@ const SignupPage = () => {
       const res = await authApi.checkEmail(email);
 
       
-      if (res?.isSuccess && res?.result?.available) {
-        setEmailChecked("ok");
+      if (res.isSuccess) {
+        if (res.result.available){
+           setEmailChecked("ok");
         setStep("password");
       } else {
         setEmailChecked("taken");
+      }
+        }
+      else {
+        setEmailChecked("error");
+        setServerError("이메일 확인에 실패했습니다. 다시 시도해 주세요.");
       }
     } catch (e) {
       setEmailChecked("error");
@@ -145,10 +143,6 @@ const SignupPage = () => {
                 setServerError("");}}
               isValid={emailIsValidForUI}
               helperText={emailHelperText}
-
-              
-
-
             />
           </>
         )}
@@ -226,7 +220,6 @@ const SignupPage = () => {
           </>
         )}
       </div>
-
       {/* 버튼 영역 */}
       <div className="mb-[52px] w-full">
         {step === 'email' && (

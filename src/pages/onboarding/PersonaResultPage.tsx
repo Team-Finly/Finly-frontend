@@ -12,14 +12,9 @@ import shadow from '@/assets/images/shadow.png';
 import BackgroundEffect from '@/components/onboarding/BackgroundEffect';
 import { useState, useEffect } from 'react';
 import { useSignupStore } from '@/store/signupStore';
-import { submitPersonaAnswers } from '@/types/personaTest' ;
+import { submitPersonaAnswers } from '@/apis/personaApi';
 
-const PERSONA_ID_MAP: Record<number, string> = {
-  1: 'TURTLE',
-  2: 'DEER',
-  3: 'EAGLE',
-  4: 'LION',
-};
+
 
 const PERSONA_UI_DATA: any = {
 
@@ -60,7 +55,6 @@ const PERSONA_UI_DATA: any = {
 
   const PersonaResultPage = () => {
   const navigate = useNavigate();
-  const location = useLocation();
   const signupData = useSignupStore();
   
   // 상태 관리
@@ -75,12 +69,8 @@ const PERSONA_UI_DATA: any = {
         const payload = {
           answers: signupData.personaAnswers
         };
-
         const res = await submitPersonaAnswers("signup", payload);
         console.log("🔥 서버 전체 응답 확인:", res);
-
-       
-        
         const responseData: any = res; // 타입 유연하게 처리
         const serverType = responseData.result?.personaType;
         
@@ -100,10 +90,8 @@ const PERSONA_UI_DATA: any = {
         setIsLoading(false);
       }
     };
-
     fetchResult(); 
   }, []); 
-
 
   const handleNext = () => {
     navigate('/terms'); 
@@ -116,7 +104,6 @@ const PERSONA_UI_DATA: any = {
       </div>
     );
   }
-
   
   const currentUI = PERSONA_UI_DATA[resultType || 'TURTLE'];
   const userNickname = signupData.nickname || "핀리대장";

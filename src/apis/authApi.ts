@@ -9,7 +9,6 @@ import type {
   SignupResult 
 } from "../types/auth"; 
 
-
 export const authApi = {
   // 1. 이메일 중복 체크 (GET 요청)
   async checkEmail(email: string) {

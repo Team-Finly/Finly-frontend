@@ -6,7 +6,6 @@ export interface ApiResponse<T> {
 }
 
 export type CheckEmailResult = { available: boolean };
-
 export type LoginRequest = { email: string; password: string };
 export type LoginResult = {
   accessToken: string;
