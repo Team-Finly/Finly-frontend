@@ -90,15 +90,15 @@ const ProfileSettings = () => {
             )}
           </div>
 
-          <div className="w-full space-y-[40px]">
-            <div>
+          <div className="w-full">
+            <div className='relative w-full mb-[40px]'>
               <label className="text-[14px] text-gray-500 mb-2 block font-semibold">닉네임</label>
               <input
                 type="text"
                 value={nickname}
                 onChange={handleNicknameChange}
                 readOnly={!isEditing}
-                className={`w-full p-4 rounded-[12px] border-[1.2px] text-[17px] text-rmedium border-gray-50 bg-[#F4F5F7]/60 text-gray-700 outline-none ${
+                className={`w-full p-4 rounded-[12px] border-[1.2px] text-[17px] text-medium border-gray-50 bg-[#F4F5F7]/60 text-gray-700 outline-none ${
                   isEditing
                     ? errorMessage
                       ? "border-stock-buy bg-white text-gray-900" // [1] 에러 발생 시
@@ -107,10 +107,11 @@ const ProfileSettings = () => {
                 }`}
               />
               {isEditing && errorMessage && (
-                <p className="text-[#FF3B30] text-[12px] mt-2 font-medium ml-1">
+                <p className="absolute top-full left-1 text-[#FF3B30] text-[12px] mt-2 font-medium">
                   {errorMessage}
                 </p>
               )}
+
             </div>
 
             <div>
@@ -135,7 +136,8 @@ const ProfileSettings = () => {
                 <button
                   onClick={handleComplete}
                   disabled={!!errorMessage}
-                  className="w-full py-4 bg-blue-500 text-white rounded-[12px] font-bold mt-[240px]"
+                  className="w-full py-4 bg-secondary text-white rounded-[12px] font-semibold mt-[240px]
+                  disabled:bg-gray-100 disabled:text-gray-300 disabled:cursor-not-allowed"
                 >
                   완료
                 </button>
