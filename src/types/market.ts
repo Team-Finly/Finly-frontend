@@ -1,3 +1,10 @@
+export interface MarketApiResponse<T> {
+  isSuccess: boolean;
+  code: string;
+  message: string;
+  result: T;
+}
+
 export interface MarketIndex {
   kospi: number;
   kosdaq: number;
@@ -6,9 +13,10 @@ export interface MarketIndex {
   updatedAt: string;
 }
 
-export interface MarketApiResponse {
-  isSuccess: boolean;
-  code: string;
+export interface MarketInsight {
+  stockName: string;
   message: string;
-  result: MarketIndex;
+  dominantEmotion: string;
+  buySellRatio: string;
+  confidenceLevel: string;
 }
