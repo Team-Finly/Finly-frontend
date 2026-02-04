@@ -1,5 +1,5 @@
 import React from 'react';
-import Close from '../../assets/icons/close-dark.svg';
+import Close from '@/assets/icons/close-dark.svg';
 
 interface HeaderProps {
   title: string;

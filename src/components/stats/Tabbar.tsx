@@ -15,7 +15,7 @@ const Tabbar = ({ currentTab, onTabChange }: Props) => {
           <button
             key={tab.id}
             onClick={() => onTabChange(tab.id)}
-            className={`w-[90px] text-center text-[14px] transition-all ${
+            className={`w-[90px] cursor-pointer text-center text-[14px] transition-all ${
               isActive
                 ? 'border-secondary text-secondary border-b-[2px] font-semibold'
                 : 'font-medium text-gray-500'

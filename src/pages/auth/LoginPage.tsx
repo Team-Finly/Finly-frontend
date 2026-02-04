@@ -1,14 +1,15 @@
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import TextField from "../../components/auth/TextField";
-import backIcon from "../../assets/icons/Vector.svg";
-
+import TextField from "@/components/auth/TextField";
+import backIcon from "@/assets/icons/Vector.svg";
+import { authService } from "@/services/authService";
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState(""); 
-  const [loginError, setLoginError] = useState(false); // 로그인 실패 상태
+  const [loginError, setLoginError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // 이메일 유효성 검사 함수
   const isEmailValid = (email: string) => {
@@ -18,15 +19,29 @@ const LoginPage = () => {
   const isPasswordInputValid = password.length >= 6;
   const isFormValid = isEmailInputValid && isPasswordInputValid;
 
-  // 로그인 버튼 클릭시 실행되는 함수
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    // 실제 로그인 로직에서 실패 시 setLoginError(true) 호출
-    // 실패 시 setLoginError(true);
-    // 성공 시 setLoginError(false);
 
-    //연동시 이부분 수정 필요
+const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!isFormValid) return;
+    setIsLoading(true);
+    setLoginError(false);
+
+    try {
+      // 1. API 호출 
+      const res = await authService.login({ email, password });
+      
+      if (res.isSuccess) {
+        // 2. 토큰 저장 
+        alert(`${res.result.member.nickname}님, 환영합니다!`);
+        navigate('/');
+      }
+    } catch (error: any) {
+      console.error("❌ 로그인 실패:", error);
+      
+      setLoginError(true);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -71,7 +86,7 @@ const LoginPage = () => {
             showValidIcon={false}
           />
           {loginError && (
-            <div className="mt-[10px]  text-[#F04452] font-normal">
+            <div className="mt-[10px]  text-[#F04452] text-[16px] font-regular">
               이메일과 비밀번호가 일치하지 않습니다
             </div>
           )}

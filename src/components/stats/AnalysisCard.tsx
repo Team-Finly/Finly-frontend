@@ -56,7 +56,7 @@ const AnalysisCard = ({ data }: AnalysisCardProps) => {
       <div className="mb-2 text-[12px] font-semibold text-gray-300">
         {formatTime(record.recordedAt)}
       </div>
-      <div className="rounded-[12px] border-[1.2px] border-gray-100 bg-gray-50/60 p-3.5 text-[14px] leading-[1.6] text-gray-700">
+      <div className="rounded-[12px] border-[1.2px] border-gray-100 bg-gray-50/60 p-4.5 text-[14px] leading-[1.6] text-gray-700">
         “{record.memo}”
       </div>
     </div>

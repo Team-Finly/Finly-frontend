@@ -128,7 +128,7 @@ const AnalysisChart = ({ data, onDataSelect }: AnalysisChartProps) => {
             />
 
             <Line
-              type="natural"
+              type="linear"
               dataKey="closePrice"
               stroke="#278DFD"
               strokeWidth={3}

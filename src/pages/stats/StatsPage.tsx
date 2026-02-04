@@ -5,10 +5,10 @@ import Tabbar from '@/components/stats/Tabbar';
 import StockImg from '@/assets/images/stats_stockExam.svg';
 import type { Stock } from '@/types/stats';
 import { STATS_TABS, type TabType } from '@/types/stats';
-import RelationTab from './RelationTab';
-import StockTab from './StockTab';
-import EmotionTab from './EmotionTab';
-import EmptyTab from './EmptyTab';
+import RelationTab from '@/pages/stats/RelationTab';
+import StockTab from '@/pages/stats/StockTab';
+import EmotionTab from '@/pages/stats/EmotionTab';
+import EmptyTab from '@/pages/stats/EmptyTab';
 import NoStock from '@/components/stats/NoStock';
 
 // 임시 더미 데이터 (API 연결 시 삭제 예정)
@@ -42,7 +42,7 @@ const StatsPage = () => {
   };
 
   return (
-    <div className="flex w-full flex-1 flex-col pb-20">
+    <div className="flex w-full flex-1 flex-col bg-gray-50 pb-25">
       <style>{`
         .recharts-wrapper,
         .recharts-wrapper *,
