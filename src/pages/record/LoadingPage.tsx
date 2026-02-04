@@ -26,18 +26,15 @@ const LoadingPage = () => {
   ];
 
   useEffect(() => {
-    // 1. 2초 후 페이드 아웃 시작 (문구 교체 준비)
     const fadeOutTimer = setTimeout(() => {
       setIsExiting(true);
     }, 1500);
 
-    // 2. 3초 시점(1초간의 애니메이션 후)에 텍스트 변경 및 페이드 인
     const changeTextTimer = setTimeout(() => {
       setTextIndex(1);
       setIsExiting(false);
     }, 2000);
 
-    // 3. 5초 후 페이지 이동 (로딩 완료)
     const navigateTimer = setTimeout(() => {
       navigate('/feedback');
     }, 5000);
@@ -80,7 +77,6 @@ const LoadingPage = () => {
           <p>{messages[textIndex].sub2}</p>
         </div>
       </div>
-      {/* 진행률 로딩바 */}
       <div className="mt-15 w-full">
         <div className="mx-auto mb-3 h-2 max-w-[333px] rounded-[14.5px] bg-gray-100">
           <div
