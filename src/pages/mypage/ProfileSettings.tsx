@@ -47,7 +47,7 @@ const ProfileSettings = () => {
     } 
   }
     else {
-    navigate('/mypagesettings');
+    navigate(-1);
     }
   };
 
@@ -58,7 +58,7 @@ const ProfileSettings = () => {
           <button
             className="absolute left-4 cursor-pointer"
             onClick={handleBackClick}>
-            <img src={Before} alt="이전" onClick={handleBackClick} className="cursor-pointer"/>
+            <img src={Before} alt="이전" className="cursor-pointer"/>
           </button>
           <h1 className="text-lg font-semibold text-gray-900">
             {isEditing ? "프로필 수정" : "프로필 및 계정 "}
