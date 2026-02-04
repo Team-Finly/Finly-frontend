@@ -22,8 +22,6 @@ const handleSignupSubmit = async () => {
         personaAnswers: signupData.personaAnswers,
       };
 
-      console.log("🚀 회원가입 최종 요청 데이터:", payload);
-
       const res = await authApi.signup(payload);
 
       if (res.isSuccess) {
@@ -35,6 +33,9 @@ const handleSignupSubmit = async () => {
       console.error("회원가입 실패:", error);
       setIsSubmitting(false);
       alert(error.response?.data?.message || "회원가입 중 오류가 발생했습니다.");
+    }
+    finally {
+      setIsSubmitting(false);
     }
   };
   return (
