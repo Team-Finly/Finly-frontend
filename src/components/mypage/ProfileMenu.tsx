@@ -23,7 +23,7 @@ const ProfileMenu = () => {
 
       <button
         type="button"
-        onClick={() => navigate('/persona-lab')} //임시주소
+        onClick={() => navigate('/mypersona')} //임시주소
         className="mb-[33px] flex w-full cursor-pointer items-center justify-between text-left">
         <div className="flex flex-col gap-[4px]">
           <p className="text-[16px] font-semibold text-gray-900">나의 페르소나</p>
@@ -34,7 +34,7 @@ const ProfileMenu = () => {
 
       <button
         type="button"
-        onClick={() => navigate('/settings')} 
+        onClick={() => navigate('/profilesettings')} 
         className="mb-[42px] flex w-full cursor-pointer items-center justify-between text-left">
         <div className="flex flex-col gap-[4px]">
           <p className="text-[16px] font-semibold text-gray-900">프로필 및 계정 설정</p>

@@ -1,14 +1,14 @@
 import { useNavigate } from 'react-router-dom';
-import TitleHeader from '../../components/record/TitleHeader';
-import turtle from '../../assets/icons/turtle.svg';
-import turtlebg from '../../assets/icons/turtlebg.svg';
-import deer from '../../assets/icons/deer.svg';
-import deerbg from '../../assets/icons/deerbg.svg';
-import eagle from '../../assets/icons/eagle.svg';
-import eaglebg from '../../assets/icons/eaglebg.svg';
-import lion from '../../assets/icons/lion.svg';
-import lionbg from '../../assets/icons/lionbg.svg';
-import light from '../../assets/icons/light.svg'
+import TitleHeader from '@/components/record/TitleHeader';
+import turtle from '@/assets/icons/turtle.svg';
+import turtlebg from '@/assets/icons/turtlebg.svg';
+import deer from '@/assets/icons/deer.svg';
+import deerbg from '@/assets/icons/deerbg.svg';
+import eagle from '@/assets/icons/eagle.svg';
+import eaglebg from '@/assets/icons/eaglebg.svg';
+import lion from '@/assets/icons/lion.svg';
+import lionbg from '@/assets/icons/lionbg.svg';
+import light from '@/assets/icons/light.svg'
 
 const PERSONA_DATA = {
   TURTLE: {
@@ -55,7 +55,6 @@ const PERSONA_DATA = {
     subDesc: <>리스크를 감수하더라도,<br/>성장을 위해 과감히 선택하는 성향이에요</>,
     image: lion,
     bgImage: lionbg,
-    
     bgStyle: "w-[150px] h-[150px]", 
     advice: [
       <>과감함은 좋지만, 모든 판에 전력을 다할 필요는 없어요.</>,
@@ -69,16 +68,18 @@ const MyPersona = () => {
   const navigate = useNavigate();
 
 //테스트
-  const mockPersonaType = "LION"; 
+  const mockPersonaType = "TURTLE"; 
   const data = PERSONA_DATA[mockPersonaType] || PERSONA_DATA.TURTLE;
 
   return (
-    <> 
-      <div className="relative z-50 bg-white">
-        <TitleHeader title="나의 페르소나" />
+    <div className="flex flex-col h-full">
+      <div className='relative z-50 bg-white flex-shrink-0'>
+          <TitleHeader title="나의 페르소나" />
       </div>
-      <main className="flex-1 overflow-y-auto scrollbar-hide">
-      <div className="w-full flex flex-col items-center justify-center mt-[110px] ">
+        
+      
+    <main className="flex-1 overflow-y-auto scrollbar-hide flex flex-col items-center">
+        <div className="w-full flex flex-col items-center justify-center mt-[110px] ">
       
         <div className="relative w-[77px] h-[70px] flex items-center justify-center mt-[42px] mb-[31px]">
           <img 
@@ -102,7 +103,7 @@ const MyPersona = () => {
             </div>
             
             <div className="w-full flex flex-col items-start"> 
-              <div className='flex flex-row items-center gap-[4px] mb-[16px]'> 
+              <div className='flex flex-row items-center gap-[4px] mb-[15px]'> 
                 <img src={light} alt="핀리의 조언 아이콘" className="w-[16px] h-[16px]" />
                 <p className="font-semibold text-[14px] bg-clip-text text-transparent w-fit"
                     style={{ backgroundImage: "linear-gradient(121deg, #E188FF 14.24%, #1677FF 96.82%)" }}>
@@ -110,7 +111,7 @@ const MyPersona = () => {
                 </p>
               </div>
             </div>
-            <div className="w-full min-h-[114px] bg-[#F7F8FA] rounded-[20px] py-[24px] px-[12px] flex flex-col items-center justify-center ">
+            <div className="w-full h-[114px] bg-[#F7F8FA] rounded-[20px] py-[24px] px-[12px] flex flex-col items-center justify-center ">
                 {data.advice.map((line, index) => (
                 <p 
                  key={index} 
@@ -123,16 +124,18 @@ const MyPersona = () => {
           </div>
         </div>
         
-        <div className="w-full px-[16px] mt-[125px]">
+        <div className="w-full px-[16px] mt-[125px] pb-[60px]">
           <button className="w-full py-[12px] h-[50px] bg-secondary text-white rounded-[12px]  leading-[26px] mb-[12px] font-semibold text-[18px]">
             이미지로 저장하기
           </button>
           <button className="w-full h-[50px] py-[12px] bg-gray-50 text-gray-500 rounded-[12px] leading-[26px]  font-semibold text-[18px]">
             테스트 다시하기
           </button>
+          
         </div>
       </main>
-    </> 
+    </div>
+  
   );
 };
 

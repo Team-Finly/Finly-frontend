@@ -1,17 +1,19 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Before from "@/assets/icons/brfore.svg";
+import Before from "@/assets/icons/before.svg";
 import profileIcon from "@/assets/icons/profile.svg";
 import cameraIcon from "@/assets/icons/camera.svg";
-import line from "@/assets/icons/line.svg";
+import line from "@/assets/icons/line50.svg";
+import Modal from "@/components/record/Modal";
 
 const ProfileSettings = () => {
   const navigate = useNavigate();
-  
-  // 상태 관리
   const [isEditing, setIsEditing] = useState(false);
   const [nickname, setNickname] = useState("조아");
   const [errorMessage, setErrorMessage] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const initinalMickname = "조아"; //테스트용 초기닉네임
 
   const handleNicknameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -25,7 +27,7 @@ const ProfileSettings = () => {
     } else if (specialCharRegex.test(value)) {
       setErrorMessage("특수문자는 사용할 수 없어요");
     } else {
-      setErrorMessage(""); // 에러 없음
+      setErrorMessage("");
     }
   };
 
@@ -36,14 +38,27 @@ const ProfileSettings = () => {
     }
   };
 
+  const handleBackClick = () => {
+    if (isEditing) {
+    if (nickname !== initinalMickname) {
+      setIsModalOpen(true);
+    } else {
+      setIsEditing(false);
+    } 
+  }
+    else {
+    navigate('/mypagesettings');
+    }
+  };
+
   return (
     <div className="h-screen flex flex-col bg-white overflow-hidden">
       <div className="fixed top-0 z-10 w-full max-w-120 border-b border-gray-100 bg-white">
         <div className="relative mt-4 flex h-15 items-center justify-center bg-white px-4">
           <button
             className="absolute left-4 cursor-pointer"
-            onClick={() => (isEditing ? setIsEditing(false) : navigate(-1))}>
-            <img src={Before} alt="이전" />
+            onClick={handleBackClick}>
+            <img src={Before} alt="이전" onClick={handleBackClick} className="cursor-pointer"/>
           </button>
           <h1 className="text-lg font-semibold text-gray-900">
             {isEditing ? "프로필 수정" : "프로필 및 계정 "}
@@ -58,10 +73,10 @@ const ProfileSettings = () => {
           )}
         </div>
       </div>
-      <div className="flex-1 overflow-y-auto scrollbar-hide pt-24 px-[16px]">
+      <div className="flex-1 overflow-y-auto scrollbar-hide pt-[75px] px-[16px]">
         <div className="flex flex-col items-center min-h-full pb-10">
             
-          <div className="relative mb-[56px] mt-[49px]">
+          <div className="relative mb-[30px] mt-[49px]">
             <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center overflow-hidden">
               <img src={profileIcon} alt="프로필 이미지" className="w-full h-full object-cover" /> 
 
@@ -73,9 +88,7 @@ const ProfileSettings = () => {
             )}
           </div>
 
-          {/* 입력 폼 */}
           <div className="w-full space-y-[40px]">
-            {/* 닉네임: 수정 모드일 때만 readOnly 해제 */}
             <div>
               <label className="text-[14px] text-gray-500 mb-2 block font-semibold">닉네임</label>
               <input
@@ -86,7 +99,6 @@ const ProfileSettings = () => {
                 className={`w-full p-4 rounded-[12px] border-[1.2px] text-[17px] text-rmedium border-gray-50 bg-[#F4F5F7]/60 text-gray-700 outline-none ${
                   isEditing
                     ? errorMessage
-
                       ? "border-stock-buy bg-white text-gray-900" // [1] 에러 발생 시
                       : "border-gray-300 bg-white text-gray-900 focus:border-secondary" // [2] 정상
                       : "border-gray-100 bg-[#F4F5F7]/60 text-gray-700" // [3] 조회
@@ -99,7 +111,6 @@ const ProfileSettings = () => {
               )}
             </div>
 
-            {/* 이메일: 항상 읽기 전용 */}
             <div>
               <label className="text-[14px] text-gray-500 mb-2 block font-semibold">이메일</label>
               <input
@@ -117,7 +128,7 @@ const ProfileSettings = () => {
               className="w-full mt-[203px] mb-[30px]"
                 />
             )}
-            <div className={`w-full ${isEditing ? 'mt-auto pt-[230px]' : ''}`}>
+            <div className={`w-full`}>
               {isEditing ? (
                 <button
                   onClick={handleComplete}
@@ -127,7 +138,7 @@ const ProfileSettings = () => {
                   완료
                 </button>
               ) : (
-                <div className="flex flex-col space-y-[30px]">
+                <div className="flex flex-col gap-[30px]">
                   <button className="text-left text-[14px] text-medium text-gray-500/80">비밀번호 변경</button>
                   <button className="text-left text-[14px] text-medium text-stock-buy">서비스 탈퇴</button>
                 </div>
@@ -136,6 +147,23 @@ const ProfileSettings = () => {
           </div>
         </div>
       </div>
+
+      {isModalOpen && (
+        <Modal
+          text="수정을 취소할까요?"
+          desc="작성된 내용은 저장되지 않아요"
+          onClickLeft={() => {
+            setIsEditing(false);
+            setIsModalOpen(false);
+            setNickname(initinalMickname);
+          }}
+          onClickRight={() => {
+            setIsModalOpen(false);
+      
+          }}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
     </div>
   );
 };
