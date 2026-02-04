@@ -3,14 +3,16 @@ import Button from '@/components/onboarding/Button';
 import ProgressBar from '@/components/onboarding/ProgressBar';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MOCK_QUESTIONS } from '@/types/persona';
-import backIcon from '@/assets/icons/Vector.svg';
+import { MOCK_QUESTIONS } from "@/constants/personaData";
+import backIcon from "../../assets/icons/Vector.svg";
+import { useSignupStore } from "../../store/signupStore";
 
 const PersonaTestPage = () => {
-  const navigate = useNavigate();
-  const [step, setStep] = useState(0);
-  const [answers, setAnswers] = useState<Record<number, number>>({});
-  const currentQ = MOCK_QUESTIONS[step];
+const navigate = useNavigate();
+const setPersonaAnswers = useSignupStore((state) => state.setPersonaAnswers);
+const [step, setStep] = useState(0);
+const[answers, setAnswers] = useState<Record<number, number>>({});
+const currentQ = MOCK_QUESTIONS[step];
 
   //옵션 선택 함수 정의
   const handleSelect = (optionId: number) => {
@@ -23,19 +25,18 @@ const PersonaTestPage = () => {
   //다음 버튼 함수 정의
   const handleNext = () => {
     if (step < MOCK_QUESTIONS.length - 1) {
-      setStep(step + 1); // 다음 문제 이동
+      setStep(step + 1); 
     } else {
-      console.log('최종 제출 데이터:', answers);
-      navigate('/onboarding/personaresult');
-    }
-  };
+      const formattedAnswers = Object.entries(answers).map(([qId, optId]) => ({
+        questionId: Number(qId),
+        optionId: optId
+      }));
+      console.log("최종 제출 데이터:", answers);
+      
+      console.log("📦 스토어에 데이터 저장 중...", formattedAnswers);
+      setPersonaAnswers(formattedAnswers);
 
-  // 뒤로가기 함수 정의
-  const handleBack = () => {
-    if (step === 0) {
-      navigate(-1);
-    } else {
-      setStep(step - 1);
+      navigate('/onboarding/personaresult');
     }
   };
 
@@ -60,9 +61,7 @@ const PersonaTestPage = () => {
           />
         </button>
 
-        <h1 className="text-lg leading-none font-semibold text-gray-900">
-          투자 페르소나 테스트
-        </h1>
+        <h1 className="text-lg leading-none font-semibold text-gray-900">투자 페르소나 테스트</h1>
       </header>
       <div className="flex flex-col">
         <ProgressBar current={step + 1} total={3} />

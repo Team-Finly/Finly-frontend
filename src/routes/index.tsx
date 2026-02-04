@@ -16,13 +16,13 @@ const routes: RouteObject[] = [
     children: [
       // 🔓 비로그인 상태에서 접근 가능한 경로
       ...authRoutes,
+      ...onboardingRoutes,
 
       // 🔐 로그인한 사용자만 접근 가능한 경로
       {
         element: <ProtectedRoute />,
         children: [
           ...mainRoutes,
-          ...onboardingRoutes,
           ...recordRoutes,
           ...statsRoutes,
           ...userRoutes,

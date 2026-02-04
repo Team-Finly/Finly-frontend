@@ -1,19 +1,4 @@
-export type SubmitAnswersRequest = { 
-  answers: { questionId: number; optionId: number }[];
-};
-
-export interface Option {
-  id: number;
-  choiceCode: string;
-  content: string;
-}
-
-export interface Question {
-  id: number;
-  questionCode: string;
-  content: string;
-  options: Option[];
-}
+import type { Question } from "@/types/persona";
 
 export const MOCK_QUESTIONS: Question[] = [
   {
