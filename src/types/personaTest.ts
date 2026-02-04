@@ -1,4 +1,4 @@
-import { api } from "../types/client";
+import { api } from "@/apis/client";
 import type { ApiResponse } from "./types";
 
 export type PersonaQuestionOption = {
