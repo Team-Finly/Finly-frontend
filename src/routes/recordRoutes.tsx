@@ -1,14 +1,15 @@
-import DailyRecordDetailPage from "@/pages/record/DailyRecordDetailPage";
-import DailyRecordPage from "@/pages/record/DailyRecordPage";
-import FeedbackPage from "@/pages/record/FeedbackPage";
-import FragmentDetailPage from "@/pages/record/FragmentDetailPage";
-import FragmentPage from "@/pages/record/FragmentPage";
-import RecordCreatePage from "@/pages/record/RecordCreatePage";
-import RecordHomePage from "@/pages/record/RecordHomePage";
-import SearchPage from "@/pages/record/SearchPage";
-import SearchResultPage from "@/pages/record/SearchResultPage";
-import StockSearchPage from "@/pages/record/StockSearchPage";
-import type { RouteObject } from "react-router-dom";
+import DailyRecordDetailPage from '@/pages/record/DailyRecordDetailPage';
+import DailyRecordPage from '@/pages/record/DailyRecordPage';
+import FeedbackPage from '@/pages/record/FeedbackPage';
+import FragmentDetailPage from '@/pages/record/FragmentDetailPage';
+import FragmentPage from '@/pages/record/FragmentPage';
+import RecordCreatePage from '@/pages/record/RecordCreatePage';
+import RecordHomePage from '@/pages/record/RecordHomePage';
+import SearchPage from '@/pages/record/SearchPage';
+import SearchResultPage from '@/pages/record/SearchResultPage';
+import StockSearchPage from '@/pages/record/StockSearchPage';
+import LoadingPage from '@/pages/record/LoadingPage';
+import type { RouteObject } from 'react-router-dom';
 
 const recordRoutes: RouteObject[] = [
   {
@@ -30,35 +31,40 @@ const recordRoutes: RouteObject[] = [
     handle: { showNav: false },
   },
   {
-        path: 'fragment',
-        element: <FragmentPage />,
-        handle: { showNav: false },
-      },
-      {
-        path: 'fragment/detail',
-        element: <FragmentDetailPage />,
-        handle: { showNav: false },
+    path: 'fragment',
+    element: <FragmentPage />,
+    handle: { showNav: false },
   },
-      {
-        path: 'search',
-        element: <SearchPage />,
-        handle: { showNav: false },
-      },
-      {
-        path: 'search/result',
-        element: <SearchResultPage />,
-        handle: { showNav: false },
+  {
+    path: 'fragment/detail',
+    element: <FragmentDetailPage />,
+    handle: { showNav: false },
   },
-      {
-        path: 'feedback',
-        element: <FeedbackPage />,
-        handle: { showNav: false },
-      },
-      {
-        path: 'stock/search',
-        element: <StockSearchPage />,
-        handle: { showNav: false },
-      },
+  {
+    path: 'search',
+    element: <SearchPage />,
+    handle: { showNav: false },
+  },
+  {
+    path: 'search/result',
+    element: <SearchResultPage />,
+    handle: { showNav: false },
+  },
+  {
+    path: 'feedback',
+    element: <FeedbackPage />,
+    handle: { showNav: false },
+  },
+  {
+    path: 'stock/search',
+    element: <StockSearchPage />,
+    handle: { showNav: false },
+  },
+  {
+    path: 'loading',
+    element: <LoadingPage />,
+    handle: { showNav: false },
+  },
 ];
 
 export default recordRoutes;

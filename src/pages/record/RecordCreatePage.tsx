@@ -283,7 +283,7 @@ const RecordCreatePage = () => {
         <div className="bg-white/60 px-4 pt-2 pb-13 backdrop-blur-[5px]">
           <Button
             text="완료"
-            onClick={() => navigate('/record')}
+            onClick={() => navigate('/loading')}
             disabled={isButtonDisabled}
           />
         </div>
