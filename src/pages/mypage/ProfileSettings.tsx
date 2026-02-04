@@ -13,7 +13,7 @@ const ProfileSettings = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const initinalMickname = "조아"; //테스트용 초기닉네임
+  const initialNickname = "조아"; //테스트용 초기닉네임
 
   const handleNicknameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -40,7 +40,7 @@ const ProfileSettings = () => {
 
   const handleBackClick = () => {
     if (isEditing) {
-    if (nickname !== initinalMickname) {
+    if (nickname !== initialNickname) {
       setIsModalOpen(true);
     } else {
       setIsEditing(false);
@@ -155,7 +155,7 @@ const ProfileSettings = () => {
           onClickLeft={() => {
             setIsEditing(false);
             setIsModalOpen(false);
-            setNickname(initinalMickname);
+            setNickname(initialNickname);
           }}
           onClickRight={() => {
             setIsModalOpen(false);
