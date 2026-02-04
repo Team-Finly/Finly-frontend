@@ -12,8 +12,7 @@ const ProfileSettings = () => {
   const [nickname, setNickname] = useState("조아");
   const [errorMessage, setErrorMessage] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const initialNickname = "조아"; //테스트용 초기닉네임
+  const [initialNickname, setInitialNickname] = useState(nickname);
 
   const handleNicknameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -35,6 +34,8 @@ const ProfileSettings = () => {
   const handleComplete = () => {
     if (!errorMessage) {
       setIsEditing(false);
+      setInitialNickname(nickname);
+      setErrorMessage("");
     }
   };
 
@@ -44,6 +45,7 @@ const ProfileSettings = () => {
       setIsModalOpen(true);
     } else {
       setIsEditing(false);
+      setErrorMessage("");
     } 
   }
     else {
@@ -156,6 +158,7 @@ const ProfileSettings = () => {
             setIsEditing(false);
             setIsModalOpen(false);
             setNickname(initialNickname);
+            setErrorMessage("");
           }}
           onClickRight={() => {
             setIsModalOpen(false);
