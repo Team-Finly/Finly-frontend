@@ -59,7 +59,7 @@ const handleNext = (path: string) => {
           <button
               onClick={() => navigate(-1)}
               className="absolute left-0 top-1/2 -translate-y-1/2 ">
-              <img src={backIcon} alt="뒤로가기" className="w-[8px] h-[16px]" />
+              <img src={backIcon} alt="뒤로가기" className="w-[8px] h-[16px] cursor-pointer" />
           </button>
           <h1 className="text-lg font-semibold leading-none text-gray-900">
             약관 동의
@@ -74,7 +74,7 @@ const handleNext = (path: string) => {
       
       <button 
           onClick={handleAllClick}
-          className={`justify-center border-[1.2px] rounded-[12px] w-full h-[50px] px-4 border-gray-300 flex items-center gap-[10px]
+          className={` cursor-pointer justify-center border-[1.2px] rounded-[12px] w-full h-[50px] px-4 border-gray-300 flex items-center gap-[10px]
           ${allAgreed
           ? 'border-secondary bg-blue-bg/80 text-secondary'
           : 'border-gray-300 bg-white text-gray-300'
@@ -94,7 +94,7 @@ const handleNext = (path: string) => {
 
           return (
             <div key={term.termId} className="flex flex-row items-center w-full gap-[8px]">
-              <button onClick={() => toggleAgreement(idStr)}>
+              <button onClick={() => toggleAgreement(idStr)} className='cursor-pointer' aria-label="약관 동의 체크박스">
                 <img src={isChecked ? checkIcon : Unchecked} alt="체크 여부" />
               </button>
               

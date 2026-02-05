@@ -12,7 +12,7 @@ const Button = ({ children, onClick, disabled }: ButtonProps) => {
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`w-full h-[50px] rounded-xl font-semibold transition-colors text-[18px] leading-[26px]
+      className={`w-full h-[50px] rounded-xl font-semibold transition-colors text-[18px] leading-[26px] cursor-pointer
         ${disabled 
           ? 'bg-gray-100 text-gray-300 cursor-not-allowed' 
           : 'bg-secondary text-white'

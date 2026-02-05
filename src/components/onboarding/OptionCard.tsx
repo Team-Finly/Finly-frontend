@@ -10,7 +10,7 @@ const OptionCard = ({ content, isSelected, onClick }: OptionCardProps) => {
   return (
     <div
       onClick={onClick}
-      className={`mb-[16px] flex items-center justify-between rounded-[12px] border-[1.2px] py-[15px] pl-[17px] transition-all ${
+      className={`cursor-pointer mb-[16px] flex items-center justify-between rounded-[12px] border-[1.2px] py-[15px] pl-[17px] transition-all ${
         isSelected
           ? 'border-secondary bg-blue-bg/80 font-medium text-gray-700'
           : 'border-gray-300 text-gray-700'

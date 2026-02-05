@@ -110,7 +110,7 @@ const SignupPage = () => {
               setStep("password");
             }
           }}
-          className="absolute top-1/2 left-0 -translate-y-1/2"
+          className="absolute top-1/2 left-0 -translate-y-1/2 cursor-pointer"
         >
           <img src={backIcon} alt="뒤로가기" className="h-[16px] w-[8px]" />
         </button>
@@ -227,7 +227,7 @@ const SignupPage = () => {
 
             disabled={!isEmailFormatValid || isLoading}
             onClick={handleEmailNext}
-            className={`w-full h-[50px] rounded-[12px] font-medium text-lg text-white transition-colors
+            className={`w-full h-[50px] rounded-[12px] font-medium text-lg text-white transition-colors cursor-pointer
               ${isEmailFormatValid && !isLoading ? "bg-secondary" : "bg-gray-200 text-gray-400 cursor-not-allowed"}
             `}
 
@@ -239,7 +239,7 @@ const SignupPage = () => {
           <button
             disabled={!isPwValid || !isMatch}
             onClick={handlePasswordNext}
-            className={`w-full h-[50px] rounded-[12px] font-medium text-lg text-white transition-colors
+            className={`w-full h-[50px] rounded-[12px] font-medium text-lg text-white transition-colors cursor-pointer
               ${isPwValid && isMatch ? "bg-secondary" : "bg-gray-200 text-gray-400 cursor-not-allowed"}
             `}
 
@@ -251,7 +251,7 @@ const SignupPage = () => {
           <button
             disabled={!isNicknameValid(nickname)}
             onClick={handleNicknameNext}
-            className={`w-full h-[50px] rounded-[12px] font-medium text-lg text-white transition-colors
+            className={`w-full h-[50px] rounded-[12px] font-medium text-lg text-white transition-colors cursor-pointer
               ${isNicknameValid(nickname) ? "bg-secondary" : "bg-gray-200 text-gray-400 cursor-not-allowed"}
             `}
 

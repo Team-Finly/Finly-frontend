@@ -52,7 +52,7 @@ const currentQ = MOCK_QUESTIONS[step];
               setStep(step - 1); // 이전 질문으로 이동
             }
           }}
-          className="absolute top-1/2 left-0 -translate-y-1/2"
+          className="absolute top-1/2 left-0 -translate-y-1/2 cursor-pointer"
         >
           <img
             src={backIcon}
