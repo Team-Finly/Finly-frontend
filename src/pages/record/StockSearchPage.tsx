@@ -1,32 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Before from '@/assets/icons/before.svg';
 import Delete from '@/assets/icons/delete.svg';
 import Message from '@/assets/icons/message.svg';
-import type { Stock } from '@/types/record';
 import StockItem from '@/components/record/StockItem';
-
-const MOCK_STOCKS: Stock[] = [
-  {
-    id: 273,
-    symbol: '005930',
-    name: '삼성전자',
-    marketType: 'KOSPI',
-    logoUrl: 'https://s3-symbol-logo.tradingview.com/samsung.svg',
-  },
-  {
-    id: 1942,
-    symbol: '111111',
-    name: '삼성제약',
-    marketType: 'KOSPI',
-    logoUrl:
-      'https://s3-symbol-logo.tradingview.com/samsung-pharmaceutical.svg',
-  },
-];
+import { useStockSearch } from '@/hooks/useStockSearch';
+import { useDebounce } from '@/hooks/useDebounce';
+import { useInView } from 'react-intersection-observer';
 
 const StockSearchPage = () => {
   const navigate = useNavigate();
   const [keyword, setKeyword] = useState<string>('');
+  const debouncedKeyword = useDebounce(keyword, 300);
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+    useStockSearch(debouncedKeyword);
+  const { ref, inView } = useInView();
+  useEffect(() => {
+    if (inView && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
+  const stocks = data?.pages.flatMap((page) => page.stocks) || [];
 
   return (
     <div>
@@ -55,27 +49,31 @@ const StockSearchPage = () => {
         </div>
       </div>
       {keyword &&
-        (MOCK_STOCKS.length > 0 ? (
-          <div className="mt-22 mb-5 flex flex-col gap-5 px-4">
-            {MOCK_STOCKS.map((stock) => (
-              <StockItem
-                key={stock.id}
-                stock={stock}
-                keyword={keyword}
-                onClick={(selectedStock) => {
-                  navigate('/record/create', {
-                    state: {
-                      selectedStock: {
-                        id: selectedStock.id,
-                        name: selectedStock.name,
+        !isLoading &&
+        (stocks.length > 0 ? (
+          <>
+            <div className="mt-22 mb-5 flex flex-col gap-5 px-4">
+              {stocks.map((stock) => (
+                <StockItem
+                  key={stock.id}
+                  stock={stock}
+                  keyword={keyword}
+                  onClick={(selectedStock) => {
+                    navigate('/record/create', {
+                      state: {
+                        selectedStock: {
+                          id: selectedStock.id,
+                          name: selectedStock.name,
+                        },
                       },
-                    },
-                    replace: true,
-                  });
-                }}
-              />
-            ))}
-          </div>
+                      replace: true,
+                    });
+                  }}
+                />
+              ))}
+            </div>
+            <div ref={ref}></div>
+          </>
         ) : (
           <div className="mt-[217px] flex h-[65px] w-full flex-col items-center justify-between rounded-xl">
             <img src={Message} alt="메시지 아이콘" className="w-[30px]" />

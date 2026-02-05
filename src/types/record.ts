@@ -5,7 +5,11 @@ export type EmotionType =
   | 'GREED'
   | 'REGRET';
 
-export type SessionType = 'PRE_MARKET' | 'MORNING' | 'AFTERNOON' | 'POST_MARKET';
+export type SessionType =
+  | 'PRE_MARKET'
+  | 'MORNING'
+  | 'AFTERNOON'
+  | 'POST_MARKET';
 
 export type TradeActionType = 'BUY' | 'SELL' | 'WATCH';
 
@@ -51,7 +55,7 @@ export interface DailyFragmentResponse {
   records: DailyFragment[];
 }
 
-// 주식 종목
+// 주식 종목 검색
 export interface Stock {
   id: number;
   symbol: string;
@@ -60,18 +64,33 @@ export interface Stock {
   logoUrl: string;
 }
 
-// 해당 일 기록 
+export interface PageInfo {
+  currentPage: number;
+  pageSize: number;
+  totalElements: number;
+  totalPages: number;
+  last: boolean;
+}
+
+export interface SearchStock {
+  searchKeyword: string;
+  totalCount: number;
+  stocks: Stock[];
+  pageInfo: PageInfo;
+}
+
+// 해당 일 기록
 export interface TradeItem {
   recordId: number;
   instrumentId: number;
   instrumentName: string;
-  emotionCode: string;     
-  emotionDisplay: string;  
+  emotionCode: string;
+  emotionDisplay: string;
   tradeAction: 'BUY' | 'SELL';
   unitPrice: number;
   quantity: number;
   memoPreview: string;
-  recordedAt: string;     
+  recordedAt: string;
 }
 
 export interface TimelineSection {
@@ -80,15 +99,15 @@ export interface TimelineSection {
 }
 
 export interface RecordDetailResponse {
-  date: string;           
+  date: string;
   sections: TimelineSection[];
 }
 
 // 최근 나의 기록 (home)
 export interface HomeRecordItem {
   recordId: number;
-  recordDate: string;       
-  recordedAt: string;      
+  recordDate: string;
+  recordedAt: string;
   session: SessionType;
   tradeAction: TradeActionType;
   symbol: string;
