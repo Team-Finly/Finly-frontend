@@ -5,6 +5,8 @@ export type EmotionType =
   | 'GREED'
   | 'REGRET';
 
+export type SessionType = 'PRE_MARKET' | 'MORNING' | 'AFTERNOON' | 'POST_MARKET';
+
 export type TradeActionType = 'BUY' | 'SELL' | 'WATCH';
 
 // 캘린더 기록
@@ -59,8 +61,6 @@ export interface Stock {
 }
 
 // 해당 일 기록 
-export type SessionType = 'MORNING' | 'AFTERNOON' | 'CLOSE';
-
 export interface TradeItem {
   recordId: number;
   instrumentId: number;
@@ -82,4 +82,19 @@ export interface TimelineSection {
 export interface RecordDetailResponse {
   date: string;           
   sections: TimelineSection[];
+}
+
+// 최근 나의 기록 (home)
+export interface HomeRecordItem {
+  recordId: number;
+  recordDate: string;       
+  recordedAt: string;      
+  session: SessionType;
+  tradeAction: TradeActionType;
+  symbol: string;
+  unitPrice: number;
+  quantity: number;
+  emotionCode: EmotionType;
+  emotionIntensity: number;
+  memo: string;
 }
