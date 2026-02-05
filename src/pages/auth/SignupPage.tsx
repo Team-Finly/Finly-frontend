@@ -91,7 +91,7 @@ const SignupPage = () => {
 
   const handleNicknameNext = () => {
     if (!isNicknameValid(nickname)) return;
-    navigate("/onboarding/persona"); 
+    navigate("/persona"); 
   };
 
 

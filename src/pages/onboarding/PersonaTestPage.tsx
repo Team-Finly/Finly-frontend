@@ -36,7 +36,7 @@ const currentQ = MOCK_QUESTIONS[step];
       console.log("📦 스토어에 데이터 저장 중...", formattedAnswers);
       setPersonaAnswers(formattedAnswers);
 
-      navigate('/onboarding/personaresult');
+      navigate('/personaresult');
     }
   };
 

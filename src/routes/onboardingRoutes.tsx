@@ -6,12 +6,12 @@ import type { RouteObject } from "react-router-dom";
 import Start from "@/pages/onboarding/start";
 const onboardingRoutes: RouteObject[] = [
   {
-    path: 'onboarding/persona',
+    path: 'persona',
     element: <PersonaTestPage />,
     handle: { showNav: false },
   },
   {
-    path: 'onboarding/personaresult',
+    path: 'personaresult',
     element: <PersonaResultPage />,
     handle: { showNav: false },
   },
