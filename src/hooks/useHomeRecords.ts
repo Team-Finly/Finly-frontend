@@ -9,7 +9,7 @@ export const useHomeRecords = () => {
     queryKey: HOME_RECORDS_QUERY_KEY,
     queryFn: async () => {
       const res = await homeRecordApi.getHomeRecords();
-      return res.result.records;
+      return res.result?.records ?? [];
     },
   
     staleTime: 60 * 1000,   
