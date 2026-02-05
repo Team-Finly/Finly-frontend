@@ -98,7 +98,7 @@ const handleNext = (path: string) => {
                 <img src={isChecked ? checkIcon : Unchecked} alt="체크 여부" />
               </button>
               
-              <p onClick={() => toggleAgreement(idStr)} className="text-[16px] font-medium text-gray-900 cursor-pointer">
+              <p onClick={() => toggleAgreement(idStr)} className="text-[16px] font-medium text-gray-900">
                 {` ${term.title}`}
               </p>
               <button
