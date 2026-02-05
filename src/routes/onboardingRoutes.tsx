@@ -21,7 +21,7 @@ const onboardingRoutes: RouteObject[] = [
     handle: { showNav: false },
   },
   {
-    path: '/termsdetail/:id',
+    path: 'termsdetail/:id',
     element: <TermsDetail />,
     handle: { showNav: false },
   },
