@@ -5,24 +5,33 @@ import { create } from 'zustand';
 interface stockInfoState {
   stockMap: Record<string, StockInfo>;
   isLoaded: boolean;
+  error: unknown | null;
   fetchStocks: () => Promise<void>;
 }
 
 export const stockInfoStore = create<stockInfoState>((set) => ({
   stockMap: {},
   isLoaded: false,
+  error: null,
 
   fetchStocks: async () => {
-    const res = await stockInfoApi.getStocks();
+    try {
+      const res = await stockInfoApi.getStocks();
+      const list = res.result ?? [];
 
-    const map = res.result.reduce((acc, stock) => {
-      acc[stock.symbol] = stock;
-      return acc;
-    }, {} as Record<string, StockInfo>);
+      const map = list.reduce((acc, stock) => {
+        acc[stock.symbol] = stock;
+        return acc;
+      }, {} as Record<string, StockInfo>);
 
-    set({
-      stockMap: map,
-      isLoaded: true,
-    });
+      set({
+        stockMap: map,
+        isLoaded: true,
+        error: null,
+      });
+    } catch (error) {
+      set({ error });
+      return;
+    }
   },
 }));
