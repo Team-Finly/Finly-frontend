@@ -58,7 +58,8 @@ if (!term) {return (<div>데이터없음</div>);}
           <p className="whitespace-pre-wrap text-gray-600">{term.content}</p>
         )}
 
-        <div className=" mt-[60px] mb-[60px]">
+      </div>
+      <div className=" mt-[60px] mb-[60px]">
         <button 
           onClick={handleAgreeClick}
           className="flex items-center gap-2 cursor-pointer w-full"
@@ -72,7 +73,6 @@ if (!term) {return (<div>데이터없음</div>);}
             동의합니다
           </span>
         </button>
-      </div>
       </div>
     </div>
   );

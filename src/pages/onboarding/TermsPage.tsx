@@ -99,8 +99,6 @@ const handleNext = (path: string) => {
               </button>
               
               <p onClick={() => toggleAgreement(idStr)} className="text-[16px] font-medium text-gray-900 cursor-pointer">
-                <span className={term.required ? "text-secondary font-bold" : "text-gray-500"}>
-                </span>
                 {` ${term.title}`}
               </p>
               
@@ -108,6 +106,7 @@ const handleNext = (path: string) => {
                 src={rightarrow} 
                 className='ml-auto cursor-pointer'
                 onClick={() => navigate(`/termsdetail/${term.termId}`)} 
+                alt="약관 상세보기"
               />
             </div>
           );
