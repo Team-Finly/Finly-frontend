@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { RecentRecordCard } from '@/components/home/RecentRecordCard';
 import RightIcon from '@/assets/images/right.svg';
 import { useHomeRecords } from '@/hooks/useHomeRecords';
-import { stockInfoStore } from '@/store/StockInfoStore';
+import { stockInfoStore } from '@/store/stockInfoStore';
 
 export const EmptyRecentRecordCard = () => {
   return (
