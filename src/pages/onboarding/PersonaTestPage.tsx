@@ -3,7 +3,7 @@ import Button from '@/components/onboarding/Button';
 import ProgressBar from '@/components/onboarding/ProgressBar';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MOCK_QUESTIONS } from "@/constants/personaData";
+import { MOCK_QUESTIONS } from "@/constants/persona";
 import backIcon from "../../assets/icons/Vector.svg";
 import { useSignupStore } from "../../store/signupStore";
 
