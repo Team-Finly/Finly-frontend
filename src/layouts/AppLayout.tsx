@@ -2,7 +2,7 @@ import { Outlet, useMatches, useNavigate } from 'react-router-dom';
 import { BottomNav } from '@/layouts/BottomNav';
 import ReportModal from '@/components/home/Report/ReportModal';
 import { useEffect, useState } from 'react';
-import { stockInfoStore } from '@/store/StockInfoStore';
+import { stockInfoStore } from '@/store/stockInfoStore';
 
 const AppLayout = () => {
   const matches = useMatches();
