@@ -98,3 +98,7 @@ export interface HomeRecordItem {
   emotionIntensity: number;
   memo: string;
 }
+
+export interface HomeRecordResponse {
+  records: HomeRecordItem[];
+}

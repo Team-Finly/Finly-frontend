@@ -1,38 +1,48 @@
 import { EMOTION_CHART_MAP } from '@/constants/emotions';
+import type { HomeRecordItem, TradeActionType } from '@/types/record';
+import type { StockInfo } from '@/types/stock';
+import { formatMonthDay } from '@/utils/date';
 
-// 추후 정확한 타입 정의
-type Record = {
-  company: string;
-  price: string;
-  status: keyof typeof EMOTION_CHART_MAP;
-  level: string;
-  type: string;
-  logo: string;
-  date: string;
-  period: string;
+interface Props {
+  record: HomeRecordItem;
+  stock?: StockInfo;
+}
+
+const TRADE_ACTION_LABEL_MAP: Record<TradeActionType, string> = {
+  BUY: '매수',
+  SELL: '매도',
+  WATCH: '관망',
 };
 
-export const RecentRecordCard = ({ record }: { record: Record }) => {
-  const emotion = EMOTION_CHART_MAP[record.status];
+export const RecentRecordCard = ({ record, stock }: Props) => {
+  const emotion = EMOTION_CHART_MAP[record.emotionCode];
 
   return (
     <div className="min-w-[256px] bg-white rounded-xl shadow-[#DFE2E81A] shadow-sm border border-[#F2F4F6] p-[12px]">
-      <p className="text-[12px] pb-[6px] text-[#4E566066]">{record.date}</p>
+      <p className="text-[12px] pb-[6px] text-[#4E566066]">{formatMonthDay(record.recordDate)}</p>
   
       <div className="flex items-center">
         <div className="mb-[10px] flex items-center gap-2">
-          <span className="">{record.logo}</span>
+          {stock?.logoUrl ? (
+            <img
+              src={stock.logoUrl}
+              alt={stock.name}
+              className="h-5 w-5 rounded-full object-cover"
+            />
+          ) : (
+            <div className="h-5 w-5 rounded bg-gray-200" />
+          )}
           <span className="text-[15px] font-semibold text-[#191F28]">
-            {record.company}
+            {stock?.name ?? record.symbol}
           </span>
         </div>
 
         <div className="relative mb-[11.5px] ml-auto flex items-center">
           <span className="absolute -top-[18px] right-0 text-[14px] whitespace-nowrap text-[#4E5660CC]">
-            2주
+            {record.quantity}주
           </span>
           <p className="text-[18px] leading-none font-semibold text-gray-900">
-            {record.price}
+            {record.unitPrice.toLocaleString()}원
           </p>
         </div>
       </div>
@@ -45,11 +55,11 @@ export const RecentRecordCard = ({ record }: { record: Record }) => {
             color: emotion?.color,
           }}
         >
-          {emotion?.label || record.status} Lv.
-          <span className="font-bold"> {record.level}</span>
+          {emotion?.label} Lv.
+          <span className="font-bold"> {record.emotionIntensity}</span>
         </span>
         <span className="rounded bg-[#F2F4F6] px-1.5 py-0.5 text-[12px] font-medium text-[#8B95A1]">
-          {record.type}
+          {TRADE_ACTION_LABEL_MAP[record.tradeAction]}
         </span>
       </div>
     </div>
