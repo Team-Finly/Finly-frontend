@@ -101,13 +101,14 @@ const handleNext = (path: string) => {
               <p onClick={() => toggleAgreement(idStr)} className="text-[16px] font-medium text-gray-900 cursor-pointer">
                 {` ${term.title}`}
               </p>
-              
-              <img 
-                src={rightarrow} 
+              <button
+                type="button" 
                 className='ml-auto cursor-pointer'
                 onClick={() => navigate(`/termsdetail/${term.termId}`)} 
-                alt="약관 상세보기"
-              />
+                aria-label="약관 상세보기">
+                  <img src={rightarrow} alt="약관 상세보기" arial-hidden="true"/>
+              </button>
+              
             </div>
           );
         })}
