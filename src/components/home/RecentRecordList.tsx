@@ -20,10 +20,11 @@ export const EmptyRecentRecordCard = () => {
 export const RecentRecordList = () => {
   const navigate = useNavigate();
 
-  const { data: records, isLoading } = useHomeRecords();
+  const { data: records, isLoading, isError } = useHomeRecords();
   const stockMap = stockInfoStore((state) => state.stockMap);
 
   if (isLoading || !records) return null;
+  if (isError) return <EmptyRecentRecordCard />;
 
   return (
     <div>
