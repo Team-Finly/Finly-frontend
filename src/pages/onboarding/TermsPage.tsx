@@ -106,7 +106,7 @@ const handleNext = (path: string) => {
                 className='ml-auto cursor-pointer'
                 onClick={() => navigate(`/termsdetail/${term.termId}`)} 
                 aria-label="약관 상세보기">
-                  <img src={rightarrow} alt="약관 상세보기" arial-hidden="true"/>
+                  <img src={rightarrow} alt="" aria-hidden="true"/>
               </button>
               
             </div>
