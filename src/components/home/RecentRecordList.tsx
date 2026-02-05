@@ -1,45 +1,30 @@
 import { useNavigate } from 'react-router-dom';
 import { RecentRecordCard } from '@/components/home/RecentRecordCard';
 import RightIcon from '@/assets/images/right.svg';
+import { useHomeRecords } from '@/hooks/useHomeRecords';
+import { stockInfoStore } from '@/store/stockInfoStore';
 
-const records = [
-  {
-    id: 1,
-    company: '테슬라',
-    price: '72,400원',
-    status: 'ANXIETY',
-    level: '7',
-    type: '매수',
-    logo: '🚗',
-    date: '12.25',
-    period: '2주',
-  },
-  {
-    id: 2,
-    company: '애플',
-    price: '189,000원',
-    status: 'CONFIDENCE',
-    level: '5',
-    type: '매수',
-    logo: '🍎',
-    date: '12.24',
-    period: '1달',
-  },
-  {
-    id: 3,
-    company: '엔비디아',
-    price: '512,000원',
-    status: 'CALM',
-    level: '9',
-    type: '매도',
-    logo: '🟢',
-    date: '12.20',
-    period: '3주',
-  },
-];
+export const EmptyRecentRecordCard = () => {
+  return (
+    <div className="min-w-[100%] bg-white rounded-xl border border-[#F2F4F6] p-[12px] flex flex-col justify-center items-center text-center">
+      <p className="text-[14px] font-medium text-[#8B95A1]">
+        아직 기록이 없어요
+      </p>
+      <p className="mt-[4px] text-[12px] text-[#B0B8C1]">
+        첫 매매 기록을 남겨보세요
+      </p>
+    </div>
+  );
+};
 
 export const RecentRecordList = () => {
   const navigate = useNavigate();
+
+  const { data: records, isLoading, isError } = useHomeRecords();
+  const stockMap = stockInfoStore((state) => state.stockMap);
+
+  if (isLoading || !records) return null;
+  if (isError) return <EmptyRecentRecordCard />;
 
   return (
     <div>
@@ -60,9 +45,17 @@ export const RecentRecordList = () => {
         </div>
         <div className="scrollbar-hide -mx-[16px] overflow-x-auto cursor-pointer">
           <div className="flex gap-2 px-[16px]">
-            {records.map((record) => (
-              <RecentRecordCard key={record.id} record={record} />
-            ))}
+            {records.length === 0 ? (
+              <EmptyRecentRecordCard />
+            ) : (
+              records.map((record) => (
+                <RecentRecordCard
+                  key={record.recordId}
+                  record={record}
+                  stock={stockMap[record.symbol]}
+                />
+              ))
+            )}
             <div className="min-w-[8px] flex-shrink-0" />
           </div>
         </div>
