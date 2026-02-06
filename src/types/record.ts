@@ -61,26 +61,6 @@ export interface Stock {
 }
 
 // 해당 일 기록 
-export interface TradeItem {
-  recordId: number;
-  instrumentId: number;
-  instrumentName: string;
-  emotionCode: string;     
-  emotionDisplay: string;  
-  tradeAction: 'BUY' | 'SELL';
-  unitPrice: number;
-  quantity: number;
-  memoPreview: string;
-  recordedAt: string;     
-}
-
-export interface TimelineSection {
-  session: SessionType;
-  items: TradeItem[];
-}
-
-//----
-
 export interface PrismFeedback {
   title: string;
   generatedAt: string; 
