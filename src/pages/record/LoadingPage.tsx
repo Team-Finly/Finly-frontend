@@ -1,12 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Robot from '@/assets/icons/robot.svg';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useFeedback } from '@/hooks/useFeedback';
 
 const LoadingPage = () => {
   const navigate = useNavigate();
+  const { state } = useLocation();
+  const recordId = state?.recordId;
+  const { data: feedback } = useFeedback(recordId);
+
   const [textIndex, setTextIndex] = useState(0);
   const [isExiting, setIsExiting] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [isMinTimeOver, setIsMinTimeOver] = useState(false);
 
   const messages = [
     {
@@ -26,30 +32,43 @@ const LoadingPage = () => {
   ];
 
   useEffect(() => {
-    const fadeOutTimer = setTimeout(() => {
-      setIsExiting(true);
-    }, 1500);
-
-    const changeTextTimer = setTimeout(() => {
-      setTextIndex(1);
-      setIsExiting(false);
-    }, 2000);
-
-    const navigateTimer = setTimeout(() => {
-      navigate('/feedback');
+    const timer = setTimeout(() => {
+      setIsMinTimeOver(true);
     }, 5000);
+    return () => clearTimeout(timer);
+  }, []);
 
+  useEffect(() => {
+    if (isMinTimeOver && feedback?.status === 'COMPLETED') {
+      setProgress(100);
+      const navigateTimer = setTimeout(() => {
+        navigate('/feedback', { state: { feedback: feedback } });
+      }, 500);
+      return () => clearTimeout(navigateTimer);
+    }
+  }, [isMinTimeOver, feedback, navigate]);
+
+  const innerTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
+
+  useEffect(() => {
     const progressTimer = setInterval(() => {
-      setProgress((prev) => (prev < 100 ? prev + 1 : 100));
+      setProgress((prev) => (prev < 99 ? prev + 1 : prev));
     }, 50);
 
+    const messageTimer = setInterval(() => {
+      setIsExiting(true);
+      innerTimeoutRef.current = setTimeout(() => {
+        setTextIndex((prev) => (prev === 0 ? 1 : 0));
+        setIsExiting(false);
+      }, 500);
+    }, 2500);
+
     return () => {
-      clearTimeout(fadeOutTimer);
-      clearTimeout(changeTextTimer);
       clearInterval(progressTimer);
-      clearTimeout(navigateTimer);
+      clearInterval(messageTimer);
+      clearTimeout(innerTimeoutRef.current);
     };
-  }, [navigate]);
+  }, []);
 
   return (
     <div className="flex flex-col items-center px-[30px] pt-40">

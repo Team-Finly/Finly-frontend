@@ -3,7 +3,7 @@ import Button from '@/components/onboarding/Button';
 import ProgressBar from '@/components/onboarding/ProgressBar';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MOCK_QUESTIONS } from "@/constants/personaData";
+import { MOCK_QUESTIONS } from "@/constants/persona";
 import backIcon from "../../assets/icons/Vector.svg";
 import { useSignupStore } from "../../store/signupStore";
 
@@ -36,7 +36,7 @@ const currentQ = MOCK_QUESTIONS[step];
       console.log("📦 스토어에 데이터 저장 중...", formattedAnswers);
       setPersonaAnswers(formattedAnswers);
 
-      navigate('/onboarding/personaresult');
+      navigate('/personaresult');
     }
   };
 
@@ -52,7 +52,7 @@ const currentQ = MOCK_QUESTIONS[step];
               setStep(step - 1); // 이전 질문으로 이동
             }
           }}
-          className="absolute top-1/2 left-0 -translate-y-1/2"
+          className="absolute top-1/2 left-0 -translate-y-1/2 cursor-pointer"
         >
           <img
             src={backIcon}
