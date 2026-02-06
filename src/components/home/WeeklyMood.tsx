@@ -27,7 +27,7 @@ export const WeeklyMood = () => {
       try {
         setLoading(true);
         const res = await homeApi.getWeeklyMood();
-        setWeekData(res.result.days);
+        setWeekData(res.result?.days ?? []);
       } catch (err) {
         console.error(err);
         setError('주간 무드를 가져오는 중 오류가 발생했습니다.');
@@ -65,7 +65,7 @@ export const WeeklyMood = () => {
                   <div className="flex items-center justify-center flex-1">
                     {loading ? (
                       <div className="w-[22px] h-[22px] rounded-full border-[1px] border-dashed border-gray-300 animate-pulse" />
-                    ) : day.hasRecord && day.emotion ? (
+                    ) : day.hasRecord && day.emotion && getEmotionIcon(day.emotion) ? (
                       <img
                         src={getEmotionIcon(day.emotion)!}
                         alt={day.emotion}
