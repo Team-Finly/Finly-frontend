@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Robot from '@/assets/icons/robot.svg';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useFeedback } from '@/hooks/useFeedback';
@@ -48,6 +48,8 @@ const LoadingPage = () => {
     }
   }, [isMinTimeOver, feedback, navigate]);
 
+  const innerTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
+
   useEffect(() => {
     const progressTimer = setInterval(() => {
       setProgress((prev) => (prev < 99 ? prev + 1 : prev));
@@ -55,7 +57,7 @@ const LoadingPage = () => {
 
     const messageTimer = setInterval(() => {
       setIsExiting(true);
-      setTimeout(() => {
+      innerTimeoutRef.current = setTimeout(() => {
         setTextIndex((prev) => (prev === 0 ? 1 : 0));
         setIsExiting(false);
       }, 500);
@@ -64,6 +66,7 @@ const LoadingPage = () => {
     return () => {
       clearInterval(progressTimer);
       clearInterval(messageTimer);
+      clearTimeout(innerTimeoutRef.current);
     };
   }, []);
 
