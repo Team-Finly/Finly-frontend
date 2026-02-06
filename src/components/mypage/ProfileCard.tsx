@@ -1,18 +1,23 @@
-import profileImg from '@/assets/icons/profile.svg';
+import defaultprofileIcon from '@/assets/icons/profile.svg';
 
-
-const ProfileCard = () => {
+interface ProfileCardProps {
+  nickname: string;
+  profileImage: string;
+}
+const ProfileCard = ({ nickname, profileImage }: ProfileCardProps) => {
 
   return (
     <div className="h-[176px] flex flex-1 flex-col items-center justify-center rounded-[12px] border border-gray-50 bg-white py-6">
+            <div className="mt-[25px] mb-[12px] w-[76px] h-[76px] rounded-full flex-shrink-0 overflow-hidden border border-gray-100">
             <img
-                src={profileImg}
+                src={profileImage || defaultprofileIcon}
                 alt="Profile"
-                className="mt-[25px] mb-[12px] object-cover h-[76px] w-[76px]"
+                className="object-cover w-full h-full"
               />
+              </div>
             <div className="flex flex-col items-center justify-center whitespace-nowrap mb-[24px]">
               <p className="mb-1 text-[12px] font-medium text-gray-700">신중한 거북이</p>
-              <p className="text-[18px] font-semibold text-gray-900">조아 님</p>
+              <p className="text-[18px] font-semibold text-gray-900">{nickname} 님</p>
             </div>
     </div>    
     );
