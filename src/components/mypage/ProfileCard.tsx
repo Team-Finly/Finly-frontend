@@ -17,7 +17,7 @@ const ProfileCard = ({ nickname, profileImage, personaName }: ProfileCardProps) 
               />
               </div>
             <div className="flex flex-col items-center justify-center whitespace-nowrap mb-[24px]">
-              <p className="mb-1 text-[12px] font-medium text-gray-700">{personaName}</p>
+              {personaName && <p className="mb-1 text-[12px] font-medium text-gray-700">{personaName}</p>}
               <p className="text-[18px] font-semibold text-gray-900">{nickname} 님</p>
             </div>
     </div>    

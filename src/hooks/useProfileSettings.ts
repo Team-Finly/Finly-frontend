@@ -42,6 +42,9 @@ export const useProfileSettings = () => {
         alert("이미지 파일만 선택할 수 있어요.");
         return;
       }
+      if (profileImage && profileImage.startsWith("blob:")) {
+        URL.revokeObjectURL(profileImage);
+      }
       setImageFile(file);
       setProfileImage(URL.createObjectURL(file));
       setIsImageDeleted(false);
@@ -49,6 +52,9 @@ export const useProfileSettings = () => {
   };
 
   const handleResetImage = () => {
+    if (profileImage && profileImage.startsWith("blob:")) {
+      URL.revokeObjectURL(profileImage);
+    }
     setProfileImage(defaultprofileIcon);
     setImageFile(null);
     setIsImageDeleted(true);
@@ -67,18 +73,18 @@ export const useProfileSettings = () => {
       {
         try{
           await updateNickname(nickname);
+          setUserInfo({ nickname });
+          setIsEditing(false);
+          setInitialNickname(nickname);
+          setInitialImage(profileImage);
+          setErrorMessage("");
         } catch (error) {
           console.error("닉네임 업데이트 실패:", error);
+          setErrorMessage("닉네임 업데이트에 실패했습니다. 다시 시도해주세요.");
         }
       }
-      setUserInfo({ nickname, profileImage });
-      setIsEditing(false);
-      setInitialNickname(nickname);
-      setInitialImage(profileImage);
-      setErrorMessage("");
     }
   };
-
   const handleCancel = () => {
     setIsEditing(false);
     setIsModalOpen(false);
