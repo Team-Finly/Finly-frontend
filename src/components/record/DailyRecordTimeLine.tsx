@@ -117,7 +117,7 @@ const DailyRecordTimeLine = ({ timelineSummary, onItemClick }: Props) => {
                               <div className="mb-[14px] flex items-center justify-between">
                                 <div className="flex items-center gap-[6px]">
                                   <span className="text-[14px] font-semibold text-gray-900">
-                                    {stock?.name ?? item.symbol}
+                                    {stock?.name || '로딩 중...'}
                                   </span>
                                   {emotion && (
                                     <div
@@ -149,7 +149,7 @@ const DailyRecordTimeLine = ({ timelineSummary, onItemClick }: Props) => {
     
                                   <span className="mx-[4px] text-gray-300">·</span>
     
-                                  <span className="font-semibold text-gray-500">
+                                  <span className="font-semibold text-[#6E757D]">
                                     {item.tradeAction === 'WATCH'
                                       ? '-'
                                       : `${item.unitPrice.toLocaleString()}원`}
@@ -165,7 +165,7 @@ const DailyRecordTimeLine = ({ timelineSummary, onItemClick }: Props) => {
                         );
                       })
                     ) : (
-                      /* 기록이 없을 때 배지 크기만큼의 최소 높이 확보로 6px 간격 유지 */
+                      /* 기록이 없을 때  */
                       <div className="h-[52px]" />
                     )}
                   </div>

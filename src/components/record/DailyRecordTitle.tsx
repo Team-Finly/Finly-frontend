@@ -8,7 +8,6 @@ interface TitleProps {
 }
 
 const DailyRecordTitle = ({ timelineSummary }: TitleProps) => {
-  console.log('전체 데이터 순서 확인:', timelineSummary);
   const { firstEmotion, lastEmotion } = useMemo(() => {
     if (!timelineSummary || timelineSummary.length === 0) {
       const defaultEmotion = EMOTIONS.find(e => e.key === 'CALM') || EMOTIONS[0];
