@@ -15,6 +15,11 @@ const FeedbackPage = () => {
   const { data: recordDetail } = useRecordDetail(feedback?.recordEntryId);
   const stockMap = stockInfoStore((state) => state.stockMap);
 
+  if (!feedback) {
+    navigate('/record', { replace: true });
+    return null;
+  }
+
   const stockName = recordDetail?.symbol
     ? (stockMap[recordDetail.symbol]?.name ?? recordDetail.symbol)
     : '';
