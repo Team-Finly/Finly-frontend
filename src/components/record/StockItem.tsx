@@ -35,12 +35,19 @@ const StockItem = ({ stock, onClick, keyword }: StockItemProps) => {
       className="flex cursor-pointer items-center justify-start"
       onClick={() => onClick(stock)}
     >
-      <img
-        src={stock.logoUrl}
-        alt={`${stock.name} 로고`}
-        className="mr-3.5 h-8 w-8 rounded-full object-contain"
-      />
-      <p className="text-gray-900">{handleHighlight(stock.name, keyword)}</p>
+      {stock.logoUrl ? (
+        <img
+          src={stock.logoUrl}
+          alt={`${stock.name} 로고`}
+          className="h-8 w-8 rounded-full object-contain"
+        />
+      ) : (
+        <div className="h-8 w-8 rounded-full bg-gray-100"></div>
+      )}
+
+      <p className="ml-3.5 text-gray-900">
+        {handleHighlight(stock.name, keyword)}
+      </p>
     </button>
   );
 };

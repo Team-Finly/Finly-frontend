@@ -1,40 +1,44 @@
 import React, { useState, useRef, useEffect } from 'react';
 import CloseHeader from '@/components/record/CloseHeader';
 import RecordSearch from '@/assets/icons/record_search3.svg';
-import type { TradeActionType } from '@/types/record';
+import type { EmotionType, TradeActionType } from '@/types/record';
 import TradeDetailInput from '@/components/record/TradeDetailInput';
 import EmotionFilterButton from '@/components/record/EmotionFilterButton';
 import { EMOTIONS } from '@/constants/emotions';
 import EmotionLevelSlider from '@/components/record/EmotionLevelSlider';
 import Button from '@/components/record/Button';
 import MiniCalendar from '@/components/record/MiniCalendar';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Modal from '@/components/record/Modal';
+import { useCreateRecord } from '@/hooks/mutations/useCreateRecord';
+import { useRecordCreateStore } from '@/store/recordCreateStore';
 
 const RecordCreatePage = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
-  const [isToday, setIsToday] = useState(false);
   const calendarRef = useRef<HTMLDivElement>(null);
-  const [stockId, setStockId] = useState<number | null>(null);
-  const [stockName, setStockName] = useState<string | null>(null);
-  const [selectedTradeAction, setSelectedTradeAction] =
-    useState<TradeActionType | null>(null);
-  const [unitPrice, setUnitPrice] = useState<string>('72400');
-  const [quantity, setQuantity] = useState<string | null>(null);
-  const [clickedEmotion, setClickedEmotion] = useState<string | null>(null);
-  const [emotionLevel, setEmotionLevel] = useState(7);
-  const [memo, setMemo] = useState<string>('');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const {
+    selectedDate,
+    stockId,
+    stockName,
+    symbol,
+    selectedTradeAction,
+    unitPrice,
+    quantity,
+    clickedEmotion,
+    emotionLevel,
+    memo,
+    setField,
+    reset,
+  } = useRecordCreateStore();
+  const { mutate, isPending } = useCreateRecord();
+  const isToday = selectedDate?.toDateString() === new Date().toDateString();
 
   const handleDateSelect = (date: Date) => {
-    setSelectedDate(date);
+    setField('selectedDate', date);
     setIsCalendarOpen(false);
-    const today = new Date();
-    setIsToday(date.toDateString() === today.toDateString());
   };
 
   const formatDate = (date: Date | null) => {
@@ -48,22 +52,12 @@ const RecordCreatePage = () => {
   const toggleToday = () => {
     if (!isToday) {
       const today = new Date();
-      setSelectedDate(today);
-      setIsToday(true);
+      setField('selectedDate', today);
       setIsCalendarOpen(false);
     } else {
-      setIsToday(false);
-      setSelectedDate(null);
+      setField('selectedDate', null);
     }
   };
-
-  useEffect(() => {
-    if (location.state?.selectedStock) {
-      const { id, name } = location.state.selectedStock;
-      setStockId(id);
-      setStockName(name);
-    }
-  }, [location.state]);
 
   const tradeActions: { id: TradeActionType; label: string }[] = [
     { id: 'BUY', label: '매수' },
@@ -74,7 +68,7 @@ const RecordCreatePage = () => {
   const handleMemo = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
     if (value.length <= 200) {
-      setMemo(value);
+      setField('memo', value);
       handleTextareaHeight();
     }
   };
@@ -112,11 +106,32 @@ const RecordCreatePage = () => {
   const isButtonDisabled =
     !selectedDate ||
     !stockId ||
+    !symbol ||
     !selectedTradeAction ||
-    !unitPrice ||
-    (selectedTradeAction !== 'WATCH' && !quantity) ||
+    (selectedTradeAction !== 'WATCH' && (!unitPrice || !quantity)) ||
     !clickedEmotion ||
+    emotionLevel === null ||
     memo.trim().length === 0;
+
+  const handleSubmit = () => {
+    if (isButtonDisabled || isPending) return;
+
+    const record = {
+      clientRequestId: self.crypto.randomUUID(),
+      recordDate: formatDate(selectedDate),
+      symbol: symbol,
+      tradeAction: selectedTradeAction!,
+      unitPrice: selectedTradeAction === 'WATCH' ? 0 : Number(unitPrice),
+      quantity: selectedTradeAction === 'WATCH' ? 0 : Number(quantity),
+      emotionCode: clickedEmotion as EmotionType,
+      emotionIntensity: emotionLevel,
+      memo: memo.trim(),
+    };
+
+    mutate(record, {
+      onSuccess: () => reset(),
+    });
+  };
 
   return (
     <div>
@@ -186,12 +201,7 @@ const RecordCreatePage = () => {
             {tradeActions.map((tradeAction) => (
               <button
                 key={tradeAction.id}
-                onClick={() => {
-                  setSelectedTradeAction(tradeAction.id);
-                  if (tradeAction.id === 'WATCH') {
-                    setQuantity(null);
-                  }
-                }}
+                onClick={() => setField('selectedTradeAction', tradeAction.id)}
                 className={`h-[39px] w-full cursor-pointer rounded-lg border text-sm transition-all ${
                   selectedTradeAction === tradeAction.id
                     ? `${
@@ -219,14 +229,15 @@ const RecordCreatePage = () => {
               <div className="flex gap-6 rounded-xl border-[1.2px] border-gray-100 bg-gray-50/60 p-4">
                 <TradeDetailInput
                   title="거래 단가"
-                  value={72400}
+                  value={unitPrice ? Number(unitPrice) : undefined}
                   unit="원"
-                  onChange={setUnitPrice}
+                  onChange={(value) => setField('unitPrice', value)}
                 />
                 <TradeDetailInput
                   title="거래 수량"
+                  value={quantity ? Number(quantity) : undefined}
                   unit="주"
-                  onChange={setQuantity}
+                  onChange={(value) => setField('quantity', value)}
                 />
               </div>
             </div>
@@ -243,13 +254,16 @@ const RecordCreatePage = () => {
                   label={emotion.label}
                   icon={emotion.icon}
                   isSelected={clickedEmotion === emotion.key}
-                  onClick={() => setClickedEmotion(emotion.key)}
+                  onClick={() => {
+                    setField('clickedEmotion', emotion.key);
+                    setField('emotionLevel', 7);
+                  }}
                 />
               ))}
             </div>
             <EmotionLevelSlider
-              level={emotionLevel}
-              onChange={setEmotionLevel}
+              level={emotionLevel ?? 7}
+              onChange={(val) => setField('emotionLevel', val)}
               isVisible={clickedEmotion !== null}
             />
           </div>
@@ -283,8 +297,8 @@ const RecordCreatePage = () => {
         <div className="bg-white/60 px-4 pt-2 pb-13 backdrop-blur-[5px]">
           <Button
             text="완료"
-            onClick={() => navigate('/loading')}
-            disabled={isButtonDisabled}
+            onClick={handleSubmit}
+            disabled={isButtonDisabled || isPending}
           />
         </div>
       </div>
@@ -292,7 +306,10 @@ const RecordCreatePage = () => {
         <Modal
           text="기록을 취소할까요?"
           desc="작성된 내용은 저장되지 않아요"
-          onClickLeft={() => navigate('/record')}
+          onClickLeft={() => {
+            reset();
+            navigate('/record');
+          }}
           onClickRight={() => setIsModalOpen(false)}
           onClose={() => setIsModalOpen(false)}
         />

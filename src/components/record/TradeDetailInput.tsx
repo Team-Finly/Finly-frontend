@@ -13,11 +13,18 @@ const TradeDetailInput = ({
   unit,
   onChange,
 }: TradeDetailInputProps) => {
-  const [inputValue, setInputValue] = useState<string>(value?.toString() || '');
+  const formatNumber = (num: number | string) => {
+    const value = num.toString().replace(/[^0-9]/g, '');
+    return value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  };
+
+  const [displayValue, setDisplayValue] = useState<string>(
+    value ? formatNumber(value) : '',
+  );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value;
-    setInputValue(val.replace(/[^0-9]/g, ''));
+    const val = e.target.value.replace(/[^0-9]/g, '');
+    setDisplayValue(formatNumber(val));
     onChange(val);
   };
 
@@ -27,9 +34,10 @@ const TradeDetailInput = ({
       <div className="mb-[3px] flex items-center justify-end">
         <div className="flex w-full text-[13px] font-semibold text-gray-500">
           <input
-            value={inputValue}
+            value={displayValue}
             onChange={handleChange}
             type="text"
+            inputMode="numeric"
             className="w-full text-right outline-none"
           />
           <p>{unit}</p>
