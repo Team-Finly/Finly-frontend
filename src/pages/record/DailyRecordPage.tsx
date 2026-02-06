@@ -29,7 +29,10 @@ const DailyRecordPage = () => {
         onCalendarClick={() => setIsCalendarOpen(true)}
       />
       
-      <DailyRecordTitle timelineSummary={data.timelineSummary} />
+      <DailyRecordTitle
+        timelineSummary={data.timelineSummary}
+        hasRecords={data.hasRecords}
+      />
  
       <DailyRecordTimeLine
         timelineSummary={data.timelineSummary}

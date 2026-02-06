@@ -180,7 +180,7 @@ const DailyRecordTimeLine = ({ timelineSummary, prismFeedback, hasRecords, onIte
         ) : (
           <div className="flex min-h-[260px] items-center justify-center px-10 text-center">
             <p className="whitespace-pre-wrap text-[15px] leading-relaxed text-gray-400">
-              {prismFeedback.title}
+              {prismFeedback?.title || '괜찮아요. 기록이 없는 날도 있을 수 있죠.'}
             </p>
           </div>
         )}
