@@ -60,13 +60,13 @@ const ProfileSettings = () => {
         <div className="flex flex-col items-center min-h-full pb-[52px]">
             
           <div className="relative mb-[30px] mt-[49px]">
-            <div onClick={handleImageClick} className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center overflow-hidden">
+            <div onClick={handleImageClick} className="cursor-pointer w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center overflow-hidden">
               <img onClick={handleImageClick} src={state.profileImage || defaultprofileIcon} alt="프로필 이미지" className="w-full h-full object-cover" /> 
 
             </div>
             {state.isEditing && (
-              <div className="cursor-pointer absolute mt-[-27px] right-[-4px] bg-blue-500 p-1.5 rounded-full border-2 border-white">
-                <img src={cameraIcon} alt="카메라 아이콘" className="w-4 h-4" />
+              <div onClick={handleImageClick} className="absolute mt-[-27px] right-[-4px] bg-blue-500 p-1.5 rounded-full border-2 border-white">
+                <img src={cameraIcon} alt="카메라 아이콘" className="w-4 h-4 cursor-pointer" />
               </div>
             )}
             {state.isEditing && state.profileImage !== defaultprofileIcon && (

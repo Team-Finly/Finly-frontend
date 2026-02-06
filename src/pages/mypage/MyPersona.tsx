@@ -102,10 +102,10 @@ const MyPersona = () => {
         </div>
         
         <div className="w-full px-[16px] mt-[125px] pb-[60px]">
-          <button className="cursor-pointer w-full py-[12px] h-[50px] bg-secondary text-white rounded-[12px]  leading-[26px] mb-[12px] font-semibold text-[18px]">
+          <button className="disabled:cursor-not-allowed w-full py-[12px] h-[50px] bg-secondary text-white rounded-[12px]  leading-[26px] mb-[12px] font-semibold text-[18px]">
             이미지로 저장하기
           </button>
-          <button className="cursor-pointer w-full h-[50px] py-[12px] bg-gray-50 text-gray-500 rounded-[12px] leading-[26px]  font-semibold text-[18px]">
+          <button className="disabled:cursor-not-allowed w-full h-[50px] py-[12px] bg-gray-50 text-gray-500 rounded-[12px] leading-[26px]  font-semibold text-[18px]">
             테스트 다시하기
           </button>
           
