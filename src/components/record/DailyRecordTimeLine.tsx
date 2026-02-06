@@ -1,18 +1,20 @@
 import TimeLineIcon from '@/assets/icons/stats_time.svg';
 import { EMOTIONS } from '@/constants/emotions';
-import type { SessionType, TimelineSection } from '@/types/record';
-import { useState } from 'react';
+import type { SessionType, TimelineSummaryItem } from '@/types/record';
+import { useMemo, useState } from 'react';
 import TimeLineModal from '@/components/record/TimeLineModal';
+import { stockInfoStore } from '@/store/stockInfoStore';
 
 interface Props {
-  sections?: TimelineSection[];
+  timelineSummary: TimelineSummaryItem[];
   onItemClick: (recordId: number) => void;
 }
 
-const DailyRecordTimeLine = ({ sections, onItemClick }: Props) => {
+const DailyRecordTimeLine = ({ timelineSummary, onItemClick }: Props) => {
   const [isTimeLineOpen, setIsTimeLineOpen] = useState(false);
   const getEmotionData = (key: string) => EMOTIONS.find((e) => e.key === key);
-
+  const { stockMap } = stockInfoStore();
+  
   const sessions: SessionType[] = ['PRE_MARKET', 'MORNING', 'AFTERNOON', 'POST_MARKET'];
 
   const sessionMap: Record<SessionType, string> = {
@@ -21,6 +23,22 @@ const DailyRecordTimeLine = ({ sections, onItemClick }: Props) => {
     AFTERNOON: '오후',
     POST_MARKET: '장 후',
   };
+
+  const groupedBySession = useMemo(() => {
+    return timelineSummary.reduce<Record<SessionType, TimelineSummaryItem[]>>(
+      (acc, item) => {
+        acc[item.session] ??= [];
+        acc[item.session].push(item);
+        return acc;
+      },
+      {
+        PRE_MARKET: [],
+        MORNING: [],
+        AFTERNOON: [],
+        POST_MARKET: [],
+      }
+    );
+  }, [timelineSummary]);
 
   const formatTime = (isoString: string) => {
     const date = new Date(isoString);
@@ -32,8 +50,7 @@ const DailyRecordTimeLine = ({ sections, onItemClick }: Props) => {
   };
 
   const getSessionStyle = (session: SessionType) => {
-    const sectionData = sections?.find((s) => s.session === session);
-    const hasItems = sectionData && sectionData.items.length > 0;
+    const hasItems = groupedBySession[session].length > 0;
 
     return {
       hasItems,
@@ -56,9 +73,8 @@ const DailyRecordTimeLine = ({ sections, onItemClick }: Props) => {
         <div className="relative ml-[16px] flex flex-col pl-8">
           <div className="flex flex-col">
             {sessions.map((sessionKey, index) => {
-              const section = sections?.find((s) => s.session === sessionKey);
-              const style = getSessionStyle(sessionKey);
-              const items = section?.items || [];
+              const items = groupedBySession[sessionKey];
+            const style = getSessionStyle(sessionKey);
               const isLast = index === sessions.length - 1;
 
               return (
@@ -85,6 +101,7 @@ const DailyRecordTimeLine = ({ sections, onItemClick }: Props) => {
                       items.map((item) => {
                         const emotion = getEmotionData(item.emotionCode);
                         const emotionColor = emotion?.color || '#EEEFF0';
+                        const stock = stockMap[item.symbol];
 
                         return (
                           <div key={item.recordId} className="relative first:min-h-[32px]">
@@ -101,7 +118,7 @@ const DailyRecordTimeLine = ({ sections, onItemClick }: Props) => {
                               <div className="mb-[14px] flex items-center justify-between">
                                 <div className="flex items-center gap-[6px]">
                                   <span className="text-[14px] font-semibold text-gray-900">
-                                    {item.instrumentName}
+                                    {stock?.name ?? item.symbol}
                                   </span>
                                   {emotion && (
                                     <div
@@ -115,7 +132,7 @@ const DailyRecordTimeLine = ({ sections, onItemClick }: Props) => {
                                 </div>
                                 <span className="text-[12px] text-gray-300">{formatTime(item.recordedAt)}</span>
                               </div>
-                              <p className="mb-[10px] text-[11px] leading-snug text-gray-700">"{item.memoPreview}"</p>
+                              <p className="mb-[10px] text-[11px] leading-snug text-gray-700">"{item.memo}"</p>
                               <div className="flex items-center justify-between text-[13px]">
                                 <span style={{ color: item.tradeAction === 'BUY' ? '#E42911' : '#065DE0' }}>
                                   {item.tradeAction === 'BUY' ? '매수' : '매도'}

@@ -79,9 +79,33 @@ export interface TimelineSection {
   items: TradeItem[];
 }
 
+//----
+
+export interface PrismFeedback {
+  title: string;
+  generatedAt: string; 
+}
+
+export interface TimelineSummaryItem {
+  recordId: number;
+  recordDate: string;    
+  recordedAt: string;     
+  session: SessionType;
+  tradeAction: TradeActionType;
+  symbol: string;
+  unitPrice: number;
+  quantity: number;
+  emotionCode: EmotionType;
+  emotionIntensity: number;
+  memo: string;
+}
+
 export interface RecordDetailResponse {
-  date: string;           
-  sections: TimelineSection[];
+  date: string; 
+  prismFeedback: PrismFeedback;
+  timelineSummary: TimelineSummaryItem[];
+  hasRecords: boolean;
+  recordCount: number;
 }
 
 // 최근 나의 기록 (home)

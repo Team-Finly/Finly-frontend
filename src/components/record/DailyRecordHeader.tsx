@@ -12,7 +12,7 @@ const DailyRecordHeader = ({ title, onCalendarClick }: HeaderProps) => {
   const navigate = useNavigate();
 
   return (
-    <div className="fixed top-0 z-1 w-full max-w-120 border-b border-gray-100 bg-white">
+    <div className="fixed top-0 z-30 w-full max-w-120 border-b border-gray-100 bg-white">
       <div className="relative mt-4 flex h-15 items-center justify-center bg-white px-4">
         <button
           className="absolute left-4 cursor-pointer"
