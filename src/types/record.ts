@@ -102,6 +102,32 @@ export interface CreateRecordResponse extends CreateRecordRequest {
   session: SessionType;
 }
 
+// AI 피드백
+export interface FeedbackResponse {
+  feedbackId: number;
+  recordEntryId: number;
+  status: 'PENDING' | 'COMPLETED';
+  content: string;
+  suggestion: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+// 기록 상세 조회
+export interface RecordDetailResponse {
+  emotionCode: EmotionType;
+  emotionIntensity: number;
+  memo: string;
+  quantity: number;
+  recordDate: string;
+  recordId: number;
+  recordedAt: string;
+  session: SessionType;
+  symbol: string;
+  tradeAction: TradeActionType;
+  unitPrice: number;
+}
+
 // 해당 일 기록
 export interface TradeItem {
   recordId: number;

@@ -1,22 +1,31 @@
 import React from 'react';
 import Gradient from '@/assets/images/gradient.svg';
-import { EMOTIONS } from '@/constants/emotions';
+import { EMOTIONS, EMOTION_CHART_MAP } from '@/constants/emotions';
 import Light from '@/assets/images/light.png';
 import Close from '@/assets/icons/close-dark.svg';
-import { useNavigate } from 'react-router-dom';
-
-const MOCK_DATA = {
-  content:
-    '기현님, 삼성전자의 급격한 하락에 크게 {{불안}}하셨군요. 하지만 지난 기록을 보면, 이런 상황에서 감정적으로 매도한 후 [[평균 2일 내]]에 후회하는 패턴이 나타났어요',
-  suggestion:
-    '지금의 감정은 자연스러워요. 다만, 매도 결정 전 과거의 기록을 한 번 더 살펴보거나, 최소 1시간 후 다시 결정하는 건 어떨까요?',
-};
+import { useLocation, useNavigate } from 'react-router-dom';
+import type { FeedbackResponse } from '@/types/record';
+import { useRecordDetail } from '@/hooks/useRecordDetail';
+import { stockInfoStore } from '@/store/stockInfoStore';
 
 const FeedbackPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const feedback = location.state?.feedback as FeedbackResponse;
+  const { data: recordDetail } = useRecordDetail(feedback?.recordEntryId);
+  const stockMap = stockInfoStore((state) => state.stockMap);
+
+  const stockName = recordDetail?.symbol
+    ? (stockMap[recordDetail.symbol]?.name ?? recordDetail.symbol)
+    : '';
+
+  const tradeAction = recordDetail?.tradeAction;
+  const emotionLabel = recordDetail?.emotionCode
+    ? EMOTION_CHART_MAP[recordDetail.emotionCode]?.label
+    : '';
 
   const handleHighlight = (content: string) => {
-    const parts = content.split(/(\{\{.*?\}\}|\[\[.*?\]\])/g);
+    const parts = content.split(/(\{\{.*?\}\}|<<.*?>>)/g);
 
     return parts.map((part, index) => {
       // 감정 키워드
@@ -37,8 +46,8 @@ const FeedbackPage = () => {
       }
 
       // 수치 데이터
-      if (part.startsWith('[[') && part.endsWith(']]')) {
-        const valueText = part.replace(/\[\[|\]\]/g, '');
+      if (part.startsWith('<<') && part.endsWith('>>')) {
+        const valueText = part.replace(/<<|>>/g, '');
         return (
           <span key={index} className="text-secondary font-bold">
             {valueText}
@@ -57,8 +66,8 @@ const FeedbackPage = () => {
 
   return (
     <div className="flex flex-1 flex-col items-center bg-[#F8F9FA] px-4">
-      <div className="mb-25 flex h-19 w-full items-center justify-end pt-[25px] pb-[9px]">
-        <button onClick={() => navigate(-1)}>
+      <div className="mb-20 flex h-19 w-full items-center justify-end pt-[25px] pb-[9px]">
+        <button onClick={() => navigate('/record')}>
           <img src={Close} alt="닫기 아이콘" className="cursor-pointer" />
         </button>
       </div>
@@ -70,12 +79,23 @@ const FeedbackPage = () => {
       </div>
       <div className="w-[339px] rounded-[20px] bg-[#ffffff]/60 p-6 shadow-[0px_3px_10px_0px_rgba(191,195,209,0.2)]">
         <div className="mb-6 flex justify-center gap-1 text-[13px] font-semibold text-gray-500/80">
-          <p>삼성 전자 매수</p>
+          <p>
+            {stockName}{' '}
+            {tradeAction === 'BUY'
+              ? '매수'
+              : tradeAction === 'SELL'
+                ? '매도'
+                : tradeAction === 'WATCH'
+                  ? '관망'
+                  : ''}
+          </p>
           <p>·</p>
-          <p>불안 Lv.7</p>
+          <p>
+            {emotionLabel} Lv.{recordDetail?.emotionIntensity}
+          </p>
         </div>
         <div className="mb-6 text-center leading-6">
-          "{handleHighlight(MOCK_DATA.content)}"
+          "{handleHighlight(feedback.content)}"
         </div>
         <div className="mb-2.5 flex items-center justify-start gap-0.5">
           <img src={Light} alt="전구 이미지" className="h-3.5 w-3.5" />
@@ -85,7 +105,7 @@ const FeedbackPage = () => {
         </div>
         <div className="rounded-xl border-[1.2px] border-gray-50 bg-gray-50/60 p-3">
           <p className="text-[11px] leading-4.5 text-gray-500">
-            {MOCK_DATA.suggestion}
+            {feedback.suggestion}
           </p>
         </div>
       </div>

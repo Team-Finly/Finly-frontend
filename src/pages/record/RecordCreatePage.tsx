@@ -108,8 +108,7 @@ const RecordCreatePage = () => {
     !stockId ||
     !symbol ||
     !selectedTradeAction ||
-    !unitPrice ||
-    (selectedTradeAction !== 'WATCH' && !quantity) ||
+    (selectedTradeAction !== 'WATCH' && (!unitPrice || !quantity)) ||
     !clickedEmotion ||
     emotionLevel === null ||
     memo.trim().length === 0;
@@ -122,7 +121,7 @@ const RecordCreatePage = () => {
       recordDate: formatDate(selectedDate),
       symbol: symbol,
       tradeAction: selectedTradeAction!,
-      unitPrice: Number(unitPrice),
+      unitPrice: selectedTradeAction === 'WATCH' ? 0 : Number(unitPrice),
       quantity: selectedTradeAction === 'WATCH' ? 0 : Number(quantity),
       emotionCode: clickedEmotion as EmotionType,
       emotionIntensity: emotionLevel,

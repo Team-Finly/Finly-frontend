@@ -4,6 +4,8 @@ import type {
   SearchStock,
   CreateRecordRequest,
   CreateRecordResponse,
+  FeedbackResponse,
+  RecordDetailResponse,
 } from '@/types/record';
 
 export const recordApi = {
@@ -29,6 +31,20 @@ export const recordApi = {
     const res = await api.post<ApiResponse<CreateRecordResponse>>(
       '/api/records',
       record,
+    );
+    return res.data.result;
+  },
+
+  getFeedback: async (recordId: number): Promise<FeedbackResponse> => {
+    const res = await api.get<ApiResponse<FeedbackResponse>>(
+      `/api/records/${recordId}/feedback`,
+    );
+    return res.data.result;
+  },
+
+  getRecordDetail: async (recordId: number) => {
+    const res = await api.get<ApiResponse<RecordDetailResponse>>(
+      `/api/records/${recordId}`,
     );
     return res.data.result;
   },
