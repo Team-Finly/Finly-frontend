@@ -8,6 +8,23 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 const MOCK_SECTIONS: TimelineSection[] = [
   {
+    session: "PRE_MARKET",
+    items: [
+     {
+        recordId: 103,
+        instrumentId: 5,
+        instrumentName: "삼성전자",
+        emotionCode: "CONFIDENCE",
+        emotionDisplay: "확신",
+        tradeAction: "BUY",
+        unitPrice: 74500,
+        quantity: 10,
+        memoPreview: "오후장 지지 확인 후 비중 확대.",
+        recordedAt: "2026-01-06T14:20:00"
+      },
+    ]
+  },
+  {
     session: "MORNING",
     items: [
       {
@@ -54,8 +71,30 @@ const MOCK_SECTIONS: TimelineSection[] = [
     ]
   },
   {
-    session: "CLOSE",
-    items: []
+    session: "POST_MARKET",
+    items: [{
+        recordId: 103,
+        instrumentId: 5,
+        instrumentName: "삼성전자",
+        emotionCode: "CONFIDENCE",
+        emotionDisplay: "확신",
+        tradeAction: "BUY",
+        unitPrice: 74500,
+        quantity: 10,
+        memoPreview: "오후장 지지 확인 후 비중 확대.",
+        recordedAt: "2026-01-06T14:20:00"
+      },{
+        recordId: 103,
+        instrumentId: 5,
+        instrumentName: "삼성전자",
+        emotionCode: "CONFIDENCE",
+        emotionDisplay: "확신",
+        tradeAction: "BUY",
+        unitPrice: 74500,
+        quantity: 10,
+        memoPreview: "오후장 지지 확인 후 비중 확대.",
+        recordedAt: "2026-01-06T14:20:00"
+      },]
   }
 ];
 
@@ -80,7 +119,10 @@ const DailyRecordPage = () => {
   }
 
   return (
-    <div className="h-screen  bg-[#F4F5F7] pt-[76px]">
+    <div className="h-screen pt-[76px]"
+      style={{
+        background: 'linear-gradient(to bottom, #F4F5F7 50%, #FFFFFF 50%)'
+      }}>
       <DailyRecordHeader
         title={targetDate}
         onCalendarClick={() => setIsCalendarOpen(true)}
