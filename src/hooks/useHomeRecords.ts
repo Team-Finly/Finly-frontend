@@ -1,4 +1,4 @@
-import { homeRecordApi } from '@/apis/homeApi';
+import { homeApi } from '@/apis/homeApi';
 import type { HomeRecordItem } from '@/types/record';
 import { useQuery } from '@tanstack/react-query';
 
@@ -8,7 +8,7 @@ export const useHomeRecords = () => {
   return useQuery<HomeRecordItem[]>({
     queryKey: HOME_RECORDS_QUERY_KEY,
     queryFn: async () => {
-      const res = await homeRecordApi.getHomeRecords();
+      const res = await homeApi.getHomeRecords();
       return res.result?.records ?? [];
     },
   
