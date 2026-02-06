@@ -74,7 +74,7 @@ const DailyRecordTimeLine = ({ timelineSummary, onItemClick }: Props) => {
           <div className="flex flex-col">
             {sessions.map((sessionKey, index) => {
               const items = groupedBySession[sessionKey];
-            const style = getSessionStyle(sessionKey);
+              const style = getSessionStyle(sessionKey);
               const isLast = index === sessions.length - 1;
 
               return (
@@ -110,7 +110,6 @@ const DailyRecordTimeLine = ({ timelineSummary, onItemClick }: Props) => {
                               className="absolute bottom-[-6px] left-[-34px] top-0 z-10 w-[2px]"
                               style={{ backgroundColor: emotionColor }}
                             />
-
                             <div
                               className="rounded-xl border-[1.2px] border-gray-100 bg-white p-[16px] shadow-sm cursor-pointer"
                               onClick={() => onItemClick(item.recordId)}
@@ -134,14 +133,32 @@ const DailyRecordTimeLine = ({ timelineSummary, onItemClick }: Props) => {
                               </div>
                               <p className="mb-[10px] text-[11px] leading-snug text-gray-700">"{item.memo}"</p>
                               <div className="flex items-center justify-between text-[13px]">
-                                <span style={{ color: item.tradeAction === 'BUY' ? '#E42911' : '#065DE0' }}>
-                                  {item.tradeAction === 'BUY' ? '매수' : '매도'}
+                                <span
+                                  style={{
+                                    color:
+                                      item.tradeAction === 'BUY'
+                                        ? '#E42911' 
+                                        : item.tradeAction === 'SELL'
+                                          ? '#065DE0' 
+                                          : '#6E757D', 
+                                  }}
+                                >
+                                  {item.tradeAction === 'BUY' && '매수'}
+                                  {item.tradeAction === 'SELL' && '매도'}
+                                  {item.tradeAction === 'WATCH' && '관망'}
+    
                                   <span className="mx-[4px] text-gray-300">·</span>
+    
                                   <span className="font-semibold text-gray-500">
-                                    {item.unitPrice.toLocaleString()}원
+                                    {item.tradeAction === 'WATCH'
+                                      ? '-'
+                                      : `${item.unitPrice.toLocaleString()}원`}
                                   </span>
                                 </span>
-                                <span className="text-gray-400">{item.quantity}주</span>
+
+                                <span className="text-gray-400">
+                                  {item.tradeAction === 'WATCH' ? '' : `${item.quantity}주`}
+                                </span>
                               </div>
                             </div>
                           </div>
