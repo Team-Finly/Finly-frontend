@@ -61,7 +61,7 @@ const ProfileSettings = () => {
             
           <div className="relative mb-[30px] mt-[49px]">
             <div onClick={handleImageClick} className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center overflow-hidden">
-              <img onClick={handleImageClick} src={state.profileImage ?? undefined} alt="프로필 이미지" className="w-full h-full object-cover" /> 
+              <img onClick={handleImageClick} src={state.profileImage || defaultprofileIcon} alt="프로필 이미지" className="w-full h-full object-cover" /> 
 
             </div>
             {state.isEditing && (

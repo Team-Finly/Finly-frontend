@@ -11,9 +11,11 @@ const Profile = () => {
   const nickname = useUserStore((state) => state.nickname);
   const profileImage = useUserStore((state) => state.profileImage);
   const personaType = useUserStore((state) => state.personaType);
-  const personaName = personaType 
-  ? PERSONA_DATA[personaType as keyof typeof PERSONA_DATA].name 
-  : "분석 중...";
+  const personaEntry = personaType 
+    ? PERSONA_DATA[personaType as keyof typeof PERSONA_DATA] 
+    : null;
+  const personaName=personaEntry?.name ?? "분석중...";
+  
 
   return (
     <div className="flex h-full flex-col bg-gray-50">

@@ -2,7 +2,7 @@ import TitleHeader from '@/components/record/TitleHeader';
 import { PERSONA_DATA } from '@/constants/mypersona';
 import light from '@/assets/icons/light.svg'
 import { useEffect, useState } from 'react';
-import { getMyPersona } from '@/apis/personaApi';
+import { getMyPersona } from '@/apis/userApi';
 import { useUserStore } from '@/store/userStore';
 
 const MyPersona = () => {
@@ -42,6 +42,10 @@ const MyPersona = () => {
   }
 
   const data = PERSONA_DATA[personaType as keyof typeof PERSONA_DATA];
+   
+  if (!data) {
+    return <div className="h-screen bg-white" />;
+  }
 
 
   return (
