@@ -1,7 +1,6 @@
 import LoginPage from "@/pages/auth/LoginPage";
 import SignupPage from "@/pages/auth/SignupPage";
 import OnboardingPage from "@/pages/onboarding/OnboardingPage";
-import Start from "@/pages/onboarding/start";
 import type { RouteObject } from "react-router-dom";
 
 const authRoutes: RouteObject[] = [
@@ -20,11 +19,7 @@ const authRoutes: RouteObject[] = [
     element: <OnboardingPage />,
     handle: { showNav: false },
   },
-  {
-    path: 'start',
-    element: <Start />,
-    handle: { showNav: false },
-  }
+  
 ];
 
 export default authRoutes;  

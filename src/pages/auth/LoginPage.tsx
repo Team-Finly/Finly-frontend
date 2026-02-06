@@ -51,7 +51,7 @@ const handleLogin = async (e: React.FormEvent) => {
       <header className="relative flex items-center justify-center w-full h-[60px]">
      <button
       onClick={() => navigate(-1)}
-      className="absolute left-0 top-1/2 -translate-y-1/2 "
+      className="absolute left-0 top-1/2 -translate-y-1/2 cursor-pointer"
     >
       <img src={backIcon} alt="뒤로가기" className="w-[8px] h-[16px]" />
     </button>
@@ -97,7 +97,7 @@ const handleLogin = async (e: React.FormEvent) => {
       <button
         disabled={!isFormValid}
         onClick={handleLogin}
-        className={`w-full h-[50px] mt-[45px] rounded-[12px] font-medium text-lg transition-colors duration-200
+        className={`w-full h-[50px] mt-[45px] rounded-[12px] font-medium text-lg transition-colors duration-200 cursor-pointer
           ${isFormValid
             ? "bg-secondary text-white cursor-pointer"
             : "bg-gray-100 text-gray-300 cursor-not-allowed"
