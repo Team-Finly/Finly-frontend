@@ -48,4 +48,8 @@ export const recordApi = {
     );
     return res.data.result;
   },
+  getTodayRecords: (date: string) =>
+    api.get<ApiResponse<RecordDetailResponse>>('/api/records/today', {
+      params: { date },
+    }),
 };

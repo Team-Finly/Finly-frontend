@@ -128,28 +128,32 @@ export interface RecordDetailResponse {
   unitPrice: number;
 }
 
-// 해당 일 기록
-export interface TradeItem {
-  recordId: number;
-  instrumentId: number;
-  instrumentName: string;
-  emotionCode: string;
-  emotionDisplay: string;
-  tradeAction: 'BUY' | 'SELL';
-  unitPrice: number;
-  quantity: number;
-  memoPreview: string;
-  recordedAt: string;
+// 해당 일 기록 
+export interface PrismFeedback {
+  title: string;
+  generatedAt: string; 
 }
 
-export interface TimelineSection {
+export interface TimelineSummaryItem {
+  recordId: number;
+  recordDate: string;    
+  recordedAt: string;     
   session: SessionType;
-  items: TradeItem[];
+  tradeAction: TradeActionType;
+  symbol: string;
+  unitPrice: number;
+  quantity: number;
+  emotionCode: EmotionType;
+  emotionIntensity: number;
+  memo: string;
 }
 
 export interface RecordDetailResponse {
-  date: string;
-  sections: TimelineSection[];
+  date: string; 
+  prismFeedback: PrismFeedback;
+  timelineSummary: TimelineSummaryItem[];
+  hasRecords: boolean;
+  recordCount: number;
 }
 
 // 최근 나의 기록 (home)
