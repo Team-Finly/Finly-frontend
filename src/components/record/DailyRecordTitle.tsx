@@ -41,14 +41,15 @@ const DailyRecordTitle = ({ timelineSummary, hasRecords }: TitleProps) => {
           {hasRecords ? (<>
             오늘은{' '}
             <span className='font-bold' style={{ color: firstEmotion.color }}>
-              {getParticle(firstEmotion.label)} 시작해
+              {firstEmotion.label}
             </span>
+            {getParticle(firstEmotion.label)} 시작해
             <br />
             <span className='font-bold' style={{ color: lastEmotion.color }}>
-              {getParticle(lastEmotion.label)} 마무리한 날이에요
+              {lastEmotion.label}
             </span>
-          </>
-          ) : (
+            {getParticle(lastEmotion.label)} 마무리한 날이에요
+          </>) : (
             <>오늘은 어떤 하루였나요?</>
           )}
         </h2>
