@@ -1,6 +1,10 @@
 import type { ApiResponse } from '@/types/types';
 import { api } from '@/apis/client';
-import type { SearchStock } from '@/types/record';
+import type {
+  SearchStock,
+  CreateRecordRequest,
+  CreateRecordResponse,
+} from '@/types/record';
 
 export const recordApi = {
   searchStocks: async (
@@ -16,6 +20,16 @@ export const recordApi = {
         sort: 'name,asc',
       },
     });
+    return res.data.result;
+  },
+
+  createRecord: async (
+    record: CreateRecordRequest,
+  ): Promise<CreateRecordResponse> => {
+    const res = await api.post<ApiResponse<CreateRecordResponse>>(
+      '/api/records',
+      record,
+    );
     return res.data.result;
   },
 };

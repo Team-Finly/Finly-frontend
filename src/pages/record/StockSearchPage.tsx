@@ -7,19 +7,23 @@ import StockItem from '@/components/record/StockItem';
 import { useStockSearch } from '@/hooks/useStockSearch';
 import { useDebounce } from '@/hooks/useDebounce';
 import { useInView } from 'react-intersection-observer';
+import { useRecordCreateStore } from '@/store/recordCreateStore';
 
 const StockSearchPage = () => {
   const navigate = useNavigate();
+  const setStock = useRecordCreateStore((state) => state.setStock);
   const [keyword, setKeyword] = useState<string>('');
   const debouncedKeyword = useDebounce(keyword, 300);
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useStockSearch(debouncedKeyword);
   const { ref, inView } = useInView();
+
   useEffect(() => {
     if (inView && hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
     }
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
+
   const stocks = data?.pages.flatMap((page) => page.stocks) || [];
 
   return (
@@ -59,15 +63,12 @@ const StockSearchPage = () => {
                   stock={stock}
                   keyword={keyword}
                   onClick={(selectedStock) => {
-                    navigate('/record/create', {
-                      state: {
-                        selectedStock: {
-                          id: selectedStock.id,
-                          name: selectedStock.name,
-                        },
-                      },
-                      replace: true,
-                    });
+                    setStock(
+                      selectedStock.id,
+                      selectedStock.name,
+                      selectedStock.symbol,
+                    );
+                    navigate('/record/create', { replace: true });
                   }}
                 />
               ))}

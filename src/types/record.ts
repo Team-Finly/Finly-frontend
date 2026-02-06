@@ -79,6 +79,29 @@ export interface SearchStock {
   pageInfo: PageInfo;
 }
 
+// 기록 생성
+export interface CreateRecordRequest {
+  clientRequestId: string;
+  recordDate: string;
+  symbol: string;
+  tradeAction: TradeActionType;
+  unitPrice: number;
+  quantity: number;
+  emotionCode: EmotionType;
+  emotionIntensity: number;
+  memo: string;
+}
+
+export interface CreateRecordResponse extends CreateRecordRequest {
+  feedback: {
+    feedbackId: number;
+    status: 'PENDING' | 'COMPLETED';
+  };
+  recordId: number;
+  recordedAt: string;
+  session: SessionType;
+}
+
 // 해당 일 기록
 export interface TradeItem {
   recordId: number;
