@@ -27,6 +27,12 @@ const DailyRecordTitle = ({ timelineSummary, hasRecords }: TitleProps) => {
     };
   }, [timelineSummary]);
 
+  const getParticle = (word: string) => {
+    const lastChar = word.charCodeAt(word.length - 1);
+    const hasBatchim = (lastChar - 0xAC00) % 28 !== 0;
+    return hasBatchim ? '으로' : '로';
+  };
+
   return (
     <section className="relative">
       <div className="flex flex-col px-[16px] pt-[30px]">
@@ -35,15 +41,14 @@ const DailyRecordTitle = ({ timelineSummary, hasRecords }: TitleProps) => {
           {hasRecords ? (<>
             오늘은{' '}
             <span className='font-bold' style={{ color: firstEmotion.color }}>
-              {firstEmotion.label}
+              {getParticle(firstEmotion.label)} 시작해
             </span>
-            으로 시작해
             <br />
             <span className='font-bold' style={{ color: lastEmotion.color }}>
-              {lastEmotion.label}
+              {getParticle(lastEmotion.label)} 마무리한 날이에요
             </span>
-            으로 마무리한 날이에요
-          </>) : (
+          </>
+          ) : (
             <>오늘은 어떤 하루였나요?</>
           )}
         </h2>
