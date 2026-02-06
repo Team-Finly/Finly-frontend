@@ -148,7 +148,7 @@ export interface TimelineSummaryItem {
   memo: string;
 }
 
-export interface RecordDetailResponse {
+export interface RecordDailyDetailResponse {
   date: string; 
   prismFeedback: PrismFeedback;
   timelineSummary: TimelineSummaryItem[];
