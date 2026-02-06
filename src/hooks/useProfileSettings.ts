@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useUserStore } from "@/store/userStore";
 import defaultprofileIcon from "@/assets/icons/profile.svg";
-import {getMyProfile} from "@/apis/userApi";
+import {getMyProfile, updateNickname} from "@/apis/userApi";
 
 export const useProfileSettings = () => {
   const { email: storeEmail, nickname: storeNickname, profileImage: storeImage, setUserInfo } = useUserStore();
@@ -20,9 +20,8 @@ export const useProfileSettings = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const data = await getMyProfile(); //
-        
-        // 서버 데이터로 스토어와 로컬 상태를 한꺼번에 업데이트합니다.
+        const data = await getMyProfile(); 
+      
         setUserInfo({ 
           nickname: data.nickname, 
           email: data.email 
@@ -37,7 +36,6 @@ export const useProfileSettings = () => {
     fetchProfile();
   }, [setUserInfo]);
 
-  
   const handleFileChange = (file: File | undefined) => {
     if (file) {
       if (!file.type.startsWith("image/")) {
@@ -64,8 +62,15 @@ export const useProfileSettings = () => {
     else setErrorMessage("");
   };
 
-  const handleComplete = () => {
+  const handleComplete = async () => {
     if (!errorMessage) {
+      {
+        try{
+          await updateNickname(nickname);
+        } catch (error) {
+          console.error("닉네임 업데이트 실패:", error);
+        }
+      }
       setUserInfo({ nickname, profileImage });
       setIsEditing(false);
       setInitialNickname(nickname);
