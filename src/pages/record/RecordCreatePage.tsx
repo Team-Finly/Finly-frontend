@@ -262,7 +262,7 @@ const RecordCreatePage = () => {
               ))}
             </div>
             <EmotionLevelSlider
-              level={emotionLevel || 7}
+              level={emotionLevel ?? 7}
               onChange={(val) => setField('emotionLevel', val)}
               isVisible={clickedEmotion !== null}
             />
