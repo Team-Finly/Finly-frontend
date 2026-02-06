@@ -52,7 +52,7 @@ const StockSearchPage = () => {
           )}
         </div>
       </div>
-      {keyword &&
+      {debouncedKeyword &&
         !isLoading &&
         (stocks.length > 0 ? (
           <>
