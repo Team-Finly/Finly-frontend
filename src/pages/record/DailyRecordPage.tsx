@@ -33,6 +33,8 @@ const DailyRecordPage = () => {
  
       <DailyRecordTimeLine
         timelineSummary={data.timelineSummary}
+        prismFeedback={data.prismFeedback}     
+        hasRecords={data.hasRecords}
         onItemClick={(recordId: number) => {
           navigate(`/record/${data.date}/${recordId}`);
         }}
