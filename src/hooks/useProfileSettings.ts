@@ -1,20 +1,43 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useUserStore } from "@/store/userStore";
 import defaultprofileIcon from "@/assets/icons/profile.svg";
+import {getMyProfile} from "@/apis/userApi";
 
 export const useProfileSettings = () => {
-  const { nickname: storeNickname, profileImage: storeImage, setUserInfo } = useUserStore();
+  const { email: storeEmail, nickname: storeNickname, profileImage: storeImage, setUserInfo } = useUserStore();
 
   const [isEditing, setIsEditing] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [profileImage, setProfileImage] = useState(storeImage);
   const [nickname, setNickname] = useState(storeNickname);
+  const [email, setEmail] = useState(storeEmail);
   const [imageFile, setImageFile] = useState<File | null>(null); 
   const [isImageDeleted, setIsImageDeleted] = useState(false); 
   const [initialImage, setInitialImage] = useState(storeImage);
   const [initialNickname, setInitialNickname] = useState(storeNickname);
 
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const data = await getMyProfile(); //
+        
+        // 서버 데이터로 스토어와 로컬 상태를 한꺼번에 업데이트합니다.
+        setUserInfo({ 
+          nickname: data.nickname, 
+          email: data.email 
+        });
+        setNickname(data.nickname);
+        setEmail(data.email);
+        setInitialNickname(data.nickname);
+      } catch (error) {
+        console.error("프로필 로드 실패:", error);
+      }
+    };
+    fetchProfile();
+  }, [setUserInfo]);
+
+  
   const handleFileChange = (file: File | undefined) => {
     if (file) {
       if (!file.type.startsWith("image/")) {
@@ -62,7 +85,7 @@ export const useProfileSettings = () => {
   };
 
   return {
-    state: { isEditing, errorMessage, isModalOpen, profileImage, nickname, initialImage, initialNickname },
+    state: { isEditing, errorMessage, isModalOpen, profileImage, nickname, initialImage, initialNickname, email },
     actions: { setIsEditing, setIsModalOpen, handleFileChange, handleResetImage, handleNicknameChange, handleComplete, handleCancel }
   };
 };

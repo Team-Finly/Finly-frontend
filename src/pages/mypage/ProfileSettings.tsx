@@ -30,9 +30,9 @@ const ProfileSettings = () => {
   return (
     <div className="h-screen flex flex-col bg-white overflow-hidden">
       <input
-      type="file"
-      accept='image/*'
-      ref={fileInputRef} 
+      type="file" 
+      accept='image/*'     
+      ref={fileInputRef}   
       onChange={(e) => actions.handleFileChange(e.target.files ? e.target.files[0] : undefined)}
       className="hidden cursor-pointer"
     />
@@ -61,7 +61,7 @@ const ProfileSettings = () => {
             
           <div className="relative mb-[30px] mt-[49px]">
             <div onClick={handleImageClick} className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center overflow-hidden">
-              <img onClick={handleImageClick} src={state.profileImage} alt="프로필 이미지" className="w-full h-full object-cover" /> 
+              <img onClick={handleImageClick} src={state.profileImage ?? undefined} alt="프로필 이미지" className="w-full h-full object-cover" /> 
 
             </div>
             {state.isEditing && (
@@ -83,7 +83,7 @@ const ProfileSettings = () => {
               <label className="text-[14px] text-gray-500 mb-2 block font-semibold">닉네임</label>
               <input
                 type="text"
-                value={state.nickname}
+                value={state.nickname || ""}
                 onChange={(e) => actions.handleNicknameChange(e.target.value)}
                 readOnly={!state.isEditing}
                 className={`w-full p-4 rounded-[12px] border-[1.2px] text-[17px] text-medium border-gray-50 bg-[#F4F5F7]/60 text-gray-700 outline-none ${
@@ -106,7 +106,7 @@ const ProfileSettings = () => {
               <label className="text-[14px] text-gray-500 mb-2 block font-semibold">이메일</label>
               <input
                 type="text"
-                value="finly@finly.com"
+                value={state.email || ""}
                 readOnly
                 className="w-full p-4 rounded-[12px] border-[1.2px] text-[17px] text-medium border-gray-50 bg-[#F4F5F7]/60 text-gray-700 outline-none"
               />
