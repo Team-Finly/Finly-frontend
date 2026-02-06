@@ -6,6 +6,7 @@ import type {
   CreateRecordResponse,
   FeedbackResponse,
   RecordDetailResponse,
+  RecordDailyDetailResponse,
 } from '@/types/record';
 
 export const recordApi = {
@@ -49,7 +50,7 @@ export const recordApi = {
     return res.data.result;
   },
   getTodayRecords: (date: string) =>
-    api.get<ApiResponse<RecordDetailResponse>>('/api/records/today', {
+    api.get<ApiResponse<RecordDailyDetailResponse>>('/api/records/today', {
       params: { date },
     }),
 };
