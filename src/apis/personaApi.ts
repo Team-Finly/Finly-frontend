@@ -1,22 +1,7 @@
-import { api } from "@/apis/client";
-import type { ApiResponse } from "@/types/types";
+import { api } from "./client";
 
-import type { 
-  GetQuestionsResult, 
-  SubmitAnswersRequest, 
-  SubmitAnswersResult 
-} from "@/types/personaTest";
-
-export async function getPersonaQuestions() {
-  const res = await api.get<ApiResponse<GetQuestionsResult>>("/api/persona-test/questions");
-  return res.data;
-}
-
-export async function submitPersonaAnswers(mode: string, payload: SubmitAnswersRequest) {
-  const res = await api.post<ApiResponse<SubmitAnswersResult>>(
-    "/api/persona-test/submit",
-    payload,
-    { params: { mode } } 
-  );
-  return res.data;
-}
+export const getMyPersona = async () => {
+  
+  const response = await api.get("/api/mypage/persona");
+  return response.data.result; 
+};

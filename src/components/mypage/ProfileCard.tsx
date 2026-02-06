@@ -2,9 +2,10 @@ import defaultprofileIcon from '@/assets/icons/profile.svg';
 
 interface ProfileCardProps {
   nickname: string;
-  profileImage: string;
+  profileImage: string|null;
+  personaName?: string;
 }
-const ProfileCard = ({ nickname, profileImage }: ProfileCardProps) => {
+const ProfileCard = ({ nickname, profileImage, personaName }: ProfileCardProps) => {
 
   return (
     <div className="h-[176px] flex flex-1 flex-col items-center justify-center rounded-[12px] border border-gray-50 bg-white py-6">
@@ -16,7 +17,7 @@ const ProfileCard = ({ nickname, profileImage }: ProfileCardProps) => {
               />
               </div>
             <div className="flex flex-col items-center justify-center whitespace-nowrap mb-[24px]">
-              <p className="mb-1 text-[12px] font-medium text-gray-700">신중한 거북이</p>
+              <p className="mb-1 text-[12px] font-medium text-gray-700">{personaName}</p>
               <p className="text-[18px] font-semibold text-gray-900">{nickname} 님</p>
             </div>
     </div>    

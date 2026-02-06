@@ -12,7 +12,7 @@ import shadow from '@/assets/images/shadow.png';
 import BackgroundEffect from '@/components/onboarding/BackgroundEffect';
 import { useState, useEffect } from 'react';
 import { useSignupStore } from '@/store/signupStore';
-import { submitPersonaAnswers } from '@/apis/personaApi';
+import { submitPersonaAnswers } from '@/apis/personatestApi';
 
 
 
@@ -69,7 +69,7 @@ const PERSONA_UI_DATA: any = {
         const payload = {
           answers: signupData.personaAnswers
         };
-        const res = await submitPersonaAnswers("signup", payload);
+        const res = await submitPersonaAnswers("signup", payload);``
         console.log("🔥 서버 전체 응답 확인:", res);
         const responseData: any = res; // 타입 유연하게 처리
         const serverType = responseData.result?.personaType;
