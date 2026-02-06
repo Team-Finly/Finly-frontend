@@ -4,6 +4,7 @@ import { EMOTIONS } from '@/constants/emotions';
 import type { WeeklyMoodItem } from '@/types/emotion';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { HomeEmptyState } from './HomeEmptyState';
 
 const DAY_ORDER: Record<string, string> = {
   MON: '월',
@@ -19,7 +20,7 @@ export const WeeklyMood = () => {
   const navigate = useNavigate();
   const [weekData, setWeekData] = useState<WeeklyMoodItem[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>("string");
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchWeeklyMood = async () => {
@@ -41,7 +42,7 @@ export const WeeklyMood = () => {
     return (
       <section className="mt-[11px]">
         <h3 className="font-semibold text-[17px] mb-[16px]">위클리 무드</h3>
-        <div className="p-4 bg-white text-gray-500 rounded-md">{error}</div>
+        <HomeEmptyState message={error} />
       </section>
     );
   }
@@ -66,7 +67,7 @@ export const WeeklyMood = () => {
                       <div className="w-[22px] h-[22px] rounded-full border-[1px] border-dashed border-gray-300 animate-pulse" />
                     ) : day.hasRecord && day.emotion ? (
                       <img
-                        src={getEmotionIcon(day.emotion)}
+                        src={getEmotionIcon(day.emotion)!}
                         alt={day.emotion}
                         className="w-[22px] h-[22px]"
                       />
