@@ -29,3 +29,14 @@ export type SignupResult = {
   nickname: string;
   personaId: number;
 };
+export interface Term {
+  termId: number;
+  title: string;
+  required: boolean;
+  type?: string;
+}
+
+export interface TermDetail extends Term {
+  termType: string;
+  content: string;
+}

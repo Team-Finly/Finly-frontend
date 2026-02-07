@@ -6,8 +6,9 @@ import type {
   LoginRequest, 
   LoginResult, 
   SignupRequest, 
-  SignupResult 
-} from "../types/auth"; 
+  SignupResult,
+  Term,
+  TermDetail} from "../types/auth"; 
 
 export const authApi = {
   // 1. 이메일 중복 체크 (GET 요청)
@@ -28,5 +29,15 @@ export const authApi = {
   async signup(payload: SignupRequest) {
     const res = await api.post<ApiResponse<SignupResult>>("/auth/signup", payload);
     return res.data;
+  },
+
+  async getTerms() {
+    const res = await api.get<ApiResponse<{ terms: Term[] }>>("/api/terms");
+    return res.data.result.terms; 
+  },
+
+  async getTermDetail(termId: number) {
+    const res = await api.get<ApiResponse<TermDetail>>(`/api/terms/${termId}`);
+    return res.data.result;
   },
 };
