@@ -5,9 +5,10 @@ import { useRecordDetail } from '@/hooks/useRecordDetail';
 import { useTodayRecords } from '@/hooks/useTodayRecords';
 import { formatDate } from '@/utils/date';
 import { useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const DailyRecordDetailPage = () => {
+  const navigate = useNavigate();
   const { recordId } = useParams<{ recordId: string }>();
   const numericRecordId = Number(recordId);
 
@@ -93,7 +94,12 @@ const DailyRecordDetailPage = () => {
 
   return (
     <div className="h-screen bg-white pt-[76px] flex flex-col">
-      <DailyDetailHeader title="기록 상세" />
+      <DailyDetailHeader
+        title="기록 상세"
+        rightButton={{
+          onClick: () => navigate(`/record/edit/${currentRecord.recordId}`)
+        }}
+      />
 
       <div className="flex flex-col items-center mt-[30px]">
         <span className="text-gray-700 text-[16px] font-semibold mb-[16px]">

@@ -7,6 +7,7 @@ import type {
   FeedbackResponse,
   RecordDetailResponse,
   RecordDailyDetailResponse,
+  UpdateRecordRequest,
 } from '@/types/record';
 
 export const recordApi = {
@@ -36,6 +37,16 @@ export const recordApi = {
     return res.data.result;
   },
 
+  updateRecord: async (
+    recordId: number,
+    record: UpdateRecordRequest,
+  ): Promise<void> => {
+    await api.patch<ApiResponse<null>>(
+      `/api/records/${recordId}`,
+      record,
+    );
+  },
+
   getFeedback: async (recordId: number): Promise<FeedbackResponse> => {
     const res = await api.get<ApiResponse<FeedbackResponse>>(
       `/api/records/${recordId}/feedback`,
@@ -49,6 +60,7 @@ export const recordApi = {
     );
     return res.data.result;
   },
+
   getTodayRecords: (date: string) =>
     api.get<ApiResponse<RecordDailyDetailResponse>>('/api/records/today', {
       params: { date },
