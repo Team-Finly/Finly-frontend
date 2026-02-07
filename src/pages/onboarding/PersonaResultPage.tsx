@@ -12,7 +12,7 @@ import shadow from '@/assets/images/shadow.png';
 import BackgroundEffect from '@/components/onboarding/BackgroundEffect';
 import { useState, useEffect } from 'react';
 import { useSignupStore } from '@/store/signupStore';
-import { submitPersonaAnswers } from '@/apis/personaApi';
+import { submitPersonaAnswers } from '@/apis/personatestApi';
 
 
 
