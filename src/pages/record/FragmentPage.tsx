@@ -23,7 +23,7 @@ const FragmentPage = () => {
         <DonutChart />
         <div className="bg-blue-bg mt-2.5 flex items-center justify-center rounded-[22.5px] text-gray-700">
           <p className="px-3 py-2 text-xs">
-            {fragmentSummary?.dominantType ? (
+            {fragmentSummary && fragmentSummary.dominantType ? (
               <>
                 현재{' '}
                 <span className="font-semibold">
