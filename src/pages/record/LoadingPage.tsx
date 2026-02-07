@@ -42,11 +42,11 @@ const LoadingPage = () => {
     if (isMinTimeOver && feedback?.status === 'COMPLETED') {
       setProgress(100);
       const navigateTimer = setTimeout(() => {
-        navigate('/feedback', { state: { feedback: feedback } });
+        navigate(`/feedback/${recordId}`);
       }, 500);
       return () => clearTimeout(navigateTimer);
     }
-  }, [isMinTimeOver, feedback, navigate]);
+  }, [isMinTimeOver, feedback, navigate, recordId]);
 
   const innerTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
 

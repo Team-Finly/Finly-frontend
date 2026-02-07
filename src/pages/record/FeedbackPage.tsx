@@ -3,19 +3,24 @@ import Gradient from '@/assets/images/gradient.svg';
 import { EMOTIONS, EMOTION_CHART_MAP } from '@/constants/emotions';
 import Light from '@/assets/images/light.png';
 import Close from '@/assets/icons/close-dark.svg';
-import { useLocation, useNavigate } from 'react-router-dom';
-import type { FeedbackResponse } from '@/types/record';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useRecordDetail } from '@/hooks/useRecordDetail';
 import { stockInfoStore } from '@/store/stockInfoStore';
+import { useFeedback } from '@/hooks/useFeedback';
 
 const FeedbackPage = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const feedback = location.state?.feedback as FeedbackResponse;
-  const { data: recordDetail } = useRecordDetail(feedback?.recordEntryId);
+  const { recordId } = useParams<{ recordId: string }>();
+  const { data: feedback, isLoading: isFeedbackLoading } = useFeedback(
+    Number(recordId),
+  );
+  const { data: recordDetail, isLoading: isDetailLoading } = useRecordDetail(
+    Number(recordId),
+  );
   const stockMap = stockInfoStore((state) => state.stockMap);
 
-  if (!feedback) {
+  if (isFeedbackLoading || isDetailLoading) return null;
+  if (!feedback || !recordDetail) {
     navigate('/record', { replace: true });
     return null;
   }
