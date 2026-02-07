@@ -113,7 +113,7 @@ const StatsPage = () => {
           <StockSelector
             stocks={fullRecordedStocks}
             selectedStock={currentStock}
-            onSelect={(stock) => setCurrentStock(stock as StockInfo)}
+            onSelect={setCurrentStock}
           />
         ) : (
           <NoStock />
