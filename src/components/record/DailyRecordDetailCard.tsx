@@ -1,33 +1,18 @@
 import FinlyTalk from "@/components/FinlyTalk";
+import { TRADE_ACTION_MAP } from "@/constants/tradeAction";
+import { stockInfoStore } from "@/store/stockInfoStore";
+import type { RecordDetailResponse } from "@/types/record";
+import { formatTime2 } from "@/utils/date";
 
 interface CardProps {
-  record: {
-    recordId: number;
-    symbol: string; 
-    instrumentName: string;
-    tradeAction: 'BUY' | 'SELL';
-    unitPrice: number;
-    quantity: number;
-    memo: string;
-    emotionCode: string;
-    emotionIntensity: number;
-    recordedAt: string;
-    recordDate: string;
-    session: string;
-  };
+  record: RecordDetailResponse;
 }
 
 const DailyRecordDetailCard = ({ record }: CardProps) => {
   const totalPrice = record.unitPrice * record.quantity;
-
-  const formatTime = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleTimeString('ko-KR', {
-      hour: 'numeric',
-      minute: '2-digit',
-      hour12: true,
-    });
-  };
+  const { stockMap } = stockInfoStore();
+  const stock = stockMap[record.symbol];
+  const action = TRADE_ACTION_MAP[record.tradeAction];
 
   return (
     <div className="min-w-full snap-center px-[16px]">
@@ -36,14 +21,14 @@ const DailyRecordDetailCard = ({ record }: CardProps) => {
         style={{ boxShadow: '0px 10px 30px rgba(0, 0, 0, 0.05)' }}
       >
         <div className="flex items-center gap-[8px] mb-[20px]">
-          <div className="w-[24px] h-[24px] bg-[#034EA2] rounded-full flex items-center justify-center text-white text-[8px] font-bold overflow-hidden">
-            {record.instrumentName.substring(0, 2)} {/* 종목 로고 들어갈 자리 */}
-          </div>
+            {stock?.logoUrl && (
+              <img src={stock.logoUrl} alt={stock.name} className="w-[24px] h-[24px] object-contain rounded-full" />
+            )}
           <span className="text-[18px] font-bold text-gray-700">
-            {record.instrumentName}
+            {stock?.name || '로딩 중...'}
           </span>
-          <span className={`text-[14px] font-bold ${record.tradeAction === 'BUY' ? 'text-red-500' : 'text-blue-500'}`}>
-            {record.tradeAction === 'BUY' ? '매수' : '매도'}
+          <span className="text-[14px] font-bold" style={{ color: action.color }}>
+            {action.label}
           </span>
         </div>
 
@@ -66,9 +51,8 @@ const DailyRecordDetailCard = ({ record }: CardProps) => {
           </div>
         </div>
 
-        {/* 하단: 시간 및 메모 */}
         <div className="text-gray-300 text-[12px] mb-[8px] font-semibold">
-          {formatTime(record.recordedAt)}
+          {formatTime2(record.recordedAt)}
         </div>
         <p className="text-gray-700 text-[14px] leading-relaxed">
           “{record.memo}”
