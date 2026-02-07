@@ -71,7 +71,7 @@ const RecordHomePage = () => {
           <h2 className="mt-5 mb-5.5 text-[17px] font-semibold">
             총{' '}
             <span className="text-secondary">
-              {fragmentSummary?.totalCount}
+              {fragmentSummary?.totalCount ?? 0}
             </span>
             개의 마음 조각을 모았어요!
           </h2>

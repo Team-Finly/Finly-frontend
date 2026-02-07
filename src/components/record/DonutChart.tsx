@@ -49,7 +49,7 @@ const DonutChart = () => {
         })}
       </svg>
       <span className="absolute text-[30px] font-bold text-gray-900">
-        {fragmentSummary?.totalCount}
+        {fragmentSummary?.totalCount ?? 0}
       </span>
     </div>
   );
