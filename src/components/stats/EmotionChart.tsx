@@ -7,31 +7,30 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import { EMOTION_CHART_MAP, CHART_ORDER } from '@/constants/emotions';
-import { useMemo } from 'react';
+import { useStatsStore } from '@/store/statsStockStore';
+import { useEmotionDistribution } from '@/hooks/useEmotionTab';
+import { apiRenderGuard } from '@/utils/renderGuard';
+import type { StockEmotionDistribution } from '@/types/stats';
 
-interface EmotionChartProps {
-  data?: { emotion: string; ratio: number }[];
-}
+const EmotionChart = () => {
+  const { currentStock } = useStatsStore();
+  const { data, isLoading, isError } = useEmotionDistribution(
+    currentStock?.symbol,
+  );
 
-const DEFAULT_DATA = [
-  { emotion: 'CONFIDENCE', ratio: 80 },
-  { emotion: 'CALM', ratio: 50 },
-  { emotion: 'REGRET', ratio: 30 },
-  { emotion: 'GREED', ratio: 40 },
-  { emotion: 'ANXIETY', ratio: 70 },
-];
+  const guardUI = apiRenderGuard(isLoading, isError, data);
+  if (guardUI !== undefined) return guardUI;
 
-const EmotionChart = ({ data = DEFAULT_DATA }: EmotionChartProps) => {
-  const chartData = useMemo(() => {
-    return CHART_ORDER.map((key) => {
-      const found = data.find((d) => d.emotion === key);
-      return {
-        subject: key,
-        value: found ? found.ratio : 0,
-        full: 100,
-      };
-    });
-  }, [data]);
+  const emotionData = data as StockEmotionDistribution;
+
+  const chartData = CHART_ORDER.map((key) => {
+    const found = emotionData.typeSummary?.find((item) => item.type === key);
+    return {
+      subject: key,
+      value: found ? found.percent : 0,
+      full: 100,
+    };
+  });
 
   const renderCustomTick = ({ payload, x, y, textAnchor }: any) => {
     const key = payload.value;
@@ -85,20 +84,22 @@ const EmotionChart = ({ data = DEFAULT_DATA }: EmotionChartProps) => {
               axisLine={false}
             />
             <Radar
-              name="Emotion"
-              dataKey="value"
-              fill="#278DFD"
-              fillOpacity={0.3}
-              dot={false}
-              activeDot={false}
-            />
-            <Radar
               name="Background"
               dataKey="full"
               fill="#F4F5F7"
               stroke="none"
               fillOpacity={0.6}
               isAnimationActive={false}
+              dot={false}
+              activeDot={false}
+            />
+            <Radar
+              name="Emotion"
+              dataKey="value"
+              fill="#278DFD"
+              fillOpacity={0.3}
+              stroke="#278DFD"
+              strokeWidth={1}
               dot={false}
               activeDot={false}
             />

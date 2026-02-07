@@ -3,37 +3,23 @@ import RecentDecisionCard from '@/components/stats/RecentDecisionCard';
 import CalculationInfoModal from '@/components/stats/CalculationInfoModal';
 import CautionIcon from '@/assets/images/stats_caution.svg';
 import NoIcon from '@/assets/images/stats_no_card_icon.svg';
-
-const MOCK_DATA = {
-  isSuccess: true,
-  code: 'COMMOM200',
-  message: '성공적으로 요청을 처리했습니다.',
-  result: [
-    {
-      stockName: '테슬라',
-      emotion: 'ANXIETY',
-      tradeType: '매도',
-      price: 74500,
-      date: '2026-01-17',
-      quantity: 5,
-      decisionResult: -5,
-    },
-    {
-      stockName: '테슬라',
-      emotion: 'ANXIETY',
-      tradeType: '매도',
-      price: 74500,
-      date: '2025-8-15',
-      quantity: 5,
-      decisionResult: -10,
-    },
-  ],
-};
+import { useStatsStore } from '@/store/statsStockStore';
+import { useRecentDecisions } from '@/hooks/useStockTab';
+import { apiRenderGuard } from '@/utils/renderGuard';
 
 const RecentDecision = () => {
-  const decisions = MOCK_DATA.result;
-  const isEmpty = !decisions || decisions.length === 0;
+  const { currentStock } = useStatsStore();
+  const {
+    data: decisions,
+    isLoading,
+    isError,
+  } = useRecentDecisions(currentStock?.symbol);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const guardUI = apiRenderGuard(isLoading, isError, decisions);
+  if (guardUI !== undefined) return guardUI;
+
+  const isEmpty = !decisions || decisions.length === 0;
 
   return (
     <>
@@ -63,10 +49,7 @@ const RecentDecision = () => {
             </div>
           ) : (
             decisions.map((item, index) => (
-              <RecentDecisionCard
-                key={`${item.stockName}-${index}`}
-                data={item}
-              />
+              <RecentDecisionCard key={`${item.date}-${index}`} data={item} />
             ))
           )}
         </div>

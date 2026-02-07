@@ -1,16 +1,16 @@
 import SelectBtn from '@/assets/images/stats_stockSelect.svg';
-import type { Stock } from '@/types/stats';
+import type { StockInfo } from '@/types/stock';
 
 interface Props {
-  stocks: Stock[];
-  selectedStock: Stock;
-  onSelect: (stock: Stock) => void;
+  stocks: StockInfo[];
+  selectedStock: StockInfo;
+  onSelect: (stock: StockInfo) => void;
 }
 
 const StockSelector = ({ stocks, selectedStock, onSelect }: Props) => {
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedId = Number(e.target.value);
-    const targetStock = stocks.find((s) => s.id === selectedId);
+    const selectedSymbol = e.target.value;
+    const targetStock = stocks.find((s) => s.symbol === selectedSymbol);
     if (targetStock) {
       onSelect(targetStock);
     }
@@ -19,12 +19,12 @@ const StockSelector = ({ stocks, selectedStock, onSelect }: Props) => {
   return (
     <div className="relative w-full px-8">
       <select
-        value={selectedStock.id}
+        value={selectedStock.symbol}
         onChange={handleChange}
         className="absolute inset-0 z-10 h-full w-full cursor-pointer opacity-0"
       >
         {stocks.map((stock) => (
-          <option key={stock.id} value={stock.id}>
+          <option key={stock.symbol} value={stock.symbol}>
             {stock.name}
           </option>
         ))}

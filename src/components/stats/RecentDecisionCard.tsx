@@ -1,14 +1,6 @@
 import { EMOTION_CHART_MAP } from '@/constants/emotions';
-
-export interface DecisionItem {
-  stockName: string;
-  emotion: string;
-  tradeType: string;
-  price: number;
-  date: string;
-  quantity: number;
-  decisionResult: number;
-}
+import type { DecisionItem } from '@/types/stats';
+import { formatDateDisplay } from '@/utils/date';
 
 interface Props {
   data: DecisionItem;
@@ -26,13 +18,7 @@ const RecentDecisionCard = ({ data }: Props) => {
   } = data;
   const emotionConfig = EMOTION_CHART_MAP[emotion];
   const emotionImg = emotionConfig?.cardImage;
-
-  // 날짜 처리
-  const dateObj = new Date(date);
-  const now = new Date();
-  const formattedDate = `${dateObj.getMonth() + 1}월 ${dateObj.getDate()}일`;
-  const diffTime = now.getTime() - dateObj.getTime();
-  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+  const formattedDate = formatDateDisplay(date);
 
   // 수익률 처리
   const isPositive = decisionResult > 0;
