@@ -33,7 +33,9 @@ const ProfileSettings = () => {
       type="file" 
       accept='image/*'     
       ref={fileInputRef}   
-      onChange={(e) => actions.handleFileChange(e.target.files ? e.target.files[0] : undefined)}
+      onChange={(e) => {
+        actions.handleFileChange(e.target.files?.[0]);
+        e.target.value = "";}}
       className="hidden cursor-pointer"
     />
       <div className="fixed top-0 z-10 w-full max-w-120 border-b border-gray-100 bg-white">
@@ -44,7 +46,7 @@ const ProfileSettings = () => {
             <img src={Before} alt="이전" className="cursor-pointer"/>
           </button>
           <h1 className="text-lg font-semibold text-gray-900">
-            {state.isEditing ? "프로필 수정" : "프로필 및 계정 "}
+            {state.isEditing ? "프로필 수정" : "프로필 및 계정"}
           </h1>
 
           {!state.isEditing && (
