@@ -9,7 +9,7 @@ import EmptyFragment from '@/components/record/EmptyFragment';
 import RecordFragment from '@/components/record/RecordFragment';
 import FloatingButton from '@/components/record/FloatingButton';
 import type { DailyFragmentResponse } from '@/types/record';
-import { useFragmentSummary } from './../../hooks/useFragmentSummary';
+import { useFragmentSummary } from '@/hooks/useFragmentSummary';
 
 const RecordHomePage = () => {
   const navigate = useNavigate();
