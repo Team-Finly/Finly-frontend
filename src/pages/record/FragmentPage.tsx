@@ -48,11 +48,7 @@ const FragmentPage = () => {
               <EmotionCard
                 key={item.type}
                 data={item}
-                onClick={() =>
-                  navigate('/fragment/detail', {
-                    state: { selectedEmotion: item },
-                  })
-                }
+                onClick={() => navigate(`/fragment/${item.type}?period=ALL`)}
               />
             ))}
           </div>

@@ -36,7 +36,7 @@ const recordRoutes: RouteObject[] = [
     handle: { showNav: false },
   },
   {
-    path: 'fragment/detail',
+    path: 'fragment/:emotionType',
     element: <FragmentDetailPage />,
     handle: { showNav: false },
   },

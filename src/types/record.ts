@@ -5,6 +5,8 @@ export type EmotionType =
   | 'GREED'
   | 'REGRET';
 
+export type PeriodType = 'ALL' | 'MONTH_1' | 'MONTH_3' | 'MONTH_6' | 'YEAR_1';
+
 export type SessionType =
   | 'PRE_MARKET'
   | 'MORNING'
@@ -37,6 +39,44 @@ export interface FragmentSummaryResponse {
   totalCount: number;
   dominantType: EmotionType;
   typeSummary: TypeSummary[];
+}
+
+// 조각 모음함 리스트
+export interface FragmentItem {
+  recordDate: string;
+  fragmentId: number;
+  stock: {
+    stockId: number;
+    stockName: string;
+    tradeAction: TradeActionType;
+  };
+  unitPrice: number;
+  quantity: number;
+  memo: string;
+  emotionCode: EmotionType;
+  emotionName: string;
+}
+
+export interface FragmentListRequest {
+  boxType?: EmotionType;
+  periodKey?: PeriodType;
+}
+
+export interface FragmentListResponse {
+  box: {
+    boxType: EmotionType;
+    boxTypeName: string;
+  };
+  period: {
+    periodKey: PeriodType;
+    from: string;
+    to: string;
+  };
+  summary: {
+    totalCount: number;
+    boxTypeName: string;
+  };
+  fragments: FragmentItem[];
 }
 
 // TODAY 마음 조각
