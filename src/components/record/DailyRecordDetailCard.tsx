@@ -10,7 +10,7 @@ interface CardProps {
 
 const DailyRecordDetailCard = ({ record }: CardProps) => {
   const totalPrice = record.unitPrice * record.quantity;
-  const { stockMap } = stockInfoStore();
+  const { stockMap, isLoaded } = stockInfoStore();
   const stock = stockMap[record.symbol];
   const action = TRADE_ACTION_MAP[record.tradeAction];
 
@@ -25,7 +25,7 @@ const DailyRecordDetailCard = ({ record }: CardProps) => {
               <img src={stock.logoUrl} alt={stock.name} className="w-[24px] h-[24px] object-contain rounded-full" />
             )}
           <span className="text-[18px] font-bold text-gray-700">
-            {stock?.name || '로딩 중...'}
+            {stock?.name || (isLoaded ? '알 수 없는 종목' : '로딩 중...')}
           </span>
           <span className="text-[14px] font-bold" style={{ color: action.color }}>
             {action.label}
