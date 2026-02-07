@@ -1,5 +1,6 @@
 import FinlyTalk from "@/components/FinlyTalk";
 import { TRADE_ACTION_MAP } from "@/constants/tradeAction";
+import { useFeedback } from "@/hooks/useFeedback";
 import { stockInfoStore } from "@/store/stockInfoStore";
 import type { RecordDetailResponse } from "@/types/record";
 import { formatTime2 } from "@/utils/date";
@@ -13,6 +14,8 @@ const DailyRecordDetailCard = ({ record }: CardProps) => {
   const { stockMap, isLoaded } = stockInfoStore();
   const stock = stockMap[record.symbol];
   const action = TRADE_ACTION_MAP[record.tradeAction];
+
+  const { data: feedback, isLoading } = useFeedback(record.recordId);
 
   return (
     <div className="min-w-full snap-center px-[16px]">
@@ -60,7 +63,13 @@ const DailyRecordDetailCard = ({ record }: CardProps) => {
       </div>
 
       <div className="mx-[-16px] mt-[-4px]">
-        <FinlyTalk />
+        <FinlyTalk 
+          recordId={record.recordId}
+          content={feedback?.content} 
+          suggestion={feedback?.suggestion}
+          status={feedback?.status || 'PENDING'}
+          isLoading={isLoading}
+        />
       </div>
     </div>
   );
