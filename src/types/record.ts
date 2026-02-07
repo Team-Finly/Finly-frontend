@@ -102,6 +102,11 @@ export interface CreateRecordResponse extends CreateRecordRequest {
   session: SessionType;
 }
 
+export type UpdateRecordRequest = Omit<
+  CreateRecordRequest,
+  'clientRequestId'
+>;
+
 // AI 피드백
 export interface FeedbackResponse {
   feedbackId: number;

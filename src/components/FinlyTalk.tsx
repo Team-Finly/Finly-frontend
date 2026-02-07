@@ -1,29 +1,52 @@
 import TitleImg from '@/assets/images/finly_talk.png';
 import FeedbackBtn from '@/assets/icons/go_feedback.svg';
 import { useNavigate } from 'react-router-dom';
+import { useMemo } from 'react';
 
-const FinlyTalk = () => {
+interface FinlyTalkProps {
+  recordId: string;
+  content?: string;
+  status?: 'PENDING' | 'COMPLETED' | 'FAILED';
+}
+
+const FinlyTalk = ({ recordId, content, status }: FinlyTalkProps) => {
   const navigate = useNavigate();
+
+  const formattedContent = useMemo(() => {
+    if (!content) return "";
+    
+    return content.replace(/<<(.+?)>>/g, '<strong class="font-bold text-gray-500">$1</strong>');
+  }, [content]);
+
   const handleGoFeedback = () => {
-    // 연동 시 로직 추가 예정
-    navigate('/feedback');
+    navigate(`/feedback/${recordId}`);
   };
+  
   return (
     <div className="flex w-full flex-col px-4 pt-7">
       <div className="rounded-xl border-[1.2px] border-gray-100 bg-gray-50/60 p-4.5">
         <div className="flex flex-row items-center justify-between">
           <img src={TitleImg} alt="Finly Talk" className="h-6.25" />
-          <img
-            src={FeedbackBtn}
-            alt="피드백 상세 보기"
-            className="h-2.75 cursor-pointer"
-            onClick={handleGoFeedback}
-          />
+          {status === 'COMPLETED' && (
+            <img
+              src={FeedbackBtn}
+              alt="피드백 상세 보기"
+              className="h-2.75 cursor-pointer"
+              onClick={handleGoFeedback}
+            />
+          )}
         </div>
         <div className="mt-3 text-[13px] text-gray-700/80">
-          기현님, 삼성전자의 급격한 하락에 크게 <strong>불안</strong>하셨군요.
-          하지만 지난 기록을 보면, 이런 상황에서 감정적으로 매도한 후 평균
-          <strong> 2일 내</strong>에 후회하는 패턴이 나타났어요.
+          {status === 'PENDING' ? (
+            <div className="flex items-center gap-2 italic text-gray-400">
+              <span className="animate-pulse">Finly가 매매 기록을 분석하고 있어요...</span>
+            </div>
+          ) : (
+            <p 
+              className="whitespace-pre-wrap" 
+              dangerouslySetInnerHTML={{ __html: formattedContent || "분석된 피드백이 없습니다." }} 
+            />
+          )}
         </div>
       </div>
     </div>

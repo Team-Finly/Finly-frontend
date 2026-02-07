@@ -71,3 +71,16 @@ export const formatMonthDay = (dateString: string): string => {
 
   return `${month}.${day}`;
 };
+
+export const formatTime2 = (dateString: string) => {
+  const date = new Date(dateString);
+
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+
+  const period = hours < 12 ? '오전' : '오후';
+  const displayHour = hours % 12 === 0 ? 12 : hours % 12;
+
+  return `${period} ${displayHour}시 ${minutes}분`;
+};
+
