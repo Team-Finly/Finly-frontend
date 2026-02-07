@@ -1,75 +1,52 @@
-import { useNavigate } from 'react-router-dom';
 import TitleHeader from '@/components/record/TitleHeader';
-import turtle from '@/assets/icons/turtle.svg';
-import turtlebg from '@/assets/icons/turtlebg.svg';
-import deer from '@/assets/icons/deer.svg';
-import deerbg from '@/assets/icons/deerbg.svg';
-import eagle from '@/assets/icons/eagle.svg';
-import eaglebg from '@/assets/icons/eaglebg.svg';
-import lion from '@/assets/icons/lion.svg';
-import lionbg from '@/assets/icons/lionbg.svg';
+import { PERSONA_DATA } from '@/constants/mypersona';
 import light from '@/assets/icons/light.svg'
-
-const PERSONA_DATA = {
-  TURTLE: {
-    name: "신중한 거북이",
-    subDesc: <>과감한 면이 있으나,<br/>원칙(안정)이 우선하는 성향이에요</>,
-    image: turtle,  
-    bgImage: turtlebg, 
-    bgStyle: "w-[150px] h-[150px]", 
-    advice: [
-      <>충분히 고민했어요. 이제는 <span className="text-secondary font-semibold">기준을 정하고</span>한 번 움직여보세요<br /> </>, 
-      <>모든 선택을 확신할 수는 없기에, 기록하며 <span className="text-secondary font-semibold">조정</span>하면 돼요.<br /> </>, 
-      <>핀리는 망설임이 길어질 때 행동 타이밍을 알려줄게요!<br /></>
-    ]
-  },
-  DEER: {
-    name: "걱정 많은 사슴",
-    subDesc: <>불안이 앞서지만, 신중하게<br/>판단하려는 마음이 강한 성향이에요</>,
-    image: deer,
-    bgImage: deerbg,
-    bgStyle: "w-[150px] h-[150px]", 
-     advice: [
-      <>불안할수록 감정만 보지 말고, <span className="text-secondary font-semibold">기록된 사실</span>을 함께 보세요.<br /> </>, 
-      <>감정이 판단을 대신하게 두지 마세요. 숫자는 늘 솔직해요.<br /> </>, 
-      <>핀리는 불안이 커질 때, 지금 <span className="text-secondary font-semibold">멈춰야 할지 아닌지</span> 정리해줄게요!<br /></>
-    ]
-    
-  },
-  EAGLE: {
-    name: "날카로운 독수리",
-    subDesc: <>빠른 판단을 선호하며,<br/>기회를 놓치지 않으려는 성향이에요</>,
-    image: eagle,
-    bgImage: eaglebg,
-    
-    bgStyle: "w-[150px] h-[150px]", 
-    advice: [
-      <>빠른 판단은 강점이지만, <span className="text-secondary font-semibold">이유 없는 확신</span>은 위험해요.<br /></>,
-      <>결정 전 한 번만 감정 기록을 확인하는 습관을 가져보세요.<br /></>,
-      <>핀리는 당신의 선택이 <span className="text-secondary font-semibold">충동인지 전략인지</span> 구분해줄게요!<br /></>
-    ]
-    
-  },
-  LION: {
-    name: "불타는 사자",
-    subDesc: <>리스크를 감수하더라도,<br/>성장을 위해 과감히 선택하는 성향이에요</>,
-    image: lion,
-    bgImage: lionbg,
-    bgStyle: "w-[150px] h-[150px]", 
-    advice: [
-      <>과감함은 좋지만, 모든 판에 전력을 다할 필요는 없어요.</>,
-      <>확신이 강할수록 <span className="text-secondary font-semibold">손실 기준</span>을 먼저 정해두세요.</>,
-      <>핀리는 큰 승부 전에 <span className="text-secondary font-semibold">리스크</span>부터 점검해줄게요!</>
-    ]
-  },
-};
+import { useEffect, useState } from 'react';
+import { getMyPersona } from '@/apis/userApi';
+import { useUserStore } from '@/store/userStore';
 
 const MyPersona = () => {
-  const navigate = useNavigate();
+  const personaType = useUserStore((state) => state.personaType);
+  const setUserInfo = useUserStore((state) => state.setUserInfo);
+  const [isLoading, setIsLoading] = useState(true);
+  
 
-//테스트
-  const mockPersonaType = "TURTLE"; 
-  const data = PERSONA_DATA[mockPersonaType] || PERSONA_DATA.TURTLE;
+  useEffect(() => {
+    const fetchPersona = async () => {
+      if (personaType) {
+      setIsLoading(false);
+      return;
+    }
+      try {
+        setIsLoading(true); 
+        const result = await getMyPersona(); 
+        if (result && result.personaType) {
+          setUserInfo({ personaType: result.personaType });
+        }
+      } catch (error) {
+        console.error("페르소나 조회 실패:", error);
+      } finally {
+        setIsLoading(false); 
+      }
+    };
+
+    fetchPersona();
+  }, [setUserInfo, personaType]);
+
+  if (isLoading) {
+    return <div className="h-screen bg-white" />;
+  }
+
+  if (!personaType) {
+    return <div className="h-screen bg-white" />;
+  }
+
+  const data = PERSONA_DATA[personaType as keyof typeof PERSONA_DATA];
+   
+  if (!data) {
+    return <div className="h-screen bg-white" />;
+  }
+
 
   return (
     <div className="flex flex-col h-full">
@@ -125,10 +102,10 @@ const MyPersona = () => {
         </div>
         
         <div className="w-full px-[16px] mt-[125px] pb-[60px]">
-          <button className="w-full py-[12px] h-[50px] bg-secondary text-white rounded-[12px]  leading-[26px] mb-[12px] font-semibold text-[18px]">
+          <button disabled className="disabled:cursor-not-allowed w-full py-[12px] h-[50px] bg-secondary text-white rounded-[12px]  leading-[26px] mb-[12px] font-semibold text-[18px]">
             이미지로 저장하기
           </button>
-          <button className="w-full h-[50px] py-[12px] bg-gray-50 text-gray-500 rounded-[12px] leading-[26px]  font-semibold text-[18px]">
+          <button disabled className="disabled:cursor-not-allowed w-full h-[50px] py-[12px] bg-gray-50 text-gray-500 rounded-[12px] leading-[26px]  font-semibold text-[18px]">
             테스트 다시하기
           </button>
           
@@ -138,5 +115,4 @@ const MyPersona = () => {
   
   );
 };
-
 export default MyPersona;

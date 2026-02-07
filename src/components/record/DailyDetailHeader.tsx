@@ -3,9 +3,12 @@ import { useNavigate } from 'react-router-dom';
 
 interface HeaderProps {
   title: string;
+  rightButton?: {
+    onClick: () => void;
+  };
 }
 
-const DailyDetailHeader = ({ title }: HeaderProps) => {
+const DailyDetailHeader = ({ title, rightButton }: HeaderProps) => {
   const navigate = useNavigate();
 
   return (
@@ -18,9 +21,14 @@ const DailyDetailHeader = ({ title }: HeaderProps) => {
           <img className="h-4 w-2" src={Before} alt="이전" />
         </button>
         <h1 className="text-lg font-semibold text-gray-900">{title}</h1>
-        <button className="absolute right-4 text-[16px] text-gray-500 cursor-pointer">
-          수정
-        </button>
+        {rightButton && (
+          <button
+            className="absolute right-4 text-[16px] text-gray-500 cursor-pointer"
+            onClick={rightButton.onClick}
+          >
+            수정
+          </button>
+        )}
       </div>
     </div>
   );

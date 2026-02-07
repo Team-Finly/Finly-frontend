@@ -2,9 +2,20 @@ import { useNavigate } from 'react-router-dom';
 import ProfileMenu from '@/components/mypage/ProfileMenu';
 import ProfileCard from '@/components/mypage/ProfileCard';
 import MindscoreCard from '@/components/mypage/MindscoreCard';
+import {useUserStore} from '@/store/userStore';
+import { PERSONA_DATA } from '@/constants/mypersona';
+
 
 const Profile = () => {
   const navigate = useNavigate();
+  const nickname = useUserStore((state) => state.nickname);
+  const profileImage = useUserStore((state) => state.profileImage);
+  const personaType = useUserStore((state) => state.personaType);
+  const personaEntry = personaType 
+    ? PERSONA_DATA[personaType as keyof typeof PERSONA_DATA] 
+    : null;
+  const personaName=personaEntry?.name ?? "분석중...";
+  
 
   return (
     <div className="flex h-full flex-col bg-gray-50">
@@ -17,7 +28,7 @@ const Profile = () => {
 
       <main className="scrollbar-hide flex-1 overflow-y-auto pb-[120px] ">
         <div className='flex w-full px-4 gap-4 mt-[20px] mb-[16px]'>
-          <ProfileCard></ProfileCard>
+          <ProfileCard nickname={nickname} profileImage={profileImage} personaName={personaName}></ProfileCard>
           <MindscoreCard score={64} color="#FFF34A"></MindscoreCard>
         </div>
         

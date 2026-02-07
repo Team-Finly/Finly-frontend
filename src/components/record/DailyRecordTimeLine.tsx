@@ -4,6 +4,7 @@ import type { PrismFeedback, SessionType, TimelineSummaryItem } from '@/types/re
 import { useMemo, useState } from 'react';
 import TimeLineModal from '@/components/record/TimeLineModal';
 import { stockInfoStore } from '@/store/stockInfoStore';
+import { TRADE_ACTION_MAP } from '@/constants/tradeAction';
 
 interface Props {
   timelineSummary: TimelineSummaryItem[];
@@ -79,7 +80,7 @@ const DailyRecordTimeLine = ({ timelineSummary, prismFeedback, hasRecords, onIte
                 const items = groupedBySession[sessionKey];
                 const style = getSessionStyle(sessionKey);
                 const isLast = index === sessions.length - 1;
-
+              
                 return (
                   <div key={sessionKey} className="relative flex flex-col">
                     {/* 회색 배경 선 */}
@@ -105,6 +106,7 @@ const DailyRecordTimeLine = ({ timelineSummary, prismFeedback, hasRecords, onIte
                           const emotion = getEmotionData(item.emotionCode);
                           const emotionColor = emotion?.color || '#EEEFF0';
                           const stock = stockMap[item.symbol];
+                          const action = TRADE_ACTION_MAP[item.tradeAction];
 
                           return (
                             <div key={item.recordId} className="relative first:min-h-[32px]">
@@ -136,22 +138,11 @@ const DailyRecordTimeLine = ({ timelineSummary, prismFeedback, hasRecords, onIte
                                 </div>
                                 <p className="mb-[10px] text-[11px] leading-snug text-gray-700">"{item.memo}"</p>
                                 <div className="flex items-center justify-between text-[13px]">
-                                  <span
-                                    style={{
-                                      color:
-                                        item.tradeAction === 'BUY'
-                                          ? '#E42911'
-                                          : item.tradeAction === 'SELL'
-                                            ? '#065DE0'
-                                            : '#6E757D',
-                                    }}
-                                  >
-                                    {item.tradeAction === 'BUY' && '매수'}
-                                    {item.tradeAction === 'SELL' && '매도'}
-                                    {item.tradeAction === 'WATCH' && '관망'}
-    
+                                  <span style={{ color: action.color }}>
+                                    {action.label}
+
                                     <span className="mx-[4px] text-gray-300">·</span>
-    
+
                                     <span className="font-semibold text-[#6E757D]">
                                       {item.tradeAction === 'WATCH'
                                         ? '-'

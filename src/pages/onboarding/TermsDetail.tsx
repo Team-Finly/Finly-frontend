@@ -41,11 +41,11 @@ const TermsDetail = () => {
           {term.title}
         </p>
         <img src={line} alt="" className='w-full mb-[30px]'/>
-
         <div className="mb-[24px] whitespace-pre-line text-[14px] leading-[20px] text-regular text-gray-600">
             {term.content} 
         </div>
       </div>
+
       <div className=" mt-[60px] mb-[60px]">
         <button 
           onClick={handleAgreeClick}
@@ -61,7 +61,8 @@ const TermsDetail = () => {
           </span>
         </button>
       </div>
-    </div>
+      </div>
+ 
   );
 };
 
