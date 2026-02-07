@@ -51,7 +51,7 @@ const recordRoutes: RouteObject[] = [
     handle: { showNav: false },
   },
   {
-    path: 'feedback',
+    path: 'feedback/:recordId',
     element: <FeedbackPage />,
     handle: { showNav: false },
   },
