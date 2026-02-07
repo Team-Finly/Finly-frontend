@@ -10,11 +10,11 @@ export const apiRenderGuard = (
   }
 
   if (isError || !data) {
-    <div className="p-10 text-center text-gray-400">
-      데이터를 가져오는 데 실패했습니다.
-    </div>;
-
-    return null;
+    return (
+      <div className="p-10 text-center text-gray-400">
+        데이터를 가져오는 데 실패했습니다.
+      </div>
+    );
   }
 
   return undefined;
