@@ -1,11 +1,6 @@
 import { useEffect, useState } from 'react';
 import { authApi } from '@/apis/authApi';
-
-interface Term {
-  termId: number;
-  title: string;
-  required: boolean;
-}
+import type { Term } from '@/types/auth';
 
 export const useTermsList = () => {
   const [data, setData] = useState<Term[] | null>(null);
