@@ -74,7 +74,7 @@ const handleNext = (path: string) => {
       
       <button 
           onClick={handleAllClick}
-          className={` cursor-pointer justify-center border-[1.2px] rounded-[12px] w-full h-[50px] px-4 border-gray-300 flex items-center gap-[10px]
+          className={`cursor-pointer justify-center border-[1.2px] rounded-[12px] w-full h-[50px] px-4 border-gray-300 flex items-center gap-[10px]
           ${allAgreed
           ? 'border-secondary bg-blue-bg/80 text-secondary'
           : 'border-gray-300 bg-white text-gray-300'
@@ -84,7 +84,7 @@ const handleNext = (path: string) => {
           <img src={allAgreed ? checkblue : checkgray}
           alt="체크 아이콘"
           className="w-[15px] h-[12px]" />
-          <span className="text-[17px] font-semibold ">서비스 이용약관 전체 동의</span>
+          <span className="text-[17px] font-semibold">서비스 이용약관 전체 동의</span>
       </button>
 
       <div className="mt-[30px] flex flex-col gap-[30px]">
@@ -99,8 +99,10 @@ const handleNext = (path: string) => {
               </button>
               
               <p onClick={() => toggleAgreement(idStr)} className="text-[16px] font-medium text-gray-900">
-                {` ${term.title}`}
-              </p>
+               <span className={term.required ? "text-gray-900" : ""}></span>
+                {term.title}
+               </p>
+               
               <button
                 type="button" 
                 className='ml-auto cursor-pointer'
@@ -121,7 +123,6 @@ const handleNext = (path: string) => {
     </div>
     
     
-  );
-};
+  );}
 
 export default TermsPage;

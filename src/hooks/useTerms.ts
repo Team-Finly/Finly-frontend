@@ -1,29 +1,24 @@
-import {TERMS_CONTENT} from '@/constants/terms';
-
-interface Term {
-  termId: number;
-  title: string;
-  required: boolean;
-}
+import { useEffect, useState } from 'react';
+import { authApi } from '@/apis/authApi';
+import type { Term } from '@/types/auth';
 
 export const useTermsList = () => {
-  const mockData: Term[] = [
-    { 
-      termId: 1, 
-      title: TERMS_CONTENT["1"].title, 
-      required: true 
-    },
-    { 
-      termId: 2, 
-      title: TERMS_CONTENT["2"].title,
-      required: true 
-    },
-    { 
-      termId: 3, 
-      title: TERMS_CONTENT["3"].title, 
-      required: false 
-    },
-  ];
+  const [data, setData] = useState<Term[] | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  return { data: mockData };
+  useEffect(() => {
+    const fetchTerms = async () => {
+      try {
+        const result = await authApi.getTerms(); 
+        setData(result);
+      } catch (error) {
+        console.error("약관 목록 조회 실패:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchTerms();
+  }, []);
+
+  return { data, isLoading };
 };
