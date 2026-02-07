@@ -8,6 +8,7 @@ import type {
   RecordDetailResponse,
   RecordDailyDetailResponse,
   UpdateRecordRequest,
+  FragmentSummaryResponse,
 } from '@/types/record';
 
 export const recordApi = {
@@ -41,10 +42,7 @@ export const recordApi = {
     recordId: number,
     record: UpdateRecordRequest,
   ): Promise<void> => {
-    await api.patch<ApiResponse<null>>(
-      `/api/records/${recordId}`,
-      record,
-    );
+    await api.patch<ApiResponse<null>>(`/api/records/${recordId}`, record);
   },
 
   getFeedback: async (recordId: number): Promise<FeedbackResponse> => {
@@ -65,4 +63,11 @@ export const recordApi = {
     api.get<ApiResponse<RecordDailyDetailResponse>>('/api/records/today', {
       params: { date },
     }),
+
+  getFragmentSummary: async (): Promise<FragmentSummaryResponse> => {
+    const res = await api.get<ApiResponse<FragmentSummaryResponse>>(
+      '/api/records/fragments/summary',
+    );
+    return res.data.result;
+  },
 };

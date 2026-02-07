@@ -26,17 +26,17 @@ export interface MonthlyRecordResponse {
   days: DailyRecord[];
 }
 
-// 조각 모음함
-export interface EmotionSummary {
-  emotion: EmotionType;
+// 감정 조각 스펙트럼
+export interface TypeSummary {
+  type: EmotionType;
   count: number;
-  ratio: number;
+  percent: number;
 }
 
-export interface FragmentSummary {
-  totalFragmentCount: number;
-  emotionSummary: EmotionSummary[];
-  dominantEmotion: EmotionType;
+export interface FragmentSummaryResponse {
+  totalCount: number;
+  dominantType: EmotionType;
+  typeSummary: TypeSummary[];
 }
 
 // TODAY 마음 조각
@@ -102,10 +102,7 @@ export interface CreateRecordResponse extends CreateRecordRequest {
   session: SessionType;
 }
 
-export type UpdateRecordRequest = Omit<
-  CreateRecordRequest,
-  'clientRequestId'
->;
+export type UpdateRecordRequest = Omit<CreateRecordRequest, 'clientRequestId'>;
 
 // AI 피드백
 export interface FeedbackResponse {
@@ -133,16 +130,16 @@ export interface RecordDetailResponse {
   unitPrice: number;
 }
 
-// 해당 일 기록 
+// 해당 일 기록
 export interface PrismFeedback {
   title: string;
-  generatedAt: string; 
+  generatedAt: string;
 }
 
 export interface TimelineSummaryItem {
   recordId: number;
-  recordDate: string;    
-  recordedAt: string;     
+  recordDate: string;
+  recordedAt: string;
   session: SessionType;
   tradeAction: TradeActionType;
   symbol: string;
@@ -154,7 +151,7 @@ export interface TimelineSummaryItem {
 }
 
 export interface RecordDailyDetailResponse {
-  date: string; 
+  date: string;
   prismFeedback: PrismFeedback;
   timelineSummary: TimelineSummaryItem[];
   hasRecords: boolean;
