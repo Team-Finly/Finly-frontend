@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Gradient from '@/assets/images/gradient.svg';
 import { EMOTIONS, EMOTION_CHART_MAP } from '@/constants/emotions';
 import Light from '@/assets/images/light.png';
@@ -19,9 +19,17 @@ const FeedbackPage = () => {
   );
   const stockMap = stockInfoStore((state) => state.stockMap);
 
-  if (isFeedbackLoading || isDetailLoading) return null;
-  if (!feedback || !recordDetail) {
-    navigate('/record', { replace: true });
+  useEffect(() => {
+    if (
+      !isFeedbackLoading &&
+      !isDetailLoading &&
+      (!feedback || !recordDetail)
+    ) {
+      navigate('/record', { replace: true });
+    }
+  }, [isFeedbackLoading, isDetailLoading, feedback, recordDetail, navigate]);
+
+  if (isFeedbackLoading || isDetailLoading || !feedback || !recordDetail) {
     return null;
   }
 
