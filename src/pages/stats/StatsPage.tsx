@@ -1,44 +1,92 @@
-import { useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
+import { useRecordedStocks, useStatsEntry } from '@/hooks/useStatsEntry';
+import type { StockInfo } from '@/types/stock';
+import { STATS_TABS, type TabType } from '@/types/stats';
 import Header from '@/components/stats/Header';
 import StockSelector from '@/components/stats/StockSelector';
 import Tabbar from '@/components/stats/Tabbar';
-import StockImg from '@/assets/images/stats_stockExam.svg';
-import type { Stock } from '@/types/stats';
-import { STATS_TABS, type TabType } from '@/types/stats';
 import RelationTab from '@/pages/stats/RelationTab';
 import StockTab from '@/pages/stats/StockTab';
 import EmotionTab from '@/pages/stats/EmotionTab';
 import EmptyTab from '@/pages/stats/EmptyTab';
 import NoStock from '@/components/stats/NoStock';
-
-// 임시 더미 데이터 (API 연결 시 삭제 예정)
-const MOCK_STOCKS = [
-  { id: 1, name: '삼성전자', logoUrl: StockImg },
-  { id: 2, name: 'SK하이닉스', logoUrl: StockImg },
-  { id: 3, name: '카카오', logoUrl: StockImg },
-];
-
-type ViewStatus = 'LOADING' | 'EMPTY' | 'ACTIVE';
-const CURRENT_TEST_STATUS = 'ACTIVE' as ViewStatus;
+import ErrorPage from '@/pages/home/ErrorPage';
+import { useStatsStore } from '@/store/statsStockStore';
+import { stockInfoStore } from '@/store/stockInfoStore';
 
 const StatsPage = () => {
-  const [currentStock, setCurrentStock] = useState<Stock>(MOCK_STOCKS[0]);
+  const {
+    data: statsInfo,
+    isLoading: isEntryLoading,
+    isError: isEntryError,
+  } = useStatsEntry();
+  const {
+    data: recordedList,
+    isLoading: isRecordedLoading,
+    isError: isRecordedError,
+  } = useRecordedStocks();
+  const { currentStock, setCurrentStock } = useStatsStore();
   const [currentTab, setCurrentTab] = useState<TabType>(STATS_TABS[0].id);
+  const { stockMap, isLoaded: isMapLoaded } = stockInfoStore();
+
+  const fullRecordedStocks = useMemo(() => {
+    if (!recordedList || !isMapLoaded) return [];
+
+    return recordedList.map((item) => {
+      const info = stockMap[item.symbol];
+      return (
+        info ||
+        ({
+          symbol: item.symbol,
+          name: item.stockName,
+          logoUrl: '',
+          isActive: true,
+          isin: '',
+          marketType: 'KOSPI',
+        } as StockInfo)
+      );
+    });
+  }, [recordedList, stockMap, isMapLoaded]);
+
+  useEffect(() => {
+    if (currentStock || !statsInfo?.defaultStock || !isMapLoaded) return;
+
+    const { symbol } = statsInfo.defaultStock;
+    const fullStockInfo = stockMap[symbol];
+
+    setCurrentStock(
+      fullStockInfo ||
+        ({
+          ...statsInfo.defaultStock,
+          logoUrl: '',
+          isActive: true,
+          isin: '',
+          marketType: 'KOSPI',
+        } as StockInfo),
+    );
+  }, [statsInfo, isMapLoaded, currentStock, stockMap, setCurrentStock]);
+
+  const isInitialLoading = isEntryLoading || isRecordedLoading || !isMapLoaded;
+  const isInitialError = isEntryError || isRecordedError;
+  if (isInitialLoading) return <div className="flex-1 bg-gray-50" />;
+  if (isInitialError || !statsInfo) return <ErrorPage />;
+
+  const { recordLevel, totalRecordCount } = statsInfo;
 
   const renderContent = () => {
-    switch (CURRENT_TEST_STATUS) {
-      case 'LOADING':
-        return <EmptyTab status="LOADING" />;
-      case 'EMPTY':
-        return <EmptyTab status="EMPTY" />;
-      case 'ACTIVE':
-        if (currentTab === 'RELATION') return <RelationTab />;
-        if (currentTab === 'STOCK') return <StockTab />;
-        if (currentTab === 'EMOTION') return <EmotionTab />;
-        return null;
-      default:
-        return null;
+    if (recordLevel === 'NONE') {
+      return <EmptyTab status="EMPTY" />;
     }
+    if (recordLevel === 'LOW') {
+      return <EmptyTab status="LOADING" recordCount={totalRecordCount} />;
+    }
+    if (recordLevel === 'HIGH') {
+      if (currentTab === 'RELATION') return <RelationTab />;
+      if (currentTab === 'STOCK') return <StockTab />;
+      if (currentTab === 'EMOTION') return <EmotionTab />;
+    }
+
+    return null;
   };
 
   return (
@@ -61,9 +109,9 @@ const StatsPage = () => {
       `}</style>
       <div className="sticky top-0 z-50 flex flex-none flex-col gap-6 bg-white pt-4">
         <Header />
-        {CURRENT_TEST_STATUS === 'ACTIVE' ? (
+        {recordLevel === 'HIGH' && currentStock ? (
           <StockSelector
-            stocks={MOCK_STOCKS}
+            stocks={fullRecordedStocks}
             selectedStock={currentStock}
             onSelect={setCurrentStock}
           />

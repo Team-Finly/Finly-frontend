@@ -1,25 +1,30 @@
-const MOCK_DATA = {
-  topKeywords: [
-    '#단어',
-    '#가슴철렁',
-    '#삼전본전',
-    '#급등주',
-    '#냠',
-    '#핀리',
-    '#뉴스공시',
-    '#가나다라',
-  ],
-};
+import { useMemo } from 'react';
+import { useStatsStore } from '@/store/statsStockStore';
+import { useShakenKeywords } from '@/hooks/useEmotionTab';
+import { apiRenderGuard } from '@/utils/renderGuard';
+import type { StockKeywordsResult } from '@/types/stats';
 
 const Keywords = () => {
-  const { topKeywords } = MOCK_DATA;
+  const { currentStock } = useStatsStore();
+  const { data, isLoading, isError } = useShakenKeywords(currentStock?.symbol);
+
+  const guardUI = apiRenderGuard(isLoading, isError, data);
+  if (guardUI !== undefined) return guardUI;
+
+  const keywordData = data as StockKeywordsResult;
+
+  // 상위 키워드 자리 고정
   const reorderedKeywords = (() => {
-    const top3 = topKeywords.slice(0, 3);
-    const others = topKeywords.slice(3, 8);
+    const rawKeywords = keywordData.keywords.map((k) => `#${k.keyword}`);
+    const top3 = rawKeywords.slice(0, 3);
+    const others = rawKeywords.slice(3, 8);
+
     const result = new Array(8).fill('');
-    result[2] = top3[0];
-    result[4] = top3[1];
-    result[6] = top3[2];
+
+    if (top3[0]) result[2] = top3[0];
+    if (top3[1]) result[4] = top3[1];
+    if (top3[2]) result[6] = top3[2];
+
     let otherIdx = 0;
     for (let i = 0; i < 8; i++) {
       if (!result[i]) {
@@ -47,12 +52,12 @@ const Keywords = () => {
       <div className="flex flex-col gap-4 px-1">
         <div className="flex flex-row justify-start gap-2">
           {row1.map((keyword, i) => {
-            const isBlue = i === 2;
             if (!keyword) return null;
+            const isTop1 = i === 2;
             return (
               <div
                 key={`row1-${i}`}
-                className={`${baseStyle} ${isBlue ? blueStyle : grayStyle}`}
+                className={`${baseStyle} ${isTop1 ? blueStyle : grayStyle}`}
               >
                 {keyword}
               </div>
@@ -61,12 +66,12 @@ const Keywords = () => {
         </div>
         <div className="flex flex-row justify-start gap-2">
           {row2.map((keyword, i) => {
-            const isBlue = i === 0 || i === 2;
             if (!keyword) return null;
+            const isTop2or3 = i === 0 || i === 2;
             return (
               <div
                 key={`row2-${i}`}
-                className={`${baseStyle} ${isBlue ? blueStyle : grayStyle}`}
+                className={`${baseStyle} ${isTop2or3 ? blueStyle : grayStyle}`}
               >
                 {keyword}
               </div>
