@@ -10,7 +10,9 @@ export const apiRenderGuard = (
   }
 
   if (isError || !data) {
-    alert('데이터를 가져오는 데 실패했습니다. 다시 시도해 주세요!');
+    <div className="p-10 text-center text-gray-400">
+      데이터를 가져오는 데 실패했습니다.
+    </div>;
 
     return null;
   }

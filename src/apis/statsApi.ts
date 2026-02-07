@@ -24,7 +24,7 @@ export const statsApi = {
   getRecordedStocks: async () => {
     const res = await api.get<
       ApiResponse<Array<{ stockId: number; symbol: string; stockName: string }>>
-    >('api/analysis/record/stocks');
+    >('/api/analysis/record/stocks');
     return res.data.result;
   },
 
@@ -41,7 +41,7 @@ export const statsApi = {
     symbol: string,
   ): Promise<StockDistributionResult> => {
     const res = await api.get<StockDistributionResponse>(
-      `api/analysis/stocks/${symbol}/price-distribution`,
+      `/api/analysis/stocks/${symbol}/price-distribution`,
     );
     return res.data.result;
   },

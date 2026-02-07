@@ -15,14 +15,22 @@ import { useStatsStore } from '@/store/statsStockStore';
 import { stockInfoStore } from '@/store/stockInfoStore';
 
 const StatsPage = () => {
-  const { data: statsInfo, isLoading, isError } = useStatsEntry();
+  const {
+    data: statsInfo,
+    isLoading: isEntryLoading,
+    isError: isEntryError,
+  } = useStatsEntry();
+  const {
+    data: recordedList,
+    isLoading: isRecordedLoading,
+    isError: isRecordedError,
+  } = useRecordedStocks();
   const { currentStock, setCurrentStock } = useStatsStore();
   const [currentTab, setCurrentTab] = useState<TabType>(STATS_TABS[0].id);
-  const { stockMap, isLoaded } = stockInfoStore();
-  const { data: recordedList } = useRecordedStocks();
+  const { stockMap, isLoaded: isMapLoaded } = stockInfoStore();
 
   const fullRecordedStocks = useMemo(() => {
-    if (!recordedList || !isLoaded) return [];
+    if (!recordedList || !isMapLoaded) return [];
 
     return recordedList.map((item) => {
       const info = stockMap[item.symbol];
@@ -31,7 +39,6 @@ const StatsPage = () => {
         ({
           symbol: item.symbol,
           name: item.stockName,
-          stockId: item.stockId,
           logoUrl: '',
           isActive: true,
           isin: '',
@@ -39,10 +46,10 @@ const StatsPage = () => {
         } as StockInfo)
       );
     });
-  }, [recordedList, stockMap, isLoaded]);
+  }, [recordedList, stockMap, isMapLoaded]);
 
   useEffect(() => {
-    if (currentStock || !statsInfo?.defaultStock || !isLoaded) return;
+    if (currentStock || !statsInfo?.defaultStock || !isMapLoaded) return;
 
     const { symbol } = statsInfo.defaultStock;
     const fullStockInfo = stockMap[symbol];
@@ -57,10 +64,12 @@ const StatsPage = () => {
           marketType: 'KOSPI',
         } as StockInfo),
     );
-  }, [statsInfo, isLoaded, currentStock, stockMap, setCurrentStock]);
+  }, [statsInfo, isMapLoaded, currentStock, stockMap, setCurrentStock]);
 
-  if (isLoading) return <div className="flex-1 bg-gray-50" />;
-  if (isError || !statsInfo) return <ErrorPage />;
+  const isInitialLoading = isEntryLoading || isRecordedLoading || !isMapLoaded;
+  const isInitialError = isEntryError || isRecordedError;
+  if (isInitialLoading) return <div className="flex-1 bg-gray-50" />;
+  if (isInitialError || !statsInfo) return <ErrorPage />;
 
   const { recordLevel, totalRecordCount } = statsInfo;
 
