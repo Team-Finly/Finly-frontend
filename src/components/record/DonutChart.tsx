@@ -1,13 +1,11 @@
 import React from 'react';
-import { EMOTIONS } from '@/constants/emotions'; // 정의하신 상수 사용
+import { EMOTIONS } from '@/constants/emotions';
+import { useFragmentSummary } from '@/hooks/useFragmentSummary';
 
-interface DonutChartProps {
-  totalCount: number;
-  data: { emotion: string; ratio: number }[];
-}
+const DonutChart = () => {
+  const { data: fragmentSummary } = useFragmentSummary();
 
-const DonutChart = ({ totalCount, data }: DonutChartProps) => {
-  const size = 120; // h-30, w-30 (120px)
+  const size = 120;
   const strokeWidth = 14;
   const center = size / 2;
   const radius = (size - strokeWidth) / 2;
@@ -18,16 +16,24 @@ const DonutChart = ({ totalCount, data }: DonutChartProps) => {
   return (
     <div className="relative flex h-30 w-30 items-center justify-center">
       <svg width={size} height={size} className="-rotate-90">
-        {data.map((item) => {
-          const emotionInfo = EMOTIONS.find((e) => e.key === item.emotion);
-          const strokeDasharray = `${(item.ratio / 100) * circumference} ${circumference}`;
+        <circle
+          cx={center}
+          cy={center}
+          r={radius}
+          fill="transparent"
+          stroke="#EEEEF0"
+          strokeWidth={strokeWidth}
+        />
+        {fragmentSummary?.typeSummary.map((item) => {
+          const emotionInfo = EMOTIONS.find((e) => e.key === item.type);
+          const strokeDasharray = `${(item.percent / 100) * circumference} ${circumference}`;
           const strokeDashoffset = -currentOffset;
 
-          currentOffset += (item.ratio / 100) * circumference;
+          currentOffset += (item.percent / 100) * circumference;
 
           return (
             <circle
-              key={item.emotion}
+              key={item.type}
               cx={center}
               cy={center}
               r={radius}
@@ -43,7 +49,7 @@ const DonutChart = ({ totalCount, data }: DonutChartProps) => {
         })}
       </svg>
       <span className="absolute text-[30px] font-bold text-gray-900">
-        {totalCount}
+        {fragmentSummary?.totalCount}
       </span>
     </div>
   );

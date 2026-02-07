@@ -26,13 +26,14 @@ const LinearBar = ({ emotions }: LinearBarProps) => {
   return (
     <div className="w-full">
       {emotions.length === 0 ? (
-        <div className="h-6 w-full cursor-pointer overflow-hidden rounded-full bg-gray-200"></div>
+        <div
+          className="h-6 w-full cursor-pointer overflow-hidden rounded-full bg-gray-200"
+          onClick={() => navigate('/fragment')}
+        ></div>
       ) : (
         <div
           className="flex h-6 w-full cursor-pointer gap-0.5 overflow-hidden rounded-full"
-          onClick={() =>
-            navigate('/fragment', { state: { typeSummary: emotions } })
-          }
+          onClick={() => navigate('/fragment')}
         >
           {emotions.map((item) => {
             const emotion = EMOTIONS.find((e) => e.key === item.type);
