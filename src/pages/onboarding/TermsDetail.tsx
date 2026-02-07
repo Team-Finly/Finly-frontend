@@ -47,6 +47,7 @@ const TermsDetail = () => {
       </div>
 
       <div className=" mt-[60px] mb-[60px]">
+
         <button 
           onClick={handleAgreeClick}
           className="flex items-center gap-2 cursor-pointer w-full"
@@ -62,7 +63,6 @@ const TermsDetail = () => {
         </button>
       </div>
       </div>
- 
   );
 };
 

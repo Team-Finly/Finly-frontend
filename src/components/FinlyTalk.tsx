@@ -14,8 +14,13 @@ const FinlyTalk = ({ recordId, content, status }: FinlyTalkProps) => {
 
   const formattedContent = useMemo(() => {
     if (!content) return "";
-    
-    return content.replace(/<<(.+?)>>/g, '<strong class="font-bold text-gray-500">$1</strong>');
+ 
+    const pattern = /<<(.+?)>>|\{\{(.+?)\}\}/g;
+
+    return content.replace(pattern, (_, p1, p2) => {
+      const target = p1 || p2;
+      return `<strong class="font-bold text-gray-700/80">${target}</strong>`;
+    });
   }, [content]);
 
   const handleGoFeedback = () => {
