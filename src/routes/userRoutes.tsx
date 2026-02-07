@@ -1,7 +1,7 @@
 import Profile from "@/pages/mypage/Profile";
 import ProfileSettings from "@/pages/mypage/ProfileSettings";
 import MyPersona from "@/pages/mypage/MyPersona";
-
+import PasswordChange from "@/pages/mypage/PasswordChange";
 const userRoutes = [
   {
     path: 'profile',
@@ -16,6 +16,11 @@ const userRoutes = [
   {
     path: 'mypersona',
     element: <MyPersona />,
+    handle: { showNav: false },
+  },
+  {
+    path: 'passwordchange',
+    element: <PasswordChange />,
     handle: { showNav: false },
   }
 ];

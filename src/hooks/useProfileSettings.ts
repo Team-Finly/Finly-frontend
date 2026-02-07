@@ -9,6 +9,7 @@ export const useProfileSettings = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false);
   const [profileImage, setProfileImage] = useState(storeImage);
   const [nickname, setNickname] = useState(storeNickname);
   const [email, setEmail] = useState(storeEmail);
@@ -96,7 +97,7 @@ export const useProfileSettings = () => {
   };
 
   return {
-    state: { isEditing, errorMessage, isModalOpen, profileImage, nickname, initialImage, initialNickname, email },
-    actions: { setIsEditing, setIsModalOpen, handleFileChange, handleResetImage, handleNicknameChange, handleComplete, handleCancel }
+    state: { isEditing, errorMessage, isModalOpen, isWithdrawModalOpen, profileImage, nickname, initialImage, initialNickname, email },
+    actions: { setIsEditing, setIsModalOpen, setIsWithdrawModalOpen, handleFileChange, handleResetImage, handleNicknameChange, handleComplete, handleCancel }
   };
 };
