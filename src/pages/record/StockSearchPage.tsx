@@ -8,6 +8,8 @@ import { useStockSearch } from '@/hooks/useStockSearch';
 import { useDebounce } from '@/hooks/useDebounce';
 import { useInView } from 'react-intersection-observer';
 import { useRecordCreateStore } from '@/store/recordCreateStore';
+import { statsApi } from '@/apis/statsApi';
+import type { Stock } from '@/types/record';
 
 const StockSearchPage = () => {
   const navigate = useNavigate();
@@ -20,6 +22,7 @@ const StockSearchPage = () => {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useStockSearch(debouncedKeyword);
   const { ref, inView } = useInView();
+  const setField = useRecordCreateStore((state) => state.setField);
 
   useEffect(() => {
     if (inView && hasNextPage && !isFetchingNextPage) {
@@ -29,8 +32,16 @@ const StockSearchPage = () => {
 
   const stocks = data?.pages.flatMap((page) => page.stocks) || [];
 
-  const handleStockClick = (selectedStock) => {
+  const handleStockClick = async (selectedStock: Stock) => {
     setStock(selectedStock.id, selectedStock.name, selectedStock.symbol);
+    try {
+      const summary = await statsApi.getStockSummary(selectedStock.symbol);
+      if (summary && summary.currentPrice) {
+        setField('unitPrice', String(summary.currentPrice));
+      }
+    } catch (error) {
+      console.log('종목 상세 정보 호출 실패', error);
+    }
 
     const targetPath = recordId
       ? `/record/create/${recordId}`

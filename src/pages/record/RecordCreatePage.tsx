@@ -60,22 +60,24 @@ const RecordCreatePage = () => {
 
   useEffect(() => {
     if (isEditMode && detail && !isReady) {
-      const name = stockMap[detail.symbol]?.name || detail.symbol;
+      if (!symbol) {
+        const name = stockMap[detail.symbol]?.name || detail.symbol;
 
-      setField('selectedDate', new Date(detail.recordDate));
-      setField('symbol', detail.symbol);
-      setField('stockName', name);
-      setField('stockId', 999);
-      setField('selectedTradeAction', detail.tradeAction);
-      setField('unitPrice', String(detail.unitPrice));
-      setField('quantity', String(detail.quantity));
-      setField('clickedEmotion', detail.emotionCode);
-      setField('emotionLevel', detail.emotionIntensity);
-      setField('memo', detail.memo);
+        setField('selectedDate', new Date(detail.recordDate));
+        setField('symbol', detail.symbol);
+        setField('stockName', name);
+        setField('stockId', 999);
+        setField('selectedTradeAction', detail.tradeAction);
+        setField('unitPrice', String(detail.unitPrice));
+        setField('quantity', String(detail.quantity));
+        setField('clickedEmotion', detail.emotionCode);
+        setField('emotionLevel', detail.emotionIntensity);
+        setField('memo', detail.memo);
+      }
 
       setIsReady(true);
     }
-  }, [isEditMode, detail, setField, stockMap, isReady]);
+  }, [isEditMode, detail, setField, stockMap, isReady, symbol]);
 
   const handleDateSelect = (date: Date) => {
     setField('selectedDate', date);
