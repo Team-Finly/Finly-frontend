@@ -171,16 +171,6 @@ export interface RecordDetailResponse {
 }
 
 // 기록 수정
-export interface RecordUpdateRequest {
-  recordDate: string;
-  symbol: string;
-  tradeAction: TradeActionType;
-  unitPrice: number;
-  quantity: number;
-  emotionCode: EmotionType;
-  emotionIntensity: number;
-  memo: string;
-}
 
 export interface RecordUpdateResponse {
   emotionCode: EmotionType;
