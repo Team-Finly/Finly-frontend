@@ -72,6 +72,11 @@ const FragmentDetailPage = () => {
               <RecordDetailFragment
                 key={fragment.fragmentId}
                 fragment={fragment}
+                onClick={() =>
+                  navigate(
+                    `/record/${fragment.recordDate}/${fragment.fragmentId}`,
+                  )
+                }
               />
             ))}
           </div>

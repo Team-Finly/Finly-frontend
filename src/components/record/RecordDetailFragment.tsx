@@ -6,16 +6,23 @@ import { TRADE_ACTION_MAP } from '@/constants/tradeAction';
 
 interface RecordDetailFragmentProps {
   fragment: FragmentItem;
+  onClick?: () => void;
 }
 
-const RecordDetailFragment = ({ fragment }: RecordDetailFragmentProps) => {
+const RecordDetailFragment = ({
+  fragment,
+  onClick,
+}: RecordDetailFragmentProps) => {
   const emotion = EMOTION_CHART_MAP[fragment.emotionCode];
   if (!emotion) return null;
 
   const tradeAction = TRADE_ACTION_MAP[fragment.stock.tradeAction];
 
   return (
-    <div className="shadow-card2 rounded-xl border-[1.2px] border-gray-100 px-3.75 py-4.25">
+    <div
+      className="shadow-card2 cursor-pointer rounded-xl border-[1.2px] border-gray-100 px-3.75 py-4.25"
+      onClick={onClick}
+    >
       <div className="mb-5.25 flex items-center justify-between">
         <div className="flex items-center">
           <h4 className="mr-1.5 font-semibold">{fragment.stock.stockName}</h4>
@@ -44,10 +51,14 @@ const RecordDetailFragment = ({ fragment }: RecordDetailFragmentProps) => {
           <p style={{ color: tradeAction.color }}>{tradeAction.label}</p>
           <p className="text-gray-300">·</p>
           <p className="font-semibold text-gray-500">
-            {fragment.unitPrice.toLocaleString()}원
+            {fragment.stock.tradeAction === 'WATCH'
+              ? '-'
+              : `${fragment.unitPrice.toLocaleString()}원`}
           </p>
         </div>
-        <p className="text-sm text-gray-500">{fragment.quantity}주</p>
+        {fragment.stock.tradeAction !== 'WATCH' && (
+          <p className="text-sm text-gray-500">{fragment.quantity}주</p>
+        )}
       </div>
     </div>
   );
