@@ -8,20 +8,12 @@ import LinearBar from '@/components/record/LinearBar';
 import EmptyFragment from '@/components/record/EmptyFragment';
 import RecordFragment from '@/components/record/RecordFragment';
 import FloatingButton from '@/components/record/FloatingButton';
-import type { FragmentSummary, DailyFragmentResponse } from '@/types/record';
+import type { DailyFragmentResponse } from '@/types/record';
+import { useFragmentSummary } from '@/hooks/useFragmentSummary';
 
 const RecordHomePage = () => {
   const navigate = useNavigate();
-  const [fragmentSummary, setFragmentSummary] = useState<FragmentSummary>({
-    totalFragmentCount: 34,
-    emotionSummary: [
-      { emotion: 'CALM', count: 5, ratio: 50 },
-      { emotion: 'CONFIDENCE', count: 2, ratio: 20 },
-      { emotion: 'ANXIETY', count: 2, ratio: 20 },
-      { emotion: 'GREED', count: 1, ratio: 10 },
-    ],
-    dominantEmotion: 'CONFIDENCE',
-  });
+  const { data: fragmentSummary } = useFragmentSummary();
 
   const [dailyFragment, setDailyFragment] = useState<DailyFragmentResponse>({
     date: '2026-01-18',
@@ -79,14 +71,11 @@ const RecordHomePage = () => {
           <h2 className="mt-5 mb-5.5 text-[17px] font-semibold">
             총{' '}
             <span className="text-secondary">
-              {fragmentSummary.totalFragmentCount}
+              {fragmentSummary?.totalCount ?? 0}
             </span>
             개의 마음 조각을 모았어요!
           </h2>
-          <LinearBar
-            emotions={fragmentSummary.emotionSummary}
-            fragmentSummary={fragmentSummary}
-          />
+          <LinearBar emotions={fragmentSummary?.typeSummary || []} />
         </div>
         <div className="h-4 bg-gray-50"></div>
         <div className="mt-5 mb-[102px] px-4">

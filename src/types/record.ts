@@ -5,6 +5,8 @@ export type EmotionType =
   | 'GREED'
   | 'REGRET';
 
+export type PeriodType = 'ALL' | 'MONTH_1' | 'MONTH_3' | 'MONTH_6' | 'YEAR_1';
+
 export type SessionType =
   | 'PRE_MARKET'
   | 'MORNING'
@@ -26,17 +28,55 @@ export interface MonthlyRecordResponse {
   days: DailyRecord[];
 }
 
-// 조각 모음함
-export interface EmotionSummary {
-  emotion: EmotionType;
+// 감정 조각 스펙트럼
+export interface TypeSummary {
+  type: EmotionType;
   count: number;
-  ratio: number;
+  percent: number;
 }
 
-export interface FragmentSummary {
-  totalFragmentCount: number;
-  emotionSummary: EmotionSummary[];
-  dominantEmotion: EmotionType;
+export interface FragmentSummaryResponse {
+  totalCount: number;
+  dominantType: EmotionType;
+  typeSummary: TypeSummary[];
+}
+
+// 조각 모음함 리스트
+export interface FragmentItem {
+  recordDate: string;
+  fragmentId: number;
+  stock: {
+    stockId: number;
+    stockName: string;
+    tradeAction: TradeActionType;
+  };
+  unitPrice: number;
+  quantity: number;
+  memo: string;
+  emotionCode: EmotionType;
+  emotionName: string;
+}
+
+export interface FragmentListRequest {
+  boxType?: EmotionType;
+  periodKey?: PeriodType;
+}
+
+export interface FragmentListResponse {
+  box: {
+    boxType: EmotionType;
+    boxTypeName: string;
+  };
+  period: {
+    periodKey: PeriodType;
+    from: string;
+    to: string;
+  };
+  summary: {
+    totalCount: number;
+    boxTypeName: string;
+  };
+  fragments: FragmentItem[];
 }
 
 // TODAY 마음 조각
@@ -102,10 +142,7 @@ export interface CreateRecordResponse extends CreateRecordRequest {
   session: SessionType;
 }
 
-export type UpdateRecordRequest = Omit<
-  CreateRecordRequest,
-  'clientRequestId'
->;
+export type UpdateRecordRequest = Omit<CreateRecordRequest, 'clientRequestId'>;
 
 // AI 피드백
 export interface FeedbackResponse {
@@ -133,16 +170,16 @@ export interface RecordDetailResponse {
   unitPrice: number;
 }
 
-// 해당 일 기록 
+// 해당 일 기록
 export interface PrismFeedback {
   title: string;
-  generatedAt: string; 
+  generatedAt: string;
 }
 
 export interface TimelineSummaryItem {
   recordId: number;
-  recordDate: string;    
-  recordedAt: string;     
+  recordDate: string;
+  recordedAt: string;
   session: SessionType;
   tradeAction: TradeActionType;
   symbol: string;
@@ -154,7 +191,7 @@ export interface TimelineSummaryItem {
 }
 
 export interface RecordDailyDetailResponse {
-  date: string; 
+  date: string;
   prismFeedback: PrismFeedback;
   timelineSummary: TimelineSummaryItem[];
   hasRecords: boolean;

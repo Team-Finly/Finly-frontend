@@ -11,6 +11,8 @@ export const useCreateRecord = () => {
     mutationFn: (data: CreateRecordRequest) => recordApi.createRecord(data),
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['records'] });
+      queryClient.invalidateQueries({ queryKey: ['fragmentList'] });
+      queryClient.invalidateQueries({ queryKey: ['fragmentSummary'] });
       navigate('/loading', { state: { recordId: data.recordId } });
     },
     onError: (error) => {

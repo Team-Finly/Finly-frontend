@@ -1,14 +1,14 @@
 import React from 'react';
 import { EMOTIONS } from '@/constants/emotions';
-import type { EmotionSummary } from '@/types/record';
+import type { TypeSummary } from '@/types/record';
 
 interface EmotionCardProps {
-  data: EmotionSummary;
+  data: TypeSummary;
   onClick: () => void;
 }
 
 const EmotionCard = ({ data, onClick }: EmotionCardProps) => {
-  const emotion = EMOTIONS.find((e) => e.key === data.emotion);
+  const emotion = EMOTIONS.find((e) => e.key === data.type);
   if (!emotion) return null;
 
   return (
@@ -25,7 +25,7 @@ const EmotionCard = ({ data, onClick }: EmotionCardProps) => {
       <div className="flex flex-1 items-center justify-between">
         <div className="flex flex-col gap-1">
           <p className="font-semibold text-gray-900">{emotion.label}</p>
-          <p className="text-gray-500/80">{data.ratio}%</p>
+          <p className="text-gray-500/80">{data.percent}%</p>
         </div>
         <div className="text-lg text-gray-900">{data.count}개</div>
       </div>
