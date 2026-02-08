@@ -160,10 +160,10 @@ const ProfileSettings = () => {
           leftBtnLabel="취소"
           rightBtnLabel="탈퇴"
           onClickLeft={() => {
-            console.log("탈퇴 API "); 
             actions.setIsWithdrawModalOpen(false);
           }}
-          onClickRight={() => actions.setIsWithdrawModalOpen(false)}
+          onClickRight={() => {
+           console.log("탈퇴 API "); actions.setIsWithdrawModalOpen(false)}}
           onClose={() => actions.setIsWithdrawModalOpen(false)}
         />
       )}
