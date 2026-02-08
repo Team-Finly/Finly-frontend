@@ -39,13 +39,13 @@ const ReportStorage = () => {
       </header>
 
       <div className="relative px-6 mt-[50px] flex-shrink-0">
-    
             <div className="flex items-center gap-[15px] text-[20px] font-bold text-gray-900 leading-[32px]">
                 <span>조아님, 이번 달</span>
                 <img src={star} alt="별" className="w-[18px] h-[22px] mb-1 rotate-[15deg] opacity-100 mix-blend-overlay" />
             </div>
-            <span className="text-secondary text-[20px] font-bold leading-[32px]">20개의 조각</span>을 모았어요!
-    
+            <p className="text-[20px] font-bold text-gray-900 leading-[32px]">
++                <span className="text-secondary">20개의 조각</span>을 모았어요!
++            </p>
       </div>
 
       <div className="flex-1 w-full relative overflow-hidden flex items-center justify-center pb-4">
