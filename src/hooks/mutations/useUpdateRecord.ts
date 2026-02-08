@@ -9,8 +9,13 @@ export const useUpdateRecord = (recordId: number) => {
 
   return useMutation({
     mutationFn: async (payload: UpdateRecordRequest) => {
-      await recordApi.updateRecord(recordId, payload);
-      return await recordApi.regenerateFeedback(recordId);
+      const updateResult = await recordApi.updateRecord(recordId, payload);
+      try {
+        await recordApi.regenerateFeedback(recordId);
+      } catch (error) {
+        console.log('피드백 재생성 실패', error);
+      }
+      return updateResult;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['home'] });
