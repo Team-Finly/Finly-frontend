@@ -12,7 +12,7 @@ const ProfileMenu = () => {
     <div className="mx-[16px] mt-[26px] flex flex-col rounded-[12px] border-[1.2px] border-gray-100 bg-white px-[20px] py-[24px]">
       <button
         type="button"
-        onClick={() => navigate('/report-archive')} //임시주소
+        onClick={() => navigate('/reports')}
         className="mb-[24px] flex w-full cursor-pointer items-center justify-between text-left">
         <div className="flex flex-col gap-[4px]">
           <p className="text-[16px] font-semibold text-gray-900">AI 리포트 보관함</p>
@@ -23,7 +23,7 @@ const ProfileMenu = () => {
 
       <button
         type="button"
-        onClick={() => navigate('/mypersona')} //임시주소
+        onClick={() => navigate('/mypersona')}
         className="mb-[33px] flex w-full cursor-pointer items-center justify-between text-left">
         <div className="flex flex-col gap-[4px]">
           <p className="text-[16px] font-semibold text-gray-900">나의 페르소나</p>

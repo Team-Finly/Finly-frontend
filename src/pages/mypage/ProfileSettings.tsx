@@ -64,7 +64,6 @@ const ProfileSettings = () => {
           <div className="relative mb-[30px] mt-[49px]">
             <div onClick={handleImageClick} className="cursor-pointer w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center overflow-hidden">
               <img onClick={handleImageClick} src={state.profileImage || defaultprofileIcon} alt="프로필 이미지" className="w-full h-full object-cover" /> 
-
             </div>
             {state.isEditing && (
               <div onClick={handleImageClick} className="absolute mt-[-27px] right-[-4px] bg-blue-500 p-1.5 rounded-full border-2 border-white">
@@ -74,12 +73,12 @@ const ProfileSettings = () => {
             {state.isEditing && state.profileImage !== defaultprofileIcon && (
               <p
                 onClick={actions.handleResetImage}
-                className="absolute top-[100%] mt-[12px] text-[12px] text-gray-300 underline underline-offset-2 cursor-pointer "
-              >
+                className="absolute top-[100%] mt-[12px] text-[12px] text-gray-300 underline underline-offset-2 cursor-pointer ">
                 기본 프로필로 변경
               </p>
             )}
           </div>
+
           <div className="w-full">
             <div className='relative w-full mb-[40px]'>
               <label className="text-[14px] text-gray-500 mb-2 block font-semibold">닉네임</label>
@@ -101,7 +100,6 @@ const ProfileSettings = () => {
                   {state.errorMessage}
                 </p>
               )}
-
             </div>
 
             <div>
@@ -133,8 +131,10 @@ const ProfileSettings = () => {
                 </button>
               ) : (
                 <div className="flex flex-col gap-[30px]">
-                  <button className="text-left text-[14px] text-medium text-gray-500/80">비밀번호 변경</button>
-                  <button className="text-left text-[14px] text-medium text-stock-buy">서비스 탈퇴</button>
+                  <button className="text-left text-[14px] font-medium text-gray-500/80 cursor-pointer"
+                          onClick={() => navigate('/passwordchange')}>비밀번호 변경</button>
+                  <button className="text-left text-[14px] font-medium text-stock-buy cursor-pointer"
+                          onClick={() => actions.setIsWithdrawModalOpen(true)}>서비스 탈퇴</button>
                 </div>
               )}
             </div>
@@ -149,7 +149,22 @@ const ProfileSettings = () => {
           onClickLeft={actions.handleCancel}
           onClickRight={() => actions.setIsModalOpen(false)}
           onClose={() => actions.setIsModalOpen(false)}
-         
+          
+        />
+      )}
+      {state.isWithdrawModalOpen && (
+        <Modal
+          text="계정을 탈퇴할까요?"
+          desc={"삭제 시 모든 정보가 영구적으로 사라지며,\n다시 복구할 수 없습니다."}
+          rightBtnClassName="bg-red text-white"
+          leftBtnLabel="취소"
+          rightBtnLabel="탈퇴"
+          onClickLeft={() => {
+            actions.setIsWithdrawModalOpen(false);
+          }}
+          onClickRight={() => {
+           console.log("탈퇴 API "); actions.setIsWithdrawModalOpen(false)}}
+          onClose={() => actions.setIsWithdrawModalOpen(false)}
         />
       )}
     </div>

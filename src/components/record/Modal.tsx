@@ -6,6 +6,9 @@ interface ModalProps {
   onClickLeft: () => void;
   onClickRight: () => void;
   onClose: () => void;
+  rightBtnClassName?: string;
+  rightBtnLabel?: string;
+  leftBtnLabel?: string;
 }
 
 const Modal = ({
@@ -14,6 +17,9 @@ const Modal = ({
   onClickLeft,
   onClickRight,
   onClose,
+  rightBtnClassName,
+  rightBtnLabel,
+  leftBtnLabel,
 }: ModalProps) => {
   return (
     <div
@@ -25,19 +31,20 @@ const Modal = ({
         onClick={(e) => e.stopPropagation()}
       >
         <h4 className="mb-2 text-sm font-semibold text-gray-900">{text}</h4>
-        <p className="mb-6 text-sm text-gray-700">{desc}</p>
+        <p className="mb-6 text-sm text-gray-700 whitespace-pre-line text-center">{desc}</p>
         <div className="flex items-center justify-center gap-3">
           <button
             onClick={onClickLeft}
             className="h-9 w-27 cursor-pointer rounded-[10px] border border-gray-300 text-xs text-gray-300"
           >
-            예
+            {leftBtnLabel || "예"}
           </button>
           <button
             onClick={onClickRight}
-            className="bg-secondary h-9 w-27 cursor-pointer rounded-[10px] text-xs text-white"
+            className={`h-9 w-27 cursor-pointer rounded-[10px] text-xs 
+            ${rightBtnClassName || 'bg-secondary text-white'}`}
           >
-            아니오
+            {rightBtnLabel || "아니오"}
           </button>
         </div>
       </div>
