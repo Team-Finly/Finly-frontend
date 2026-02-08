@@ -44,8 +44,8 @@ const ReportStorage = () => {
                 <img src={star} alt="별" className="w-[18px] h-[22px] mb-1 rotate-[15deg] opacity-100 mix-blend-overlay" />
             </div>
             <p className="text-[20px] font-bold text-gray-900 leading-[32px]">
-+                <span className="text-secondary">20개의 조각</span>을 모았어요!
-+            </p>
+             <span className="text-secondary">20개의 조각</span>을 모았어요!
+         </p>
       </div>
 
       <div className="flex-1 w-full relative overflow-hidden flex items-center justify-center pb-4">

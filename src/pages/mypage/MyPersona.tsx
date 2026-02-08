@@ -12,10 +12,6 @@ const MyPersona = () => {
   
   useEffect(() => {
     const fetchPersona = async () => {
-      if (personaType) {
-      setIsLoading(false);
-      return;
-    }
       try {
         setIsLoading(true); 
         const result = await getMyPersona(); 
@@ -40,8 +36,7 @@ const MyPersona = () => {
     return <div className="h-screen bg-white" />;
   }
 
-  const data = PERSONA_DATA[personaType as keyof typeof PERSONA_DATA];
-   
+ const data = personaType ? PERSONA_DATA[personaType as keyof typeof PERSONA_DATA] : null;
   if (!data) {
     return <div className="h-screen bg-white" />;
   }

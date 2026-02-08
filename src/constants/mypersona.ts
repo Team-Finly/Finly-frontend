@@ -58,3 +58,5 @@ export const PERSONA_DATA = {
     ]
   },
 };
+
+export type PersonaKey = keyof typeof PERSONA_DATA;

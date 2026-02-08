@@ -1,10 +1,11 @@
 import { api } from "./client";
+import type { MyPageMainData, ProfileDetailData, PersonaDetail } from "@/types/member";
 
-export const getMyProfile = async () => {
+export const getMyProfile = async (): Promise<ProfileDetailData> => {
   const response = await api.get("/api/mypage/me");
   return response.data.result;
 };
-export const getMyPersona = async () => {
+export const getMyPersona = async (): Promise<PersonaDetail>=> {
   const response = await api.get("/api/mypage/persona");
   return response.data.result; 
 };
@@ -12,7 +13,7 @@ export const updateNickname = async (nickname: string) => {
   const response = await api.post("/api/mypage/me/nickname", { nickname });
   return response.data; 
 };
-export const getUserMainProfile = async () => {
+export const getUserMainProfile = async (): Promise<MyPageMainData> => {
   const response = await api.get('/api/mypage');
   return response.data.result; 
 };

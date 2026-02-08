@@ -1,13 +1,13 @@
 import { create } from 'zustand';
 import { getUserMainProfile, getMyProfile } from '@/apis/userApi'; 
 import defaultProfileIcon from "@/assets/icons/profile.svg";
-
+import type { PersonaKey } from "@/constants/mypersona";
 interface UserState {
   memberId: number;
   nickname: string;
   email: string;
   profileImage: string | null;
-  personaType: string | null;
+  personaType: PersonaKey | null;
   mindScore: number;      
   fragmentCount: number;  
   isLoading: boolean;
@@ -45,8 +45,8 @@ export const useUserStore = create<UserState>((set) => ({
         memberId: data.memberId,
         nickname: data.nickname,
         personaType: data.personaType ?? state.personaType,
-        mindScore: data.finMindIdx,          
-        fragmentCount: data.mindPieceCount,  
+        mindScore: data.findMindIdx ?? 0,        
+        fragmentCount: data.mindPieceCount ?? 0,  
         isLoading: false,
       }));
     } catch (error) {
