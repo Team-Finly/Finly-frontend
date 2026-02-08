@@ -66,7 +66,6 @@ const RecordCreatePage = () => {
         setField('selectedDate', new Date(detail.recordDate));
         setField('symbol', detail.symbol);
         setField('stockName', name);
-        setField('stockId', 999);
         setField('selectedTradeAction', detail.tradeAction);
         setField('unitPrice', String(detail.unitPrice));
         setField('quantity', String(detail.quantity));
@@ -149,7 +148,7 @@ const RecordCreatePage = () => {
   const isButtonDisabled =
     !selectedDate ||
     !stockId ||
-    !symbol ||
+    (!stockId && !isEditMode) ||
     !selectedTradeAction ||
     (selectedTradeAction !== 'WATCH' && (!unitPrice || !quantity)) ||
     !clickedEmotion ||
