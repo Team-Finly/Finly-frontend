@@ -131,9 +131,9 @@ const ProfileSettings = () => {
                 </button>
               ) : (
                 <div className="flex flex-col gap-[30px]">
-                  <button className="text-left text-[14px] text-medium text-gray-500/80 cursor-pointer"
+                  <button className="text-left text-[14px] font-medium text-gray-500/80 cursor-pointer"
                           onClick={() => navigate('/passwordchange')}>비밀번호 변경</button>
-                  <button className="text-left text-[14px] text-medium text-stock-buy cursor-pointer"
+                  <button className="text-left text-[14px] font-medium text-stock-buy cursor-pointer"
                           onClick={() => actions.setIsWithdrawModalOpen(true)}>서비스 탈퇴</button>
                 </div>
               )}
