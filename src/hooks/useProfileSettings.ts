@@ -41,7 +41,7 @@ export const useProfileSettings = () => {
   }, [setUserInfo]);
 
  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
+    const file = e.target.files?.[0]; // 이벤트에서 파일 추출
     if (file) {
       if (!file.type.startsWith("image/")) {
         alert("이미지 파일만 선택할 수 있어요.");

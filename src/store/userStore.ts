@@ -9,7 +9,7 @@ interface UserState {
   profileImage: string | null;
   personaType: PersonaKey | null;
   mindScore: number;      
-  fragmentCount: number;  
+  fragmentCount: number;
   isLoading: boolean;
 
 
@@ -36,6 +36,7 @@ export const useUserStore = create<UserState>((set) => ({
   ...initialState,
   setUserInfo: (info) => set((state) => ({ ...state, ...info })),
   clearUser: () => set(initialState),
+
   fetchMainProfile: async () => {
     set({ isLoading: true });
     try {
@@ -45,7 +46,7 @@ export const useUserStore = create<UserState>((set) => ({
         memberId: data.memberId,
         nickname: data.nickname,
         personaType: data.personaType ?? state.personaType,
-        mindScore: data.finMindIdx,    
+        mindScore: data.finMindIdx ?? 0,
         fragmentCount: data.mindPieceCount ?? 0,  
         isLoading: false,
       }));
@@ -56,6 +57,7 @@ export const useUserStore = create<UserState>((set) => ({
   },
 
   fetchDetailProfile: async () => {
+    set({ isLoading: true });
     try {
       const data = await getMyProfile();
       set((state) => ({
@@ -65,9 +67,11 @@ export const useUserStore = create<UserState>((set) => ({
         email: data.email,      
         profileImage: data.profileImage ?? defaultProfileIcon, 
         personaType: data.personaType ?? state.personaType,
+        isLoading: false,
       }));
     } catch (error) {
       console.error("상세 프로필 로딩 실패:", error);
+      set({ isLoading: false });
     }
   },
 }));
