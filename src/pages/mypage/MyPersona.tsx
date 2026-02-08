@@ -1,5 +1,5 @@
 import TitleHeader from '@/components/record/TitleHeader';
-import { PERSONA_DATA } from '@/constants/mypersona';
+import { PERSONA_DATA, type PersonaKey } from '@/constants/mypersona';
 import light from '@/assets/icons/light.svg'
 import { useEffect, useState } from 'react';
 import { getMyPersona } from '@/apis/userApi';
@@ -36,7 +36,7 @@ const MyPersona = () => {
     return <div className="h-screen bg-white" />;
   }
 
- const data = personaType ? PERSONA_DATA[personaType as keyof typeof PERSONA_DATA] : null;
+ const data = PERSONA_DATA[personaType as PersonaKey];
   if (!data) {
     return <div className="h-screen bg-white" />;
   }
