@@ -7,24 +7,10 @@ export const usePasswordChange = () => {
 
   const [password, setPassword] = useState("");
   const [pwConfirm, setPwConfirm] = useState("");
-  const [isPwValid, setIsPwValid] = useState(false);
-  const [isMatch, setIsMatch] = useState(false);
-  const [isValid, setIsValid] = useState(false); 
-
-  useEffect(() => {
-    const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
-    const isValidFormat = regex.test(password);
-    setIsPwValid(isValidFormat);
-  }, [password]);
-
-
-  useEffect(() => {
-    setIsMatch(password === pwConfirm && password !== "");
-  }, [password, pwConfirm]);
-
-  useEffect(() => {
-    setIsValid(isPwValid && isMatch);
-  }, [isPwValid, isMatch]);
+  const regex=/^(?=.*[a-zA-Z])(?=.*[0-9]).{6,}$/;
+  const isPwValid = regex.test(password);
+  const isMatch = password === pwConfirm && pwConfirm.length > 0;
+  const isValid = isPwValid && isMatch;
 
 
   const handleSubmit = async () => {

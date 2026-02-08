@@ -12,7 +12,7 @@ import yellowround from '@/assets/icons/yellowround.svg';
 import road from '@/assets/icons/road.svg';
 import cloud from '@/assets/images/cloud.png';
 import star from '@/assets/icons/star.svg';
-const ReportRoadmapPage = () => {
+const ReportStorage = () => {
   const navigate = useNavigate();
 
   return (
@@ -27,11 +27,11 @@ const ReportRoadmapPage = () => {
         {/* 헤더 */}
       <header className="relative z-10 flex items-center justify-center h-[60px] px-4 flex-shrink-0">
         <div className="flex items-center gap-[20px]">
-            <button onClick={() => navigate(-1)} className="p-2 cursor-pointer">
+            <button disabled className="p-2 cursor-pointer">
                <img src={leftarrow} alt="왼쪽" className="w-[10px] h-[18px]" />
             </button>
             <span className="font-semibold text-gray-900 text-[18px] mx-[20px]">2026.2월</span>
-            <button>
+            <button disabled className="p-2 cursor-pointer">
                 <img src={rightarrow} alt="오른쪽" className="w-[10px] h-[18px]" />
             </button>
         </div>
@@ -61,7 +61,7 @@ const ReportRoadmapPage = () => {
                     <img src={yellowround} alt="배경" className="absolute w-full h-full object-cover" />
                     <img src={trophy} alt="트로피" className="relative z-10 w-[32px] h-[32px] mb-1" />
                 </div>
-                <div className="mt-[-5px] bg-gray-900 text-white text-center text-[13px] font-semibold px-3 py-1.5 rounded-full font-bold shadow-lg z-30 whitespace-nowrap">
+                <div className="mt-[-5px] bg-gray-900 text-white text-center text-[13px] font-semibold px-3 py-1.5 rounded-full z-30 whitespace-nowrap">
                   2월 월간 리포트
                 </div>
             </div>
@@ -124,4 +124,5 @@ const ReportRoadmapPage = () => {
   );
 };  
 
-export default ReportRoadmapPage;
+
+export default ReportStorage;
