@@ -51,10 +51,14 @@ const RecordDetailFragment = ({
           <p style={{ color: tradeAction.color }}>{tradeAction.label}</p>
           <p className="text-gray-300">·</p>
           <p className="font-semibold text-gray-500">
-            {fragment.unitPrice.toLocaleString()}원
+            {tradeAction.label === '관망'
+              ? '-'
+              : `${fragment.unitPrice.toLocaleString()}원`}
           </p>
         </div>
-        <p className="text-sm text-gray-500">{fragment.quantity}주</p>
+        {tradeAction.label !== '관망' && (
+          <p className="text-sm text-gray-500">{fragment.quantity}주</p>
+        )}
       </div>
     </div>
   );
