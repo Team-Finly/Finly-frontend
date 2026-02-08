@@ -1,3 +1,5 @@
+import type { PersonaKey } from "@/constants/mypersona";
+
 //내 정보 조회
 export interface PersonaInfo {
   personaId: number;
@@ -7,21 +9,24 @@ export interface PersonaInfo {
 
 export interface MyPageMainData {
   memberId: number;
-  email: string
   nickname:string;
-  persona: PersonaInfo;
-  findMindIdx: number;
+  personaType: PersonaKey | null;
+  finMindIdx: number;
   mindPieceCount: number;
+  profileImage: string | null;
 }
 //프로필 조회
 export interface ProfileDetailData {
+    personaType: PersonaKey | null;
     memberId: number;
     email: string;
     nickname: string;
     persona: PersonaInfo;
+    profileImage: string | null;
 }
 //페르소나 결과조회
 export interface PersonaDetail{
+    personaType: PersonaKey | null;
     id: number;
     title: string;
     description: string;

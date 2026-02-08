@@ -17,7 +17,6 @@ export const usePasswordChange = () => {
     if (!isValid) return;
 
     try {
-      console.log("비밀번호 변경 요청:", password);
       alert("비밀번호가 변경되었습니다.");
       navigate(-1); 
     } catch (error) {
