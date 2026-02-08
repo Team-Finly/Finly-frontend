@@ -8,17 +8,29 @@ import { EMOTIONS } from '@/constants/emotions';
 import EmotionLevelSlider from '@/components/record/EmotionLevelSlider';
 import Button from '@/components/record/Button';
 import MiniCalendar from '@/components/record/MiniCalendar';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Modal from '@/components/record/Modal';
 import { useCreateRecord } from '@/hooks/mutations/useCreateRecord';
 import { useRecordCreateStore } from '@/store/recordCreateStore';
+import { useUpdateRecord } from '@/hooks/mutations/useUpdateRecord';
+import { useRecordDetail } from '@/hooks/useRecordDetail';
+import { stockInfoStore } from '@/store/stockInfoStore';
 
 const RecordCreatePage = () => {
   const navigate = useNavigate();
+  const { recordId } = useParams<{ recordId: string }>();
+  const isEditMode = !!recordId;
+  const numericId = Number(recordId);
+
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const calendarRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [isReady, setIsReady] = useState(false);
+
+  const stockMap = stockInfoStore((state) => state.stockMap);
+
   const {
     selectedDate,
     stockId,
@@ -33,8 +45,37 @@ const RecordCreatePage = () => {
     setField,
     reset,
   } = useRecordCreateStore();
-  const { mutate, isPending } = useCreateRecord();
+
+  const { data: detail, isLoading: isDetailLoading } = useRecordDetail(
+    isEditMode ? numericId : undefined,
+  );
+
+  const { mutate: createMutate, isPending: isCreatePending } =
+    useCreateRecord();
+  const { mutate: updateMutate, isPending: isUpdatePending } =
+    useUpdateRecord(numericId);
+
+  const isPending = isCreatePending || isUpdatePending;
   const isToday = selectedDate?.toDateString() === new Date().toDateString();
+
+  useEffect(() => {
+    if (isEditMode && detail && !isReady) {
+      const name = stockMap[detail.symbol]?.name || detail.symbol;
+
+      setField('selectedDate', new Date(detail.recordDate));
+      setField('symbol', detail.symbol);
+      setField('stockName', name);
+      setField('stockId', 999);
+      setField('selectedTradeAction', detail.tradeAction);
+      setField('unitPrice', String(detail.unitPrice));
+      setField('quantity', String(detail.quantity));
+      setField('clickedEmotion', detail.emotionCode);
+      setField('emotionLevel', detail.emotionIntensity);
+      setField('memo', detail.memo);
+
+      setIsReady(true);
+    }
+  }, [isEditMode, detail, setField, stockMap, isReady]);
 
   const handleDateSelect = (date: Date) => {
     setField('selectedDate', date);
@@ -116,27 +157,35 @@ const RecordCreatePage = () => {
   const handleSubmit = () => {
     if (isButtonDisabled || isPending) return;
 
-    const record = {
-      clientRequestId: self.crypto.randomUUID(),
+    const data = {
       recordDate: formatDate(selectedDate),
-      symbol: symbol,
+      symbol: symbol!,
       tradeAction: selectedTradeAction!,
       unitPrice: selectedTradeAction === 'WATCH' ? 0 : Number(unitPrice),
       quantity: selectedTradeAction === 'WATCH' ? 0 : Number(quantity),
       emotionCode: clickedEmotion as EmotionType,
-      emotionIntensity: emotionLevel,
+      emotionIntensity: emotionLevel!,
       memo: memo.trim(),
     };
 
-    mutate(record, {
-      onSuccess: () => reset(),
-    });
+    if (isEditMode) {
+      updateMutate(data);
+    } else {
+      createMutate({
+        ...data,
+        clientRequestId: self.crypto.randomUUID(),
+      });
+    }
   };
+
+  if (isEditMode && isDetailLoading) {
+    return <div>로딩 중...</div>;
+  }
 
   return (
     <div>
       <CloseHeader
-        title="기록하기"
+        title={isEditMode ? '기록 수정하기' : '기록하기'}
         border={false}
         desc="지금 내 투자 마음은 어떤가요?"
         onClick={() => setIsModalOpen(true)}
@@ -181,7 +230,12 @@ const RecordCreatePage = () => {
         <div className="mt-7.5 flex flex-col">
           <h3 className="text-secondary text-sm font-bold">STEP2</h3>
           <button
-            onClick={() => navigate('/stock/search')}
+            onClick={() => {
+              const searchPath = isEditMode
+                ? `/stock/search?recordId=${recordId}`
+                : '/stock/search';
+              navigate(searchPath);
+            }}
             className={`my-4 flex h-12.5 w-full cursor-pointer items-center justify-between rounded-xl border-[1.2px] bg-gray-50/60 px-[15px] ${
               stockName ? 'border-secondary' : 'border-gray-100'
             }`}
@@ -227,76 +281,80 @@ const RecordCreatePage = () => {
           >
             <div className="overflow-hidden">
               <div className="flex gap-6 rounded-xl border-[1.2px] border-gray-100 bg-gray-50/60 p-4">
-                <TradeDetailInput
-                  title="거래 단가"
-                  value={unitPrice ? Number(unitPrice) : undefined}
-                  unit="원"
-                  onChange={(value) => setField('unitPrice', value)}
-                />
-                <TradeDetailInput
-                  title="거래 수량"
-                  value={quantity ? Number(quantity) : undefined}
-                  unit="주"
-                  onChange={(value) => setField('quantity', value)}
-                />
+                {(!isEditMode || isReady) && (
+                  <>
+                    <TradeDetailInput
+                      title="거래 단가"
+                      value={unitPrice ? Number(unitPrice) : undefined}
+                      unit="원"
+                      onChange={(value) => setField('unitPrice', value)}
+                    />
+                    <TradeDetailInput
+                      title="거래 수량"
+                      value={quantity ? Number(quantity) : undefined}
+                      unit="주"
+                      onChange={(value) => setField('quantity', value)}
+                    />
+                  </>
+                )}
               </div>
             </div>
           </div>
-          <div className="mt-7.5 flex flex-col">
-            <h3 className="text-secondary text-sm font-bold">STEP3</h3>
-            <p className="my-4 text-[15px] font-semibold">
-              어떤 감정이 가장 강한가요?
-            </p>
-            <div className="flex justify-between">
-              {EMOTIONS.map((emotion) => (
-                <EmotionFilterButton
-                  key={emotion.key}
-                  label={emotion.label}
-                  icon={emotion.icon}
-                  isSelected={clickedEmotion === emotion.key}
-                  onClick={() => {
-                    setField('clickedEmotion', emotion.key);
-                    setField('emotionLevel', 7);
-                  }}
-                />
-              ))}
+        </div>
+        <div className="mt-7.5 flex flex-col">
+          <h3 className="text-secondary text-sm font-bold">STEP3</h3>
+          <p className="my-4 text-[15px] font-semibold">
+            어떤 감정이 가장 강한가요?
+          </p>
+          <div className="flex justify-between">
+            {EMOTIONS.map((emotion) => (
+              <EmotionFilterButton
+                key={emotion.key}
+                label={emotion.label}
+                icon={emotion.icon}
+                isSelected={clickedEmotion === emotion.key}
+                onClick={() => {
+                  setField('clickedEmotion', emotion.key);
+                  setField('emotionLevel', 7);
+                }}
+              />
+            ))}
+          </div>
+          <EmotionLevelSlider
+            level={emotionLevel ?? 7}
+            onChange={(val) => setField('emotionLevel', val)}
+            isVisible={clickedEmotion !== null}
+          />
+        </div>
+        <div
+          className={`mb-[150px] flex flex-col ${clickedEmotion !== null ? 'mt-5' : 'mt-7.5'}`}
+        >
+          <h3 className="text-secondary mb-4 text-sm font-bold">STEP4</h3>
+          <textarea
+            value={memo || ''}
+            onChange={handleMemo}
+            maxLength={200}
+            spellCheck={false}
+            placeholder={
+              '왜 그런 감정이 들었나요? 당시 상황을 짧게 적어주세요.\n(AI 분석에 활용돼요)'
+            }
+            className={`scrollbar-hide h-[74px] resize-none overflow-y-auto rounded-xl border-[1.2px] bg-gray-50/60 p-4 text-sm whitespace-pre-line outline-none placeholder:text-gray-500/80 ${
+              memo.length > 0 ? 'border-secondary' : 'border-gray-100/60'
+            }`}
+            ref={textareaRef}
+          />
+          {memo.length > 0 && (
+            <div className="mt-1 flex justify-end text-[11px]">
+              <p className="text-secondary">{memo.length}</p>
+              <p className="text-gray-300">/200</p>
             </div>
-            <EmotionLevelSlider
-              level={emotionLevel ?? 7}
-              onChange={(val) => setField('emotionLevel', val)}
-              isVisible={clickedEmotion !== null}
-            />
-          </div>
-          <div
-            className={`mb-[150px] flex flex-col ${clickedEmotion !== null ? 'mt-5' : 'mt-7.5'}`}
-          >
-            <h3 className="text-secondary mb-4 text-sm font-bold">STEP4</h3>
-            <textarea
-              value={memo || ''}
-              onChange={handleMemo}
-              maxLength={200}
-              spellCheck={false}
-              placeholder={
-                '왜 그런 감정이 들었나요? 당시 상황을 짧게 적어주세요.\n(AI 분석에 활용돼요)'
-              }
-              className={`scrollbar-hide h-[74px] resize-none overflow-y-auto rounded-xl border-[1.2px] bg-gray-50/60 p-4 text-sm whitespace-pre-line outline-none placeholder:text-gray-500/80 ${
-                memo.length > 0 ? 'border-secondary' : 'border-gray-100/60'
-              }`}
-              ref={textareaRef}
-            />
-            {memo.length > 0 && (
-              <div className="mt-1 flex justify-end text-[11px]">
-                <p className="text-secondary">{memo.length}</p>
-                <p className="text-gray-300">/200</p>
-              </div>
-            )}
-          </div>
+          )}
         </div>
       </div>
       <div className="fixed right-0 bottom-0 left-0 z-1 mx-auto max-w-120">
         <div className="bg-white/60 px-4 pt-2 pb-13 backdrop-blur-[5px]">
           <Button
-            text="완료"
+            text={isEditMode ? '수정 완료' : '완료'}
             onClick={handleSubmit}
             disabled={isButtonDisabled || isPending}
           />
@@ -304,7 +362,7 @@ const RecordCreatePage = () => {
       </div>
       {isModalOpen && (
         <Modal
-          text="기록을 취소할까요?"
+          text={isEditMode ? '수정을 취소할까요?' : '기록을 취소할까요?'}
           desc="작성된 내용은 저장되지 않아요"
           onClickLeft={() => {
             reset();

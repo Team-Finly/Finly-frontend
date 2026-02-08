@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Before from '@/assets/icons/before.svg';
 import Delete from '@/assets/icons/delete.svg';
 import Message from '@/assets/icons/message.svg';
@@ -11,7 +11,10 @@ import { useRecordCreateStore } from '@/store/recordCreateStore';
 
 const StockSearchPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const setStock = useRecordCreateStore((state) => state.setStock);
+  const queryParams = new URLSearchParams(location.search);
+  const recordId = queryParams.get('recordId');
   const [keyword, setKeyword] = useState<string>('');
   const debouncedKeyword = useDebounce(keyword, 300);
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
@@ -25,6 +28,16 @@ const StockSearchPage = () => {
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   const stocks = data?.pages.flatMap((page) => page.stocks) || [];
+
+  const handleStockClick = (selectedStock) => {
+    setStock(selectedStock.id, selectedStock.name, selectedStock.symbol);
+
+    const targetPath = recordId
+      ? `/record/create/${recordId}`
+      : '/record/create';
+
+    navigate(targetPath, { replace: true });
+  };
 
   return (
     <div>
@@ -62,13 +75,8 @@ const StockSearchPage = () => {
                   key={stock.id}
                   stock={stock}
                   keyword={keyword}
-                  onClick={(selectedStock) => {
-                    setStock(
-                      selectedStock.id,
-                      selectedStock.name,
-                      selectedStock.symbol,
-                    );
-                    navigate('/record/create', { replace: true });
+                  onClick={() => {
+                    handleStockClick(stock);
                   }}
                 />
               ))}

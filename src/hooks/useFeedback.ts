@@ -7,8 +7,10 @@ export const useFeedback = (recordId?: number) => {
     queryKey: ['feedback', recordId],
     queryFn: () => recordApi.getFeedback(recordId!),
     enabled: !!recordId,
-    refetchInterval: (query) =>
-      query.state.data?.status === 'COMPLETED' ? false : 1000,
+    refetchInterval: (query) => {
+      const status = query.state.data?.status;
+      return status === 'COMPLETED' || status === 'FAILED' ? false : 1000;
+    },
     staleTime: 0,
     gcTime: 5 * 60 * 1000,
   });

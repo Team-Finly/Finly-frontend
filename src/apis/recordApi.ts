@@ -11,6 +11,7 @@ import type {
   FragmentSummaryResponse,
   FragmentListRequest,
   FragmentListResponse,
+  RecordUpdateResponse,
 } from '@/types/record';
 
 export const recordApi = {
@@ -43,13 +44,24 @@ export const recordApi = {
   updateRecord: async (
     recordId: number,
     record: UpdateRecordRequest,
-  ): Promise<void> => {
-    await api.patch<ApiResponse<null>>(`/api/records/${recordId}`, record);
+  ): Promise<RecordUpdateResponse> => {
+    const res = await api.patch<ApiResponse<RecordUpdateResponse>>(
+      `/api/records/${recordId}`,
+      record,
+    );
+    return res.data.result;
   },
 
   getFeedback: async (recordId: number): Promise<FeedbackResponse> => {
     const res = await api.get<ApiResponse<FeedbackResponse>>(
       `/api/records/${recordId}/feedback`,
+    );
+    return res.data.result;
+  },
+
+  regenerateFeedback: async (recordId: number): Promise<FeedbackResponse> => {
+    const res = await api.post<ApiResponse<FeedbackResponse>>(
+      `/api/records/${recordId}/feedback/regenerate`,
     );
     return res.data.result;
   },

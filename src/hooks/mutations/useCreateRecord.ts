@@ -10,9 +10,12 @@ export const useCreateRecord = () => {
   return useMutation({
     mutationFn: (data: CreateRecordRequest) => recordApi.createRecord(data),
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ['records'] });
+      queryClient.invalidateQueries({ queryKey: ['home'] });
+      queryClient.invalidateQueries({ queryKey: ['recordDetail'] });
+      queryClient.invalidateQueries({ queryKey: ['todayRecords'] });
       queryClient.invalidateQueries({ queryKey: ['fragmentList'] });
       queryClient.invalidateQueries({ queryKey: ['fragmentSummary'] });
+      queryClient.invalidateQueries({ queryKey: ['feedback'] });
       navigate('/loading', { state: { recordId: data.recordId } });
     },
     onError: (error) => {
