@@ -45,7 +45,7 @@ export const useUserStore = create<UserState>((set) => ({
         memberId: data.memberId,
         nickname: data.nickname,
         personaType: data.personaType ?? state.personaType,
-        mindScore: data.findMindIdx ?? 0,        
+        mindScore: data.finMindIdx,    
         fragmentCount: data.mindPieceCount ?? 0,  
         isLoading: false,
       }));

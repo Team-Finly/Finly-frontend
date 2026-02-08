@@ -11,7 +11,7 @@ export interface MyPageMainData {
   memberId: number;
   nickname:string;
   personaType: PersonaKey | null;
-  findMindIdx: number;
+  finMindIdx: number;
   mindPieceCount: number;
   profileImage: string | null;
 }
