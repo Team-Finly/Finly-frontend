@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ChangeEvent } from "react";
 import { useUserStore } from "@/store/userStore";
 import defaultprofileIcon from "@/assets/icons/profile.svg";
 import {getMyProfile, updateNickname} from "@/apis/userApi";
@@ -25,11 +25,14 @@ export const useProfileSettings = () => {
       
         setUserInfo({ 
           nickname: data.nickname, 
-          email: data.email 
+          email: data.email,
+          profileImage: data.profileImage
         });
         setNickname(data.nickname);
         setEmail(data.email);
+        setProfileImage(data.profileImage ?? defaultprofileIcon);
         setInitialNickname(data.nickname);
+        setInitialImage(data.profileImage);
       } catch (error) {
         console.error("프로필 로드 실패:", error);
       }
@@ -37,7 +40,8 @@ export const useProfileSettings = () => {
     fetchProfile();
   }, [setUserInfo]);
 
-  const handleFileChange = (file: File | undefined) => {
+ const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
     if (file) {
       if (!file.type.startsWith("image/")) {
         alert("이미지 파일만 선택할 수 있어요.");

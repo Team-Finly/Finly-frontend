@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import ProfileMenu from '@/components/mypage/ProfileMenu';
 import ProfileCard from '@/components/mypage/ProfileCard';
 import MindscoreCard from '@/components/mypage/MindscoreCard';
@@ -8,14 +9,26 @@ import { PERSONA_DATA } from '@/constants/mypersona';
 
 const Profile = () => {
   const navigate = useNavigate();
-  const nickname = useUserStore((state) => state.nickname);
-  const profileImage = useUserStore((state) => state.profileImage);
-  const personaType = useUserStore((state) => state.personaType);
+  const { 
+    nickname, 
+    profileImage, 
+    personaType, 
+    mindScore,       
+    fragmentCount,   
+    fetchMainProfile 
+  } = useUserStore();
+  
+
+  useEffect(() => {
+    fetchMainProfile();
+  }, [fetchMainProfile]);
+
+ 
   const personaEntry = personaType 
     ? PERSONA_DATA[personaType as keyof typeof PERSONA_DATA] 
     : null;
-  const personaName=personaEntry?.name ?? "분석중...";
-  
+  const personaName = personaEntry?.name ?? " "; 
+
 
   return (
     <div className="flex h-full flex-col bg-gray-50">
@@ -29,14 +42,12 @@ const Profile = () => {
       <main className="scrollbar-hide flex-1 overflow-y-auto pb-[120px] ">
         <div className='flex w-full px-4 gap-4 mt-[20px] mb-[16px]'>
           <ProfileCard nickname={nickname} profileImage={profileImage} personaName={personaName}></ProfileCard>
-          <MindscoreCard score={64} color="#FFF34A"></MindscoreCard>
+          <MindscoreCard score={mindScore} color="#FFF34A"></MindscoreCard>
         </div>
-        
         <div>
-
           <div className="mx-[16px] mt-[20px] flex h-[78px] flex-row rounded-[12px] border-[1.2px] border-gray-100 bg-[#E9F0FA99] px-[12px]">
             <div className="mt-[20px] flex w-full flex-col justify-start gap-[4px]">
-              <p className="text-secondary text-[17px] font-bold">124개<span className="text-[17px] font-semibold text-gray-900">의 조각</span></p>
+              <p className="text-secondary text-[17px] font-bold">{fragmentCount}개<span className="text-[17px] font-semibold text-gray-900">의 조각</span></p>
               <p className="text-[12px] font-semibold text-gray-300">나의 감정 기록 확인하기</p>
             </div>
 
@@ -48,12 +59,8 @@ const Profile = () => {
                 <p className="text-[12px] font-semibold text-gray-700">모음함 열기</p>
               </button>
             </div>
-
           </div>
-          <div className="mb-[39px]">
             <ProfileMenu></ProfileMenu>
-          </div>
-
         </div>
       </main>
     </div>

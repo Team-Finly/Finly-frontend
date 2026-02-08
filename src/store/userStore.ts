@@ -1,22 +1,73 @@
 import { create } from 'zustand';
+import { getUserMainProfile, getMyProfile } from '@/apis/userApi'; 
 import defaultProfileIcon from "@/assets/icons/profile.svg";
 
 interface UserState {
-  personaType: string | null;
+  memberId: number;
   nickname: string;
   email: string;
-  profileImage: string | null; 
-  setUserInfo: (info: Partial<Omit<UserState, 'setUserInfo'>>) => void;
+  profileImage: string | null;
+  personaType: string | null;
+  mindScore: number;      
+  fragmentCount: number;  
+  isLoading: boolean;
+
+
+  fetchMainProfile: () => Promise<void>;   
+  fetchDetailProfile: () => Promise<void>;
+  
+  setUserInfo: (info: Partial<UserState>) => void;
+  clearUser: () => void;
 }
 
-export const useUserStore = create<UserState>((set) => ({
-  nickname: "조아",
+// 초기값
+const initialState = {
+  memberId: 0,
+  nickname: "",
   email: "",
   profileImage: defaultProfileIcon,
   personaType: null,
+  mindScore: 0,
+  fragmentCount: 0,
+  isLoading: false,
+};
 
-  setUserInfo: (info) => set((state) => ({
-    ...state,
-    ...info,
-  })),
+export const useUserStore = create<UserState>((set) => ({
+  ...initialState,
+  setUserInfo: (info) => set((state) => ({ ...state, ...info })),
+  clearUser: () => set(initialState),
+  fetchMainProfile: async () => {
+    set({ isLoading: true });
+    try {
+      const data = await getUserMainProfile(); 
+      set((state) => ({
+        ...state,
+        memberId: data.memberId,
+        nickname: data.nickname,
+        personaType: data.personaType ?? state.personaType,
+        mindScore: data.finMindIdx,          
+        fragmentCount: data.mindPieceCount,  
+        isLoading: false,
+      }));
+    } catch (error) {
+      console.error("메인 프로필 로딩 실패:", error);
+      set({ isLoading: false });
+    }
+  },
+
+  fetchDetailProfile: async () => {
+    try {
+      const data = await getMyProfile();
+      set((state) => ({
+        ...state,
+        memberId: data.memberId,
+        nickname: data.nickname,
+        email: data.email,      
+        profileImage: data.profileImage ?? defaultProfileIcon, 
+        personaType: data.personaType ?? state.personaType,
+      }));
+    } catch (error) {
+      console.error("상세 프로필 로딩 실패:", error);
+    }
+  },
 }));

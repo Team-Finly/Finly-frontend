@@ -34,7 +34,7 @@ const ProfileSettings = () => {
       accept='image/*'     
       ref={fileInputRef}   
       onChange={(e) => {
-        actions.handleFileChange(e.target.files?.[0]);
+        actions.handleFileChange(e);
         e.target.value = "";}}
       className="hidden cursor-pointer"
     />

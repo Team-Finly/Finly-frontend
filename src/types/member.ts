@@ -7,9 +7,8 @@ export interface PersonaInfo {
 
 export interface MyPageMainData {
   memberId: number;
-  email: string
   nickname:string;
-  persona: PersonaInfo;
+  personaType: string;
   findMindIdx: number;
   mindPieceCount: number;
 }
