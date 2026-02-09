@@ -36,25 +36,25 @@ const SearchResultPage = () => {
             <p className="font-normal text-gray-700">&nbsp;검색 결과</p>
           </div>
         </div>
-      </div>
-      <div className="scrollbar-hide mt-19 mb-6 flex gap-2 overflow-x-auto px-4 pt-4 pb-2">
-        <EmotionFilterButton
-          label="ALL"
-          isSelected={clickedFilter === 'ALL'}
-          onClick={() => setClickedFilter('ALL')}
-          px={16}
-        />
-        {EMOTIONS.map((emotion) => (
+        <div className="scrollbar-hide mb-6 flex gap-2 overflow-x-auto px-4 pt-4 pb-2">
           <EmotionFilterButton
-            key={emotion.key}
-            label={emotion.label}
-            icon={emotion.icon}
-            isSelected={clickedFilter === emotion.key}
-            onClick={() => setClickedFilter(emotion.key)}
+            label="ALL"
+            isSelected={clickedFilter === 'ALL'}
+            onClick={() => setClickedFilter('ALL')}
+            px={16}
           />
-        ))}
+          {EMOTIONS.map((emotion) => (
+            <EmotionFilterButton
+              key={emotion.key}
+              label={emotion.label}
+              icon={emotion.icon}
+              isSelected={clickedFilter === emotion.key}
+              onClick={() => setClickedFilter(emotion.key)}
+            />
+          ))}
+        </div>
       </div>
-      <div className="mb-2 flex flex-col gap-2 px-4">
+      <div className="mb-2 flex flex-col gap-2 px-4 pt-40">
         {isLoading ? (
           <div className="flex flex-col gap-2">
             {[...Array(4)].map((_, i) => (
