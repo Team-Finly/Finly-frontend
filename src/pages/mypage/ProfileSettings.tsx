@@ -12,15 +12,18 @@ const ProfileSettings = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { state, actions } = useProfileSettings();
 
+  const isChanged = 
+    state.nickname !== state.initialNickname || 
+    state.profileImage !== state.initialImage;
+
   const handleImageClick = () => {  
     if (state.isEditing && fileInputRef.current) {
-      fileInputRef.current.click();   // 파일 선택 창 열기
+      fileInputRef.current.click(); 
     }
   };
 
   const handleBackClick = () => {
     if (state.isEditing) {
-    const isChanged = state.nickname !== state.initialNickname || state.profileImage !== state.initialImage;
     isChanged ? actions.setIsModalOpen(true) : actions.handleCancel();
     } else {
       navigate(-1);
@@ -123,9 +126,9 @@ const ProfileSettings = () => {
               {state.isEditing ? (
                 <button
                   onClick={actions.handleComplete}
-                  disabled={!!state.errorMessage}
+                  disabled={!!state.errorMessage || !isChanged}
                   className="w-full py-4 bg-secondary text-white rounded-[12px] font-semibold mt-[240px]
-                  disabled:bg-gray-100 disabled:text-gray-300 disabled:cursor-not-allowed"
+                  disabled:bg-gray-100 disabled:text-gray-300 "
                 >
                   완료
                 </button>
