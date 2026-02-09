@@ -30,13 +30,17 @@ const AnalysisPage = () => {
     if (!data?.prices) return [];
 
     return data.prices.map((p) => {
-      const time = p.dateTime.split(' ')[1].substring(0, 5);
-      const record = data.records?.find((r) =>
-        r.recordDateTime?.includes(time),
-      );
+      const priceTime = p.dateTime.split(' ')[1]?.substring(0, 5);
+
+      if (!priceTime) return { time: '', closePrice: p.price, record: null };
+
+      const record = data.records?.find((r) => {
+        const recordTime = r.recordDateTime?.split(' ')[1]?.substring(0, 5);
+        return recordTime === priceTime;
+      });
 
       return {
-        time,
+        time: priceTime,
         closePrice: p.price,
         record: record || null,
       };
@@ -44,13 +48,23 @@ const AnalysisPage = () => {
   }, [data]);
 
   useEffect(() => {
-    if (chartData.length > 0) {
-      const latestWithRecord = [...chartData]
-        .reverse()
-        .find((d) => d.record !== null);
-      setSelectedData(latestWithRecord || null);
+    const latestFromChart = [...chartData]
+      .reverse()
+      .find((d) => d.record !== null);
+
+    if (latestFromChart) {
+      setSelectedData(latestFromChart);
+    } else if (data?.records && data.records.length > 0) {
+      const lastRecord = data.records[data.records.length - 1];
+      setSelectedData({
+        time: lastRecord.recordDateTime.split(' ')[1].substring(0, 5),
+        closePrice: 0,
+        record: lastRecord,
+      });
+    } else {
+      setSelectedData(null);
     }
-  }, [chartData]);
+  }, [chartData, data]);
 
   const guardUI = apiRenderGuard(isLoading, isError, data);
   if (guardUI !== undefined) return guardUI;

@@ -47,7 +47,7 @@ const AnalysisCard = ({ data }: AnalysisCardProps) => {
         ) : (
           <>
             {record.quantity}주 {record.tradeAction === 'BUY' ? '매수' : '매도'}{' '}
-            · 1주 당 {record.unitPrice?.toLocaleString()}원
+            · 1주 당 {(record.unitPrice ?? 0).toLocaleString()}원
           </>
         )}
       </div>
