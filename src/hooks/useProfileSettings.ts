@@ -2,7 +2,7 @@ import { useEffect, useState, type ChangeEvent } from "react";
 import { useUserStore } from "@/store/userStore";
 import defaultprofileIcon from "@/assets/icons/profile.svg";
 import {getMyProfile, updateNickname, deleteProfileImage, updateProfileImage, addProfileImage} from "@/apis/userApi";
-
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 export const useProfileSettings = () => {
   const { email: storeEmail, nickname: storeNickname, profileImage: storeImage, setUserInfo } = useUserStore();
 
@@ -25,7 +25,14 @@ export const useProfileSettings = () => {
     const fetchProfile = async () => {
       try {
         const data = await getMyProfile();
-        const serverImage = data.profileImageUrl ?? defaultprofileIcon;
+        let serverImage = defaultprofileIcon;
+        if (data.profileImageUrl) {
+          if (data.profileImageUrl.startsWith('http')) {
+            serverImage = data.profileImageUrl;
+          } else {
+            serverImage = `${BASE_URL}${data.profileImageUrl}`;
+          }
+        }
       
         setUserInfo({ 
           nickname: data.nickname, 
