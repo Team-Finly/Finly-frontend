@@ -36,20 +36,20 @@ const DailyRecordDetailCard = ({ record }: CardProps) => {
         </div>
 
         <div className="text-[20px] font-bold text-gray-900 mb-[16px]">
-          {totalPrice.toLocaleString()}원
+          {record.unitPrice ? `${record.unitPrice.toLocaleString()}원` : '-'}
         </div>
 
         <div className="grid grid-cols-2 gap-4 pb-[24px] border-b border-gray-100 mb-[24px]">
           <div>
             <div className="text-gray-300 text-[12px] mb-[4px]">단가</div>
             <div className="text-gray-900 text-[16px] font-semibold">
-              {record.unitPrice.toLocaleString()}원
+              {record.unitPrice ? `${record.unitPrice.toLocaleString()}원` : '-'}
             </div>
           </div>
           <div>
             <div className="text-gray-300 text-[12px] mb-[4px]">수량</div>
             <div className="text-gray-900 text-[16px] font-semibold">
-              {record.quantity}주
+              {record.unitPrice ? `${record.quantity}주` : '-'}
             </div>
           </div>
         </div>
