@@ -4,18 +4,36 @@ import { useFeedback } from "@/hooks/useFeedback";
 import { stockInfoStore } from "@/store/stockInfoStore";
 import type { RecordDetailResponse } from "@/types/record";
 import { formatTime2 } from "@/utils/date";
+import { useEffect, useState } from "react";
 
 interface CardProps {
   record: RecordDetailResponse;
+  isActive: boolean;
 }
 
-const DailyRecordDetailCard = ({ record }: CardProps) => {
+const DailyRecordDetailCard = ({ record, isActive }: CardProps) => {
   const totalPrice = record.unitPrice * record.quantity;
   const { stockMap, isLoaded } = stockInfoStore();
   const stock = stockMap[record.symbol];
   const action = TRADE_ACTION_MAP[record.tradeAction];
 
-  const { data: feedback, isLoading } = useFeedback(record.recordId);
+  const [tryCount, setTryCount] = useState(0);
+
+  const enabled =
+    !!record.recordId &&
+    !!record.memo &&
+    tryCount < 2;
+
+  const { data: feedback, isError } = useFeedback(
+    record.recordId,
+    { enabled }
+  );
+  
+  useEffect(() => {
+    if (isError) {
+      setTryCount((prev) => prev + 1);
+    }
+  }, [isError]);
 
   return (
     <div className="min-w-full snap-center px-[16px]">
@@ -36,20 +54,20 @@ const DailyRecordDetailCard = ({ record }: CardProps) => {
         </div>
 
         <div className="text-[20px] font-bold text-gray-900 mb-[16px]">
-          {totalPrice.toLocaleString()}원
+          {record.unitPrice ? `${totalPrice.toLocaleString()}원` : '-'}
         </div>
 
         <div className="grid grid-cols-2 gap-4 pb-[24px] border-b border-gray-100 mb-[24px]">
           <div>
             <div className="text-gray-300 text-[12px] mb-[4px]">단가</div>
             <div className="text-gray-900 text-[16px] font-semibold">
-              {record.unitPrice.toLocaleString()}원
+              {record.unitPrice ? `${record.unitPrice.toLocaleString()}원` : '-'}
             </div>
           </div>
           <div>
             <div className="text-gray-300 text-[12px] mb-[4px]">수량</div>
             <div className="text-gray-900 text-[16px] font-semibold">
-              {record.quantity}주
+              {record.unitPrice ? `${record.quantity}주` : '  -'}
             </div>
           </div>
         </div>
@@ -66,9 +84,7 @@ const DailyRecordDetailCard = ({ record }: CardProps) => {
         <FinlyTalk 
           recordId={record.recordId}
           content={feedback?.content} 
-          suggestion={feedback?.suggestion}
           status={feedback?.status || 'PENDING'}
-          isLoading={isLoading}
         />
       </div>
     </div>

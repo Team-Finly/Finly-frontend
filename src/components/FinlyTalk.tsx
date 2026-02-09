@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useMemo } from 'react';
 
 interface FinlyTalkProps {
-  recordId: string;
+  recordId: number;
   content?: string;
   status?: 'PENDING' | 'COMPLETED' | 'FAILED';
 }
