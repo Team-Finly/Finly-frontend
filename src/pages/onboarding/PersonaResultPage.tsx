@@ -14,7 +14,6 @@ import { useState, useEffect } from 'react';
 import { useSignupStore } from '@/store/signupStore';
 import { submitPersonaAnswers } from '@/apis/personatestApi';
 import {useUserStore} from "../../store/userStore";
-import closeIcon from '../../assets/icons/close.svg';
 
 const PERSONA_UI_DATA: any = {
 
@@ -76,7 +75,7 @@ const PERSONA_UI_DATA: any = {
         };
         const modeParam = isRetest ? 'retest' : 'signup';
         const res: any = await submitPersonaAnswers(modeParam, payload);
-       if (res.isSuccess && res.result?.personaType) {
+       if (res.isSuccess && res?.result && res.result.personaType) {
             setResultType(res.result.personaType);
         } else {
             setResultType('TURTLE');
@@ -98,23 +97,11 @@ const PERSONA_UI_DATA: any = {
     }
   };
   
-  const handleClose = () => {
-     navigate('/mypersona');
-  };
 
   if (isLoading) {
     return (
       <div className='flex flex-col items-center justify-center w-full h-screen bg-white'>
         <h1 className="text-xl font-bold text-gray-500">나의 투자 성향 분석 중...</h1>
-        {isRetest && (
-            <button 
-                onClick={handleClose} 
-                className="absolute right-0 p-2 cursor-pointer"
-            >
-                <img src={closeIcon} alt="닫기" className="w-[14px] h-[14px]" /> 
-            </button>
-        )}
-      
       </div>
     );
   }

@@ -44,7 +44,7 @@ const MyPersona = () => {
     return <div className="h-screen bg-white" />;
   }
   const handleRetest = () => {
-    resetSignupStore(); // ★ [핵심] 들어가기 전에 싹 비우기!
+    resetSignupStore();
     navigate('/persona', { state: { from: 'mypage' } });
   };
 
