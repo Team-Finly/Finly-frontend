@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { recordApi } from '@/apis/recordApi';
 import { useNavigate } from 'react-router-dom';
 import type { UpdateRecordRequest } from '@/types/record';
+import { useRecordCreateStore } from '@/store/recordCreateStore';
 
 export const useUpdateRecord = (recordId: number) => {
   const navigate = useNavigate();
@@ -18,6 +19,9 @@ export const useUpdateRecord = (recordId: number) => {
       return updateResult;
     },
     onSuccess: () => {
+      const { reset } = useRecordCreateStore.getState();
+      reset();
+
       queryClient.invalidateQueries({ queryKey: ['home'] });
       queryClient.invalidateQueries({ queryKey: ['recordDetail'] });
       queryClient.invalidateQueries({ queryKey: ['todayRecords'] });

@@ -148,6 +148,7 @@ const RecordCreatePage = () => {
   const isButtonDisabled =
     !selectedDate ||
     (!stockId && !isEditMode) ||
+    !symbol ||
     !selectedTradeAction ||
     (selectedTradeAction !== 'WATCH' && (!unitPrice || !quantity)) ||
     !clickedEmotion ||
