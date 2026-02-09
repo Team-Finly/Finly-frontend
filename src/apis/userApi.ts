@@ -48,3 +48,7 @@ export const updatePassword = async (newPassword: string, newPasswordConfirm: st
   });
   return response.data; 
 };
+export const deleteMember = async () => {
+  const response = await api.delete("/api/mypage/members/me");
+  return response.data;
+};
