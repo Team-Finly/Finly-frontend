@@ -171,7 +171,6 @@ export interface RecordDetailResponse {
 }
 
 // 기록 수정
-
 export interface RecordUpdateResponse {
   emotionCode: EmotionType;
   emotionIntensity: number;
@@ -231,4 +230,15 @@ export interface HomeRecordItem {
 
 export interface HomeRecordResponse {
   records: HomeRecordItem[];
+}
+
+// 기록 검색
+export interface RecordSearchRequest {
+  keyword: string;
+  emotionCode?: EmotionType;
+}
+
+export interface RecordSearchResponse {
+  records: RecordDetailResponse[];
+  totalCount: number;
 }

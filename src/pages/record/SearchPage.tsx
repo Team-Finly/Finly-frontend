@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Before from '@/assets/icons/before.svg';
 import RecordSearch2 from '@/assets/icons/record_search2.svg';
 import SearchHistory from '@/components/record/SearchHistory';
@@ -6,6 +6,13 @@ import { useNavigate } from 'react-router-dom';
 
 const SearchPage = () => {
   const navigate = useNavigate();
+  const [keyword, setKeyword] = useState('');
+
+  const handleSearch = () => {
+    if (keyword.trim() !== '') {
+      navigate(`/search/result?keyword=${encodeURIComponent(keyword)}`);
+    }
+  };
 
   return (
     <div className="mt-4 px-4">
@@ -19,9 +26,11 @@ const SearchPage = () => {
             placeholder="종목명, 메모 검색"
             className="flex-1 font-normal placeholder:text-gray-500/40 focus:outline-none"
             spellCheck={false}
+            value={keyword}
+            onChange={(e) => setKeyword(e.target.value)}
           />
           <button
-            onClick={() => navigate('/search/result')}
+            onClick={handleSearch}
             onMouseDown={(e) => e.preventDefault()}
             className="cursor-pointer"
           >

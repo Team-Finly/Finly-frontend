@@ -12,6 +12,8 @@ import type {
   FragmentListRequest,
   FragmentListResponse,
   RecordUpdateResponse,
+  RecordSearchRequest,
+  RecordSearchResponse,
 } from '@/types/record';
 
 export const recordApi = {
@@ -88,6 +90,16 @@ export const recordApi = {
   getFragmentList: async (params?: FragmentListRequest) => {
     const res = await api.get<ApiResponse<FragmentListResponse>>(
       '/api/records/fragments',
+      { params },
+    );
+    return res.data.result;
+  },
+
+  searchRecords: async (
+    params: RecordSearchRequest,
+  ): Promise<RecordSearchResponse> => {
+    const res = await api.get<ApiResponse<RecordSearchResponse>>(
+      '/api/records/search',
       { params },
     );
     return res.data.result;
