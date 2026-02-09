@@ -88,7 +88,7 @@ const AnalysisPage = () => {
           <AnalysisCard data={selectedData} />
           {selectedData.record && (
             <FinlyTalk
-              recordId={String(selectedData.record.recordId)}
+              recordId={selectedData.record.recordId}
               content={selectedData.record.finlyTalk}
               status="COMPLETED"
             />
