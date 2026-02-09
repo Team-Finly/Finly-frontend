@@ -16,6 +16,12 @@ const SearchPage = () => {
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
   return (
     <div className="mt-4 px-4">
       <div className="mb-7.5 flex h-15 items-center gap-5.5">
@@ -30,6 +36,7 @@ const SearchPage = () => {
             spellCheck={false}
             value={keyword}
             onChange={(e) => setKeyword(e.target.value)}
+            onKeyDown={handleKeyDown}
           />
           <button
             onClick={handleSearch}
