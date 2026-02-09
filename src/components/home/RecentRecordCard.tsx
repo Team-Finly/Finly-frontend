@@ -39,10 +39,10 @@ export const RecentRecordCard = ({ record, stock }: Props) => {
 
         <div className="relative mb-[11.5px] ml-auto flex items-center">
           <span className="absolute -top-[18px] right-0 text-[14px] whitespace-nowrap text-[#4E5660CC]">
-            {record.quantity}주
+            {record.unitPrice ? `${record.quantity}주` : ''}
           </span>
           <p className="text-[18px] leading-none font-semibold text-gray-900">
-            {record.unitPrice.toLocaleString()}원
+            {record.unitPrice ? `${record.unitPrice.toLocaleString()}원` : ''}
           </p>
         </div>
       </div>
