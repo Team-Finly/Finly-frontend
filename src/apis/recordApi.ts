@@ -14,6 +14,7 @@ import type {
   RecordUpdateResponse,
   RecordSearchRequest,
   RecordSearchResponse,
+  RecentSearchResponse,
 } from '@/types/record';
 
 export const recordApi = {
@@ -103,5 +104,12 @@ export const recordApi = {
       { params },
     );
     return res.data.result;
+  },
+
+  getRecentSearch: async (): Promise<string[]> => {
+    const res = await api.get<ApiResponse<RecentSearchResponse>>(
+      '/api/records/search/recent',
+    );
+    return res.data.result.recentKeywords;
   },
 };

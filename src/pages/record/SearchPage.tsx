@@ -5,10 +5,12 @@ import SearchHistory from '@/components/record/SearchHistory';
 import { useNavigate } from 'react-router-dom';
 import { EMOTIONS } from '@/constants/emotions';
 import EmotionFilterButton from '@/components/record/EmotionFilterButton';
+import { useRecentSearch } from '@/hooks/useRecentSearch';
 
 const SearchPage = () => {
   const navigate = useNavigate();
   const [keyword, setKeyword] = useState('');
+  const { data: recentKeywords, isLoading } = useRecentSearch();
 
   const handleSearch = () => {
     if (keyword.trim() !== '') {
@@ -60,13 +62,28 @@ const SearchPage = () => {
           ))}
         </div>
       </div>
-      <div>
-        <h3 className="mb-4 font-semibold text-gray-900">최근 검색</h3>
-        <div className="flex flex-col divide-y-[1.2px] divide-gray-100">
-          <SearchHistory />
-          <SearchHistory />
+      {isLoading ? (
+        <p className="flex items-center justify-between text-gray-500">
+          최근 검색어 로딩 중...
+        </p>
+      ) : recentKeywords && recentKeywords.length > 0 ? (
+        <div>
+          <h3 className="mb-4 font-semibold text-gray-900">최근 검색</h3>
+          <div className="flex flex-col divide-y-[1.2px] divide-gray-100">
+            {recentKeywords.map((keyword, index) => (
+              <SearchHistory
+                key={index}
+                keyword={keyword}
+                onClick={() =>
+                  navigate(
+                    `/search/result?keyword=${encodeURIComponent(keyword)}`,
+                  )
+                }
+              />
+            ))}
+          </div>
         </div>
-      </div>
+      ) : null}
     </div>
   );
 };

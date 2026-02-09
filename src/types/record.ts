@@ -242,3 +242,8 @@ export interface RecordSearchResponse {
   records: RecordDetailResponse[];
   totalCount: number;
 }
+
+// 최근 검색 기록
+export interface RecentSearchResponse {
+  recentKeywords: string[];
+}
