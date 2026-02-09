@@ -88,7 +88,7 @@ export const WeeklyMood = () => {
           <div className="flex items-center justify-center relative z-10">
             <button
               className="ml-0.5 min-w-[31px] h-[43px] bg-blue-bg rounded-lg flex items-center justify-center z-10 cursor-pointer"
-              onClick={() => navigate('/record')}
+              onClick={() => navigate('/record/create')}
             >
               <img src={plusIcon} alt="기분 추가 아이콘" className="w-[14px] h-[14px]" />
             </button>

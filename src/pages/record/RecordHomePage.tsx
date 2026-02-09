@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import RecordSearch1 from '@/assets/icons/record_search1.svg';
 import FGI from '@/assets/images/fgi.png';
@@ -8,36 +7,15 @@ import LinearBar from '@/components/record/LinearBar';
 import EmptyFragment from '@/components/record/EmptyFragment';
 import RecordFragment from '@/components/record/RecordFragment';
 import FloatingButton from '@/components/record/FloatingButton';
-import type { DailyFragmentResponse } from '@/types/record';
 import { useFragmentSummary } from '@/hooks/useFragmentSummary';
+import { useTodayRecords } from '@/hooks/useTodayRecords';
+import { getTodayString } from '@/utils/date';
 
 const RecordHomePage = () => {
   const navigate = useNavigate();
   const { data: fragmentSummary } = useFragmentSummary();
-
-  const [dailyFragment, setDailyFragment] = useState<DailyFragmentResponse>({
-    date: '2026-01-18',
-    records: [
-      {
-        recordId: 1,
-        instrumentName: '테슬라',
-        tradeAction: '매수',
-        unitPrice: 72400,
-        emotion: 'ANXIETY',
-        emotionIntensity: 4,
-        recordedAt: '2026-01-06T09:30:00',
-      },
-      {
-        recordId: 2,
-        instrumentName: '삼성전자',
-        tradeAction: '매도',
-        unitPrice: 30000,
-        emotion: 'CALM',
-        emotionIntensity: 3,
-        recordedAt: '2026-01-19T09:30:00',
-      },
-    ],
-  });
+  const today = getTodayString();
+  const { data: dailyDetail } = useTodayRecords(today);
 
   return (
     <div>
@@ -83,17 +61,30 @@ const RecordHomePage = () => {
             <h2 className="text-[17px] font-semibold text-gray-900">
               TODAY 마음 조각
             </h2>
-            {dailyFragment.records && dailyFragment.records.length > 0 && (
-              <button className="flex cursor-pointer items-center gap-0.75">
+            {dailyDetail?.hasRecords && (
+              <button
+                className="flex cursor-pointer items-center gap-0.75"
+                onClick={() => navigate(`/record/${today}`)}
+              >
                 <p className="text-[13px] text-gray-500">전체 보기</p>
                 <img src={ArrowRightThin} alt="전체 보기" />
               </button>
             )}
           </div>
-          {dailyFragment.records && dailyFragment.records.length > 0 ? (
+          {dailyDetail?.timelineSummary &&
+            dailyDetail.timelineSummary.length > 0 ? (
             <div className="flex flex-col gap-1.5">
-              {dailyFragment.records.map((record) => (
-                <RecordFragment key={record.recordId} data={record} />
+              {dailyDetail.timelineSummary.map(item => (
+                <button
+                  key={item.recordId}
+                  type="button"
+                  className="text-left"
+                  onClick={() =>
+                    navigate(`/record/${today}/${item.recordId}`)
+                  }
+                >
+                  <RecordFragment data={item} />
+                </button>
               ))}
             </div>
           ) : (
