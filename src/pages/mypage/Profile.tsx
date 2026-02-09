@@ -1,14 +1,15 @@
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import ProfileMenu from '@/components/mypage/ProfileMenu';
 import ProfileCard from '@/components/mypage/ProfileCard';
 import MindscoreCard from '@/components/mypage/MindscoreCard';
 import {useUserStore} from '@/store/userStore';
 import { PERSONA_DATA } from '@/constants/mypersona';
-
+import Modal from '@/components/record/Modal';
 
 const Profile = () => {
   const navigate = useNavigate();
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const { 
     nickname, 
     profileImage, 
@@ -29,6 +30,13 @@ const Profile = () => {
     : null;
   const personaName = personaEntry?.name ?? " "; 
 
+  const handleLogoutConfirm = () => {
+    localStorage.removeItem("accessToken"); 
+    localStorage.removeItem("refreshToken");
+
+    navigate('/login');
+    setIsLogoutModalOpen(false);
+  };
 
   return (
     <div className="flex h-full flex-col bg-gray-50">
@@ -39,7 +47,7 @@ const Profile = () => {
         </div>
       </div>
 
-      <main className="scrollbar-hide flex-1 overflow-y-auto pb-[120px] ">
+      <main className="scrollbar-hide flex-1 overflow-y-auto pb-[95px] ">
         <div className='flex w-full px-4 gap-4 mt-[20px] mb-[16px]'>
           <ProfileCard nickname={nickname} profileImage={profileImage} personaName={personaName}></ProfileCard>
           <MindscoreCard score={mindScore} color="#FFF34A"></MindscoreCard>
@@ -60,9 +68,22 @@ const Profile = () => {
               </button>
             </div>
           </div>
-            <ProfileMenu></ProfileMenu>
+          <div className='mb-[10px]'>
+            <ProfileMenu onLogoutClick={() => setIsLogoutModalOpen(true)}></ProfileMenu>
+          </div>
         </div>
       </main>
+      {isLogoutModalOpen && (
+        <Modal
+          text="기기에서 로그아웃 할까요?"
+          desc=''
+          leftBtnLabel="아니오"
+          rightBtnLabel="예"
+          onClickLeft={() => setIsLogoutModalOpen(false)}
+          onClickRight={handleLogoutConfirm}
+          onClose={() => setIsLogoutModalOpen(false)}
+        />
+      )}
     </div>
   );
 };
