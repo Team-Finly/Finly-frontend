@@ -55,7 +55,6 @@ export const useProfileSettings = () => {
     const file = e.target.files?.[0]; 
     if (file) {
       if (!file.type.startsWith("image/")) {
-        alert("이미지 파일만 선택할 수 있어요.");
         return;
       }
       if (profileImage && profileImage.startsWith("blob:")) {
@@ -91,38 +90,38 @@ export const useProfileSettings = () => {
       if (nickname !== initialNickname) {
         await updateNickname(nickname);
       }
+      let finalProfileImageUrl = profileImage;
       if (imageFile) {
+        let response;
         if (initialImage && initialImage !== defaultprofileIcon) {
-           await updateProfileImage(imageFile); 
+          response = await updateProfileImage(imageFile);
         } else {
-           await addProfileImage(imageFile);   
+           response = await addProfileImage(imageFile);
+        }
+        if (response && response.result && response.result.profileImageUrl) {
+          finalProfileImageUrl = response.result.profileImageUrl.startsWith('http')
+            ? response.result.profileImageUrl
+            : `${BASE_URL}${response.result.profileImageUrl}`;
         }
       } 
       else if (isImageDeleted) {
         await deleteProfileImage();
+        finalProfileImageUrl = defaultprofileIcon;
       }
-
-      const newImageUrl = imageFile 
-        ? URL.createObjectURL(imageFile) 
-        : isImageDeleted 
-          ? null 
-          : (profileImage === defaultprofileIcon ? null : profileImage);
 
       setUserInfo({ 
         nickname, 
-        profileImage: newImageUrl 
+        profileImage: finalProfileImageUrl ===defaultprofileIcon ? null : finalProfileImageUrl 
       });
 
       setIsEditing(false);
       setInitialNickname(nickname);
-      setInitialImage(newImageUrl ?? defaultprofileIcon);
+      setInitialImage(finalProfileImageUrl);
       setErrorMessage("");
       setImageFile(null);
       setIsImageDeleted(false);
 
     } catch (error) {
-      console.error("프로필 변경 실패:", error);
-      alert("프로필 변경에 실패했습니다. 다시 시도해주세요.");
     }
   };
 
