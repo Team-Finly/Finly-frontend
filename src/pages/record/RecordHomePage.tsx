@@ -9,11 +9,12 @@ import RecordFragment from '@/components/record/RecordFragment';
 import FloatingButton from '@/components/record/FloatingButton';
 import { useFragmentSummary } from '@/hooks/useFragmentSummary';
 import { useTodayRecords } from '@/hooks/useTodayRecords';
+import { getTodayString } from '@/utils/date';
 
 const RecordHomePage = () => {
   const navigate = useNavigate();
   const { data: fragmentSummary } = useFragmentSummary();
-  const today = new Date().toISOString().slice(0, 10);
+  const today = getTodayString();
   const { data: dailyDetail } = useTodayRecords(today);
   console.log(dailyDetail)
 
@@ -62,7 +63,10 @@ const RecordHomePage = () => {
               TODAY 마음 조각
             </h2>
             {dailyDetail?.hasRecords && (
-              <button className="flex cursor-pointer items-center gap-0.75">
+              <button
+                className="flex cursor-pointer items-center gap-0.75"
+                onClick={() => navigate(`/record/${today}`)}
+              >
                 <p className="text-[13px] text-gray-500">전체 보기</p>
                 <img src={ArrowRightThin} alt="전체 보기" />
               </button>
