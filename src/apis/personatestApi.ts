@@ -12,11 +12,13 @@ export async function getPersonaQuestions() {
   return res.data;
 }
 
-export async function submitPersonaAnswers(mode: string, payload: SubmitAnswersRequest) {
+export async function submitPersonaAnswers(mode: 'signup' | 'retest', payload: SubmitAnswersRequest) {
   const res = await api.post<ApiResponse<SubmitAnswersResult>>(
     "/api/persona-test/submit",
     payload,
-    { params: { mode } } 
+    { 
+      params: { mode } 
+    } 
   );
   return res.data;
 }
