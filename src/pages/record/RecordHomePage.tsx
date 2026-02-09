@@ -16,7 +16,6 @@ const RecordHomePage = () => {
   const { data: fragmentSummary } = useFragmentSummary();
   const today = getTodayString();
   const { data: dailyDetail } = useTodayRecords(today);
-  console.log(dailyDetail)
 
   return (
     <div>
