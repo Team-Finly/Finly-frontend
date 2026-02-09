@@ -22,9 +22,9 @@ const DailyRecordDetailCard = ({ record, isActive }: CardProps) => {
   const enabled =
     !!record.recordId &&
     !!record.memo &&
-    tryCount < 3;
+    tryCount < 2;
 
-  const { data: feedback, error, isError, isFetching } = useFeedback(
+  const { data: feedback, isError } = useFeedback(
     record.recordId,
     { enabled }
   );
