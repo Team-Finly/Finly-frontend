@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { updatePassword } from "@/apis/userApi";
+import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
 
@@ -7,8 +8,10 @@ export const usePasswordChange = () => {
 
   const [password, setPassword] = useState("");
   const [pwConfirm, setPwConfirm] = useState("");
-  const regex=/^(?=.*[a-zA-Z])(?=.*[0-9]).{6,}$/;
-  const isPwValid = regex.test(password);
+  const isPwValid = useMemo(() => {
+    const regex=/^(?=.*[a-zA-Z])(?=.*[0-9]).{6,}$/;
+    return regex.test(password);
+  }, [password]);
   const isMatch = password === pwConfirm && pwConfirm.length > 0;
   const isValid = isPwValid && isMatch;
 
@@ -17,11 +20,16 @@ export const usePasswordChange = () => {
     if (!isValid) return;
 
     try {
+      const response = await updatePassword(password, pwConfirm);
+      if (response.isSuccess){
       alert("비밀번호가 변경되었습니다.");
-      navigate(-1); 
+      navigate('/profilesettings'); 
+    } else {
+      alert("비밀번호 변경에 실패했습니다. 다시 시도해주세요.");
+    }
     } catch (error) {
-      console.error(error);
-      alert("변경에 실패했습니다.");
+      console.error("비밀번호 변경 실패:", error);
+      alert("비밀번호 변경 중 오류가 발생했습니다. 다시 시도해주세요.");
     }
   };
 

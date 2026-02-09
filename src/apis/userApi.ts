@@ -41,3 +41,10 @@ export const deleteProfileImage = async () => {
   const response = await api.delete("/api/mypage/me/profile-image");
   return response.data;
 };
+export const updatePassword = async (newPassword: string, newPasswordConfirm: string) => {
+  const response = await api.patch("/api/mypage/me/password", { 
+    newPassword, 
+    newPasswordConfirm 
+  });
+  return response.data; 
+};

@@ -1,9 +1,7 @@
-import { useNavigate } from "react-router-dom";
 import TextField from "@/components/auth/TextField";
 import { usePasswordChange } from "@/hooks/usePasswordChange";
 import Header from "@/components/record/TitleHeader";
 const PasswordChange = () => {
-  const navigate = useNavigate();
   const { state, actions } = usePasswordChange();
 
   return (
