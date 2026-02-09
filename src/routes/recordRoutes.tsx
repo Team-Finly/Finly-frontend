@@ -31,6 +31,11 @@ const recordRoutes: RouteObject[] = [
     handle: { showNav: false },
   },
   {
+    path: 'record/create/:recordId',
+    element: <RecordCreatePage />,
+    handle: { showNav: false },
+  },
+  {
     path: 'fragment',
     element: <FragmentPage />,
     handle: { showNav: false },
