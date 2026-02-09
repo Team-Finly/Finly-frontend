@@ -3,6 +3,8 @@ import Before from '@/assets/icons/before.svg';
 import RecordSearch2 from '@/assets/icons/record_search2.svg';
 import SearchHistory from '@/components/record/SearchHistory';
 import { useNavigate } from 'react-router-dom';
+import { EMOTIONS } from '@/constants/emotions';
+import EmotionFilterButton from '@/components/record/EmotionFilterButton';
 
 const SearchPage = () => {
   const navigate = useNavigate();
@@ -39,7 +41,20 @@ const SearchPage = () => {
         </div>
       </div>
       <div>
-        <h3 className="mb-4 font-semibold">최근 검색</h3>
+        <h3 className="mb-4 font-semibold text-gray-900">감정별 모아보기</h3>
+        <div className="mb-7.5 flex w-full justify-between">
+          {EMOTIONS.map((emotion) => (
+            <EmotionFilterButton
+              key={emotion.key}
+              label={emotion.label}
+              icon={emotion.icon}
+              onClick={() => navigate(`/fragment/${emotion.key}?period=ALL`)}
+            />
+          ))}
+        </div>
+      </div>
+      <div>
+        <h3 className="mb-4 font-semibold text-gray-900">최근 검색</h3>
         <div className="flex flex-col divide-y-[1.2px] divide-gray-100">
           <SearchHistory />
           <SearchHistory />
