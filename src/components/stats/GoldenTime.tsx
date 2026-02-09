@@ -2,6 +2,7 @@ import TimeIcon from '@/assets/icons/stats_time.svg';
 import TimeModal from '@/components/stats/TimeModal';
 import { useState } from 'react';
 import { useStatsStore } from '@/store/statsStockStore';
+import { useUserStore } from '@/store/userStore';
 import { useGoldenTime } from '@/hooks/useEmotionTab';
 import { apiRenderGuard } from '@/utils/renderGuard';
 import type { GoldenTimeResult } from '@/types/stats';
@@ -19,6 +20,7 @@ const GoldenTime = () => {
   const { currentStock } = useStatsStore();
   const { data, isLoading, isError } = useGoldenTime(currentStock?.symbol);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const nickname = useUserStore((state) => state.nickname);
 
   const guardUI = apiRenderGuard(isLoading, isError, data);
   if (guardUI !== undefined) return guardUI;
@@ -72,7 +74,8 @@ const GoldenTime = () => {
         })}
       </div>
       <div className="my-1 w-full rounded-[22.5px] bg-gray-50/60 py-3 text-center text-[13px] text-gray-500">
-        “기현님은 <b>{summary.goldenTimeName}</b>에 감정 기록이 가장 활발해요!”
+        “{nickname || '유저'}님은 <b>{summary.goldenTimeName}</b>에 감정 기록이
+        가장 활발해요!”
       </div>
       <TimeModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>

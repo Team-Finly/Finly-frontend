@@ -1,6 +1,15 @@
 import { api } from '@/apis/client';
 import type {
+  AiAnalysisResponse,
+  AiAnalysisResult,
+  AnalysisDetailResult,
+  ConvictionScoreResponse,
+  ConvictionScoreResult,
+  DailyChartResponse,
+  DailyChartResult,
   DecisionItem,
+  FearIndexResponse,
+  FearIndexResult,
   GoldenTimeResult,
   StatsEntryResponse,
   StatsEntryResult,
@@ -76,6 +85,46 @@ export const statsApi = {
   getGoldenTime: async (symbol: string): Promise<GoldenTimeResult> => {
     const res = await api.get<ApiResponse<GoldenTimeResult>>(
       `/api/analysis/stocks/${symbol}/emotion-golden-time`,
+    );
+    return res.data.result;
+  },
+
+  /** 주가 & 감정 그래프 */
+  getDailyChart: async (symbol: string): Promise<DailyChartResult> => {
+    const res = await api.get<DailyChartResponse>(
+      `/api/analysis/stocks/${symbol}/charts/daily`,
+    );
+    return res.data.result;
+  },
+
+  /** 하락장 공포 지수 */
+  getFearIndex: async (): Promise<FearIndexResult> => {
+    const res = await api.get<FearIndexResponse>('/api/analysis/fear-index');
+    return res.data.result;
+  },
+
+  /** 매수 확신도 */
+  getConvictionScore: async (): Promise<ConvictionScoreResult> => {
+    const res = await api.get<ConvictionScoreResponse>(
+      '/api/analysis/conviction-score',
+    );
+    return res.data.result;
+  },
+
+  /** 투자 패턴 발견 */
+  getAiAnalysis: async (): Promise<AiAnalysisResult> => {
+    const res = await api.get<AiAnalysisResponse>('/api/analysis/ai');
+    return res.data.result;
+  },
+
+  /** 심층 분석 그래프 */
+  getHourlyChart: async (
+    symbol: string,
+    targetDate?: string,
+  ): Promise<AnalysisDetailResult> => {
+    const res = await api.get<ApiResponse<AnalysisDetailResult>>(
+      `/api/analysis/stocks/${symbol}/charts/hourly`,
+      { params: { targetDate } },
     );
     return res.data.result;
   },

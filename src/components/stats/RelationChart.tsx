@@ -1,45 +1,12 @@
-import { useMemo } from 'react';
 import { AreaChart, Area, XAxis, YAxis, ResponsiveContainer } from 'recharts';
 import { useNavigate } from 'react-router-dom';
-import { EMOTIONS } from '@/constants/emotions';
+import { EMOTION_CHART_MAP } from '@/constants/emotions';
 import { Tooltip } from 'react-tooltip';
-
-type EmotionConfigType = (typeof EMOTIONS)[number];
-
-interface DailyPrice {
-  date: string;
-  close_price: number;
-}
-interface EmotionSummary {
-  date: string;
-  emotion: string;
-  strength: number;
-  record_count: number;
-}
-interface ChartDataResponse {
-  stock_id: number;
-  stock_name: string;
-  daily_prices: DailyPrice[];
-  emotions_summary: EmotionSummary[];
-}
-
-const MOCK_DATA: ChartDataResponse = {
-  stock_id: 27,
-  stock_name: '삼성전자',
-  daily_prices: [
-    { date: '2026-02-14', close_price: 65000 },
-    { date: '2026-02-15', close_price: 65400 },
-    { date: '2026-02-16', close_price: 65200 },
-    { date: '2026-02-17', close_price: 65800 },
-    { date: '2026-02-18', close_price: 66000 },
-    { date: '2026-02-19', close_price: 65500 },
-    { date: '2026-02-20', close_price: 66100 },
-  ],
-  emotions_summary: [
-    { date: '2026-02-17', emotion: '불안', strength: 3, record_count: 2 },
-    { date: '2026-02-19', emotion: '확신', strength: 2, record_count: 1 },
-  ],
-};
+import { useStatsStore } from '@/store/statsStockStore';
+import { useDailyChart } from '@/hooks/useStatsAnalysis';
+import { apiRenderGuard } from '@/utils/renderGuard';
+import type { DailyChartResult } from '@/types/stats';
+import { formatMonthDay } from '@/utils/date';
 
 const CustomEmojiDot = (props: any) => {
   const { cx, cy, payload } = props;
@@ -69,35 +36,22 @@ const CustomEmojiDot = (props: any) => {
 
 const RelationChart = () => {
   const navigate = useNavigate();
+  const { currentStock } = useStatsStore();
+  const { data, isLoading, isError } = useDailyChart(currentStock?.symbol);
 
-  const chartData = useMemo(() => {
-    return MOCK_DATA.daily_prices.map((priceItem) => {
-      const emotionItem = MOCK_DATA.emotions_summary.find(
-        (e: EmotionSummary) => e.date === priceItem.date,
-      );
+  const guardUI = apiRenderGuard(isLoading, isError, data);
+  if (guardUI !== undefined) return guardUI;
 
-      let emotionImg = null;
+  const chartResult = data as DailyChartResult;
 
-      if (emotionItem) {
-        const matchedConfig = EMOTIONS.find(
-          (e: EmotionConfigType) => e.label === emotionItem.emotion,
-        );
-        if (matchedConfig) {
-          emotionImg = matchedConfig.chartImage;
-        }
-      }
-
-      const dateObj = new Date(priceItem.date);
-      const formattedDate = `${dateObj.getMonth() + 1}.${String(dateObj.getDate()).padStart(2, '0')}`;
-
-      return {
-        ...priceItem,
-        formattedDate,
-        emotionImg,
-        hasEmotion: !!emotionImg,
-      };
-    });
-  }, []);
+  const chartData = chartResult.dailyData.map((item) => {
+    const emotionConfig = EMOTION_CHART_MAP[item.mainEmotion];
+    return {
+      ...item,
+      formattedDate: formatMonthDay(item.date),
+      emotionImg: emotionConfig?.chartImage || null,
+    };
+  });
 
   return (
     <div
@@ -137,7 +91,7 @@ const RelationChart = () => {
             <Area
               activeDot={false}
               type="linear"
-              dataKey="close_price"
+              dataKey="closePrice"
               stroke="#278DFD"
               strokeWidth={3}
               fill="url(#colorPrice)"

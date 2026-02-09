@@ -17,7 +17,7 @@ interface AnalysisChartProps {
 const EmotionMarkerDot = (props: any) => {
   const { cx, cy, payload } = props;
   if (!payload?.record) return null;
-  const emotionConfig = EMOTION_CHART_MAP[payload.record.emotion];
+  const emotionConfig = EMOTION_CHART_MAP[payload.record.emotionCode];
   if (!emotionConfig?.chartImage) return null;
 
   return (
@@ -62,8 +62,7 @@ const AnalysisChart = ({ data, onDataSelect }: AnalysisChartProps) => {
       state?.activeTooltipIndex !== undefined &&
       state.activeTooltipIndex !== null
     ) {
-      const index = parseInt(state.activeTooltipIndex);
-      const item = data[index];
+      const item = data[state.activeTooltipIndex];
 
       if (item?.record) {
         onDataSelect({ ...item });

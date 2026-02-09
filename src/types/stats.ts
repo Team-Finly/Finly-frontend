@@ -108,3 +108,75 @@ export interface GoldenTimeResult {
   };
   session: SessionItem[];
 }
+
+export interface DailyData {
+  closePrice: number;
+  date: string;
+  day: string;
+  emotions: string[];
+  mainEmotion: string;
+  recordCount: number;
+}
+
+export interface DailyChartResult {
+  dailyData: DailyData[];
+  endDate: string;
+  startDate: string;
+  stockId: number;
+  stockName: string;
+  symbol: string;
+  today: string;
+}
+
+export type DailyChartResponse = ApiResponse<DailyChartResult>;
+
+export interface FearIndexResult {
+  fearIndex: number;
+  changeDirection: 'UP' | 'DOWN' | 'SAME';
+  changeValue: number;
+  phrase: string;
+}
+
+export type FearIndexResponse = ApiResponse<FearIndexResult>;
+
+export interface ConvictionScoreResult {
+  convictionScore: number;
+  phrase: string;
+  status: 'LOW' | 'MID' | 'GOOD' | 'HIGH';
+}
+
+export type ConvictionScoreResponse = ApiResponse<ConvictionScoreResult>;
+
+export interface AiAnalysisResult {
+  text: string;
+}
+
+export type AiAnalysisResponse = ApiResponse<AiAnalysisResult>;
+
+export interface AnalysisPricePoint {
+  dateTime: string;
+  price: number;
+}
+
+export interface AnalysisRecord {
+  recordId: number;
+  recordDateTime: string;
+  emotionCode: string;
+  emotionIntensity: number;
+  tradeAction: 'BUY' | 'SELL' | 'WATCH';
+  quantity: number | null;
+  unitPrice: number | null;
+  totalPrice: number | null;
+  memo: string;
+  finlyTalk: string;
+}
+
+export interface AnalysisDetailResult {
+  stockId: number;
+  stockCode: string;
+  stockName: string;
+  now: string;
+  targetDate: string;
+  prices: AnalysisPricePoint[];
+  records: AnalysisRecord[];
+}
