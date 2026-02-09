@@ -56,8 +56,10 @@ const AnalysisPage = () => {
       setSelectedData(latestFromChart);
     } else if (data?.records && data.records.length > 0) {
       const lastRecord = data.records[data.records.length - 1];
+      const timePart =
+        lastRecord.recordDateTime?.split(' ')[1]?.substring(0, 5) || '';
       setSelectedData({
-        time: lastRecord.recordDateTime.split(' ')[1].substring(0, 5),
+        time: timePart,
         closePrice: 0,
         record: lastRecord,
       });
