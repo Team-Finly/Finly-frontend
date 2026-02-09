@@ -11,10 +11,10 @@ const AnalysisCard = ({ data }: AnalysisCardProps) => {
   }
 
   const { record } = data;
-  const emotionData = EMOTION_CHART_MAP[record.emotion];
+  const emotionData = EMOTION_CHART_MAP[record.emotionCode || record.emotion];
 
   if (!emotionData) {
-    console.log('emotionData 없음:', record.emotion);
+    console.log('emotionData 없음:', record.emotionCode || record.emotion);
     return null;
   }
 
@@ -36,25 +36,23 @@ const AnalysisCard = ({ data }: AnalysisCardProps) => {
           </div>
         </div>
         <div className="text-[18px] font-semibold text-gray-900">
-          {record.tradeAction === 'HOLD' ? (
-            '관망 중'
-          ) : (
-            <>{record.totalPrice?.toLocaleString()}원</>
-          )}
+          {record.tradeAction === 'WATCH'
+            ? '관망 중'
+            : `${(record.totalPrice ?? 0).toLocaleString()}원`}
         </div>
       </div>
       <div className="mt-1 mb-2 flex flex-row justify-end text-[12px] font-semibold text-gray-300">
-        {record.tradeAction === 'HOLD' ? (
+        {record.tradeAction === 'WATCH' ? (
           '\u00A0'
         ) : (
           <>
             {record.quantity}주 {record.tradeAction === 'BUY' ? '매수' : '매도'}{' '}
-            · 1주 당 {record.pricePerShare?.toLocaleString()}원
+            · 1주 당 {record.unitPrice?.toLocaleString()}원
           </>
         )}
       </div>
       <div className="mb-2 text-[12px] font-semibold text-gray-300">
-        {formatTime(record.recordedAt)}
+        {formatTime(record.recordDateTime)}
       </div>
       <div className="rounded-[12px] border-[1.2px] border-gray-100 bg-gray-50/60 p-4.5 text-[14px] leading-[1.6] text-gray-700">
         “{record.memo}”
