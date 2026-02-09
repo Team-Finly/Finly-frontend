@@ -18,7 +18,6 @@ export interface MyPageMainData {
 }
 //프로필 조회
 export interface ProfileDetailData {
-    addprofileImageUrl: string;
     profileImageUrl: string;
     personaType: PersonaKey | null;
     memberId: number;

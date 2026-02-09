@@ -23,7 +23,7 @@ const Profile = () => {
   useEffect(() => {
     fetchMainProfile();
   }, [fetchMainProfile]);
-console.log("현재 스토어에 저장된 마음 지수:", mindScore);
+
  
   const personaEntry = personaType 
     ? PERSONA_DATA[personaType as keyof typeof PERSONA_DATA] 
