@@ -5,7 +5,7 @@ const PasswordChange = () => {
   const { state, actions } = usePasswordChange();
 
   return (
-    <div className="min-h-screen">
+    <div className="h-screen flex flex-col bg-white">
       <Header title="비밀번호 변경" />
 
       <div className="flex flex-col mt-[80px] flex-1 px-4">
@@ -43,7 +43,7 @@ const PasswordChange = () => {
           </div>
         </div>
 
-        <div className="mt-[356px] mb-[52px] w-full">
+        <div className="mt-auto mb-[52px] w-full">
         <button
           onClick={actions.handleSubmit}
           disabled={!state.isValid}
