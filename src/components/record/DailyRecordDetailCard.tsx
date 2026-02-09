@@ -4,18 +4,36 @@ import { useFeedback } from "@/hooks/useFeedback";
 import { stockInfoStore } from "@/store/stockInfoStore";
 import type { RecordDetailResponse } from "@/types/record";
 import { formatTime2 } from "@/utils/date";
+import { useEffect, useState } from "react";
 
 interface CardProps {
   record: RecordDetailResponse;
+  isActive: boolean;
 }
 
-const DailyRecordDetailCard = ({ record }: CardProps) => {
+const DailyRecordDetailCard = ({ record, isActive }: CardProps) => {
   const totalPrice = record.unitPrice * record.quantity;
   const { stockMap, isLoaded } = stockInfoStore();
   const stock = stockMap[record.symbol];
   const action = TRADE_ACTION_MAP[record.tradeAction];
 
-  const { data: feedback } = useFeedback(record.recordId);
+  const [tryCount, setTryCount] = useState(0);
+
+  const enabled =
+    !!record.recordId &&
+    !!record.memo &&
+    tryCount < 3;
+
+  const { data: feedback, error, isError, isFetching } = useFeedback(
+    record.recordId,
+    { enabled }
+  );
+  
+  useEffect(() => {
+    if (isError) {
+      setTryCount((prev) => prev + 1);
+    }
+  }, [isError]);
 
   return (
     <div className="min-w-full snap-center px-[16px]">
