@@ -6,24 +6,47 @@ import cameraIcon from "@/assets/icons/camera.svg";
 import line from "@/assets/icons/line50.svg";
 import Modal from "@/components/record/Modal";
 import { useProfileSettings } from "@/hooks/useProfileSettings";
+import { deleteMember } from "@/apis/userApi";
+import { useUserStore } from "@/store/userStore";
 
 const ProfileSettings = () => {
   const navigate = useNavigate();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { state, actions } = useProfileSettings();
 
+  const isChanged = 
+    state.nickname !== state.initialNickname || 
+    state.profileImage !== state.initialImage;
+
   const handleImageClick = () => {  
     if (state.isEditing && fileInputRef.current) {
-      fileInputRef.current.click();   // 파일 선택 창 열기
+      fileInputRef.current.click(); 
     }
   };
 
   const handleBackClick = () => {
     if (state.isEditing) {
-    const isChanged = state.nickname !== state.initialNickname || state.profileImage !== state.initialImage;
     isChanged ? actions.setIsModalOpen(true) : actions.handleCancel();
     } else {
-      navigate(-1);
+      navigate('/profile');
+    }
+  };
+  const handleWithdrawalConfirm = async () => {
+    try {
+      const response = await deleteMember();
+
+      if (response.isSuccess) {
+        localStorage.removeItem("accessToken"); 
+        localStorage.removeItem("refreshToken");
+        useUserStore.getState().clearUser();
+        actions.setIsWithdrawModalOpen(false);
+        navigate("/onboarding"); 
+      } else {
+        actions.setIsWithdrawModalOpen(false);
+      }
+    } catch (error) {
+      console.error(error);
+      actions.setIsWithdrawModalOpen(false);
     }
   };
 
@@ -58,9 +81,8 @@ const ProfileSettings = () => {
           )}
         </div>
       </div>
-      <div className="flex-1 overflow-y-auto scrollbar-hide pt-[75px] px-[16px]">
-        <div className="flex flex-col items-center min-h-full pb-[52px]">
-            
+      <div className="flex-1 flex flex-col pt-[75px] px-[16px]">
+        <div className="flex flex-col items-center">
           <div className="relative mb-[30px] mt-[49px]">
             <div onClick={handleImageClick} className="cursor-pointer w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center overflow-hidden">
               <img onClick={handleImageClick} src={state.profileImage || defaultprofileIcon} alt="프로필 이미지" className="w-full h-full object-cover" /> 
@@ -79,7 +101,7 @@ const ProfileSettings = () => {
             )}
           </div>
 
-          <div className="w-full">
+          <div className="w-full flex flex-col">
             <div className='relative w-full mb-[40px]'>
               <label className="text-[14px] text-gray-500 mb-2 block font-semibold">닉네임</label>
               <input
@@ -108,29 +130,33 @@ const ProfileSettings = () => {
                 type="text"
                 value={state.email || ""}
                 readOnly
-                className="w-full p-4 rounded-[12px] border-[1.2px] text-[17px] text-medium border-gray-50 bg-[#F4F5F7]/60 text-gray-700 outline-none"
+                className="w-full p-4  rounded-[12px] border-[1.2px] text-[17px] text-medium border-gray-50 bg-[#F4F5F7]/60 text-gray-700 outline-none"
               />
             </div>
-
-          {!state.isEditing && (
+            </div>
+        </div>
+        <div className="flex-1" />
+          <div className ='flex-1'>
+            <div className='w-full'>
+              {!state.isEditing && (
             <img 
               src={line} 
               alt="구분선" 
-              className="w-full mt-[203px] mb-[30px]"
+              className="w-full mb-[30px]"
                 />
             )}
             <div className={`w-full`}>
               {state.isEditing ? (
                 <button
                   onClick={actions.handleComplete}
-                  disabled={!!state.errorMessage}
-                  className="w-full py-4 bg-secondary text-white rounded-[12px] font-semibold mt-[240px]
-                  disabled:bg-gray-100 disabled:text-gray-300 disabled:cursor-not-allowed"
+                  disabled={!!state.errorMessage || !isChanged}
+                  className="w-full py-4 bg-secondary text-white rounded-[12px] font-semibold
+                  disabled:bg-gray-100 disabled:text-gray-300 "
                 >
                   완료
                 </button>
               ) : (
-                <div className="flex flex-col gap-[30px]">
+                <div className="flex flex-col gap-[30px] ">
                   <button className="text-left text-[14px] font-medium text-gray-500/80 cursor-pointer"
                           onClick={() => navigate('/passwordchange')}>비밀번호 변경</button>
                   <button className="text-left text-[14px] font-medium text-stock-buy cursor-pointer"
@@ -159,11 +185,8 @@ const ProfileSettings = () => {
           rightBtnClassName="bg-red text-white"
           leftBtnLabel="취소"
           rightBtnLabel="탈퇴"
-          onClickLeft={() => {
-            actions.setIsWithdrawModalOpen(false);
-          }}
-          onClickRight={() => {
-           console.log("탈퇴 API "); actions.setIsWithdrawModalOpen(false)}}
+          onClickLeft={() => actions.setIsWithdrawModalOpen(false)}
+          onClickRight={handleWithdrawalConfirm}
           onClose={() => actions.setIsWithdrawModalOpen(false)}
         />
       )}

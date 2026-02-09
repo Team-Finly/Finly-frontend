@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { getUserMainProfile, getMyProfile } from '@/apis/userApi'; 
 import defaultProfileIcon from "@/assets/icons/profile.svg";
 import type { PersonaKey } from "@/constants/mypersona";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL ;
 interface UserState {
   memberId: number;
   nickname: string;
@@ -40,7 +41,16 @@ export const useUserStore = create<UserState>((set) => ({
   fetchMainProfile: async () => {
     set({ isLoading: true });
     try {
-      const data = await getUserMainProfile(); 
+      const data = await getUserMainProfile();
+      let serverImage = defaultProfileIcon;
+      if (data.profileImageUrl) {
+        if (data.profileImageUrl.startsWith('http')) {
+          serverImage = data.profileImageUrl;
+        } else {
+          serverImage = `${BASE_URL}${data.profileImageUrl}`;
+        }
+      }
+  
       set((state) => ({
         ...state,
         memberId: data.memberId,
@@ -48,6 +58,7 @@ export const useUserStore = create<UserState>((set) => ({
         personaType: data.personaType ?? state.personaType,
         mindScore: data.finMindIdx ?? 0,
         fragmentCount: data.mindPieceCount ?? 0,  
+        profileImage: serverImage,
         isLoading: false,
       }));
     } catch (error) {
@@ -60,12 +71,21 @@ export const useUserStore = create<UserState>((set) => ({
     set({ isLoading: true });
     try {
       const data = await getMyProfile();
+      let serverImage = defaultProfileIcon;
+      if (data.profileImageUrl) {
+        if (data.profileImageUrl.startsWith('http')) {
+          serverImage = data.profileImageUrl;
+        } else {
+          serverImage = `${BASE_URL}${data.profileImageUrl}`;
+        }
+      }
+
       set((state) => ({
         ...state,
         memberId: data.memberId,
         nickname: data.nickname,
         email: data.email,      
-        profileImage: data.profileImage ?? defaultProfileIcon, 
+        profileImage: serverImage,
         personaType: data.personaType ?? state.personaType,
         isLoading: false,
       }));
