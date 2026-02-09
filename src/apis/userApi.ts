@@ -22,7 +22,7 @@ export const addProfileImage = async (file: File) => {
   formData.append("image", file);
 
   const response = await api.post("/api/mypage/me/profile-image", formData, {
-    headers: { "Content-Type": "multipart/form-data" },
+    headers: { "Content-Type": undefined },
   });
   return response.data;
 };
@@ -32,7 +32,7 @@ export const updateProfileImage = async (file: File) => {
   formData.append("image", file); 
 
   const response = await api.put("/api/mypage/me/profile-image", formData, {
-    headers: { "Content-Type": "multipart/form-data" },
+    headers: { "Content-Type": undefined },
   });
   return response.data;
 };
