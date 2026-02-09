@@ -73,9 +73,36 @@ const DailyRecordDetailPage = () => {
     if (!containerRef.current) return;
 
     const { scrollLeft, offsetWidth } = containerRef.current;
-    const index = Math.round(scrollLeft / offsetWidth);
+
+    const rawIndex = Math.round(scrollLeft / offsetWidth);
+    const index = Math.min(
+      Math.max(rawIndex, 0),
+      records.length - 1
+    );
+
     setCurrentIndex(index);
   };
+
+const MAX_DOTS = 12;
+const total = records.length;
+let startIndex = 0;
+
+if (total > MAX_DOTS) {
+  if (currentIndex <= 5) {
+    startIndex = 0;
+  } else if (currentIndex >= total - 6) {
+    startIndex = total - MAX_DOTS;
+  } else {
+    startIndex = currentIndex - 5;
+  }
+  };
+
+  const visibleIndexes = Array.from(
+    { length: Math.min(MAX_DOTS, total) },
+    (_, i) => startIndex + i
+  );
+  
+  const activeDotIndex = currentIndex - startIndex;
 
   const currentRecord = records[currentIndex];
   const emotion = currentRecord
@@ -142,10 +169,10 @@ const DailyRecordDetailPage = () => {
       {/* 하단 페이지네이션 바 */}
       {showPagination && (
         <div className="py-8 flex justify-center items-center gap-[4px]">
-          {records.map((_, index) => (
+          {visibleIndexes.map((_, index) => (
             <div
               key={index}
-              className={`h-[4px] rounded-[4px] transition-all duration-300 w-[24px] ${index === currentIndex ? 'bg-gray-300' : 'bg-gray-100'
+              className={`h-[4px] rounded-[4px] transition-all duration-300 w-[24px] ${index === activeDotIndex ? 'bg-gray-300' : 'bg-gray-100'
                 }`}
             />
           ))}
