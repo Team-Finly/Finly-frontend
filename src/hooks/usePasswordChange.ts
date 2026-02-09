@@ -22,7 +22,6 @@ export const usePasswordChange = () => {
     try {
       const response = await updatePassword(password, pwConfirm);
       if (response.isSuccess){
-      alert("비밀번호가 변경되었습니다.");
       navigate('/profilesettings'); 
     } else {
       alert("비밀번호 변경에 실패했습니다. 다시 시도해주세요.");

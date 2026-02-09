@@ -27,7 +27,7 @@ const ProfileSettings = () => {
     if (state.isEditing) {
     isChanged ? actions.setIsModalOpen(true) : actions.handleCancel();
     } else {
-      navigate(-1);
+      navigate('/profile');
     }
   };
   const handleWithdrawalConfirm = async () => {
