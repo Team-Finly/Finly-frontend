@@ -76,7 +76,16 @@ const RecordHomePage = () => {
             dailyDetail.timelineSummary.length > 0 ? (
             <div className="flex flex-col gap-1.5">
               {dailyDetail.timelineSummary.map(item => (
-                <RecordFragment key={item.recordId} data={item} />
+                <button
+                  key={item.recordId}
+                  type="button"
+                  className="text-left"
+                  onClick={() =>
+                    navigate(`/record/${today}/${item.recordId}`)
+                  }
+                >
+                  <RecordFragment data={item} />
+                </button>
               ))}
             </div>
           ) : (
