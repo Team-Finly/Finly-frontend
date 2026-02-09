@@ -15,7 +15,7 @@ const DailyRecordDetailCard = ({ record }: CardProps) => {
   const stock = stockMap[record.symbol];
   const action = TRADE_ACTION_MAP[record.tradeAction];
 
-  const { data: feedback, isLoading } = useFeedback(record.recordId);
+  const { data: feedback } = useFeedback(record.recordId);
 
   return (
     <div className="min-w-full snap-center px-[16px]">
