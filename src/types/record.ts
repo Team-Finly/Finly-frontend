@@ -148,7 +148,7 @@ export type UpdateRecordRequest = Omit<CreateRecordRequest, 'clientRequestId'>;
 export interface FeedbackResponse {
   feedbackId: number;
   recordEntryId: number;
-  status: 'PENDING' | 'COMPLETED';
+  status: 'PENDING' | 'COMPLETED' | 'FAILED';
   content: string;
   suggestion: string;
   createdAt: string;
@@ -168,6 +168,22 @@ export interface RecordDetailResponse {
   symbol: string;
   tradeAction: TradeActionType;
   unitPrice: number;
+}
+
+// 기록 수정
+
+export interface RecordUpdateResponse {
+  emotionCode: EmotionType;
+  emotionIntensity: number;
+  memo: string;
+  quantity: number;
+  recordDate: string;
+  recordId: number;
+  session: SessionType;
+  symbol: string;
+  tradeAction: TradeActionType;
+  unitPrice: number;
+  updatedAt: string;
 }
 
 // 해당 일 기록

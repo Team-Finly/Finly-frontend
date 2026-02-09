@@ -30,14 +30,11 @@ const DailyRecordDetailPage = () => {
 
   const records = dailyDetail?.timelineSummary ?? [];
 
-  const getEmotionData = (key: string) =>
-    EMOTIONS.find((e) => e.key === key);
+  const getEmotionData = (key: string) => EMOTIONS.find((e) => e.key === key);
 
-  // recordId 기준 초기 index 계산 + 스크롤 
+  // recordId 기준 초기 index 계산 + 스크롤
   useEffect(() => {
-    const index = records.findIndex(
-      (r) => r.recordId === numericRecordId
-    );
+    const index = records.findIndex((r) => r.recordId === numericRecordId);
 
     if (index !== -1) {
       setCurrentIndex(index);
@@ -55,20 +52,15 @@ const DailyRecordDetailPage = () => {
     return <div className="h-screen bg-white" />;
   }
 
-  if (
-    isDetailError ||
-    isDailyError ||
-    !recordDetail ||
-    !dailyDetail
-  ) {
+  if (isDetailError || isDailyError || !recordDetail || !dailyDetail) {
     return (
-      <div className="h-screen flex items-center justify-center">
+      <div className="flex h-screen items-center justify-center">
         기록을 불러올 수 없습니다.
       </div>
     );
   }
 
-  // 스크롤 → index 계산 
+  // 스크롤 → index 계산
   const handleScroll = () => {
     if (!containerRef.current) return;
 
@@ -111,7 +103,7 @@ if (total > MAX_DOTS) {
 
   if (!currentRecord) {
     return (
-      <div className="h-screen flex items-center justify-center">
+      <div className="flex h-screen items-center justify-center">
         기록을 찾을 수 없습니다.
       </div>
     );
@@ -120,43 +112,43 @@ if (total > MAX_DOTS) {
   const showPagination = records.length >= 2;
 
   return (
-    <div className="h-screen bg-white pt-[76px] flex flex-col">
+    <div className="flex h-screen flex-col bg-white pt-[76px]">
       <DailyDetailHeader
         title="기록 상세"
         rightButton={{
-          onClick: () => navigate(`/record/edit/${currentRecord.recordId}`)
+          onClick: () => navigate(`/record/create/${currentRecord.recordId}`),
         }}
       />
 
-      <div className="flex flex-col items-center mt-[30px]">
-        <span className="text-gray-700 text-[16px] font-semibold mb-[16px]">
+      <div className="mt-[30px] flex flex-col items-center">
+        <span className="mb-[16px] text-[16px] font-semibold text-gray-700">
           {formatDate(currentRecord.recordDate)}
         </span>
         {emotion && (
           <div
-            className="flex items-center gap-0.5 px-[8px] py-[6.5px] rounded-full text-[14px] font-semibold mb-[24px]"
+            className="mb-[24px] flex items-center gap-0.5 rounded-full px-[8px] py-[6.5px] text-[14px] font-semibold"
             style={{
               backgroundColor: emotion.bgColor,
-              color: emotion.color           
+              color: emotion.color,
             }}
           >
             <img
               src={emotion.icon}
               alt={emotion.label}
-              className="w-[18px] h-[18px] object-contain"
+              className="h-[18px] w-[18px] object-contain"
             />
-    
+
             <span className="leading-none font-bold">
               {emotion.label} Lv.{currentRecord.emotionIntensity}
             </span>
           </div>
         )}
       </div>
-      
+
       <div
         ref={containerRef}
         onScroll={handleScroll}
-        className="flex-1 overflow-x-auto snap-x snap-mandatory scrollbar-hide"
+        className="scrollbar-hide flex-1 snap-x snap-mandatory overflow-x-auto"
         style={{ scrollSnapType: 'x mandatory' }}
       >
         <div className="flex h-full">
