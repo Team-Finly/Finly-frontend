@@ -7,6 +7,7 @@ import line from "@/assets/icons/line50.svg";
 import Modal from "@/components/record/Modal";
 import { useProfileSettings } from "@/hooks/useProfileSettings";
 import { deleteMember } from "@/apis/userApi";
+import { useUserStore } from "@/store/userStore";
 
 const ProfileSettings = () => {
   const navigate = useNavigate();
@@ -37,15 +38,14 @@ const ProfileSettings = () => {
       if (response.isSuccess) {
         localStorage.removeItem("accessToken"); 
         localStorage.removeItem("refreshToken");
+        useUserStore.getState().clearUser();
         actions.setIsWithdrawModalOpen(false);
         navigate("/onboarding"); 
       } else {
-        alert(response.message || "회원 탈퇴에 실패했습니다.");
         actions.setIsWithdrawModalOpen(false);
       }
     } catch (error) {
       console.error(error);
-      alert("서버 오류가 발생했습니다.");
       actions.setIsWithdrawModalOpen(false);
     }
   };

@@ -8,6 +8,7 @@ export interface PersonaInfo {
 }
 
 export interface MyPageMainData {
+  profileImageUrl: string;
   memberId: number;
   nickname:string;
   personaType: PersonaKey | null;
@@ -17,6 +18,8 @@ export interface MyPageMainData {
 }
 //프로필 조회
 export interface ProfileDetailData {
+    addprofileImageUrl: string;
+    profileImageUrl: string;
     personaType: PersonaKey | null;
     memberId: number;
     email: string;
