@@ -66,9 +66,7 @@ const DailyRecordDetailCard = ({ record }: CardProps) => {
         <FinlyTalk 
           recordId={record.recordId}
           content={feedback?.content} 
-          suggestion={feedback?.suggestion}
           status={feedback?.status || 'PENDING'}
-          isLoading={isLoading}
         />
       </div>
     </div>
