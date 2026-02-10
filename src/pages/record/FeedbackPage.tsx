@@ -148,7 +148,7 @@ const FeedbackPage = () => {
         </div>
         <div className="rounded-xl border-[1.2px] border-gray-50 bg-gray-50/60 p-3">
           <p className="text-[11px] leading-4.5 text-gray-500">
-            {handleBoldText(feedback.suggestion)}
+            {handleBoldText(feedback.suggestion ?? '')}
           </p>
         </div>
       </div>
