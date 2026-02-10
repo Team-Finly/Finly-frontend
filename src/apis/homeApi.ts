@@ -22,6 +22,6 @@ export const homeApi = {
 
   getMindScoreDetail: async (): Promise<ApiResponse<MindScoreDetailResponse>> => {
     const res = await api.get('/api/home/mind/detail');
-    return res.data
+    return res.data;
   }
 };
