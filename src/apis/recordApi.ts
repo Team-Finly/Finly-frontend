@@ -12,6 +12,9 @@ import type {
   FragmentListRequest,
   FragmentListResponse,
   RecordUpdateResponse,
+  RecordSearchRequest,
+  RecordSearchResponse,
+  RecentSearchResponse,
 } from '@/types/record';
 
 export const recordApi = {
@@ -90,6 +93,30 @@ export const recordApi = {
       '/api/records/fragments',
       { params },
     );
+    return res.data.result;
+  },
+
+  searchRecords: async (
+    params: RecordSearchRequest,
+  ): Promise<RecordSearchResponse> => {
+    const res = await api.get<ApiResponse<RecordSearchResponse>>(
+      '/api/records/search',
+      { params },
+    );
+    return res.data.result;
+  },
+
+  getRecentSearch: async (): Promise<string[]> => {
+    const res = await api.get<ApiResponse<RecentSearchResponse>>(
+      '/api/records/search/recent',
+    );
+    return res.data.result.recentKeywords;
+  },
+
+  deleteRecentKeyword: async (keyword: string): Promise<void> => {
+    const res = await api.delete(`/api/records/search/recent`, {
+      params: { keyword },
+    });
     return res.data.result;
   },
 };
