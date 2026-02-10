@@ -51,7 +51,7 @@ const Profile = () => {
       <main className="scrollbar-hide flex-1 overflow-y-auto pb-[95px] ">
         <div className='flex w-full px-4 gap-4 mt-[20px] mb-[16px]'>
           <ProfileCard nickname={nickname} profileImage={profileImage} personaName={personaName}></ProfileCard>
-          <MindscoreCard score={mindScore} color="#FFF34A"></MindscoreCard>
+          <MindscoreCard score={mindScore}></MindscoreCard>
         </div>
         <div>
           <div className="mx-[16px] mt-[20px] flex h-[78px] flex-row rounded-[12px] border-[1.2px] border-gray-100 bg-[#E9F0FA99] px-[12px]">
