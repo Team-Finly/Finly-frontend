@@ -8,10 +8,9 @@ import { useEffect, useState } from "react";
 
 interface CardProps {
   record: RecordDetailResponse;
-  isActive: boolean;
 }
 
-const DailyRecordDetailCard = ({ record, isActive }: CardProps) => {
+const DailyRecordDetailCard = ({ record }: CardProps) => {
   const totalPrice = record.unitPrice * record.quantity;
   const { stockMap, isLoaded } = stockInfoStore();
   const stock = stockMap[record.symbol];

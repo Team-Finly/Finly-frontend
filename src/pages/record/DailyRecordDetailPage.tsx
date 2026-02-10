@@ -156,7 +156,6 @@ if (total > MAX_DOTS) {
             <DailyRecordDetailCard
               key={record.recordId}
               record={record}
-              isActive={index === currentIndex}
             />
           ))}
         </div>
