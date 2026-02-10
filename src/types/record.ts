@@ -18,13 +18,14 @@ export type TradeActionType = 'BUY' | 'SELL' | 'WATCH';
 // 캘린더 기록
 export interface DailyRecord {
   date: string;
-  hasRecord: boolean;
-  emotions: string[];
+  totalCount: number;
+  byType: { type: EmotionType; count: number }[];
 }
 
-export interface MonthlyRecordResponse {
-  year: number;
-  month: number;
+export interface CalendarResponse {
+  yearMonth: string;
+  range: { from: string; to: string };
+  totalRecords: number;
   days: DailyRecord[];
 }
 
