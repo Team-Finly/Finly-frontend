@@ -26,12 +26,15 @@ const HomePage = () => {
           />
         )}
         {!isLoading && !isError && data && (
-          <button
+          <div
+            role="button"
+            tabIndex={0}
             onClick={() => navigate('/mindscore')}
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') navigate('/mindscore'); }}
             className="block w-full text-left bg-transparent cursor-pointer"
           >
             <MindScore mindScore={data} />
-          </button>
+          </div>
         )}
 
         <div className="flex justify-end mt-[12px]">

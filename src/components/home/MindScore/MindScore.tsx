@@ -10,7 +10,8 @@ interface mindScoreProps {
 export const MindScore = ({ mindScore }: mindScoreProps) => {
   if (!mindScore) return null;
 
-  const { fmiComment, fmiLevel, fmiScore, memberName, persona: { personaTitle }} = mindScore;
+  const { fmiComment, fmiLevel, fmiScore, memberName, persona } = mindScore;
+  const personaTitle = persona?.personaTitle ?? '';
 
   const config =
     SCORE_CONFIG.find((c) => fmiScore >= c.min && fmiScore <= c.max) ||
