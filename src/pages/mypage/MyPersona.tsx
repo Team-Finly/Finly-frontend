@@ -56,7 +56,7 @@ const MyPersona = () => {
             className="absolute left-4 cursor-pointer"
             onClick={() => navigate('/profile')}
           >
-            <img src={Before} alt="이전" className="cursor-pointer" />
+            <img src={Before} alt="이전" className="h-4 w-2 cursor-pointer" />
           </button>
           <h1 className="text-lg font-semibold text-gray-900">나의 페르소나</h1>
         </div>
