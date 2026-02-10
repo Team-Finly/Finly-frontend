@@ -61,7 +61,6 @@ const MyPersona = () => {
           <h1 className="text-lg font-semibold text-gray-900">나의 페르소나</h1>
         </div>
       </div>
-
       <main className="scrollbar-hide flex flex-1 flex-col items-center overflow-y-auto">
         <div className="mt-[110px] flex w-full flex-col items-center justify-center">
           <div className="relative mt-[42px] mb-[31px] flex h-[70px] w-[77px] items-center justify-center">
@@ -76,7 +75,6 @@ const MyPersona = () => {
               className="relative z-10 mb-[14px] h-[70px] w-[77px] object-contain"
             />
           </div>
-
           <div className="flex w-full flex-col px-[30px]">
             <div className="mb-[40px] text-center">
               <h2 className="mb-[14px] text-[20px] font-bold text-gray-900">
@@ -123,14 +121,7 @@ const MyPersona = () => {
             </div>
           </div>
         </div>
-
-        <div className="mt-[125px] w-full px-[16px] pb-[60px]">
-          <button
-            disabled
-            className="bg-secondary mb-[12px] h-[50px] w-full rounded-[12px] py-[12px] text-[18px] leading-[26px] font-semibold text-white disabled:cursor-not-allowed"
-          >
-            이미지로 저장하기
-          </button>
+        <div className="fixed bottom-15 w-full max-w-120 px-[16px]">
           <button
             onClick={handleRetest}
             className="h-[50px] w-full cursor-pointer rounded-[12px] bg-gray-50 py-[12px] text-[18px] leading-[26px] font-semibold text-gray-500"
