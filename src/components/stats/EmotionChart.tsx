@@ -15,7 +15,7 @@ import { UniversalSkeleton } from '@/components/UniversalSkeleton';
 
 const EmotionChartSkeleton = () => (
   <div className="flex items-center justify-center rounded-xl border-[1.2px] border-gray-100 bg-white p-5">
-    <UniversalSkeleton className="h-[162px] w-[320px] rounded-md bg-gray-50" />
+    <UniversalSkeleton className="h-[162px] w-[320px] rounded-md bg-gray-100" />
   </div>
 );
 
