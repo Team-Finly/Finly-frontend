@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { type AxiosRequestConfig } from "axios";
 import { tokenStorage } from "@/utils/tokenStorage";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -19,23 +19,23 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+interface QueueItem {
+  resolve: (value?: any) => void;
+  reject: (reason?: any) => void;
+  config: AxiosRequestConfig;
+}
+
 let isRefreshing = false;
-let failedQueue: any[] = [];
+let failedQueue: QueueItem[] = [];
 
 const processQueue = (error: any, token: string | null = null) => {
   failedQueue.forEach((prom) => {
     if (error) {
       prom.reject(error);
     } else {
-      if (prom.config.headers) {
-        prom.config.headers['Authorization'] = `Bearer ${token}`;
-         if (typeof prom.config.headers.set === 'function') {
-            prom.config.headers.set('Authorization', `Bearer ${token}`);
+        prom.resolve(api(prom.config));
          }
-      }
-      prom.resolve(api(prom.config));
-    }
-  });
+      });
   failedQueue = [];
 };
 
@@ -73,17 +73,10 @@ api.interceptors.response.use(
 
         if (newAccessToken) {
           tokenStorage.set(newAccessToken);
-          
-          if (originalConfig.headers) {
-             originalConfig.headers['Authorization'] = `Bearer ${newAccessToken}`;
-             if (typeof originalConfig.headers.set === 'function') {
-                originalConfig.headers.set('Authorization', `Bearer ${newAccessToken}`);
-             }
-          }
-
           processQueue(null, newAccessToken);
-          
           return api(originalConfig);
+        }else{
+          throw new Error("토큰 재발급 실패");
         }
       } catch (reissueError) {
         processQueue(reissueError, null);
