@@ -35,6 +35,7 @@ const StockSelector = ({ stocks, selectedStock, onSelect }: Props) => {
           <img
             className="h-[24px] w-[24px] rounded-full object-cover"
             src={selectedStock.logoUrl || DefaultLogo}
+            onError={(e) => (e.currentTarget.src = DefaultLogo)}
             alt={selectedStock.name}
           />
           <div className="text-[17px] font-semibold text-gray-900">
