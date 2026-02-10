@@ -1,14 +1,15 @@
-export interface MindScoreResult {
-  userName: string;
+export interface Persona {
   personaTitle: string;
-  fmiScore: number;
-  fmiLevelLabel: string;
-  fmiDescription: string;
-};
+  personaType: string;
+}
 
 export interface MindScoreResponse {
-  result: MindScoreResult;
-}
+  memberName: string;
+  persona: Persona;
+  fmiScore: number;
+  fmiLevel: string;
+  fmiComment: string;
+};
 
 export interface MindScoreDetail {
   score: number;
@@ -21,7 +22,7 @@ export interface PersonaScoreMap {
   recordConsistency: MindScoreDetail;
 }
 
-export interface MindScoreDetailResult {
+export interface MindScoreDetailResponse {
   memberName: string;
   personaTitle: string;
   personaDescription: string;
@@ -30,10 +31,5 @@ export interface MindScoreDetailResult {
   fmiComment: string;
   scores: PersonaScoreMap;
 }
-
-export interface MindScoreDetailResponse {
-  result: MindScoreDetailResult;
-}
-
 
 
