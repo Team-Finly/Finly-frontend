@@ -15,7 +15,7 @@ export default {
         },
       },
       animation: {
-        shimmer: 'shimmer 1.5s infinite linear ease-in-out',
+        shimmer: 'shimmer 1.5s infinite linear',
       },
 
       height: {

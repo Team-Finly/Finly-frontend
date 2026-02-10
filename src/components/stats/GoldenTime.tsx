@@ -12,7 +12,7 @@ const GoldenTimeSkeleton = () => (
   <div className="rounded-[8px] border-[1.2px] border-gray-100 bg-white p-5">
     <UniversalSkeleton className="mb-1 h-[24px] w-[120px] rounded-md bg-gray-50" />
     <UniversalSkeleton className="h-[73px] w-full rounded-[10px]" />
-    <UniversalSkeleton className="my-1 h-[40px] w-[320] rounded-[22.5px]" />
+    <UniversalSkeleton className="my-1 h-[40px] w-[320px] rounded-[22.5px]" />
   </div>
 );
 
