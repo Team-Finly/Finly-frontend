@@ -81,7 +81,7 @@ const RecordHomePage = () => {
               조각 모음함 데이터를 불러오지 못했어요.
             </p>
           ) : (
-            <LinearBar fragmentSummary={fragmentSummary} />
+            <LinearBar fragmentSummary={fragmentSummary ?? null} />
           )}
         </div>
         <div className="h-4 bg-gray-50"></div>
