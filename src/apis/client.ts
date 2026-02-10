@@ -8,10 +8,10 @@ export const api = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
-  withCredentials: false, 
+  withCredentials: true, 
 });
 
-api.interceptors.request.use(config => {
+api.interceptors.request.use((config) => {
   const token = tokenStorage.get();
   if (token) {
     config.headers.set("Authorization", `Bearer ${token}`);
@@ -19,24 +19,84 @@ api.interceptors.request.use(config => {
   return config;
 });
 
+let isRefreshing = false;
+let failedQueue: any[] = [];
+
+const processQueue = (error: any, token: string | null = null) => {
+  failedQueue.forEach((prom) => {
+    if (error) {
+      prom.reject(error);
+    } else {
+      if (prom.config.headers) {
+        prom.config.headers['Authorization'] = `Bearer ${token}`;
+         if (typeof prom.config.headers.set === 'function') {
+            prom.config.headers.set('Authorization', `Bearer ${token}`);
+         }
+      }
+      prom.resolve(api(prom.config));
+    }
+  });
+  failedQueue = [];
+};
+
 api.interceptors.response.use(
-  res => res,
-  err => {
+  (res) => res,
+  async (err) => {
+    const originalConfig = err.config;
     const status = err?.response?.status;
 
-    if (status === 401) {
-      tokenStorage.remove();
-      window.location.replace("/login");
-    }
+    if (status === 401 && !originalConfig._retry) {
+      if (isRefreshing) {
+        return new Promise((resolve, reject) => {
+          failedQueue.push({
+            resolve,
+            reject,
+            config: originalConfig,
+          });
+        });
+      }
 
-    if (import.meta.env.DEV) {
-      console.error("[API ERROR]", {
-        status,
-        url: err?.config?.url,
-        method: err?.config?.method,
-      });
-    }
+      originalConfig._retry = true;
+      isRefreshing = true;
 
+      try {
+        const res = await axios.post(
+          `${BASE_URL}/auth/reissue`,
+          {},
+          {
+            withCredentials: true,
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+
+        const newAccessToken = res.data.result?.accessToken;
+
+        if (newAccessToken) {
+          tokenStorage.set(newAccessToken);
+          
+          if (originalConfig.headers) {
+             originalConfig.headers['Authorization'] = `Bearer ${newAccessToken}`;
+             if (typeof originalConfig.headers.set === 'function') {
+                originalConfig.headers.set('Authorization', `Bearer ${newAccessToken}`);
+             }
+          }
+
+          processQueue(null, newAccessToken);
+          
+          return api(originalConfig);
+        }
+      } catch (reissueError) {
+        processQueue(reissueError, null);
+        
+        tokenStorage.remove();
+        localStorage.clear();
+        window.location.href = "/login";
+        
+        return Promise.reject(reissueError);
+      } finally {
+        isRefreshing = false;
+      }
+    }
     return Promise.reject(err);
   }
 );
