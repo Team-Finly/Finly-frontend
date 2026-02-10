@@ -1,0 +1,29 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { recordApi } from '@/apis/recordApi';
+import { useNavigate } from 'react-router-dom';
+import type { CreateRecordRequest } from '@/types/record';
+import { useRecordCreateStore } from '@/store/recordCreateStore';
+
+export const useCreateRecord = () => {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (data: CreateRecordRequest) => recordApi.createRecord(data),
+    onSuccess: (data) => {
+      const { reset } = useRecordCreateStore.getState();
+      reset();
+
+      queryClient.invalidateQueries({ queryKey: ['home'] });
+      queryClient.invalidateQueries({ queryKey: ['recordDetail'] });
+      queryClient.invalidateQueries({ queryKey: ['todayRecords'] });
+      queryClient.invalidateQueries({ queryKey: ['fragmentList'] });
+      queryClient.invalidateQueries({ queryKey: ['fragmentSummary'] });
+      queryClient.invalidateQueries({ queryKey: ['feedback'] });
+      navigate('/loading', { state: { recordId: data.recordId } });
+    },
+    onError: (error) => {
+      console.log('기록 작성 실패', error);
+    },
+  });
+};

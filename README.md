@@ -1,73 +1,76 @@
-# React + TypeScript + Vite
+# Finly Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 🚀 GitHub Workflow
 
-Currently, two official plugins are available:
+1. Issue를 생성합니다.
+2. develop 브랜치를 기준으로 개별 브랜치를 생성합니다.
+3. 기능 구현 완료 후 develop 브랜치로 Pull Request를 생성하여 리뷰를 요청합니다.
+4. 최소 1명 이상의 승인이 있어야 머지가 가능합니다.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🤝 Convention
 
-## React Compiler
+### 1. Commit Convention
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+커밋 메시지는 `Gitmoji Type: 제목` 형태이며, 콜론(`:`) 뒤에만 space가 있음에 유의합니다.
 
-## Expanding the ESLint configuration
+- **Format:** `Gitmoji Type: 제목`
+- **Example:** `✨ Feat: 로그인 기능 구현`
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+|     Type     | 설명                                                              |
+| :----------: | :---------------------------------------------------------------- |
+|   **feat**   | 새로운 기능 추가                                                  |
+|   **fix**    | 버그 수정                                                         |
+|   **docs**   | 문서 수정 (README, API 명세서 등)                                 |
+|  **style**   | 코드 포맷팅, 세미콜론 누락 (비즈니스 로직 변경 없음)              |
+|  **design**  | 사용자 UI 디자인 변경 (CSS, 레이아웃 등)                          |
+| **refactor** | 코드 리팩토링 (기능 변경 없음)                                    |
+|   **perf**   | 성능 개선                                                         |
+|   **test**   | 테스트 코드 추가/수정                                             |
+|  **chore**   | 빌드, 패키지 매니저, 환경 설정 수정 (.gitignore, package.json 등) |
+|   **init**   | 프로젝트 초기 생성                                                |
+|  **rename**  | 파일/폴더명 수정 혹은 이동                                        |
+|  **remove**  | 파일 삭제                                                         |
+|  **revert**  | 이전 커밋 되돌리기                                                |
+| **comment**  | 주석 추가 및 변경                                                 |
+|  **deploy**  | 배포                                                              |
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### 2. PR Convention
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+PR 제목은 **Gitmoji**를 포함하여 작성합니다.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- **Format:** `[Gitmoji] [Type] 제목`
+- **Example:** `✨ [Feat] 로그인 기능 구현`
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+| Gitmoji |     Type     | 설명                  |
+| :-----: | :----------: | :-------------------- |
+|   ✨    |   **Feat**   | 새로운 기능 추가      |
+|   🐛    |   **Fix**    | 버그 수정             |
+|   📝    |   **Docs**   | 문서 수정             |
+|   🎨    |  **Style**   | 코드 스타일 수정      |
+|   💄    |  **Design**  | 사용자 UI 디자인 수정 |
+|   ♻️    | **Refactor** | 코드 리팩토링         |
+|   ⚡️    |   **Perf**   | 성능 개선             |
+|   ✅    |   **Test**   | 테스트 코드 추가      |
+|   📦    |  **Chore**   | 빌드/설정 파일 수정   |
+|   🎉    |   **Init**   | 프로젝트 초기 생성    |
+|   🚚    |  **Rename**  | 파일 이동/이름 변경   |
+|   🔥    |  **Remove**  | 파일 삭제             |
+|   ⏪️    |  **Revert**  | 커밋 되돌리기         |
+|   💡    | **Comment**  | 주석 추가/변경        |
+|   🚀    |  **Deploy**  | 배포                  |
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### 3. Branch Strategy
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+브랜치 이름은 해당 작업의 이슈 번호를 포함하여 생성합니다.
+
+- **main**: 배포용 최종 브랜치
+- **develop**: 개발용 메인 브랜치
+- **feature**: 기능 개발 브랜치 (`feat/#이슈번호-제목`)
+  - ex) `feat/#12-login`
+
+## 🛠 Tech Stack
+
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
