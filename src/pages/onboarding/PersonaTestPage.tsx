@@ -2,19 +2,20 @@ import OptionCard from '@/components/onboarding/OptionCard';
 import Button from '@/components/onboarding/Button';
 import ProgressBar from '@/components/onboarding/ProgressBar';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { MOCK_QUESTIONS } from "@/constants/persona";
 import backIcon from "../../assets/icons/Vector.svg";
 import { useSignupStore } from "../../store/signupStore";
 
 const PersonaTestPage = () => {
 const navigate = useNavigate();
+const location = useLocation();
+const isRetest = location.state?.from === 'mypage';
 const setPersonaAnswers = useSignupStore((state) => state.setPersonaAnswers);
 const [step, setStep] = useState(0);
 const[answers, setAnswers] = useState<Record<number, number>>({});
 const currentQ = MOCK_QUESTIONS[step];
 
-  //옵션 선택 함수 정의
   const handleSelect = (optionId: number) => {
     setAnswers((prev) => ({
       ...prev,
@@ -22,21 +23,28 @@ const currentQ = MOCK_QUESTIONS[step];
     }));
   };
 
-  //다음 버튼 함수 정의
+  const handleBack = () => {
+    if (step === 0) {
+      if (isRetest) {
+        navigate('/mypersona'); 
+      } else {
+        navigate('/signup', { state: { step: 'nickname' } }); 
+      }
+    } else {
+      setStep(step - 1);
+    }
+  };
+
   const handleNext = () => {
     if (step < MOCK_QUESTIONS.length - 1) {
-      setStep(step + 1); 
+      setStep(step + 1);
     } else {
       const formattedAnswers = Object.entries(answers).map(([qId, optId]) => ({
         questionId: Number(qId),
         optionId: optId
       }));
-      console.log("최종 제출 데이터:", answers);
-      
-      console.log("📦 스토어에 데이터 저장 중...", formattedAnswers);
       setPersonaAnswers(formattedAnswers);
-
-      navigate('/personaresult');
+      navigate('/personaresult', { state: { from: isRetest ? 'mypage' : 'signup' } });
     }
   };
 
@@ -45,13 +53,7 @@ const currentQ = MOCK_QUESTIONS[step];
       {/* 1. Header */}
       <header className="relative flex h-[60px] w-full items-center justify-center">
         <button
-          onClick={() => {
-            if (step === 0) {
-              navigate('/signup', { state: { step: 'nickname' } });
-            } else {
-              setStep(step - 1); // 이전 질문으로 이동
-            }
-          }}
+          onClick={handleBack}
           className="absolute top-1/2 left-0 -translate-y-1/2 cursor-pointer"
         >
           <img

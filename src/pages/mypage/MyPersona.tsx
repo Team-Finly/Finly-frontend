@@ -1,15 +1,18 @@
-import TitleHeader from '@/components/record/TitleHeader';
 import { PERSONA_DATA, type PersonaKey } from '@/constants/mypersona';
 import light from '@/assets/icons/light.svg'
 import { useEffect, useState } from 'react';
 import { getMyPersona } from '@/apis/userApi';
 import { useUserStore } from '@/store/userStore';
+import { useNavigate } from 'react-router-dom';
+import { useSignupStore } from '@/store/signupStore';
+import Before from "@/assets/icons/before.svg";
 
 const MyPersona = () => {
   const personaType = useUserStore((state) => state.personaType);
   const setUserInfo = useUserStore((state) => state.setUserInfo);
   const [isLoading, setIsLoading] = useState(true);
-  
+  const navigate = useNavigate();
+  const resetSignupStore = useSignupStore((state) => state.reset);
   useEffect(() => {
     const fetchPersona = async () => {
       try {
@@ -40,14 +43,27 @@ const MyPersona = () => {
   if (!data) {
     return <div className="h-screen bg-white" />;
   }
+  const handleRetest = () => {
+    resetSignupStore();
+    navigate('/persona', { state: { from: 'mypage' } });
+  };
 
 
   return (
     <div className="flex flex-col h-full">
-      <div className='relative z-50 bg-white flex-shrink-0'>
-          <TitleHeader title="나의 페르소나" />
+      <div className="fixed top-0 z-10 w-full max-w-120 border-b border-gray-100 bg-white">
+        <div className="relative mt-4 flex h-15 items-center justify-center bg-white px-4">
+          <button
+            className="absolute left-4 cursor-pointer"
+            onClick={() => navigate('/profile')}>
+            <img src={Before} alt="이전" className="cursor-pointer"/>
+          </button>
+          <h1 className="text-lg font-semibold text-gray-900">
+           나의 페르소나
+          </h1>
+        </div>
       </div>
-        
+  
     <main className="flex-1 overflow-y-auto scrollbar-hide flex flex-col items-center">
         <div className="w-full flex flex-col items-center justify-center mt-[110px] ">
         <div className="relative w-[77px] h-[70px] flex items-center justify-center mt-[42px] mb-[31px]">
@@ -96,7 +112,9 @@ const MyPersona = () => {
           <button disabled className="disabled:cursor-not-allowed w-full py-[12px] h-[50px] bg-secondary text-white rounded-[12px]  leading-[26px] mb-[12px] font-semibold text-[18px]">
             이미지로 저장하기
           </button>
-          <button disabled className="disabled:cursor-not-allowed w-full h-[50px] py-[12px] bg-gray-50 text-gray-500 rounded-[12px] leading-[26px]  font-semibold text-[18px]">
+          <button
+          onClick={handleRetest} 
+          className=" cursor-pointer w-full h-[50px] py-[12px] bg-gray-50 text-gray-500 rounded-[12px] leading-[26px] font-semibold text-[18px]">
             테스트 다시하기
           </button>
         </div>

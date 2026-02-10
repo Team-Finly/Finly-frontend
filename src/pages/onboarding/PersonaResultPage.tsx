@@ -13,8 +13,7 @@ import BackgroundEffect from '@/components/onboarding/BackgroundEffect';
 import { useState, useEffect } from 'react';
 import { useSignupStore } from '@/store/signupStore';
 import { submitPersonaAnswers } from '@/apis/personatestApi';
-
-
+import {useUserStore} from "../../store/userStore";
 
 const PERSONA_UI_DATA: any = {
 
@@ -55,59 +54,61 @@ const PERSONA_UI_DATA: any = {
 
   const PersonaResultPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const signupData = useSignupStore();
-  
-  // 상태 관리
+  const nickname = useUserStore((state) => state.nickname);
   const [isLoading, setIsLoading] = useState(true);
   const [resultType, setResultType] = useState<string | null>(null); 
+
+  const isRetest = location.state?.from === 'mypage';
+  const userNickname = isRetest 
+    ? (nickname || "핀리대장") 
+    : (signupData.nickname || "핀리대장");
+
+  const currentUI = PERSONA_UI_DATA[resultType ?? ''] ?? PERSONA_UI_DATA['TURTLE'];
 
   useEffect(() => {
     const fetchResult = async () => {
       try {
-        console.log("🚀 페르소나 분석 요청 (회원가입X):", signupData.personaAnswers);
-
         const payload = {
           answers: signupData.personaAnswers
         };
-        const res = await submitPersonaAnswers("signup", payload);
-        console.log("🔥 서버 전체 응답 확인:", res);
-        const responseData: any = res; // 타입 유연하게 처리
-        const serverType = responseData.result?.personaType;
-        
-        if (serverType) {
-          const myType = PERSONA_UI_DATA[serverType] ? serverType : 'TURTLE';
-          console.log(`✅ 분석 성공! 결과: ${myType}`);
-          setResultType(myType); 
-        } else {
-           console.warn("응답에 ID가 없습니다. 기본값 사용");
-           setResultType('TURTLE');
+        const modeParam = isRetest ? 'retest' : 'signup';
+        const res = await submitPersonaAnswers(modeParam, payload);
+       if (res.isSuccess && res.result && res.result.personaType) {
+          setResultType(res.result.personaType); 
+}      else {
+            setResultType('TURTLE');
         }
-
       } catch (error) {
-        console.error("❌ API 에러:", error);
-        setResultType('TURTLE'); // 에러 나면 기본값
+        setResultType('TURTLE');
       } finally {
         setIsLoading(false);
       }
     };
     fetchResult(); 
-  }, []); 
+  }, [isRetest, signupData.personaAnswers]);
 
   const handleNext = () => {
-    navigate('/terms'); 
+    if (isRetest) {
+      navigate('/mypersona'); 
+    } else {
+      if(isRetest) {
+        navigate('/mypersona'); 
+      } else {
+        navigate('/terms'); 
+      }
+    }
   };
+  
 
   if (isLoading) {
     return (
-      <div className='flex flex-col items-center justify-center w-full h-dvh bg-white'>
+      <div className='flex flex-col items-center justify-center w-full h-screen bg-white'>
         <h1 className="text-xl font-bold text-gray-500">나의 투자 성향 분석 중...</h1>
       </div>
     );
   }
-  
-  const currentUI = PERSONA_UI_DATA[resultType || 'TURTLE'];
-  const userNickname = signupData.nickname || "핀리대장";
-
   return (
     <div className='flex flex-col items-center w-full px-4 h-full bg-white'>
 
@@ -116,9 +117,9 @@ const PERSONA_UI_DATA: any = {
         <h1 className="text-[18px] font-semibold text-gray-900">페르소나 결과</h1>
       </header>
 
-
       <div className="flex-1 flex flex-col items-center mt-[67px] w-full">
       <div className="flex flex-col items-center ">
+      
       {/* 이름표 */}
       <img 
         src={currentUI.nameTag}
@@ -126,15 +127,13 @@ const PERSONA_UI_DATA: any = {
         className="block  mb-[10px] object-contain h-[31px]" 
       />
 
-
       {/* 닉네임 */}
       <div className="flex flex-col items-center">
-      <h1 className="text-[24px] font-bold text-gray-900 ">
-        {userNickname}
-      </h1>
+        <h1 className="text-[24px] font-bold text-gray-900 ">
+         {userNickname}
+        </h1>
+        </div>
       </div>
-
-    </div>
 
       {/* 캐릭터 */}
       <div className="relative w-[285px] h-[182px] mt-[21px] mb-[67px] flex justify-center items-center">
@@ -143,7 +142,6 @@ const PERSONA_UI_DATA: any = {
         </div>
 
         <div className={`relative z-10 flex flex-col items-center ${currentUI.charPos}`}>
-
         <img 
           src={currentUI.character} 
           alt="캐릭터" 
@@ -152,14 +150,12 @@ const PERSONA_UI_DATA: any = {
         <img src={shadow} alt="그림자" className={`mt-[3px]`}/>
       </div>
       </div>
-      
 
       {/*  설명 박스 */}
       <div className={`w-[279px] h-[100px] shrink-0 rounded-[18px] py-[28px] px-[20px] text-center font-medium text-[14px] whitespace-pre-wrap text-gray-600 leading-[22px] 
         bg-gradient-to-b ${currentUI.bgGradient}`}>
         {currentUI.description}
       </div>
-
       </div>
 
       {/* 안내 문구 */}
@@ -170,11 +166,11 @@ const PERSONA_UI_DATA: any = {
 
       {/*  다음 버튼  */}
       <div className="w-full">
-        <Button onClick={() => { handleNext(); }} >
-          다음
+        <Button onClick={handleNext}>
+        {isRetest ? '저장' : '다음'}
         </Button>
+        </div>
       </div>
-</div>
     </div>
   );
 };
