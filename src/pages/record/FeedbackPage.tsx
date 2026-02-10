@@ -83,6 +83,22 @@ const FeedbackPage = () => {
     });
   };
 
+  const handleBoldText = (text: string) => {
+    const parts = text.split(/(\{\{.*?\}\})/g);
+
+    return parts.map((part, index) => {
+      if (part.startsWith('{{') && part.endsWith('}}')) {
+        const keyword = part.replace(/\{\{|\}\}/g, '');
+        return (
+          <strong key={index} className="font-bold">
+            {keyword}
+          </strong>
+        );
+      }
+      return <span key={index}>{part}</span>;
+    });
+  };
+
   const handleClose = () => {
     if (location.state?.fromLoading) {
       navigate('/record');
@@ -132,7 +148,7 @@ const FeedbackPage = () => {
         </div>
         <div className="rounded-xl border-[1.2px] border-gray-50 bg-gray-50/60 p-3">
           <p className="text-[11px] leading-4.5 text-gray-500">
-            {feedback.suggestion}
+            {handleBoldText(feedback.suggestion ?? '')}
           </p>
         </div>
       </div>
