@@ -15,6 +15,7 @@ import type {
   RecordSearchRequest,
   RecordSearchResponse,
   RecentSearchResponse,
+  CalendarResponse,
 } from '@/types/record';
 
 export const recordApi = {
@@ -117,6 +118,16 @@ export const recordApi = {
     const res = await api.delete(`/api/records/search/recent`, {
       params: { keyword },
     });
+    return res.data.result;
+  },
+
+  getCalendarFragment: async (yearMonth: string) => {
+    const res = await api.get<ApiResponse<CalendarResponse>>(
+      `/api/records/fragments/calendar`,
+      {
+        params: { yearMonth },
+      },
+    );
     return res.data.result;
   },
 };
