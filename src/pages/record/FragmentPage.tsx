@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import TitleHeader from '@/components/record/TitleHeader';
 import EmotionCard from '@/components/record/EmotionCard';
 import DonutChart from '@/components/record/DonutChart';
@@ -7,16 +7,27 @@ import { useFragmentSummary } from '@/hooks/useFragmentSummary';
 import { EMOTION_CHART_MAP } from '@/constants/emotions';
 import Message from '@/assets/icons/message.svg';
 import PlusWhite from '@/assets/icons/plus-white.svg';
+import { useUserStore } from '@/store/userStore';
 
 const FragmentPage = () => {
   const navigate = useNavigate();
+  const { nickname, fetchMainProfile } = useUserStore();
+  console.log('Nickname:', nickname);
   const { data: fragmentSummary } = useFragmentSummary();
+
+  useEffect(() => {
+    fetchMainProfile();
+  }, [fetchMainProfile]);
 
   return (
     <div>
       <TitleHeader title="조각 모음함" />
       <div className="mt-19 flex w-full flex-col items-center pt-7 pb-5">
-        <p className="mb-1.5 text-sm text-[#6E757D]/80">지금까지 구름님은</p>
+        {nickname && (
+          <p className="mb-1.5 text-sm text-[#6E757D]/80">
+            지금까지 {nickname}님은
+          </p>
+        )}
         <h4 className="mb-5.5 text-xl font-semibold text-gray-900">
           총 {fragmentSummary?.totalCount || 0}개의 조각을 수집했어요
         </h4>
