@@ -7,6 +7,15 @@ import { useDailyChart } from '@/hooks/useStatsAnalysis';
 import { apiRenderGuard } from '@/utils/renderGuard';
 import type { DailyChartResult } from '@/types/stats';
 import { formatMonthDay } from '@/utils/date';
+import { UniversalSkeleton } from '@/components/UniversalSkeleton';
+
+const RelationChartSkeleton = () => (
+  <div className="rounded-[12px] border-[1.2px] border-gray-100 bg-white p-5">
+    <UniversalSkeleton className="mb-1 h-[24px] w-[120px] rounded-md bg-gray-50" />
+    <UniversalSkeleton className="mb-6 h-[18px] w-[180px] rounded-md bg-gray-50" />
+    <UniversalSkeleton className="h-[184px] w-full rounded-[10px]" />
+  </div>
+);
 
 const CustomEmojiDot = (props: any) => {
   const { cx, cy, payload } = props;
@@ -39,7 +48,12 @@ const RelationChart = () => {
   const { currentStock } = useStatsStore();
   const { data, isLoading, isError } = useDailyChart(currentStock?.symbol);
 
-  const guardUI = apiRenderGuard(isLoading, isError, data);
+  const guardUI = apiRenderGuard(
+    isLoading,
+    isError,
+    data,
+    <RelationChartSkeleton />,
+  );
   if (guardUI !== undefined) return guardUI;
 
   const chartResult = data as DailyChartResult;

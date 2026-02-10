@@ -26,7 +26,7 @@ const RecentDecisionCard = ({ data }: Props) => {
   const resultSign = isPositive ? '+' : '';
 
   return (
-    <div className="flex flex-row gap-5 rounded-[12px] border-[1.2px] border-gray-100 bg-white px-4 py-5">
+    <div className="flex flex-row gap-3 rounded-[12px] border-[1.2px] border-gray-100 bg-white px-4 py-4">
       {emotionImg && (
         <img src={emotionImg} alt={emotion} className="h-[50px] w-[50px]" />
       )}
