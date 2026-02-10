@@ -112,4 +112,11 @@ export const recordApi = {
     );
     return res.data.result.recentKeywords;
   },
+
+  deleteRecentKeyword: async (keyword: string): Promise<void> => {
+    const res = await api.delete(`/api/records/search/recent`, {
+      params: { keyword },
+    });
+    return res.data.result;
+  },
 };

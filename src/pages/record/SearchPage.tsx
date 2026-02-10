@@ -6,11 +6,13 @@ import { useNavigate } from 'react-router-dom';
 import { EMOTIONS } from '@/constants/emotions';
 import EmotionFilterButton from '@/components/record/EmotionFilterButton';
 import { useRecentSearch } from '@/hooks/useRecentSearch';
+import { useDeleteRecentSearch } from '@/hooks/useDeleteRecentSearch';
 
 const SearchPage = () => {
   const navigate = useNavigate();
   const [keyword, setKeyword] = useState('');
   const { data: recentKeywords, isLoading } = useRecentSearch();
+  const { mutate: deleteRecentKeyword } = useDeleteRecentSearch();
 
   const handleSearch = () => {
     if (keyword.trim() !== '') {
@@ -80,6 +82,7 @@ const SearchPage = () => {
                     `/search/result?keyword=${encodeURIComponent(keyword)}`,
                   )
                 }
+                onDelete={() => deleteRecentKeyword(keyword)}
               />
             ))}
           </div>
