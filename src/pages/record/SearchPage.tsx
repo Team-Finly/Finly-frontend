@@ -73,16 +73,16 @@ const SearchPage = () => {
         <div>
           <h3 className="mb-4 font-semibold text-gray-900">최근 검색</h3>
           <div className="flex flex-col divide-y-[1.2px] divide-gray-100">
-            {recentKeywords.map((keyword, index) => (
+            {recentKeywords.map((recentKeyword) => (
               <SearchHistory
-                key={index}
-                keyword={keyword}
+                key={recentKeyword}
+                keyword={recentKeyword}
                 onClick={() =>
                   navigate(
-                    `/search/result?keyword=${encodeURIComponent(keyword)}`,
+                    `/search/result?keyword=${encodeURIComponent(recentKeyword)}`,
                   )
                 }
-                onDelete={() => deleteRecentKeyword(keyword)}
+                onDelete={() => deleteRecentKeyword(recentKeyword)}
               />
             ))}
           </div>
