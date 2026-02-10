@@ -74,10 +74,10 @@ const PERSONA_UI_DATA: any = {
           answers: signupData.personaAnswers
         };
         const modeParam = isRetest ? 'retest' : 'signup';
-        const res: any = await submitPersonaAnswers(modeParam, payload);
-       if (res.isSuccess && res?.result && res.result.personaType) {
-            setResultType(res.result.personaType);
-        } else {
+        const res = await submitPersonaAnswers(modeParam, payload);
+       if (res.isSuccess && res.result && res.result.personaType) {
+          setResultType(res.result.personaType); 
+}      else {
             setResultType('TURTLE');
         }
       } catch (error) {
