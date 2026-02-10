@@ -11,7 +11,6 @@ interface LinearBarProps {
 
 const LinearBar = ({ fragmentSummary }: LinearBarProps) => {
   const navigate = useNavigate();
-  console.log('fragmentSummary', fragmentSummary);
 
   if (!fragmentSummary) {
     return null;
