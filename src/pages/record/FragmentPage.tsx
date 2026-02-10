@@ -12,7 +12,6 @@ import { useUserStore } from '@/store/userStore';
 const FragmentPage = () => {
   const navigate = useNavigate();
   const { nickname, fetchMainProfile } = useUserStore();
-  console.log('Nickname:', nickname);
   const { data: fragmentSummary } = useFragmentSummary();
 
   useEffect(() => {
@@ -36,7 +35,7 @@ const FragmentPage = () => {
           <p className="px-3 py-2 text-xs">
             {fragmentSummary && fragmentSummary.dominantType ? (
               <>
-                현재{' '}
+                {fragmentSummary.multipleDominant ? '최근 ' : '현재 '}
                 <span className="font-semibold">
                   '{EMOTION_CHART_MAP[fragmentSummary.dominantType].label}'
                 </span>{' '}

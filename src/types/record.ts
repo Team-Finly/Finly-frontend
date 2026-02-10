@@ -39,6 +39,9 @@ export interface TypeSummary {
 export interface FragmentSummaryResponse {
   totalCount: number;
   dominantType: EmotionType;
+  multipleDominant: boolean;
+  recessiveType: EmotionType;
+  multipleRecessive: boolean;
   typeSummary: TypeSummary[];
 }
 

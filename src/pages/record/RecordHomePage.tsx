@@ -20,7 +20,11 @@ const RecordHomePage = () => {
     isLoading: isMarketIndexLoading,
     isError: isMarketIndexError,
   } = useMarketIndex();
-  const { data: fragmentSummary } = useFragmentSummary();
+  const {
+    data: fragmentSummary,
+    isLoading: isFragmentSummaryLoading,
+    isError: isFragmentSummaryError,
+  } = useFragmentSummary();
   const today = getTodayString();
   const { data: dailyDetail } = useTodayRecords(today);
 
@@ -68,7 +72,17 @@ const RecordHomePage = () => {
             </span>
             개의 마음 조각을 모았어요!
           </h2>
-          <LinearBar emotions={fragmentSummary?.typeSummary || []} />
+          {isFragmentSummaryLoading ? (
+            <p className="mb-2 text-xs font-semibold text-gray-500/40">
+              조각 모음함 데이터를 불러오는 중이에요...
+            </p>
+          ) : isFragmentSummaryError ? (
+            <p className="mb-2 text-xs font-semibold text-gray-500/40">
+              조각 모음함 데이터를 불러오지 못했어요.
+            </p>
+          ) : (
+            <LinearBar fragmentSummary={fragmentSummary} />
+          )}
         </div>
         <div className="h-4 bg-gray-50"></div>
         <div className="mt-5 mb-[102px] px-4">
@@ -93,7 +107,7 @@ const RecordHomePage = () => {
                 <button
                   key={item.recordId}
                   type="button"
-                  className="text-left"
+                  className="cursor-pointer text-left"
                   onClick={() => navigate(`/record/${today}/${item.recordId}`)}
                 >
                   <RecordFragment data={item} />

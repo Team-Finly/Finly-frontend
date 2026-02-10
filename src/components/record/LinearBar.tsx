@@ -1,31 +1,30 @@
 import React from 'react';
 import { EMOTIONS } from '@/constants/emotions';
-import type { TypeSummary } from '@/types/record';
+import type { FragmentSummaryResponse } from '@/types/record';
 import { useNavigate } from 'react-router-dom';
 import { hasBatchim } from '@/utils/checkBatchim';
+import { EMOTION_CHART_MAP } from '@/constants/emotions';
 
 interface LinearBarProps {
-  emotions: TypeSummary[];
+  fragmentSummary: FragmentSummaryResponse | null;
 }
 
-const LinearBar = ({ emotions }: LinearBarProps) => {
+const LinearBar = ({ fragmentSummary }: LinearBarProps) => {
   const navigate = useNavigate();
+  console.log('fragmentSummary', fragmentSummary);
 
-  if (!emotions) return null;
-  let maxLabel = '';
-  let minLabel = '';
-
-  if (emotions.length > 0) {
-    const sortedEmotions = [...emotions].sort((a, b) => b.count - a.count);
-    const maxEmotion = sortedEmotions[0];
-    const minEmotion = sortedEmotions[sortedEmotions.length - 1];
-    maxLabel = EMOTIONS.find((e) => e.key === maxEmotion?.type)?.label || '';
-    minLabel = EMOTIONS.find((e) => e.key === minEmotion?.type)?.label || '';
+  if (!fragmentSummary) {
+    return null;
   }
+
+  const dominantLabel =
+    EMOTION_CHART_MAP[fragmentSummary.dominantType]?.label || '';
+  const recessiveLabel =
+    EMOTION_CHART_MAP[fragmentSummary.recessiveType]?.label || '';
 
   return (
     <div className="w-full">
-      {emotions.length === 0 ? (
+      {fragmentSummary.typeSummary.length === 0 ? (
         <div
           className="h-6 w-full cursor-pointer overflow-hidden rounded-full bg-gray-200"
           onClick={() => navigate('/fragment')}
@@ -35,10 +34,9 @@ const LinearBar = ({ emotions }: LinearBarProps) => {
           className="flex h-6 w-full cursor-pointer gap-0.5 overflow-hidden rounded-full"
           onClick={() => navigate('/fragment')}
         >
-          {emotions.map((item) => {
+          {fragmentSummary.typeSummary.map((item) => {
             const emotion = EMOTIONS.find((e) => e.key === item.type);
             if (!emotion) return null;
-
             return (
               <div
                 key={item.type}
@@ -53,15 +51,19 @@ const LinearBar = ({ emotions }: LinearBarProps) => {
         </div>
       )}
       <div className="mt-2 mb-5.5 flex justify-between text-xs font-semibold text-gray-500/40">
-        {emotions.length === 0 ? (
+        {fragmentSummary.typeSummary.length === 0 ? (
           <p>첫 조각을 남겨주세요!</p>
         ) : (
           <>
-            <p>
-              {maxLabel}
-              {hasBatchim(maxLabel) ? '이' : '가'} 가장 선명해요
-            </p>
-            <p>{minLabel} 조각 감소 중</p>
+            {dominantLabel && (
+              <p>
+                {dominantLabel}
+                {hasBatchim(dominantLabel) ? '이' : '가'} 가장 선명해요
+              </p>
+            )}
+            {fragmentSummary.typeSummary.length !== 1 && recessiveLabel && (
+              <p>{recessiveLabel} 조각 감소 중</p>
+            )}
           </>
         )}
       </div>
