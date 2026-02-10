@@ -15,8 +15,11 @@ import { getFgiLabel } from '@/constants/market';
 
 const RecordHomePage = () => {
   const navigate = useNavigate();
-  const { data: marketIndex, isLoading: isMarketIndexLoading } =
-    useMarketIndex();
+  const {
+    data: marketIndex,
+    isLoading: isMarketIndexLoading,
+    isError: isMarketIndexError,
+  } = useMarketIndex();
   const { data: fragmentSummary } = useFragmentSummary();
   const today = getTodayString();
   const { data: dailyDetail } = useTodayRecords(today);
@@ -45,12 +48,12 @@ const RecordHomePage = () => {
             <div className="flex gap-1 text-[13px] text-gray-700">
               {isMarketIndexLoading ? (
                 <p className="text-[13px] text-gray-700">로딩 중...</p>
+              ) : isMarketIndexError || marketIndex?.fearGreed == null ? (
+                <p className="text-[13px] text-gray-700">데이터 없음</p>
               ) : (
                 <>
-                  <p className="font-semibold">
-                    {marketIndex?.fearGreed ?? 0}%
-                  </p>
-                  <p>{getFgiLabel(marketIndex?.fearGreed ?? 0)}</p>
+                  <p className="font-semibold">{marketIndex.fearGreed}%</p>
+                  <p>{getFgiLabel(marketIndex.fearGreed)}</p>
                 </>
               )}
             </div>
