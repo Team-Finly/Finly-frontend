@@ -1,10 +1,10 @@
 type MetricCardProps = {
   title: string;
   score: number;
-  desc: string;
+  description: string;
 };
 
-const MetricCard = ({ title, score, desc }: MetricCardProps) => {
+const MetricCard = ({ title, score, description }: MetricCardProps) => {
   const clampedScore = Math.min(100, Math.max(0, score));
 
   return (
@@ -32,7 +32,7 @@ const MetricCard = ({ title, score, desc }: MetricCardProps) => {
       </div>
 
       <p className="bg-[#F4F5F799] border border-gray-100 rounded-xl mt-[12px] px-[16px] py-[12px] text-[13px] text-gray-600 leading-relaxed">
-        {desc}
+        {description}
       </p>
     </div>
   );

@@ -6,5 +6,6 @@ export const useMindScoreDetail = () => {
     queryKey: ['mindScoreDetail'],
     queryFn: homeApi.getMindScoreDetail,
     staleTime: 1000 * 60 * 5,
+    select: (res) => res.result,
   });
 };
