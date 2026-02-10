@@ -2,11 +2,17 @@ import PatternBg from '@/assets/images/pattern_bg.png';
 import { useAiAnalysis } from '@/hooks/useStatsAnalysis';
 import { apiRenderGuard } from '@/utils/renderGuard';
 import type { AiAnalysisResult } from '@/types/stats';
+import { UniversalSkeleton } from '@/components/UniversalSkeleton';
 
 const RelationPattern = () => {
   const { data, isLoading, isError } = useAiAnalysis();
 
-  const guardUI = apiRenderGuard(isLoading, isError, data);
+  const guardUI = apiRenderGuard(
+    isLoading,
+    isError,
+    data,
+    <UniversalSkeleton className="h-[150px] w-full rounded-[20px]" />,
+  );
   if (guardUI !== undefined) return guardUI;
 
   const { text } = data as AiAnalysisResult;

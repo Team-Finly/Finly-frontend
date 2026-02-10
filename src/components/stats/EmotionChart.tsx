@@ -11,6 +11,13 @@ import { useStatsStore } from '@/store/statsStockStore';
 import { useEmotionDistribution } from '@/hooks/useEmotionTab';
 import { apiRenderGuard } from '@/utils/renderGuard';
 import type { StockEmotionDistribution } from '@/types/stats';
+import { UniversalSkeleton } from '@/components/UniversalSkeleton';
+
+const EmotionChartSkeleton = () => (
+  <div className="flex items-center justify-center rounded-xl border-[1.2px] border-gray-100 bg-white p-5">
+    <UniversalSkeleton className="h-[162px] w-[320px] rounded-md bg-gray-50" />
+  </div>
+);
 
 const EmotionChart = () => {
   const { currentStock } = useStatsStore();
@@ -18,7 +25,12 @@ const EmotionChart = () => {
     currentStock?.symbol,
   );
 
-  const guardUI = apiRenderGuard(isLoading, isError, data);
+  const guardUI = apiRenderGuard(
+    isLoading,
+    isError,
+    data,
+    <EmotionChartSkeleton />,
+  );
   if (guardUI !== undefined) return guardUI;
 
   const emotionData = data as StockEmotionDistribution;

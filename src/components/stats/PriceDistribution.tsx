@@ -3,6 +3,15 @@ import { useStatsStore } from '@/store/statsStockStore';
 import { usePriceDistribution } from '@/hooks/useStockTab';
 import { apiRenderGuard } from '@/utils/renderGuard';
 import type { StockDistributionResult } from '@/types/stats';
+import { UniversalSkeleton } from '@/components/UniversalSkeleton';
+
+const PriceDistributionSkeleton = () => (
+  <div className="rounded-[8px] border-[1.2px] border-gray-100 bg-white p-5">
+    <UniversalSkeleton className="mb-1 h-[24px] w-[120px] rounded-md bg-gray-50" />
+    <UniversalSkeleton className="mb-6 h-[18px] w-[180px] rounded-md bg-gray-50" />
+    <UniversalSkeleton className="h-[120px] w-full rounded-[10px]" />
+  </div>
+);
 
 const PriceDistribution = () => {
   const { currentStock } = useStatsStore();
@@ -10,7 +19,12 @@ const PriceDistribution = () => {
     currentStock?.symbol,
   );
 
-  const guardUI = apiRenderGuard(isLoading, isError, data);
+  const guardUI = apiRenderGuard(
+    isLoading,
+    isError,
+    data,
+    <PriceDistributionSkeleton />,
+  );
   if (guardUI !== undefined) return guardUI;
 
   const { distributions } = data as StockDistributionResult;

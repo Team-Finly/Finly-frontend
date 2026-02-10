@@ -4,11 +4,17 @@ import FlatIcon from '@/assets/images/stats_flat.svg';
 import { useFearIndex } from '@/hooks/useStatsAnalysis';
 import { apiRenderGuard } from '@/utils/renderGuard';
 import type { FearIndexResult } from '@/types/stats';
+import { UniversalSkeleton } from '@/components/UniversalSkeleton';
 
 const RelationFear = () => {
   const { data, isLoading, isError } = useFearIndex();
 
-  const guardUI = apiRenderGuard(isLoading, isError, data);
+  const guardUI = apiRenderGuard(
+    isLoading,
+    isError,
+    data,
+    <UniversalSkeleton className="h-[108px] w-[175px] rounded-[12px]" />,
+  );
   if (guardUI !== undefined) return guardUI;
 
   const { fearIndex, changeDirection, changeValue, phrase } =

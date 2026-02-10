@@ -6,6 +6,15 @@ import { useUserStore } from '@/store/userStore';
 import { useGoldenTime } from '@/hooks/useEmotionTab';
 import { apiRenderGuard } from '@/utils/renderGuard';
 import type { GoldenTimeResult } from '@/types/stats';
+import { UniversalSkeleton } from '@/components/UniversalSkeleton';
+
+const GoldenTimeSkeleton = () => (
+  <div className="rounded-[8px] border-[1.2px] border-gray-100 bg-white p-5">
+    <UniversalSkeleton className="mb-1 h-[24px] w-[120px] rounded-md bg-gray-50" />
+    <UniversalSkeleton className="h-[73px] w-full rounded-[10px]" />
+    <UniversalSkeleton className="my-1 h-[40px] w-[320] rounded-[22.5px]" />
+  </div>
+);
 
 // 높이 계산
 const getBarHeight = (percent: number) => {
@@ -22,7 +31,12 @@ const GoldenTime = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const nickname = useUserStore((state) => state.nickname);
 
-  const guardUI = apiRenderGuard(isLoading, isError, data);
+  const guardUI = apiRenderGuard(
+    isLoading,
+    isError,
+    data,
+    <GoldenTimeSkeleton />,
+  );
   if (guardUI !== undefined) return guardUI;
 
   const result = data as GoldenTimeResult;
