@@ -111,13 +111,13 @@ const TermsPage = () => {
               >
                 <img src={isChecked ? checkIcon : Unchecked} alt="체크 여부" />
               </button>
-              <p
+              <button
                 onClick={() => toggleAgreement(idStr)}
-                className="text-[16px] font-medium text-gray-900"
+                className="cursor-pointer text-[16px] font-medium text-gray-900"
               >
                 <span className={term.required ? 'text-gray-900' : ''}></span>
                 {term.title}
-              </p>
+              </button>
               <button
                 type="button"
                 className="ml-auto cursor-pointer"
