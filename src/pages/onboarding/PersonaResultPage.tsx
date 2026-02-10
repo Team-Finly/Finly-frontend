@@ -65,7 +65,7 @@ const PERSONA_UI_DATA: any = {
     ? (nickname || "핀리대장") 
     : (signupData.nickname || "핀리대장");
 
-  const currentUI = PERSONA_UI_DATA[resultType || 'TURTLE'];
+  const currentUI = PERSONA_UI_DATA[resultType ?? ''] ?? PERSONA_UI_DATA['TURTLE'];
 
   useEffect(() => {
     const fetchResult = async () => {
@@ -93,7 +93,11 @@ const PERSONA_UI_DATA: any = {
     if (isRetest) {
       navigate('/mypersona'); 
     } else {
-      navigate('/terms'); 
+      if(isRetest) {
+        navigate('/mypersona'); 
+      } else {
+        navigate('/terms'); 
+      }
     }
   };
   
