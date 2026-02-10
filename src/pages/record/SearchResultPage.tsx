@@ -66,13 +66,13 @@ const SearchResultPage = () => {
             <img src={Message} alt="메시지 아이콘" className="w-[30px]" />
             <p className="text-gray-300">검색 중 오류가 발생했어요</p>
           </div>
-        ) : data?.records.length === 0 ? (
+        ) : data?.records?.length === 0 ? (
           <div className="mt-[217px] flex h-[65px] w-full flex-col items-center justify-between rounded-xl">
             <img src={Message} alt="메시지 아이콘" className="w-[30px]" />
             <p className="text-gray-300">검색 결과가 없어요</p>
           </div>
         ) : (
-          data?.records.map((record) => {
+          data?.records?.map((record) => {
             const emotionObj = EMOTIONS.find(
               (e) => e.key === record.emotionCode,
             );
