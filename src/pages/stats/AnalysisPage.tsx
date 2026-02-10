@@ -108,7 +108,8 @@ const AnalysisPage = () => {
         <img
           src={Close}
           alt="닫기"
-          className="absolute right-4 h-auto w-[16px]"
+          role="button"
+          className="absolute right-4 h-auto w-[16px] cursor-pointer"
           onClick={() => navigate(-1)}
         />
       </header>
