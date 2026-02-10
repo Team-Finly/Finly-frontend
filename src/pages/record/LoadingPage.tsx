@@ -26,7 +26,7 @@ const LoadingPage = () => {
     if (isMinTimeOver && feedback?.status === 'COMPLETED') {
       setProgress(100);
       const navigateTimer = setTimeout(() => {
-        navigate(`/feedback/${recordId}`);
+        navigate(`/feedback/${recordId}`, { state: { fromLoading: true } });
       }, 500);
       return () => clearTimeout(navigateTimer);
     }

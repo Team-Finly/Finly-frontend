@@ -3,13 +3,14 @@ import Gradient from '@/assets/images/gradient.svg';
 import { EMOTIONS, EMOTION_CHART_MAP } from '@/constants/emotions';
 import Light from '@/assets/images/light.png';
 import Close from '@/assets/icons/close-dark.svg';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { useRecordDetail } from '@/hooks/useRecordDetail';
 import { stockInfoStore } from '@/store/stockInfoStore';
 import { useFeedback } from '@/hooks/useFeedback';
 
 const FeedbackPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { recordId } = useParams<{ recordId: string }>();
   const { data: feedback, isLoading: isFeedbackLoading } = useFeedback(
     Number(recordId),
@@ -82,10 +83,18 @@ const FeedbackPage = () => {
     });
   };
 
+  const handleClose = () => {
+    if (location.state?.fromLoading) {
+      navigate('/record');
+    } else {
+      navigate(-1);
+    }
+  };
+
   return (
     <div className="flex flex-1 flex-col items-center bg-[#F8F9FA] px-4">
       <div className="mb-20 flex h-19 w-full items-center justify-end pt-[25px] pb-[9px]">
-        <button onClick={() => navigate('/record')}>
+        <button onClick={handleClose}>
           <img src={Close} alt="닫기 아이콘" className="cursor-pointer" />
         </button>
       </div>
