@@ -20,6 +20,7 @@ const DailyRecordDetailPage = () => {
     isLoading: isDetailLoading,
     isError: isDetailError,
   } = useRecordDetail(numericRecordId);
+  console.log(recordDetail)
 
   const recordDate = recordDetail?.recordDate ?? '';
   const {
@@ -97,9 +98,6 @@ if (total > MAX_DOTS) {
   const activeDotIndex = currentIndex - startIndex;
 
   const currentRecord = records[currentIndex];
-  const emotion = currentRecord
-    ? getEmotionData(currentRecord.emotionCode)
-    : null;
 
   if (!currentRecord) {
     return (
@@ -120,31 +118,6 @@ if (total > MAX_DOTS) {
         }}
       />
 
-      <div className="mt-[30px] flex flex-col items-center">
-        <span className="mb-[16px] text-[16px] font-semibold text-gray-700">
-          {formatDate(currentRecord.recordDate)}
-        </span>
-        {emotion && (
-          <div
-            className="mb-[24px] flex items-center gap-0.5 rounded-full px-[8px] py-[6.5px] text-[14px] font-semibold"
-            style={{
-              backgroundColor: emotion.bgColor,
-              color: emotion.color,
-            }}
-          >
-            <img
-              src={emotion.icon}
-              alt={emotion.label}
-              className="h-[18px] w-[18px] object-contain"
-            />
-
-            <span className="leading-none font-bold">
-              {emotion.label} Lv.{currentRecord.emotionIntensity}
-            </span>
-          </div>
-        )}
-      </div>
-
       <div
         ref={containerRef}
         onScroll={handleScroll}
@@ -152,16 +125,48 @@ if (total > MAX_DOTS) {
         style={{ scrollSnapType: 'x mandatory' }}
       >
         <div className="flex h-full">
-          {records.map((record) => (
-            <DailyRecordDetailCard
-              key={record.recordId}
-              record={record}
-            />
-          ))}
+          {records.map((record) => {
+            const emotion = getEmotionData(record.emotionCode);
+
+            return (
+              <div
+                key={record.recordId}
+                className="flex-shrink-0 w-full flex flex-col items-center snap-start"
+              >
+                {/* 날짜 + 감정 */}
+                <div className="mt-[30px] flex flex-col items-center">
+                  <span className="mb-[16px] text-[16px] font-semibold text-gray-700">
+                    {formatDate(record.recordDate)}
+                  </span>
+                  {emotion && (
+                    <div
+                      className="mb-[24px] flex items-center gap-0.5 rounded-full px-[8px] py-[6.5px] text-[14px] font-semibold"
+                      style={{
+                        backgroundColor: emotion.bgColor,
+                        color: emotion.color,
+                      }}
+                    >
+                      <img
+                        src={emotion.icon}
+                        alt={emotion.label}
+                        className="h-[18px] w-[18px] object-contain"
+                      />
+                      <span className="leading-none font-bold">
+                        {emotion.label} Lv.{record.emotionIntensity}
+                      </span>
+                    </div>
+                  )}
+                </div>
+
+                {/* 카드 */}
+                <DailyRecordDetailCard record={record} />
+              </div>
+            );
+          })}
         </div>
       </div>
 
-      {/* 하단 페이지네이션 바 */}
+      {/* 하단 페이지네이션 */}
       {showPagination && (
         <div className="py-8 flex justify-center items-center gap-[4px]">
           {visibleIndexes.map((_, index) => (
