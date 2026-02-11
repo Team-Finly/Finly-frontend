@@ -84,7 +84,7 @@ const LoginPage = () => {
             showValidIcon={false}
           />
           {loginError && (
-            <div className="font-regular mt-[10px] text-[16px] text-[#F04452]">
+            <div className="font-regular absolute mt-[10px] text-[16px] text-[#F04452]">
               이메일과 비밀번호가 일치하지 않습니다
             </div>
           )}
@@ -95,7 +95,7 @@ const LoginPage = () => {
       <button
         disabled={!isFormValid}
         onClick={handleLogin}
-        className={`mt-[45px] h-[50px] w-full cursor-pointer rounded-[12px] text-lg font-medium transition-colors duration-200 ${
+        className={`mt-[71px] h-[50px] w-full cursor-pointer rounded-[12px] text-lg font-medium transition-colors duration-200 ${
           isFormValid
             ? 'bg-secondary cursor-pointer text-white'
             : 'cursor-not-allowed bg-gray-100 text-gray-300'
