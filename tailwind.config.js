@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       fontFamily: {
@@ -8,10 +8,18 @@ export default {
         sans: ['Pretendard', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
 
-
+      keyframes: {
+        shimmer: {
+          '0%': { transform: 'translateX(-150%)' },
+          '100%': { transform: 'translateX(150%)' },
+        },
+      },
+      animation: {
+        shimmer: 'shimmer 1.5s infinite linear',
+      },
 
       height: {
-        screen: '100dvh', 
+        screen: '100dvh',
       },
     },
   },

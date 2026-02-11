@@ -1,14 +1,27 @@
-import { useMemo } from 'react';
 import { useStatsStore } from '@/store/statsStockStore';
 import { useShakenKeywords } from '@/hooks/useEmotionTab';
 import { apiRenderGuard } from '@/utils/renderGuard';
 import type { StockKeywordsResult } from '@/types/stats';
+import { UniversalSkeleton } from '@/components/UniversalSkeleton';
+
+const KeywordsSkeleton = () => (
+  <div className="rounded-[8px] border-[1.2px] border-gray-100 bg-white p-5">
+    <UniversalSkeleton className="mb-1 h-[24px] w-[120px] rounded-md bg-gray-50" />
+    <UniversalSkeleton className="mb-6 h-[18px] w-[180px] rounded-md bg-gray-50" />
+    <UniversalSkeleton className="h-[70px] w-full rounded-[10px]" />
+  </div>
+);
 
 const Keywords = () => {
   const { currentStock } = useStatsStore();
   const { data, isLoading, isError } = useShakenKeywords(currentStock?.symbol);
 
-  const guardUI = apiRenderGuard(isLoading, isError, data);
+  const guardUI = apiRenderGuard(
+    isLoading,
+    isError,
+    data,
+    <KeywordsSkeleton />,
+  );
   if (guardUI !== undefined) return guardUI;
 
   const keywordData = data as StockKeywordsResult;

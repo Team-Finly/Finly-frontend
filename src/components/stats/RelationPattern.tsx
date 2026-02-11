@@ -1,12 +1,28 @@
 import PatternBg from '@/assets/images/pattern_bg.png';
+import { useAiAnalysis } from '@/hooks/useStatsAnalysis';
+import { apiRenderGuard } from '@/utils/renderGuard';
+import type { AiAnalysisResult } from '@/types/stats';
+import { UniversalSkeleton } from '@/components/UniversalSkeleton';
 
 const RelationPattern = () => {
+  const { data, isLoading, isError } = useAiAnalysis();
+
+  const guardUI = apiRenderGuard(
+    isLoading,
+    isError,
+    data,
+    <UniversalSkeleton className="h-[150px] w-full rounded-[20px]" />,
+  );
+  if (guardUI !== undefined) return guardUI;
+
+  const { text } = data as AiAnalysisResult;
+
   return (
     <div
       className="flex w-full flex-col gap-4 rounded-[20px] px-5 py-5 shadow-sm"
       style={{
         backgroundImage: `url(${PatternBg})`,
-        backgroundSize: '105%',
+        backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
       }}
@@ -15,7 +31,7 @@ const RelationPattern = () => {
         투자 패턴 발견
       </div>
       <div className="text-[13px] leading-relaxed font-medium whitespace-pre-wrap text-gray-700">
-        {`기현님의 오전 10시 전 '불안'은 85% 확률로 손절로 이어졌어요\n하지만 그중 60%는 오후에 가격이 다시 회복되었어요`}
+        {text}
       </div>
     </div>
   );

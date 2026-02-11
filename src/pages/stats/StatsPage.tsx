@@ -68,7 +68,18 @@ const StatsPage = () => {
 
   const isInitialLoading = isEntryLoading || isRecordedLoading || !isMapLoaded;
   const isInitialError = isEntryError || isRecordedError;
-  if (isInitialLoading) return <div className="flex-1 bg-gray-50" />;
+
+  if (isInitialLoading)
+    return (
+      <div className="flex flex-1 flex-col items-center justify-center bg-gray-50">
+        <div className="flex flex-col items-center gap-4">
+          <div className="border-t-secondary h-10 w-10 animate-spin rounded-full border-4 border-gray-200" />
+          <p className="text-sm font-medium text-gray-500">
+            통계 데이터를 불러오고 있어요...
+          </p>
+        </div>
+      </div>
+    );
   if (isInitialError || !statsInfo) return <ErrorPage />;
 
   const { recordLevel, totalRecordCount } = statsInfo;

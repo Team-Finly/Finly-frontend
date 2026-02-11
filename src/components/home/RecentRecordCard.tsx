@@ -18,9 +18,11 @@ export const RecentRecordCard = ({ record, stock }: Props) => {
   const emotion = EMOTION_CHART_MAP[record.emotionCode];
 
   return (
-    <div className="min-w-[256px] bg-white rounded-xl shadow-[#DFE2E81A] shadow-sm border border-[#F2F4F6] p-[12px]">
-      <p className="text-[12px] pb-[6px] text-[#4E566066]">{formatMonthDay(record.recordDate)}</p>
-  
+    <div className="min-w-[256px] rounded-xl border border-[#F2F4F6] bg-white p-[12px] shadow-sm shadow-[#DFE2E81A]">
+      <p className="pb-[6px] text-[12px] text-[#4E566066]">
+        {formatMonthDay(record.recordDate)}
+      </p>
+
       <div className="flex items-center">
         <div className="mb-[10px] flex items-center gap-2">
           {stock?.logoUrl ? (

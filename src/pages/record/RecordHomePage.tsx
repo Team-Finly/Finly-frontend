@@ -10,9 +10,16 @@ import FloatingButton from '@/components/record/FloatingButton';
 import { useFragmentSummary } from '@/hooks/useFragmentSummary';
 import { useTodayRecords } from '@/hooks/useTodayRecords';
 import { getTodayString } from '@/utils/date';
+import { useMarketIndex } from '@/hooks/useMarketIndex';
+import { getFgiLabel } from '@/constants/market';
 
 const RecordHomePage = () => {
   const navigate = useNavigate();
+  const {
+    data: marketIndex,
+    isLoading: isMarketIndexLoading,
+    isError: isMarketIndexError,
+  } = useMarketIndex();
   const { data: fragmentSummary } = useFragmentSummary();
   const today = getTodayString();
   const { data: dailyDetail } = useTodayRecords(today);
@@ -39,8 +46,16 @@ const RecordHomePage = () => {
               <p className="text-[13px] text-gray-700">공포탐욕 지수(FGI)</p>
             </div>
             <div className="flex gap-1 text-[13px] text-gray-700">
-              <p className="font-semibold">87%</p>
-              <p>탐욕</p>
+              {isMarketIndexLoading ? (
+                <p className="text-[13px] text-gray-700">로딩 중...</p>
+              ) : isMarketIndexError || marketIndex?.fearGreed == null ? (
+                <p className="text-[13px] text-gray-700">데이터 없음</p>
+              ) : (
+                <>
+                  <p className="font-semibold">{marketIndex.fearGreed}%</p>
+                  <p>{getFgiLabel(marketIndex.fearGreed)}</p>
+                </>
+              )}
             </div>
           </div>
           <Calendar />
@@ -72,16 +87,14 @@ const RecordHomePage = () => {
             )}
           </div>
           {dailyDetail?.timelineSummary &&
-            dailyDetail.timelineSummary.length > 0 ? (
+          dailyDetail.timelineSummary.length > 0 ? (
             <div className="flex flex-col gap-1.5">
-              {dailyDetail.timelineSummary.map(item => (
+              {dailyDetail.timelineSummary.map((item) => (
                 <button
                   key={item.recordId}
                   type="button"
                   className="text-left"
-                  onClick={() =>
-                    navigate(`/record/${today}/${item.recordId}`)
-                  }
+                  onClick={() => navigate(`/record/${today}/${item.recordId}`)}
                 >
                   <RecordFragment data={item} />
                 </button>

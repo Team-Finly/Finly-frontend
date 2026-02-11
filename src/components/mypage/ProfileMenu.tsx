@@ -4,17 +4,21 @@ import rightarrow from '@/assets/icons/rightarrow.svg';
 import onIcon from '@/assets/icons/on.svg';
 import offIcon from '@/assets/icons/off.svg';
 
-const ProfileMenu = () => {
+interface ProfileMenuProps {
+  onLogoutClick: () => void;
+}
+
+const ProfileMenu = ({ onLogoutClick }: ProfileMenuProps) => {
   const navigate = useNavigate();
   const [isNotiOn, setIsNotiOn] = useState(true);
-
+  
   return (
-    <div className="mx-[16px] mt-[26px] flex flex-col rounded-[12px] border-[1.2px] border-gray-100 bg-white px-[20px] py-[24px]">
+    <div className="mx-[16px] mt-[26px] flex flex-col h-[310px] rounded-[12px] border-[1.2px] border-gray-100 px-[20px] bg-white ">
       <button
         type="button"
         onClick={() => navigate('/reports')}
-        className="mb-[24px] flex w-full cursor-pointer items-center justify-between text-left">
-        <div className="flex flex-col gap-[4px]">
+        className="mb-[20px] mt-[25px] flex w-full cursor-pointer items-center justify-between text-left">
+        <div className="flex flex-col">
           <p className="text-[16px] font-semibold text-gray-900">AI 리포트 보관함</p>
           <p className="text-[12px] text-gray-300">주간 월간 리포트 모아보기</p>
         </div>
@@ -24,8 +28,8 @@ const ProfileMenu = () => {
       <button
         type="button"
         onClick={() => navigate('/mypersona')}
-        className="mb-[33px] flex w-full cursor-pointer items-center justify-between text-left">
-        <div className="flex flex-col gap-[4px]">
+        className="mb-[29px] flex w-full cursor-pointer items-center justify-between text-left">
+        <div className="flex flex-col ">
           <p className="text-[16px] font-semibold text-gray-900">나의 페르소나</p>
           <p className="text-[12px] text-gray-300">테스트 다시하기 | 성향 분석</p>
         </div>
@@ -35,14 +39,14 @@ const ProfileMenu = () => {
       <button
         type="button"
         onClick={() => navigate('/profilesettings')} 
-        className="mb-[42px] flex w-full cursor-pointer items-center justify-between text-left">
-        <div className="flex flex-col gap-[4px]">
+        className="mb-[38px] flex w-full cursor-pointer items-center justify-between text-left">
+        <div className="flex flex-col">
           <p className="text-[16px] font-semibold text-gray-900">프로필 및 계정 설정</p>
         </div>
         <img src={rightarrow} alt="Right Arrow" />
       </button>
 
-      <div className="flex w-full items-center justify-between pt-[4px]">
+      <div className="flex w-full items-center justify-between">
         <p className="text-[16px] font-semibold text-gray-900">알림 설정</p>
 
         <button
@@ -55,6 +59,15 @@ const ProfileMenu = () => {
             className="h-full w-full cursor-pointer object-contain"/>
         </button>
       </div>
+      <button
+        type="button"
+        onClick={onLogoutClick}
+        className=" flex w-full mb-[29px] mt-[38px] cursor-pointer items-center justify-between text-left">
+        <div className="flex flex-col gap-[4px] ">
+          <p
+          className="text-[16px] font-semibold text-gray-900">로그아웃</p>
+        </div>
+      </button>
     </div>
   );
 };

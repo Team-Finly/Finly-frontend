@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist, createJSONStorage } from 'zustand/middleware';
 
 type TermAgreement = { termId: number; agreed: boolean };
 type PersonaAnswer = { questionId: number; optionId: number };
@@ -26,10 +27,12 @@ type SignupState = {
 };
 
 
-export const useSignupStore = create<SignupState>((set) => ({
-  email: "",
-  password: "",
-  nickname: "",
+export const useSignupStore = create<SignupState>()(
+  persist(
+    (set) => ({
+      email: "",
+      password: "",
+      nickname: "",
 
   agreements: { "1": false, "2": false, "3": false },
 
@@ -61,4 +64,10 @@ export const useSignupStore = create<SignupState>((set) => ({
       termAgreements: [],
       personaAnswers: [],
     }),
-}));
+}),
+{
+      name: 'signup-storage',
+      storage: createJSONStorage(() => sessionStorage),
+    }
+  )
+);

@@ -6,6 +6,14 @@ import NoIcon from '@/assets/images/stats_no_card_icon.svg';
 import { useStatsStore } from '@/store/statsStockStore';
 import { useRecentDecisions } from '@/hooks/useStockTab';
 import { apiRenderGuard } from '@/utils/renderGuard';
+import { UniversalSkeleton } from '@/components/UniversalSkeleton';
+
+const RecentDecisionSkeleton = () => (
+  <div className="flex flex-col gap-4">
+    <UniversalSkeleton className="h-[24px] w-[120px] rounded-md bg-gray-200" />
+    <UniversalSkeleton className="h-[84px] w-full rounded-[12px]" />
+  </div>
+);
 
 const RecentDecision = () => {
   const { currentStock } = useStatsStore();
@@ -16,7 +24,12 @@ const RecentDecision = () => {
   } = useRecentDecisions(currentStock?.symbol);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const guardUI = apiRenderGuard(isLoading, isError, decisions);
+  const guardUI = apiRenderGuard(
+    isLoading,
+    isError,
+    decisions,
+    <RecentDecisionSkeleton />,
+  );
   if (guardUI !== undefined) return guardUI;
 
   const isEmpty = !decisions || decisions.length === 0;

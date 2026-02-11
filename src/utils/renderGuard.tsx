@@ -1,12 +1,14 @@
+import type { ReactNode } from 'react';
+import { UniversalSkeleton } from '@/components/UniversalSkeleton';
+
 export const apiRenderGuard = (
   isLoading: boolean,
   isError: boolean,
   data: any,
+  customSkeleton?: ReactNode,
 ) => {
   if (isLoading) {
-    return (
-      <div className="p-10 text-center text-gray-400">데이터 로딩 중...</div>
-    );
+    return customSkeleton || <UniversalSkeleton />;
   }
 
   if (isError || !data) {

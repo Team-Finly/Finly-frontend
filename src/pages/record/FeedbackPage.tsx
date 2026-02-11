@@ -3,13 +3,14 @@ import Gradient from '@/assets/images/gradient.svg';
 import { EMOTIONS, EMOTION_CHART_MAP } from '@/constants/emotions';
 import Light from '@/assets/images/light.png';
 import Close from '@/assets/icons/close-dark.svg';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { useRecordDetail } from '@/hooks/useRecordDetail';
 import { stockInfoStore } from '@/store/stockInfoStore';
 import { useFeedback } from '@/hooks/useFeedback';
 
 const FeedbackPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { recordId } = useParams<{ recordId: string }>();
   const { data: feedback, isLoading: isFeedbackLoading } = useFeedback(
     Number(recordId),
@@ -82,10 +83,34 @@ const FeedbackPage = () => {
     });
   };
 
+  const handleBoldText = (text: string) => {
+    const parts = text.split(/(\{\{.*?\}\})/g);
+
+    return parts.map((part, index) => {
+      if (part.startsWith('{{') && part.endsWith('}}')) {
+        const keyword = part.replace(/\{\{|\}\}/g, '');
+        return (
+          <strong key={index} className="font-bold">
+            {keyword}
+          </strong>
+        );
+      }
+      return <span key={index}>{part}</span>;
+    });
+  };
+
+  const handleClose = () => {
+    if (location.state?.fromLoading) {
+      navigate('/record');
+    } else {
+      navigate(-1);
+    }
+  };
+
   return (
     <div className="flex flex-1 flex-col items-center bg-[#F8F9FA] px-4">
       <div className="mb-20 flex h-19 w-full items-center justify-end pt-[25px] pb-[9px]">
-        <button onClick={() => navigate('/record')}>
+        <button onClick={handleClose}>
           <img src={Close} alt="닫기 아이콘" className="cursor-pointer" />
         </button>
       </div>
@@ -123,7 +148,7 @@ const FeedbackPage = () => {
         </div>
         <div className="rounded-xl border-[1.2px] border-gray-50 bg-gray-50/60 p-3">
           <p className="text-[11px] leading-4.5 text-gray-500">
-            {feedback.suggestion}
+            {handleBoldText(feedback.suggestion ?? '')}
           </p>
         </div>
       </div>

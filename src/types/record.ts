@@ -18,13 +18,14 @@ export type TradeActionType = 'BUY' | 'SELL' | 'WATCH';
 // 캘린더 기록
 export interface DailyRecord {
   date: string;
-  hasRecord: boolean;
-  emotions: string[];
+  totalCount: number;
+  byType: { type: EmotionType; count: number }[];
 }
 
-export interface MonthlyRecordResponse {
-  year: number;
-  month: number;
+export interface CalendarResponse {
+  yearMonth: string;
+  range: { from: string; to: string };
+  totalRecords: number;
   days: DailyRecord[];
 }
 
@@ -171,7 +172,6 @@ export interface RecordDetailResponse {
 }
 
 // 기록 수정
-
 export interface RecordUpdateResponse {
   emotionCode: EmotionType;
   emotionIntensity: number;
@@ -231,4 +231,20 @@ export interface HomeRecordItem {
 
 export interface HomeRecordResponse {
   records: HomeRecordItem[];
+}
+
+// 기록 검색
+export interface RecordSearchRequest {
+  keyword: string;
+  emotionCode?: EmotionType;
+}
+
+export interface RecordSearchResponse {
+  records: RecordDetailResponse[];
+  totalCount: number;
+}
+
+// 최근 검색 기록
+export interface RecentSearchResponse {
+  recentKeywords: string[];
 }

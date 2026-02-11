@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { type AxiosRequestConfig } from "axios";
 import { tokenStorage } from "@/utils/tokenStorage";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -8,10 +8,10 @@ export const api = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
-  withCredentials: false, 
+  withCredentials: true, 
 });
 
-api.interceptors.request.use(config => {
+api.interceptors.request.use((config) => {
   const token = tokenStorage.get();
   if (token) {
     config.headers.set("Authorization", `Bearer ${token}`);
@@ -19,24 +19,76 @@ api.interceptors.request.use(config => {
   return config;
 });
 
+interface QueueItem {
+  resolve: (value?: any) => void;
+  reject: (reason?: any) => void;
+  config: AxiosRequestConfig;
+}
+
+let isRefreshing = false;
+let failedQueue: QueueItem[] = [];
+
+const processQueue = (error: any, token: string | null = null) => {
+  failedQueue.forEach((prom) => {
+    if (error) {
+      prom.reject(error);
+    } else {
+        prom.resolve(api(prom.config));
+         }
+      });
+  failedQueue = [];
+};
+
 api.interceptors.response.use(
-  res => res,
-  err => {
+  (res) => res,
+  async (err) => {
+    const originalConfig = err.config;
     const status = err?.response?.status;
 
-    if (status === 401) {
-      tokenStorage.remove();
-      window.location.replace("/login");
-    }
+    if (status === 401 && !originalConfig._retry) {
+      if (isRefreshing) {
+        return new Promise((resolve, reject) => {
+          failedQueue.push({
+            resolve,
+            reject,
+            config: originalConfig,
+          });
+        });
+      }
 
-    if (import.meta.env.DEV) {
-      console.error("[API ERROR]", {
-        status,
-        url: err?.config?.url,
-        method: err?.config?.method,
-      });
-    }
+      originalConfig._retry = true;
+      isRefreshing = true;
 
+      try {
+        const res = await axios.post(
+          `${BASE_URL}/auth/reissue`,
+          {},
+          {
+            withCredentials: true,
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+
+        const newAccessToken = res.data.result?.accessToken;
+
+        if (newAccessToken) {
+          tokenStorage.set(newAccessToken);
+          processQueue(null, newAccessToken);
+          return api(originalConfig);
+        }else{
+          throw new Error("토큰 재발급 실패");
+        }
+      } catch (reissueError) {
+        processQueue(reissueError, null);
+        
+        tokenStorage.remove();
+        window.location.href = "/login";
+        
+        return Promise.reject(reissueError);
+      } finally {
+        isRefreshing = false;
+      }
+    }
     return Promise.reject(err);
   }
 );
