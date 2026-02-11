@@ -6,6 +6,8 @@ import MindscoreCard from '@/components/mypage/MindscoreCard';
 import {useUserStore} from '@/store/userStore';
 import { PERSONA_DATA } from '@/constants/mypersona';
 import Modal from '@/components/record/Modal';
+import { logout } from '@/apis/userApi';
+import { tokenStorage } from '@/utils/tokenStorage';
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -16,7 +18,8 @@ const Profile = () => {
     personaType, 
     mindScore,       
     fragmentCount,   
-    fetchMainProfile 
+    fetchMainProfile,
+    clearUser
   } = useUserStore();
   
 
@@ -30,13 +33,17 @@ const Profile = () => {
     : null;
   const personaName = personaEntry?.name ?? " "; 
 
-  const handleLogoutConfirm = () => {
-    localStorage.removeItem("accessToken"); 
-    localStorage.removeItem("refreshToken");
-    useUserStore.getState().clearUser();
-
-    navigate('/login');
+  const handleLogoutConfirm = async () => {
+    try {
+      await logout(); 
+    } catch (error) {
+      console.error('로그아웃 실패:', error);
+    } finally {
+    localStorage.clear();
+    clearUser();
     setIsLogoutModalOpen(false);
+    navigate('/login');
+    }
   };
 
   return (
@@ -51,7 +58,7 @@ const Profile = () => {
       <main className="scrollbar-hide flex-1 overflow-y-auto pb-[95px] ">
         <div className='flex w-full px-4 gap-4 mt-[20px] mb-[16px]'>
           <ProfileCard nickname={nickname} profileImage={profileImage} personaName={personaName}></ProfileCard>
-          <MindscoreCard score={mindScore} color="#FFF34A"></MindscoreCard>
+          <MindscoreCard score={mindScore}></MindscoreCard>
         </div>
         <div>
           <div className="mx-[16px] mt-[20px] flex h-[78px] flex-row rounded-[12px] border-[1.2px] border-gray-100 bg-[#E9F0FA99] px-[12px]">
@@ -89,4 +96,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default Profile ;
