@@ -1,12 +1,12 @@
 interface BestDecisionCardProps {
   emoji: string;
-  emojiBgColor: string; // ex) '#FFDCDC'
-  title: string;        // 삼성전자
-  action: string;       // 매도
-  date: string;         // 2월 20일
+  emojiBgColor: string;
+  title: string;        
+  action: string;       
+  date: string;         
   holdingWeeks: number;
-  price: string;        // 152,400원
-  rate: string;         // 50%
+  price: string;        
+  rate: string;         
 }
 
 const BestDecisionCard = ({
