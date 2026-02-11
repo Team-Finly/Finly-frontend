@@ -1,11 +1,12 @@
 import OptionCard from '@/components/onboarding/OptionCard';
 import Button from '@/components/onboarding/Button';
 import ProgressBar from '@/components/onboarding/ProgressBar';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { MOCK_QUESTIONS } from "@/constants/persona";
-import backIcon from "../../assets/icons/Vector.svg";
-import { useSignupStore } from "../../store/signupStore";
+import { MOCK_QUESTIONS } from '@/constants/persona';
+import backIcon from '../../assets/icons/Vector.svg';
+import { useSignupStore } from '../../store/signupStore';
+import { useUserStore } from '@/store/userStore';
 
 const PersonaTestPage = () => {
 const navigate = useNavigate();
@@ -13,8 +14,22 @@ const location = useLocation();
 const isRetest = location.state?.from === 'mypage';
 const setPersonaAnswers = useSignupStore((state) => state.setPersonaAnswers);
 const [step, setStep] = useState(0);
-const[answers, setAnswers] = useState<Record<number, number>>({});
+const [answers, setAnswers] = useState<Record<number, number>>({});
+
 const currentQ = MOCK_QUESTIONS[step];
+
+const signupNickname = useSignupStore((state) => state.nickname);
+const { nickname: userNickname, fetchMainProfile } = useUserStore();
+
+useEffect(() => {
+    if (isRetest && !userNickname) {
+      fetchMainProfile(); 
+    }
+  }, [isRetest, userNickname, fetchMainProfile]);
+
+  const activeNickname = isRetest ? userNickname : signupNickname;
+  const fallbackNickname = activeNickname || "사용자";
+  const displayContent = currentQ.content.replace('{nickname}', fallbackNickname);
 
   const handleSelect = (optionId: number) => {
     setAnswers((prev) => ({
@@ -50,7 +65,6 @@ const currentQ = MOCK_QUESTIONS[step];
 
   return (
     <div className="mt-[16px] flex w-full flex-col px-4">
-      {/* 1. Header */}
       <header className="relative flex h-[60px] w-full items-center justify-center">
         <button
           onClick={handleBack}
@@ -62,28 +76,23 @@ const currentQ = MOCK_QUESTIONS[step];
             className="left-0 h-[16px] w-[8px]"
           />
         </button>
-
-        <h1 className="text-lg leading-none font-semibold text-gray-900">투자 페르소나 테스트</h1>
+        <p className="text-lg leading-none font-semibold text-gray-900">투자 페르소나 테스트</p>
       </header>
+
       <div className="flex flex-col">
         <ProgressBar current={step + 1} total={3} />
       </div>
 
       <div>
-        {/*질문 번호*/}
         <div className="mb-[50px]">
           <span className="text-secondary mt-[30px] mb-[10px] block h-[26px] w-[32px] text-[24px] font-semibold">
             {currentQ.questionCode}
           </span>
-
-          {/*질문 내용*/}
-          <h1 className="mb-[40px] whitespace-pre-wrap">
+          <p className="mb-[40px] whitespace-pre-wrap">
             <span className="text-[20px] leading-[30px] font-semibold text-[#1F2023]">
-              {currentQ.content}
+              {displayContent}
             </span>
-          </h1>
-
-          {/*옵션*/}
+          </p>
           {currentQ.options.map((opt) => (
             <OptionCard
               key={opt.id}
@@ -94,7 +103,6 @@ const currentQ = MOCK_QUESTIONS[step];
           ))}
         </div>
 
-        {/*다음 버튼*/}
         <div>
           <Button onClick={handleNext} disabled={!answers[currentQ.id]}>
             다음
