@@ -28,7 +28,7 @@ const ReportStorage = () => {
         <div className="flex items-center gap-[20px]">
           <button disabled className="invisible"></button>
           <span className="font-semibold text-[18px]">2026.1월</span>
-          <button onClick={() => navigate('/reportsfeb')} className="cursor-pointer"><img src={next} alt="next" className="w-[10px]" /></button>
+          <button disabled onClick={() => navigate('/reportsfeb')}><img src={next} alt="next" className="w-[10px]" /></button>
         </div>
         <button onClick={() => navigate('/profile')} className="absolute right-4 text-gray-500 font-medium cursor-pointer">닫기</button>
       </header>
@@ -56,7 +56,7 @@ const ReportStorage = () => {
 
           {/* 4주차 */}
           <div className="absolute top-[40%] left-[72%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
-            <div className="relative w-[60px] h-[60px] bg-white rounded-full shadow-[0_0_10px_theme(colors.secondary/20%)] flex items-center justify-center">
+            <div className="relative cursor-pointer w-[60px] h-[60px] bg-white rounded-full shadow-[0_0_10px_theme(colors.secondary/20%)] flex items-center justify-center">
               <img src={run} alt="run" className="relative z-10 w-[27px]" />
               <img src={check} alt="" className="absolute bottom-0 right-0 " />
             </div>
@@ -67,7 +67,7 @@ const ReportStorage = () => {
           <div className="absolute top-[55%] left-[15%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center transition-transform active:scale-95">
               <div className="cursor-pointer absolute bottom-[-4px] left-1/2 -translate-x-1/2 w-2 h-2 bg-white rotate-45"></div>
             
-            <div className="relative w-[60px] h-[60px] bg-white rounded-full shadow-[0_0_10px_theme(colors.secondary/20%)] flex items-center justify-center">
+            <div className="relative cursor-pointer w-[60px] h-[60px] bg-white rounded-full shadow-[0_0_10px_theme(colors.secondary/20%)] flex items-center justify-center">
               <img src={run} alt="run" className="relative z-10 w-[27px]" />
               <img src={check} alt="" className="absolute bottom-0 right-0 " />
             </div>
@@ -76,7 +76,7 @@ const ReportStorage = () => {
 
           {/* 2주차 */}
           <div onClick={() => handleNavigate("2")} className="absolute top-[68%] left-[80%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center cursor-pointer transition-transform active:scale-95">
-            <div className="relative w-[60px] h-[60px] bg-white rounded-full shadow-[0_0_10px_theme(colors.secondary/20%)] flex items-center justify-center">
+            <div className="relative cursor-pointer w-[60px] h-[60px] bg-white rounded-full shadow-[0_0_10px_theme(colors.secondary/20%)] flex items-center justify-center">
               <img src={run} alt="run" className="relative z-10 w-[27px]" />
               <img src={check} alt="" className="absolute bottom-0 right-0 " />
             </div>
@@ -85,7 +85,7 @@ const ReportStorage = () => {
 
           {/* 1주차 */}
           <div onClick={() => handleNavigate("1")} className="absolute top-[85%] left-[14%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center cursor-pointer transition-transform active:scale-95">
-            <div className="relative w-[60px] h-[60px] bg-white rounded-full shadow-[0_0_10px_theme(colors.secondary/20%)] flex items-center justify-center">
+            <div className="relative cursor-pointer w-[60px] h-[60px] bg-white rounded-full shadow-[0_0_10px_theme(colors.secondary/20%)] flex items-center justify-center">
               <img src={run} alt="run" className="relative z-10 w-[27px]" />
               <img src={check} alt="" className="absolute bottom-0 right-0 " />
             </div>
