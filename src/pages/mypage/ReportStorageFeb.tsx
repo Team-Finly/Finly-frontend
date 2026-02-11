@@ -32,7 +32,7 @@ const ReportStorage = () => {
         <div className="flex items-center gap-[20px]">
           <button onClick={() => navigate('/reportsjan')} className="cursor-pointer"><img src={back} alt="back" className="w-[10px]" /></button>
           <span className="font-semibold text-[18px]">2026.2월</span>
-          <button className="cursor-pointer"><img src={next} alt="next" className="w-[10px]" /></button>
+          <button disabled className="invisible w-[10px]"></button>
         </div>
         <button onClick={() => navigate('/profile')} className="absolute right-4 text-gray-500 font-medium cursor-pointer">닫기</button>
       </header>

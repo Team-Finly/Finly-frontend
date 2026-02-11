@@ -26,9 +26,9 @@ const ReportStorage = () => {
 
       <header className="relative z-10 flex items-center justify-center h-[60px] px-4 flex-shrink-0">
         <div className="flex items-center gap-[20px]">
-          <button disabled className="invisible"></button>
+          <button disabled className="invisible w-[10px]"></button>
           <span className="font-semibold text-[18px]">2026.1월</span>
-          <button disabled onClick={() => navigate('/reportsfeb')}><img src={next} alt="next" className="w-[10px]" /></button>
+          <button onClick={() => navigate('/reportsfeb')}><img src={next} alt="next" className="w-[10px] cursor-pointer" /></button>
         </div>
         <button onClick={() => navigate('/profile')} className="absolute right-4 text-gray-500 font-medium cursor-pointer">닫기</button>
       </header>
