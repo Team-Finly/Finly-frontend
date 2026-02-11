@@ -62,6 +62,13 @@ const SignupPage = () => {
     setServerError("");
 
     try {
+      const res= await authApi.checkEmail(email);
+      if (res.result && res.result.available === false) {
+        setEmailChecked("taken");
+        return;
+      }
+      setEmailChecked("ok");
+      setStep("password")
       await authApi.checkEmail(email);
 
       setEmailChecked("ok");
