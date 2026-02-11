@@ -14,6 +14,7 @@ import { useUserStore } from "@/store/userStore";
 const ReportStorage = () => {
   const navigate = useNavigate();
   const { nickname } = useUserStore();
+  const fragmentCount = useUserStore((state) => state.fragmentCount);
   const currentYM = "2026-02"; 
 
   const handleNavigate = (week?: string) => {
@@ -42,7 +43,7 @@ const ReportStorage = () => {
           <img src={star} alt="별" className="w-[18px] rotate-[15deg] mix-blend-overlay" />
         </div>
         <p className="text-[20px] font-bold">
-          <span className="text-secondary">20개의 조각</span>을 모았어요!
+          <span className="text-secondary">{fragmentCount}개의 조각</span>을 모았어요!
         </p>
       </div>
 
