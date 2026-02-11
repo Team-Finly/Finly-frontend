@@ -10,7 +10,7 @@ export const getMyPersona = async (): Promise<PersonaDetail>=> {
   return response.data.result; 
 };
 export const updateNickname = async (nickname: string) => {
-  const response = await api.post("/api/mypage/me/nickname", { nickname });
+  const response = await api.patch("/api/mypage/me/nickname", { nickname });
   return response.data; 
 };
 export const getUserMainProfile = async (): Promise<MyPageMainData> => {
@@ -51,4 +51,7 @@ export const updatePassword = async (newPassword: string, newPasswordConfirm: st
 export const deleteMember = async () => {
   const response = await api.delete("/api/mypage/members/me");
   return response.data;
+};
+export const logout = async () => {
+  return await api.post("/auth/logout", {});
 };
