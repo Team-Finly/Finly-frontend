@@ -18,8 +18,11 @@ const SignupPage = () => {
   const location = useLocation();
   const { email, setEmail, password, setPassword, nickname, setNickname } = useSignupStore();
 
-  const initialStep = location.state?.step || "email";
+  const VALID_STEPS: Step[] = ["email", "password", "nickname"];
+  const rawStep = location.state?.step;
+  const initialStep: Step = VALID_STEPS.includes(rawStep) ? rawStep : "email";
   const [step, setStep] = useState<Step>(initialStep);
+ 
   const [pwConfirm, setPwConfirm] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
