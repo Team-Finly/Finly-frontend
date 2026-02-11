@@ -55,15 +55,19 @@ const Profile = () => {
 
       <main className="scrollbar-hide flex-1 overflow-y-auto pb-[95px]">
         <div className="mt-[20px] mb-[16px] flex w-full gap-4 px-4">
-          <ProfileCard
-            nickname={nickname}
-            profileImage={profileImage}
-            personaName={personaName}
-          ></ProfileCard>
-          <MindscoreCard score={mindScore}></MindscoreCard>
+          <div className="shadow-card1 flex-1">
+            <ProfileCard
+              nickname={nickname}
+              profileImage={profileImage}
+              personaName={personaName}
+            />
+          </div>
+          <div className="shadow-card1 flex-1">
+            <MindscoreCard score={mindScore} />
+          </div>
         </div>
         <div>
-          <div className="mx-[16px] mt-[20px] flex h-[78px] flex-row rounded-[12px] border-[1.2px] border-gray-100 bg-[#E9F0FA99] px-[12px]">
+          <div className="shadow-card1 mx-[16px] mt-[20px] flex h-[78px] flex-row rounded-[12px] border-[1.2px] border-gray-100 bg-[#E9F0FA99] px-[12px]">
             <div className="mt-[20px] flex w-full flex-col justify-start gap-[4px]">
               <p className="text-secondary text-[17px] font-bold">
                 {fragmentCount}개

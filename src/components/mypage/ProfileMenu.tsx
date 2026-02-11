@@ -13,7 +13,7 @@ const ProfileMenu = ({ onLogoutClick }: ProfileMenuProps) => {
   const [isNotiOn, setIsNotiOn] = useState(true);
 
   return (
-    <div className="mx-[16px] mt-[26px] flex h-[310px] flex-col rounded-[12px] border-[1.2px] border-gray-100 bg-white px-[20px]">
+    <div className="shadow-card1 mx-[16px] mt-[26px] flex h-[310px] flex-col rounded-[12px] border-[1.2px] border-gray-100 bg-white px-[20px]">
       <button
         type="button"
         onClick={() => navigate('/reports')}
