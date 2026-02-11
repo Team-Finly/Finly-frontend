@@ -1,6 +1,6 @@
 import MetricCard from '@/components/home/MindScore/MetricCard';
 
-type Metric = {
+export type Metric = {
   key: string;
   title: string;
   score: number;
@@ -11,7 +11,7 @@ type MetricSectionProps = {
   metrics: Metric[];
 };
 
-const MetricSection = ({ metrics }: MetricSectionProps) => {
+const MetricSection = ({ metrics }: MetricSectionProps) => { 
   return (
     <section className="mt-[32px] px-[32px]">
       {metrics.map((metric) => (
@@ -19,7 +19,7 @@ const MetricSection = ({ metrics }: MetricSectionProps) => {
           key={metric.key}
           title={metric.title}
           score={metric.score}
-          desc={metric.desc}
+          description={metric.desc}
         />
       ))}
     </section>

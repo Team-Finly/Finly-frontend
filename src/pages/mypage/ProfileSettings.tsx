@@ -1,32 +1,32 @@
-import {useRef} from "react";
-import { useNavigate } from "react-router-dom";
-import Before from "@/assets/icons/before.svg";
-import defaultprofileIcon from "@/assets/icons/profile.svg";
-import cameraIcon from "@/assets/icons/camera.svg";
-import line from "@/assets/icons/line50.svg";
-import Modal from "@/components/record/Modal";
-import { useProfileSettings } from "@/hooks/useProfileSettings";
-import { deleteMember } from "@/apis/userApi";
-import { useUserStore } from "@/store/userStore";
+import { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Before from '@/assets/icons/before.svg';
+import defaultprofileIcon from '@/assets/icons/profile.svg';
+import cameraIcon from '@/assets/icons/camera.svg';
+import line from '@/assets/icons/line50.svg';
+import Modal from '@/components/record/Modal';
+import { useProfileSettings } from '@/hooks/useProfileSettings';
+import { deleteMember } from '@/apis/userApi';
+import { useUserStore } from '@/store/userStore';
 
 const ProfileSettings = () => {
   const navigate = useNavigate();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { state, actions } = useProfileSettings();
 
-  const isChanged = 
-    state.nickname !== state.initialNickname || 
+  const isChanged =
+    state.nickname !== state.initialNickname ||
     state.profileImage !== state.initialImage;
 
-  const handleImageClick = () => {  
+  const handleImageClick = () => {
     if (state.isEditing && fileInputRef.current) {
-      fileInputRef.current.click(); 
+      fileInputRef.current.click();
     }
   };
 
   const handleBackClick = () => {
     if (state.isEditing) {
-    isChanged ? actions.setIsModalOpen(true) : actions.handleCancel();
+      isChanged ? actions.setIsModalOpen(true) : actions.handleCancel();
     } else {
       navigate('/profile');
     }
@@ -36,11 +36,11 @@ const ProfileSettings = () => {
       const response = await deleteMember();
 
       if (response.isSuccess) {
-        localStorage.removeItem("accessToken"); 
-        localStorage.removeItem("refreshToken");
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
         useUserStore.getState().clearUser();
         actions.setIsWithdrawModalOpen(false);
-        navigate("/onboarding"); 
+        navigate('/onboarding');
       } else {
         actions.setIsWithdrawModalOpen(false);
       }
@@ -51,116 +51,142 @@ const ProfileSettings = () => {
   };
 
   return (
-    <div className="h-screen flex flex-col bg-white overflow-hidden">
+    <div className="flex h-screen flex-col overflow-hidden bg-white">
       <input
-      type="file" 
-      accept='image/*'     
-      ref={fileInputRef}   
-      onChange={(e) => {
-        actions.handleFileChange(e);
-        e.target.value = "";}}
-      className="hidden cursor-pointer"
-    />
+        type="file"
+        accept="image/*"
+        ref={fileInputRef}
+        onChange={(e) => {
+          actions.handleFileChange(e);
+          e.target.value = '';
+        }}
+        className="hidden cursor-pointer"
+      />
       <div className="fixed top-0 z-10 w-full max-w-120 border-b border-gray-100 bg-white">
         <div className="relative mt-4 flex h-15 items-center justify-center bg-white px-4">
           <button
             className="absolute left-4 cursor-pointer"
-            onClick={handleBackClick}>
-            <img src={Before} alt="이전" className="cursor-pointer"/>
+            onClick={handleBackClick}
+          >
+            <img src={Before} alt="이전" className="h-4 w-2 cursor-pointer" />
           </button>
           <h1 className="text-lg font-semibold text-gray-900">
-            {state.isEditing ? "프로필 수정" : "프로필 및 계정"}
+            {state.isEditing ? '프로필 수정' : '프로필 및 계정'}
           </h1>
 
           {!state.isEditing && (
             <button
               onClick={() => actions.setIsEditing(true)}
-              className="absolute right-4 text-md font-medium text-gray-500 cursor-pointer">
+              className="text-md absolute right-4 cursor-pointer font-medium text-gray-500"
+            >
               수정
             </button>
           )}
         </div>
       </div>
-      <div className="flex-1 flex flex-col pt-[75px] px-[16px]">
+      <div className="flex flex-1 flex-col px-[16px] pt-[75px]">
         <div className="flex flex-col items-center">
-          <div className="relative mb-[30px] mt-[49px]">
-            <div onClick={handleImageClick} className="cursor-pointer w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center overflow-hidden">
-              <img onClick={handleImageClick} src={state.profileImage || defaultprofileIcon} alt="프로필 이미지" className="w-full h-full object-cover" /> 
+          <div className="relative mt-[49px] mb-[30px]">
+            <div
+              onClick={handleImageClick}
+              className={`flex h-24 w-24 items-center justify-center overflow-hidden rounded-full bg-gray-100 ${state.isEditing && 'cursor-pointer'}`}
+            >
+              <img
+                onClick={handleImageClick}
+                src={state.profileImage || defaultprofileIcon}
+                alt="프로필 이미지"
+                className="h-full w-full object-cover"
+              />
             </div>
             {state.isEditing && (
-              <div onClick={handleImageClick} className="absolute mt-[-27px] right-[-4px] bg-blue-500 p-1.5 rounded-full border-2 border-white">
-                <img src={cameraIcon} alt="카메라 아이콘" className="w-4 h-4 cursor-pointer" />
+              <div
+                onClick={handleImageClick}
+                className="absolute right-[-4px] mt-[-27px] cursor-pointer rounded-full border-2 border-white bg-blue-500 p-1.5"
+              >
+                <img
+                  src={cameraIcon}
+                  alt="카메라 아이콘"
+                  className="h-4 w-4 cursor-pointer"
+                />
               </div>
             )}
             {state.isEditing && state.profileImage !== defaultprofileIcon && (
               <p
                 onClick={actions.handleResetImage}
-                className="absolute top-[100%] mt-[12px] text-[12px] text-gray-300 underline underline-offset-2 cursor-pointer ">
+                className="absolute top-[100%] mt-[12px] cursor-pointer text-[12px] text-gray-300 underline underline-offset-2"
+              >
                 기본 프로필로 변경
               </p>
             )}
           </div>
 
-          <div className="w-full flex flex-col">
-            <div className='relative w-full mb-[40px]'>
-              <label className="text-[14px] text-gray-500 mb-2 block font-semibold">닉네임</label>
+          <div className="flex w-full flex-col">
+            <div className="relative mb-[40px] w-full">
+              <label className="mb-2 block text-[14px] font-semibold text-gray-500">
+                닉네임
+              </label>
               <input
                 type="text"
-                value={state.nickname || ""}
+                value={state.nickname || ''}
                 onChange={(e) => actions.handleNicknameChange(e.target.value)}
                 readOnly={!state.isEditing}
-                className={`w-full p-4 rounded-[12px] border-[1.2px] text-[17px] text-medium border-gray-50 bg-[#F4F5F7]/60 text-gray-700 outline-none ${
+                className={`text-medium w-full rounded-[12px] border-[1.2px] border-gray-50 bg-[#F4F5F7]/60 p-4 text-[17px] text-gray-700 outline-none ${
                   state.isEditing
                     ? state.errorMessage
-                      ? "border-stock-buy bg-white text-gray-900" // [1] 에러 발생 시
-                      : "border-gray-300 bg-white text-gray-900 focus:border-secondary" // [2] 정상
-                      : "border-gray-100 bg-[#F4F5F7]/60 text-gray-700" // [3] 조회
+                      ? 'border-stock-buy bg-white text-gray-900' // [1] 에러 발생 시
+                      : 'focus:border-secondary border-gray-300 bg-white text-gray-900' // [2] 정상
+                    : 'border-gray-100 bg-[#F4F5F7]/60 text-gray-700' // [3] 조회
                 }`}
               />
               {state.isEditing && state.errorMessage && (
-                <p className="absolute top-full left-1 text-[#FF3B30] text-[12px] mt-2 font-medium">
+                <p className="absolute top-full left-1 mt-2 text-[12px] font-medium text-[#FF3B30]">
                   {state.errorMessage}
                 </p>
               )}
             </div>
 
             <div>
-              <label className="text-[14px] text-gray-500 mb-2 block font-semibold">이메일</label>
+              <label className="mb-2 block text-[14px] font-semibold text-gray-500">
+                이메일
+              </label>
               <input
                 type="text"
-                value={state.email || ""}
+                value={state.email || ''}
                 readOnly
-                className="w-full p-4  rounded-[12px] border-[1.2px] text-[17px] text-medium border-gray-50 bg-[#F4F5F7]/60 text-gray-700 outline-none"
+                className="text-medium w-full rounded-[12px] border-[1.2px] border-gray-50 bg-[#F4F5F7]/60 p-4 text-[17px] text-gray-700 outline-none"
               />
             </div>
-            </div>
+          </div>
         </div>
         <div className="flex-1" />
-          <div className ='flex-1'>
-            <div className='w-full'>
-              {!state.isEditing && (
-            <img 
-              src={line} 
-              alt="구분선" 
-              className="w-full mb-[30px]"
-                />
+        <div className="flex-1">
+          <div className="w-full">
+            {!state.isEditing && (
+              <img src={line} alt="구분선" className="mb-[30px] w-full" />
             )}
             <div className={`w-full`}>
               {state.isEditing ? (
                 <button
                   onClick={actions.handleComplete}
                   disabled={!!state.errorMessage || !isChanged}
-                  className="w-full py-4 bg-secondary text-white rounded-[12px] font-semibold
-                  disabled:bg-gray-100 disabled:text-gray-300 "
+                  className="bg-secondary w-full rounded-[12px] py-4 font-semibold text-white disabled:bg-gray-100 disabled:text-gray-300"
                 >
                   완료
                 </button>
               ) : (
-                <div className="flex flex-col gap-[30px] ">
-                  <button className="text-left text-[14px] font-medium text-gray-500/80 cursor-pointer"
-                          onClick={() => navigate('/passwordchange')}>비밀번호 변경</button>
-                  <button className="text-left text-[14px] font-medium text-stock-buy cursor-pointer"
-                          onClick={() => actions.setIsWithdrawModalOpen(true)}>서비스 탈퇴</button>
+                <div className="flex flex-col gap-[30px]">
+                  <button
+                    className="cursor-pointer text-left text-[14px] font-medium text-gray-500/80"
+                    onClick={() => navigate('/passwordchange')}
+                  >
+                    비밀번호 변경
+                  </button>
+                  <button
+                    className="text-stock-buy cursor-pointer text-left text-[14px] font-medium"
+                    onClick={() => actions.setIsWithdrawModalOpen(true)}
+                  >
+                    서비스 탈퇴
+                  </button>
                 </div>
               )}
             </div>
@@ -175,13 +201,14 @@ const ProfileSettings = () => {
           onClickLeft={actions.handleCancel}
           onClickRight={() => actions.setIsModalOpen(false)}
           onClose={() => actions.setIsModalOpen(false)}
-          
         />
       )}
       {state.isWithdrawModalOpen && (
         <Modal
           text="계정을 탈퇴할까요?"
-          desc={"삭제 시 모든 정보가 영구적으로 사라지며,\n다시 복구할 수 없습니다."}
+          desc={
+            '삭제 시 모든 정보가 영구적으로 사라지며,\n다시 복구할 수 없습니다.'
+          }
           rightBtnClassName="bg-red text-white"
           leftBtnLabel="취소"
           rightBtnLabel="탈퇴"

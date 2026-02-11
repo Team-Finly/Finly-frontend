@@ -2,8 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import ArrowLeft from '@/assets/icons/arrow-left.svg';
 import ArrowRight from '@/assets/icons/arrow-right.svg';
 import { EMOTIONS } from '@/constants/emotions';
-import type { MonthlyRecordResponse } from '@/types/record';
 import { useNavigate } from 'react-router-dom';
+import { useCalendarFragment } from '@/hooks/useCalendarFragment';
 
 interface CalendarProps {
   onClose?: () => void;
@@ -19,23 +19,25 @@ const Calendar = ({ onClose }: CalendarProps) => {
     return new Date(now.getFullYear(), now.getMonth(), 1);
   });
 
-  const [monthData] = useState<MonthlyRecordResponse>({
-    year: 2026,
-    month: 1,
-    days: [
-      { date: '2026-01-06', hasRecord: true, emotions: ['CONFIDENCE'] },
-      { date: '2026-01-14', hasRecord: true, emotions: ['CALM', 'GREED'] },
-      { date: '2026-01-17', hasRecord: true, emotions: ['ANXIETY', 'REGRET'] },
-      { date: '2026-01-19', hasRecord: false, emotions: [] },
-    ],
-  });
+  const yearMonth = `${baseDate.getFullYear()}-${String(baseDate.getMonth() + 1).padStart(2, '0')}`;
+
+  const { data: calendarData } = useCalendarFragment(yearMonth);
 
   const getDayRecord = (date: Date) => {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');
     const dateStr = `${year}-${month}-${day}`;
-    return monthData.days.find((d) => d.date === dateStr);
+
+    const daySummary = calendarData?.days.find((d) => d.date === dateStr);
+
+    if (!daySummary) return null;
+
+    return {
+      hasRecord: daySummary.totalCount > 0,
+      totalCount: daySummary.totalCount,
+      emotions: daySummary.byType,
+    };
   };
 
   const moveMonth = (offset: number) => {
@@ -174,42 +176,36 @@ const Calendar = ({ onClose }: CalendarProps) => {
           const dateMonthValue = date.getFullYear() * 12 + date.getMonth();
           const baseMonthValue =
             baseDate.getFullYear() * 12 + baseDate.getMonth();
-          const isPrevMonth = dateMonthValue < baseMonthValue;
-          const isNextMonth = dateMonthValue > baseMonthValue;
-          const record = getDayRecord(date);
+          const isCurrentMonth = dateMonthValue === baseMonthValue;
 
-          const isClickable = !isPrevMonth && !isNextMonth;
+          const record = getDayRecord(date);
 
           return (
             <div
               key={index}
-              onClick={() => {
-                if (isClickable) handleDayClick(date);
-              }}
-              className={`relative flex min-h-11.5 flex-col items-center ${!isPrevMonth && !isNextMonth ? 'cursor-pointer' : 'pointer-events-none'} `}
+              onClick={() => isCurrentMonth && handleDayClick(date)}
+              className={`relative flex min-h-11.5 flex-col items-center ${isCurrentMonth ? 'cursor-pointer' : 'pointer-events-none'} `}
             >
               {isToday && (
                 <div className="bg-secondary/6 border-primary absolute top-0 z-0 h-11.5 w-full max-w-10 rounded-lg border" />
               )}
               <span
                 className={`flex h-8 items-center justify-center font-semibold ${
-                  isPrevMonth || isNextMonth
-                    ? 'text-gray-300/80'
-                    : 'text-gray-900'
+                  isCurrentMonth ? 'text-gray-900' : 'text-gray-300/80'
                 }`}
               >
                 {date.getDate()}
               </span>
-              {!isPrevMonth && !isNextMonth && record && record.hasRecord && (
+              {isCurrentMonth && record && record.hasRecord && (
                 <div className="mt-1 mb-0.5 flex h-1 w-full max-w-8 overflow-hidden rounded-full bg-gray-50">
                   {record.emotions.map((emotion, i) => (
                     <div
                       key={i}
                       className="h-full"
                       style={{
-                        width: `${100 / record.emotions.length}%`,
+                        width: `${(emotion.count / record.totalCount) * 100}%`,
                         backgroundColor:
-                          EMOTIONS.find((e) => e.key === emotion)?.color ||
+                          EMOTIONS.find((e) => e.key === emotion.type)?.color ||
                           'var(--color-gray-200)',
                       }}
                     />

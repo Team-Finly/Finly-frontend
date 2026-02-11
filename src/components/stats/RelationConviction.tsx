@@ -1,11 +1,17 @@
 import { useConvictionScore } from '@/hooks/useStatsAnalysis';
 import { apiRenderGuard } from '@/utils/renderGuard';
 import type { ConvictionScoreResult } from '@/types/stats';
+import { UniversalSkeleton } from '@/components/UniversalSkeleton';
 
 const RelationConviction = () => {
   const { data, isLoading, isError } = useConvictionScore();
 
-  const guardUI = apiRenderGuard(isLoading, isError, data);
+  const guardUI = apiRenderGuard(
+    isLoading,
+    isError,
+    data,
+    <UniversalSkeleton className="h-[108px] w-[175px] rounded-[12px]" />,
+  );
   if (guardUI !== undefined) return guardUI;
 
   const { convictionScore, phrase, status } = data as ConvictionScoreResult;

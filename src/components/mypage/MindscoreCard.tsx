@@ -1,17 +1,24 @@
-import React from 'react';
+import {useMemo} from 'react';
+import {SCORE_CONFIG} from '@/constants/mindScore';
 
 type Props = {
   score: number;
-  color: string;
   size?: number;
 };
 
-const MindscoreCard = ({ score, color, size = 76 }: Props) => {
+const MindscoreCard = ({ score, size = 76 }: Props) => {
   const radius = 40;
   const circumference = 2 * Math.PI * radius;
   const clampedScore = Math.min(100, Math.max(0, score));
   const offset = circumference - (clampedScore / 100) * circumference;
 
+  const currentConfig = useMemo(() => {
+    return SCORE_CONFIG.find(
+      (config) => clampedScore >= config.min && clampedScore <= config.max
+    );
+  }, [clampedScore]);
+
+  const activeColor = currentConfig?.color || "#f5f260";
 
   return (
     
@@ -25,7 +32,7 @@ const MindscoreCard = ({ score, color, size = 76 }: Props) => {
         className="relative flex-shrink-0 flex items-center justify-center"
         style={{ width: size, height: size }}
       >
-        <svg viewBox="0 0 96 96" className="w-full h-full transform -rotate-290">
+        <svg viewBox="0 0 96 96" className="w-full h-full transform -rotate-270">
           <defs>
             <radialGradient
               id="inner-shadow"
@@ -62,7 +69,7 @@ const MindscoreCard = ({ score, color, size = 76 }: Props) => {
             cx="48"
             cy="48"
             r={radius}
-            stroke={color}
+            stroke={activeColor}
             strokeWidth="11"
             fill="none"
             strokeDasharray={circumference}

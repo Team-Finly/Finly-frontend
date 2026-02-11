@@ -1,25 +1,21 @@
 import backIcon from '@/assets/icons/Vector.svg';
-import checkIcon from '@/assets/icons/isvalid.svg'
-import checkgray from '@/assets/icons/checkgray.svg'
-import checkblue from '@/assets/icons/checkblue.svg'
+import checkIcon from '@/assets/icons/isvalid.svg';
+import checkgray from '@/assets/icons/checkgray.svg';
+import checkblue from '@/assets/icons/checkblue.svg';
 import Button from '@/components/onboarding/Button';
-import Unchecked from '@/assets/icons/unchecked.svg'
-import rightarrow from '@/assets/icons/rightarrow.svg'
+import Unchecked from '@/assets/icons/unchecked.svg';
+import Next from '@/assets/icons/next.svg';
 import { useNavigate } from 'react-router-dom';
 import { useMemo } from 'react';
 import { useSignupStore } from '@/store/signupStore';
-import {useTermsList} from '@/hooks/useTerms';
+import { useTermsList } from '@/hooks/useTerms';
 
 const TermsPage = () => {
-const navigate = useNavigate();
-const { data: termsData } = useTermsList();
+  const navigate = useNavigate();
+  const { data: termsData } = useTermsList();
 
-  const { 
-    agreements, 
-    toggleAgreement, 
-    setAllAgreements, 
-    setTermAgreements 
-  } = useSignupStore();
+  const { agreements, toggleAgreement, setAllAgreements, setTermAgreements } =
+    useSignupStore();
 
   const allAgreed = useMemo(() => {
     if (!termsData) return false;
@@ -30,15 +26,14 @@ const { data: termsData } = useTermsList();
     if (!termsData) return false;
     return termsData
       .filter((t) => t.required)
-      .every((t) => agreements[String(t.termId)]); 
+      .every((t) => agreements[String(t.termId)]);
   }, [termsData, agreements]);
 
-const handleAllClick = () => {
+  const handleAllClick = () => {
     setAllAgreements(!allAgreed);
   };
 
-
-const handleNext = (path: string) => {
+  const handleNext = (path: string) => {
     if (isNextEnabled && termsData) {
       const formattedAgreements = termsData?.map((t) => ({
         termId: t.termId,
@@ -48,43 +43,55 @@ const handleNext = (path: string) => {
       setTermAgreements(formattedAgreements);
       navigate(path);
     } else {
-      alert("필수 약관에 동의해 주세요.");
+      alert('필수 약관에 동의해 주세요.');
     }
   };
 
   return (
-    <div className='flex flex-col w-full mt-[16px] px-4 h-dvh'>
+    <div className="mt-[16px] flex h-dvh w-full flex-col px-4">
+      <header className="relative flex h-[60px] w-full items-center justify-center">
+        <button
+          onClick={() => navigate(-1)}
+          className="absolute top-1/2 left-0 -translate-y-1/2"
+        >
+          <img
+            src={backIcon}
+            alt="뒤로가기"
+            className="h-[16px] w-[8px] cursor-pointer"
+          />
+        </button>
+        <h1 className="text-lg leading-none font-semibold text-gray-900">
+          약관 동의
+        </h1>
+      </header>
 
-        <header className="relative flex items-center justify-center w-full h-[60px]">
-          <button
-              onClick={() => navigate(-1)}
-              className="absolute left-0 top-1/2 -translate-y-1/2 ">
-              <img src={backIcon} alt="뒤로가기" className="w-[8px] h-[16px] cursor-pointer" />
-          </button>
-          <h1 className="text-lg font-semibold leading-none text-gray-900">
-            약관 동의
-          </h1>
-        </header>
-
-        <div className="text-left mt-[30px] mb-[32px]">
-          <p className ="font-semibold text-[20px] leading-[26px] text-gray-900">Finly
+      <div className="mt-[30px] mb-[32px] text-left">
+        <p className="text-[20px] leading-[26px] font-semibold text-gray-900">
+          Finly
           <br />
-          <span className="font-semibold text-[20px] leading-[26px] text-secondary">약관 동의</span>가 필요해요 </p>
-        </div>
-      
-      <button 
-          onClick={handleAllClick}
-          className={`cursor-pointer justify-center border-[1.2px] rounded-[12px] w-full h-[50px] px-4 border-gray-300 flex items-center gap-[10px]
-          ${allAgreed
-          ? 'border-secondary bg-blue-bg/80 text-secondary'
-          : 'border-gray-300 bg-white text-gray-300'
-          }`}
-          >
+          <span className="text-secondary text-[20px] leading-[26px] font-semibold">
+            약관 동의
+          </span>
+          가 필요해요
+        </p>
+      </div>
 
-          <img src={allAgreed ? checkblue : checkgray}
+      <button
+        onClick={handleAllClick}
+        className={`flex h-[50px] w-full cursor-pointer items-center justify-center gap-[10px] rounded-[12px] border-[1.2px] border-gray-300 px-4 ${
+          allAgreed
+            ? 'border-secondary bg-blue-bg/80 text-secondary'
+            : 'border-gray-300 bg-white text-gray-300'
+        }`}
+      >
+        <img
+          src={allAgreed ? checkblue : checkgray}
           alt="체크 아이콘"
-          className="w-[15px] h-[12px]" />
-          <span className="text-[17px] font-semibold">서비스 이용약관 전체 동의</span>
+          className="h-[12px] w-[15px]"
+        />
+        <span className="text-[17px] font-semibold">
+          서비스 이용약관 전체 동의
+        </span>
       </button>
 
       <div className="mt-[30px] flex flex-col gap-[30px]">
@@ -93,36 +100,48 @@ const handleNext = (path: string) => {
           const isChecked = agreements[idStr] || false;
 
           return (
-            <div key={term.termId} className="flex flex-row items-center w-full gap-[8px]">
-              <button onClick={() => toggleAgreement(idStr)} className='cursor-pointer' aria-label="약관 동의 체크박스">
+            <div
+              key={term.termId}
+              className="flex w-full flex-row items-center gap-[8px]"
+            >
+              <button
+                onClick={() => toggleAgreement(idStr)}
+                className="cursor-pointer"
+                aria-label="약관 동의 체크박스"
+              >
                 <img src={isChecked ? checkIcon : Unchecked} alt="체크 여부" />
               </button>
-              
-              <p onClick={() => toggleAgreement(idStr)} className="text-[16px] font-medium text-gray-900">
-               <span className={term.required ? "text-gray-900" : ""}></span>
-                {term.title}
-               </p>
-               
               <button
-                type="button" 
-                className='ml-auto cursor-pointer'
-                onClick={() => navigate(`/termsdetail/${term.termId}`)} 
-                aria-label="약관 상세보기">
-                  <img src={rightarrow} alt="" aria-hidden="true"/>
+                onClick={() => toggleAgreement(idStr)}
+                className="cursor-pointer text-[16px] font-medium text-gray-900"
+              >
+                <span className={term.required ? 'text-gray-900' : ''}></span>
+                {term.title}
               </button>
-              
+              <button
+                type="button"
+                className="ml-auto cursor-pointer"
+                onClick={() => navigate(`/termsdetail/${term.termId}`)}
+                aria-label="약관 상세보기"
+              >
+                <img src={Next} alt="약관 상세보기 아이콘" aria-hidden="true" />
+              </button>
             </div>
           );
         })}
       </div>
-      <div className="w-full mt-auto mb-[52px]">
-          <Button disabled={!isNextEnabled} onClick={() => { handleNext('/start'); }} >
-            다음
-          </Button>
+      <div className="mt-auto mb-[52px] w-full">
+        <Button
+          disabled={!isNextEnabled}
+          onClick={() => {
+            handleNext('/start');
+          }}
+        >
+          다음
+        </Button>
       </div>
     </div>
-    
-    
-  );}
+  );
+};
 
 export default TermsPage;

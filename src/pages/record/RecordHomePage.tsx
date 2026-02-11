@@ -10,10 +10,21 @@ import FloatingButton from '@/components/record/FloatingButton';
 import { useFragmentSummary } from '@/hooks/useFragmentSummary';
 import { useTodayRecords } from '@/hooks/useTodayRecords';
 import { getTodayString } from '@/utils/date';
+import { useMarketIndex } from '@/hooks/useMarketIndex';
+import { getFgiLabel } from '@/constants/market';
 
 const RecordHomePage = () => {
   const navigate = useNavigate();
-  const { data: fragmentSummary } = useFragmentSummary();
+  const {
+    data: marketIndex,
+    isLoading: isMarketIndexLoading,
+    isError: isMarketIndexError,
+  } = useMarketIndex();
+  const {
+    data: fragmentSummary,
+    isLoading: isFragmentSummaryLoading,
+    isError: isFragmentSummaryError,
+  } = useFragmentSummary();
   const today = getTodayString();
   const { data: dailyDetail } = useTodayRecords(today);
 
@@ -39,8 +50,16 @@ const RecordHomePage = () => {
               <p className="text-[13px] text-gray-700">공포탐욕 지수(FGI)</p>
             </div>
             <div className="flex gap-1 text-[13px] text-gray-700">
-              <p className="font-semibold">87%</p>
-              <p>탐욕</p>
+              {isMarketIndexLoading ? (
+                <p className="text-[13px] text-gray-700">로딩 중...</p>
+              ) : isMarketIndexError || marketIndex?.fearGreed == null ? (
+                <p className="text-[13px] text-gray-700">데이터 없음</p>
+              ) : (
+                <>
+                  <p className="font-semibold">{marketIndex.fearGreed}%</p>
+                  <p>{getFgiLabel(marketIndex.fearGreed)}</p>
+                </>
+              )}
             </div>
           </div>
           <Calendar />
@@ -53,7 +72,17 @@ const RecordHomePage = () => {
             </span>
             개의 마음 조각을 모았어요!
           </h2>
-          <LinearBar emotions={fragmentSummary?.typeSummary || []} />
+          {isFragmentSummaryLoading ? (
+            <p className="mb-2 text-xs font-semibold text-gray-500/40">
+              조각 모음함 데이터를 불러오는 중이에요...
+            </p>
+          ) : isFragmentSummaryError ? (
+            <p className="mb-2 text-xs font-semibold text-gray-500/40">
+              조각 모음함 데이터를 불러오지 못했어요.
+            </p>
+          ) : (
+            <LinearBar fragmentSummary={fragmentSummary ?? null} />
+          )}
         </div>
         <div className="h-4 bg-gray-50"></div>
         <div className="mt-5 mb-[102px] px-4">
@@ -72,16 +101,14 @@ const RecordHomePage = () => {
             )}
           </div>
           {dailyDetail?.timelineSummary &&
-            dailyDetail.timelineSummary.length > 0 ? (
+          dailyDetail.timelineSummary.length > 0 ? (
             <div className="flex flex-col gap-1.5">
-              {dailyDetail.timelineSummary.map(item => (
+              {dailyDetail.timelineSummary.map((item) => (
                 <button
                   key={item.recordId}
                   type="button"
-                  className="text-left"
-                  onClick={() =>
-                    navigate(`/record/${today}/${item.recordId}`)
-                  }
+                  className="cursor-pointer text-left"
+                  onClick={() => navigate(`/record/${today}/${item.recordId}`)}
                 >
                   <RecordFragment data={item} />
                 </button>

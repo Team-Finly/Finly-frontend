@@ -68,7 +68,32 @@ const AnalysisPage = () => {
     }
   }, [chartData, data]);
 
-  const guardUI = apiRenderGuard(isLoading, isError, data);
+  if (isLoading) {
+    return (
+      <div className="flex w-full flex-1 flex-col bg-white">
+        <header className="relative flex h-[60px] w-full flex-row items-center justify-center border-b border-gray-100 pt-4">
+          <div className="px-4 text-[18px] font-semibold text-gray-900">
+            심층 분석
+          </div>
+          <img
+            src={Close}
+            alt="닫기"
+            className="absolute right-4 w-[16px]"
+            onClick={() => navigate(-1)}
+          />
+        </header>
+        <div className="flex flex-1 flex-col items-center justify-center pb-20">
+          <div className="flex flex-col items-center gap-4">
+            <div className="border-t-secondary h-10 w-10 animate-spin rounded-full border-4 border-gray-200" />
+            <p className="text-sm font-medium text-gray-500">
+              심층 분석 그래프를 그리고 있어요...
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  const guardUI = apiRenderGuard(false, isError, data);
   if (guardUI !== undefined) return guardUI;
 
   const analysisData = data as AnalysisDetailResult;
@@ -83,7 +108,8 @@ const AnalysisPage = () => {
         <img
           src={Close}
           alt="닫기"
-          className="absolute right-4 h-auto w-[16px]"
+          role="button"
+          className="absolute right-4 h-auto w-[16px] cursor-pointer"
           onClick={() => navigate(-1)}
         />
       </header>

@@ -21,12 +21,16 @@ const mainRoutes: RouteObject[] = [
     element: <MindScoreDetailPage />,
     handle: { showNav: false },
   },
-      
   {
     path: 'reports/:yearMonth',
     element: <ReportDetailPage />,
     handle: { showNav: false },
   },
+  {
+    path: 'reports/:yearMonth/:week',
+    element: <ReportDetailPage />,
+    handle: { showNav: false },
+  }
 ];
 
 export default mainRoutes;

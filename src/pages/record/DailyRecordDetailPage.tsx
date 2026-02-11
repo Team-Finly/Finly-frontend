@@ -152,11 +152,10 @@ if (total > MAX_DOTS) {
         style={{ scrollSnapType: 'x mandatory' }}
       >
         <div className="flex h-full">
-          {records.map((record, index) => (
+          {records.map((record) => (
             <DailyRecordDetailCard
               key={record.recordId}
               record={record}
-              isActive={index === currentIndex}
             />
           ))}
         </div>
