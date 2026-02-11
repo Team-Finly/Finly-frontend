@@ -8,7 +8,7 @@ import { useRecordSearch } from '@/hooks/useRecordSearch';
 import Message from '@/assets/icons/message.svg';
 import { stockInfoStore } from '@/store/stockInfoStore';
 import type { TradeActionType, EmotionType } from '@/types/record';
-import FragmentDetailSkeleton from '@/pages/record/FragmentDetailSkeleton';
+import FragmentDetailSkeleton from '@/components/record/FragmentDetailSkeleton';
 
 const SearchResultPage = () => {
   const navigate = useNavigate();
