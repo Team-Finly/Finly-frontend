@@ -30,7 +30,8 @@ const TermsPage = () => {
   }, [termsData, agreements]);
 
   const handleAllClick = () => {
-    setAllAgreements(!allAgreed);
+    const allIds = termsData?.map((t) => String(t.termId));
+    setAllAgreements(!allAgreed, allIds);
   };
 
   const handleNext = (path: string) => {
@@ -78,8 +79,8 @@ const TermsPage = () => {
 
       <button
         onClick={handleAllClick}
-        className={`flex h-[50px] w-full cursor-pointer items-center justify-center gap-[10px] rounded-[12px] border-[1.2px] border-gray-300 px-4 ${
-          allAgreed
+        className={`flex h-[50px] w-full cursor-pointer items-center justify-center gap-[10px] rounded-[12px] border-[1.2px] border-gray-300 px-4
+          ${allAgreed
             ? 'border-secondary bg-blue-bg/80 text-secondary'
             : 'border-gray-300 bg-white text-gray-300'
         }`}
@@ -115,7 +116,6 @@ const TermsPage = () => {
                 onClick={() => toggleAgreement(idStr)}
                 className="cursor-pointer text-[16px] font-medium text-gray-900"
               >
-                <span className={term.required ? 'text-gray-900' : ''}></span>
                 {term.title}
               </button>
               <button
