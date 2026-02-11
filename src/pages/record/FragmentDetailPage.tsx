@@ -8,6 +8,8 @@ import { useFragmentList } from '@/hooks/useFragmentList';
 import type { EmotionType, PeriodType } from '@/types/record';
 import { PERIODS } from '@/constants/period';
 import Message from '@/assets/icons/message.svg';
+import { apiRenderGuard } from '@/utils/renderGuard';
+import FragmentDetailSkeleton from '@/components/record/FragmentDetailSkeleton';
 
 const FragmentDetailPage = () => {
   const navigate = useNavigate();
@@ -15,11 +17,16 @@ const FragmentDetailPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPeriod = (searchParams.get('period') as PeriodType) || 'ALL';
 
-  const { data: fragmentList, isLoading } = useFragmentList({
+  const {
+    data: fragmentList,
+    isLoading,
+    isError,
+  } = useFragmentList({
     boxType: emotionType,
     periodKey: currentPeriod,
   });
   const [totalCount, setTotalCount] = useState<number>(0);
+
   useEffect(() => {
     if (
       fragmentList?.summary?.totalCount !== undefined &&
@@ -35,6 +42,16 @@ const FragmentDetailPage = () => {
   const handlePeriod = (key: PeriodType) => {
     setSearchParams({ period: key }, { replace: true });
   };
+
+  const skeletonUI = (
+    <div className="flex flex-col gap-2.5">
+      {[...Array(5)].map((_, i) => (
+        <FragmentDetailSkeleton key={i} />
+      ))}
+    </div>
+  );
+
+  const guardUI = apiRenderGuard(isLoading, isError, fragmentList, skeletonUI);
 
   return (
     <div className="flex h-dvh flex-col overflow-hidden bg-white">
@@ -65,10 +82,11 @@ const FragmentDetailPage = () => {
         </div>
       </div>
       <div className="scrollbar-hide mx-4 flex-1 overflow-y-auto">
-        {isLoading ? null : fragmentList &&
-          fragmentList?.fragments.length > 0 ? (
+        {guardUI !== undefined ? (
+          guardUI
+        ) : fragmentList && fragmentList.fragments.length > 0 ? (
           <div className="mb-2.5 flex flex-col gap-2.5">
-            {fragmentList?.fragments.map((fragment) => (
+            {fragmentList.fragments.map((fragment) => (
               <RecordDetailFragment
                 key={fragment.fragmentId}
                 fragment={fragment}
