@@ -6,7 +6,7 @@ import { stockInfoStore } from '@/store/stockInfoStore';
 
 export const EmptyRecentRecordCard = () => {
   return (
-    <div className="min-w-[100%] bg-white rounded-xl border border-[#F2F4F6] p-[12px] flex flex-col justify-center items-center text-center">
+    <div className="flex min-w-[100%] flex-col items-center justify-center rounded-xl border border-[#F2F4F6] bg-white p-[12px] text-center">
       <p className="text-[14px] font-medium text-[#8B95A1]">
         아직 기록이 없어요
       </p>
@@ -35,7 +35,7 @@ export const RecentRecordList = () => {
             className="flex items-center text-[13px] text-gray-500"
             onClick={() => navigate('/record')}
           >
-            <span className="leading-none cursor-pointer">전체 보기</span>
+            <span className="cursor-pointer leading-none">전체 보기</span>
             <img
               src={RightIcon}
               alt="오른쪽 화살표"
@@ -43,7 +43,7 @@ export const RecentRecordList = () => {
             />
           </button>
         </div>
-        <div className="scrollbar-hide -mx-[16px] overflow-x-auto cursor-pointer">
+        <div className="scrollbar-hide -mx-[16px] overflow-x-auto">
           <div className="flex gap-2 px-[16px]">
             {records.length === 0 ? (
               <EmptyRecentRecordCard />
