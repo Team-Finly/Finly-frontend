@@ -6,6 +6,8 @@ import MindscoreCard from '@/components/mypage/MindscoreCard';
 import {useUserStore} from '@/store/userStore';
 import { PERSONA_DATA } from '@/constants/mypersona';
 import Modal from '@/components/record/Modal';
+import { logout } from '@/apis/userApi';
+import { tokenStorage } from '@/utils/tokenStorage';
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -16,7 +18,8 @@ const Profile = () => {
     personaType, 
     mindScore,       
     fragmentCount,   
-    fetchMainProfile 
+    fetchMainProfile,
+    clearUser
   } = useUserStore();
   
 
@@ -30,13 +33,17 @@ const Profile = () => {
     : null;
   const personaName = personaEntry?.name ?? " "; 
 
-  const handleLogoutConfirm = () => {
-    localStorage.removeItem("accessToken"); 
-    localStorage.removeItem("refreshToken");
-    useUserStore.getState().clearUser();
-
-    navigate('/login');
+  const handleLogoutConfirm = async () => {
+    try {
+      await logout(); 
+    } catch (error) {
+    } finally {
+    tokenStorage.remove()
+    localStorage.clear();
+    clearUser();
     setIsLogoutModalOpen(false);
+    navigate('/login');
+    }
   };
 
   return (
@@ -89,4 +96,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default Profile ;

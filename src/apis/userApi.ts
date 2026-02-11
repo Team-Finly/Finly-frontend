@@ -52,3 +52,6 @@ export const deleteMember = async () => {
   const response = await api.delete("/api/mypage/members/me");
   return response.data;
 };
+export const logout = async () => {
+  return await api.post("/auth/logout", {});
+};
