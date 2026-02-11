@@ -16,9 +16,8 @@ type SignupState = {
   setEmail: (v: string) => void;
   setPassword: (v: string) => void;
   setNickname: (v: string) => void;
-
   toggleAgreement: (id: string) => void;
-  setAllAgreements: (checked: boolean) => void;
+  setAllAgreements: (checked: boolean, ids?: string[]) => void;
   setTermAgreements: (v: TermAgreement[]) => void;
 
   setPersonaAnswers: (v: PersonaAnswer[]) => void;
@@ -49,8 +48,12 @@ export const useSignupStore = create<SignupState>()(
       [id]: !state.agreements[id] 
     }
   })),
-    setAllAgreements: (checked) => set({
-    agreements: { "1": checked, "2": checked, "3": checked }
+    setAllAgreements: (checked, ids) => set(() => {
+      const newAgreements: Record<string, boolean> = { };
+      ids?.forEach((id)=> {
+        newAgreements[id] = checked;
+      })
+      return { agreements: newAgreements };
   }),
   setTermAgreements: (termAgreements) => set({ termAgreements }),
   setPersonaAnswers: (personaAnswers) => set({ personaAnswers }),
@@ -60,7 +63,7 @@ export const useSignupStore = create<SignupState>()(
       email: "",
       password: "",
       nickname: "",
-      agreements: { "1": false, "2": false, "3": false },
+      agreements: { },
       termAgreements: [],
       personaAnswers: [],
     }),
