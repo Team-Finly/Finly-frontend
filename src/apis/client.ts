@@ -44,6 +44,11 @@ api.interceptors.response.use(
   async (err) => {
     const originalConfig = err.config;
     const status = err?.response?.status;
+    const url = originalConfig.url;
+
+    if (url?.includes('/auth/login')) {
+      return Promise.reject(err);
+    }
 
     if (status === 401 && !originalConfig._retry) {
       if (isRefreshing) {
