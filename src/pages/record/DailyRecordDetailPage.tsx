@@ -20,7 +20,6 @@ const DailyRecordDetailPage = () => {
     isLoading: isDetailLoading,
     isError: isDetailError,
   } = useRecordDetail(numericRecordId);
-  console.log(recordDetail)
 
   const recordDate = recordDetail?.recordDate ?? '';
   const {
