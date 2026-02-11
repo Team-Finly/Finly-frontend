@@ -16,7 +16,7 @@ const ProfileMenu = ({ onLogoutClick }: ProfileMenuProps) => {
     <div className="mx-[16px] mt-[26px] flex flex-col h-[310px] rounded-[12px] border-[1.2px] border-gray-100 px-[20px] bg-white ">
       <button
         type="button"
-        onClick={() => navigate('/reports')}
+        onClick={() => navigate('/reportsfeb')}
         className="mb-[20px] mt-[25px] flex w-full cursor-pointer items-center justify-between text-left">
         <div className="flex flex-col">
           <p className="text-[16px] font-semibold text-gray-900">AI 리포트 보관함</p>

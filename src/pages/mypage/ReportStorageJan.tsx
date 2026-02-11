@@ -1,8 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import leftarrow from '@/assets/icons/Vector.svg';
-import rightarrow from '@/assets/icons/rightarrow.svg';
-import book from '@/assets/icons/book.svg';
-import lock from '@/assets/icons/lock.svg';
+import next from '@/assets/icons/rightarrow.svg';
 import run from '@/assets/icons/run.svg';
 import trophy from '@/assets/icons/trophy.svg';
 import road from '@/assets/icons/road.svg';
@@ -14,8 +11,7 @@ import { useUserStore } from "@/store/userStore";
 const ReportStorage = () => {
   const navigate = useNavigate();
   const { nickname } = useUserStore();
-  const fragmentCount = useUserStore((state) => state.fragmentCount);
-  const currentYM = "2026-02"; 
+  const currentYM = "2026-01"; 
 
   const handleNavigate = (week?: string) => {
     const path = week ? `/reports/${currentYM}/${week}` : `/reports/${currentYM}`;
@@ -30,11 +26,11 @@ const ReportStorage = () => {
 
       <header className="relative z-10 flex items-center justify-center h-[60px] px-4 flex-shrink-0">
         <div className="flex items-center gap-[20px]">
-          <button disabled className="p-2 opacity-30"><img src={leftarrow} alt="L" className="w-[10px]" /></button>
-          <span className="font-semibold text-[18px]">2026.2월</span>
-          <button disabled className="p-2 opacity-30"><img src={rightarrow} alt="R" className="w-[10px]" /></button>
+          <button disabled className="invisible"></button>
+          <span className="font-semibold text-[18px]">2026.1월</span>
+          <button onClick={() => navigate('/reportsfeb')} className="cursor-pointer"><img src={next} alt="next" className="w-[10px]" /></button>
         </div>
-        <button onClick={() => navigate(-1)} className="absolute right-4 text-gray-500 font-medium cursor-pointer">닫기</button>
+        <button onClick={() => navigate('/profile')} className="absolute right-4 text-gray-500 font-medium cursor-pointer">닫기</button>
       </header>
 
       <div className="relative px-6 mt-[50px] z-10">
@@ -43,7 +39,7 @@ const ReportStorage = () => {
           <img src={star} alt="별" className="w-[18px] rotate-[15deg] mix-blend-overlay" />
         </div>
         <p className="text-[20px] font-bold">
-          <span className="text-secondary">{fragmentCount}개의 조각</span>을 모았어요!
+          <span className="text-secondary">31개의 조각</span>을 모았어요!
         </p>
       </div>
 
@@ -55,27 +51,27 @@ const ReportStorage = () => {
             <div className="cursor-pointer border-2 border-white relative w-[60px] h-[60px] bg-gradient-to-b from-[#FFEE9B] to-[#FFB835] rounded-full flex items-center justify-center">
               <img src={trophy} alt="trophy" className="relative z-10 w-[28px]" />
             </div>
-            <div className="mt-[8px] bg-gray-900 text-white text-[13px] font-semibold px-3 py-1.5 rounded-full whitespace-nowrap">2월 월간 리포트</div>
+            <div className="mt-[8px] bg-gray-900 text-white text-[13px] font-semibold px-3 py-1.5 rounded-full whitespace-nowrap">1월 월간 리포트</div>
           </div>
 
           {/* 4주차 */}
           <div className="absolute top-[40%] left-[72%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
-            <div className="cursor-pointer border-2 border-white relative w-[60px] h-[60px] bg-gray-50 rounded-full flex items-center justify-center">
-              <img src={lock} alt="lock" className="relative z-10 w-[26px] grayscale" />
+            <div className="relative w-[60px] h-[60px] bg-white rounded-full shadow-[0_0_10px_theme(colors.secondary/20%)] flex items-center justify-center">
+              <img src={run} alt="run" className="relative z-10 w-[27px]" />
+              <img src={check} alt="" className="absolute bottom-0 right-0 " />
             </div>
-            <div className="mt-[8px] w-[58px] h-[28px] rounded-full bg-white text-gray-400 flex items-center justify-center text-[12px] font-semibold">4주차</div>
+            <div className="w-[58px] h-[28px] mt-[8px] rounded-full bg-white text-secondary flex items-center justify-center text-[12px] font-semibold shadow-sm">4주차</div>
           </div>
 
           {/* 3주차 */}
           <div className="absolute top-[55%] left-[15%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center transition-transform active:scale-95">
-            <div className="absolute bottom-[105%] mb-2 bg-white px-3 py-2 rounded-[12px] whitespace-nowrap z-30 animate-bounce shadow-md">
-              <span className="text-[12px] font-medium">진행 중이에요!</span>
               <div className="cursor-pointer absolute bottom-[-4px] left-1/2 -translate-x-1/2 w-2 h-2 bg-white rotate-45"></div>
+            
+            <div className="relative w-[60px] h-[60px] bg-white rounded-full shadow-[0_0_10px_theme(colors.secondary/20%)] flex items-center justify-center">
+              <img src={run} alt="run" className="relative z-10 w-[27px]" />
+              <img src={check} alt="" className="absolute bottom-0 right-0 " />
             </div>
-            <div className="border-2 border-white relative w-[60px] h-[60px] bg-secondary rounded-full flex items-center justify-center">
-              <img src={book} alt="book" className="relative z-10 w-[26px]" />
-            </div>
-            <div className="w-[58px] h-[28px] mt-[8px] rounded-full bg-gray-900 text-white flex items-center justify-center text-[12px] font-semibold">3주차</div>
+            <div className="w-[58px] h-[28px] mt-[8px] rounded-full bg-white text-secondary flex items-center justify-center text-[12px] font-semibold shadow-sm">3주차</div>
           </div>
 
           {/* 2주차 */}

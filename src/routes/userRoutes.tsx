@@ -2,7 +2,9 @@ import Profile from "@/pages/mypage/Profile";
 import ProfileSettings from "@/pages/mypage/ProfileSettings";
 import MyPersona from "@/pages/mypage/MyPersona";
 import PasswordChange from "@/pages/mypage/PasswordChange";
-import ReportStorage from "@/pages/mypage/ReportStorage";
+import ReportStorageFeb from "@/pages/mypage/ReportStorageFeb";
+import ReportStorageJan from "@/pages/mypage/ReportStorageJan";
+
 const userRoutes = [
   {
     path: 'profile',
@@ -25,8 +27,13 @@ const userRoutes = [
     handle: { showNav: false },
   },
   {
-    path: 'reports',
-    element: <ReportStorage />,
+    path: 'reportsfeb',
+    element: <ReportStorageFeb />,
+    handle: { showNav: false },
+  },
+  {
+    path: 'reportsjan',
+    element: <ReportStorageJan />,
     handle: { showNav: false },
   }
 ];
