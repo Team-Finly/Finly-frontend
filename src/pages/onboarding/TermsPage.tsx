@@ -30,6 +30,7 @@ const TermsPage = () => {
   }, [termsData, agreements]);
 
   const handleAllClick = () => {
+    if (!termsData) return;
     const allIds = termsData?.map((t) => String(t.termId));
     setAllAgreements(!allAgreed, allIds);
   };
