@@ -6,9 +6,12 @@ import Header from '@/components/home/Header';
 import { useNavigate } from 'react-router-dom';
 import { useMindScore } from '@/hooks/useMindScore';
 import { HomeEmptyState } from '@/components/home/HomeEmptyState';
+import MindScoreInfoModal from '@/components/home/MindScore/MindScoreInfoModal';
+import { useState } from 'react';
 
 const HomePage = () => {
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { data, isError, isLoading } = useMindScore();
 
   return (
@@ -40,12 +43,16 @@ const HomePage = () => {
         <div className="flex justify-end mt-[12px]">
           <button
             type="button"
-            onClick={() => { }}
+            onClick={() => setIsModalOpen(true)}
             className="text-[12px] text-gray-500 underline underline-offset-2 transition-colors cursor-pointer"
           >
             금융 마음 지수란?
           </button>
         </div>
+        <MindScoreInfoModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+        />
         
         <WeeklyMood />
         <RecentRecordList />
