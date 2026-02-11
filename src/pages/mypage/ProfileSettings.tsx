@@ -89,10 +89,9 @@ const ProfileSettings = () => {
           <div className="relative mt-[49px] mb-[30px]">
             <div
               onClick={handleImageClick}
-              className={`flex h-24 w-24 items-center justify-center overflow-hidden rounded-full bg-gray-100 ${state.isEditing && 'cursor-pointer'}`}
+              className={`flex h-24 w-24 items-center justify-center overflow-hidden rounded-full bg-gray-100 ${state.isEditing ? 'cursor-pointer' : ''}`}
             >
               <img
-                onClick={handleImageClick}
                 src={state.profileImage || defaultprofileIcon}
                 alt="프로필 이미지"
                 className="h-full w-full object-cover"
