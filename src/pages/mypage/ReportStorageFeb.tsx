@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import leftarrow from '@/assets/icons/Vector.svg';
-import rightarrow from '@/assets/icons/rightarrow.svg';
+import back from '@/assets/icons/Vector.svg';
 import book from '@/assets/icons/book.svg';
 import lock from '@/assets/icons/lock.svg';
 import run from '@/assets/icons/run.svg';
@@ -9,6 +8,7 @@ import road from '@/assets/icons/road.svg';
 import cloud from '@/assets/images/cloud.png';
 import star from '@/assets/icons/star.svg';
 import check from '@/assets/icons/checkround.svg';
+import next from '@/assets/icons/rightarrow.svg';
 import { useUserStore } from "@/store/userStore";
 
 const ReportStorage = () => {
@@ -30,17 +30,17 @@ const ReportStorage = () => {
 
       <header className="relative z-10 flex items-center justify-center h-[60px] px-4 flex-shrink-0">
         <div className="flex items-center gap-[20px]">
-          <button disabled className="p-2 opacity-30"><img src={leftarrow} alt="L" className="w-[10px]" /></button>
+          <button onClick={() => navigate('/reportsjan')} className="cursor-pointer"><img src={back} alt="back" className="w-[10px]" /></button>
           <span className="font-semibold text-[18px]">2026.2월</span>
-          <button disabled className="p-2 opacity-30"><img src={rightarrow} alt="R" className="w-[10px]" /></button>
+          <button disabled className="invisible w-[10px]"></button>
         </div>
-        <button onClick={() => navigate(-1)} className="absolute right-4 text-gray-500 font-medium cursor-pointer">닫기</button>
+        <button onClick={() => navigate('/profile')} className="absolute right-4 text-gray-500 font-medium cursor-pointer">닫기</button>
       </header>
 
       <div className="relative px-6 mt-[50px] z-10">
         <div className="flex items-center gap-2 text-[20px] font-bold">
             <span>{nickname}님, 이번 달</span>
-          <img src={star} alt="별" className="w-[18px] rotate-[15deg] mix-blend-overlay" />
+          <img src={star} alt="별" className="w-[18px] top-[80%] rotate-[15deg] mix-blend-overlay" />
         </div>
         <p className="text-[20px] font-bold">
           <span className="text-secondary">{fragmentCount}개의 조각</span>을 모았어요!
