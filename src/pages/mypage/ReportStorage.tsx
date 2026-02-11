@@ -70,9 +70,9 @@ const ReportStorage = () => {
           <div className="absolute top-[55%] left-[15%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center transition-transform active:scale-95">
             <div className="absolute bottom-[105%] mb-2 bg-white px-3 py-2 rounded-[12px] whitespace-nowrap z-30 animate-bounce shadow-md">
               <span className="text-[12px] font-medium">진행 중이에요!</span>
-              <div className="absolute bottom-[-4px] left-1/2 -translate-x-1/2 w-2 h-2 bg-white rotate-45"></div>
+              <div className="cursor-pointer absolute bottom-[-4px] left-1/2 -translate-x-1/2 w-2 h-2 bg-white rotate-45"></div>
             </div>
-            <div className="cursor-pointer border-2 border-white relative w-[60px] h-[60px] bg-secondary rounded-full flex items-center justify-center">
+            <div className="border-2 border-white relative w-[60px] h-[60px] bg-secondary rounded-full flex items-center justify-center">
               <img src={book} alt="book" className="relative z-10 w-[26px]" />
             </div>
             <div className="w-[58px] h-[28px] mt-[8px] rounded-full bg-gray-900 text-white flex items-center justify-center text-[12px] font-semibold">3주차</div>
