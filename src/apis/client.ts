@@ -1,20 +1,20 @@
-import axios, { type AxiosRequestConfig } from "axios";
-import { tokenStorage } from "@/utils/tokenStorage";
+import axios, { type AxiosRequestConfig } from 'axios';
+import { tokenStorage } from '@/utils/tokenStorage';
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const api = axios.create({
   baseURL: BASE_URL,
   headers: {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
   },
-  withCredentials: true, 
+  withCredentials: true,
 });
 
 api.interceptors.request.use((config) => {
   const token = tokenStorage.get();
   if (token) {
-    config.headers.set("Authorization", `Bearer ${token}`);
+    config.headers.set('Authorization', `Bearer ${token}`);
   }
   return config;
 });
@@ -33,9 +33,9 @@ const processQueue = (error: any, token: string | null = null) => {
     if (error) {
       prom.reject(error);
     } else {
-        prom.resolve(api(prom.config));
-         }
-      });
+      prom.resolve(api(prom.config));
+    }
+  });
   failedQueue = [];
 };
 
@@ -44,6 +44,11 @@ api.interceptors.response.use(
   async (err) => {
     const originalConfig = err.config;
     const status = err?.response?.status;
+    const url = originalConfig.url;
+
+    if (url?.includes('/auth/login')) {
+      return Promise.reject(err);
+    }
 
     if (status === 401 && !originalConfig._retry) {
       if (isRefreshing) {
@@ -65,8 +70,8 @@ api.interceptors.response.use(
           {},
           {
             withCredentials: true,
-            headers: { "Content-Type": "application/json" },
-          }
+            headers: { 'Content-Type': 'application/json' },
+          },
         );
 
         const newAccessToken = res.data.result?.accessToken;
@@ -75,20 +80,20 @@ api.interceptors.response.use(
           tokenStorage.set(newAccessToken);
           processQueue(null, newAccessToken);
           return api(originalConfig);
-        }else{
-          throw new Error("토큰 재발급 실패");
+        } else {
+          throw new Error('토큰 재발급 실패');
         }
       } catch (reissueError) {
         processQueue(reissueError, null);
-        
+
         tokenStorage.remove();
-        window.location.href = "/login";
-        
+        window.location.href = '/onboarding';
+
         return Promise.reject(reissueError);
       } finally {
         isRefreshing = false;
       }
     }
     return Promise.reject(err);
-  }
+  },
 );

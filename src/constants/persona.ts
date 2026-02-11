@@ -1,10 +1,9 @@
-import type { Question } from "@/types/persona";
-
+import type { Question } from '@/types/persona';
 export const MOCK_QUESTIONS: Question[] = [
   {
     id: 1,
     questionCode: "Q1",
-    content: "주가가 -5% 하락했을 때,\n조아님의 반응은?",
+    content: "주가가 -5% 하락했을 때,\n{nickname}님의 반응은?",
     options: [
       { id: 1, choiceCode: "A", content: "“왜 떨어졌지?” 차분히 분석한다" },
       { id: 2, choiceCode: "B", content: "“불안해...” 계속 앱을 확인한다" },
@@ -24,7 +23,7 @@ export const MOCK_QUESTIONS: Question[] = [
   {
     id: 3,
     questionCode: "Q3",
-    content: "조아님이 추구하는\n투자 스타일은?",
+    content: "{nickname}님이 추구하는\n투자 스타일은?",
     options: [
       { id: 7, choiceCode: "A", content: "원금을 지키며 천천히 불리기" },
       { id: 8, choiceCode: "B", content: "리스크가 커도 높은 수익 노리기" },

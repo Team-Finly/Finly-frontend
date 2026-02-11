@@ -12,6 +12,8 @@ import { useTodayRecords } from '@/hooks/useTodayRecords';
 import { getTodayString } from '@/utils/date';
 import { useMarketIndex } from '@/hooks/useMarketIndex';
 import { getFgiLabel } from '@/constants/market';
+import { UniversalSkeleton } from '@/components/UniversalSkeleton';
+import { LinearBarSkeleton } from '@/components/record/LinearBarSkeleton';
 
 const RecordHomePage = () => {
   const navigate = useNavigate();
@@ -20,13 +22,11 @@ const RecordHomePage = () => {
     isLoading: isMarketIndexLoading,
     isError: isMarketIndexError,
   } = useMarketIndex();
-  const {
-    data: fragmentSummary,
-    isLoading: isFragmentSummaryLoading,
-    isError: isFragmentSummaryError,
-  } = useFragmentSummary();
+  const { data: fragmentSummary, isLoading: isFragmentSummaryLoading } =
+    useFragmentSummary();
   const today = getTodayString();
-  const { data: dailyDetail } = useTodayRecords(today);
+  const { data: dailyDetail, isLoading: isDailyDetailLoading } =
+    useTodayRecords(today);
 
   return (
     <div>
@@ -65,23 +65,22 @@ const RecordHomePage = () => {
           <Calendar />
         </div>
         <div className="px-4">
-          <h2 className="mt-5 mb-5.5 text-[17px] font-semibold">
-            총{' '}
-            <span className="text-secondary">
-              {fragmentSummary?.totalCount ?? 0}
-            </span>
-            개의 마음 조각을 모았어요!
-          </h2>
           {isFragmentSummaryLoading ? (
-            <p className="mb-2 text-xs font-semibold text-gray-500/40">
-              조각 모음함 데이터를 불러오는 중이에요...
-            </p>
-          ) : isFragmentSummaryError ? (
-            <p className="mb-2 text-xs font-semibold text-gray-500/40">
-              조각 모음함 데이터를 불러오지 못했어요.
-            </p>
+            <div>
+              <UniversalSkeleton className="mt-5 mb-5.5 h-[25px] w-[270px]" />
+              <LinearBarSkeleton />
+            </div>
           ) : (
-            <LinearBar fragmentSummary={fragmentSummary ?? null} />
+            <>
+              <h2 className="mt-5 mb-5.5 text-[17px] font-semibold">
+                총{' '}
+                <span className="text-secondary">
+                  {fragmentSummary?.totalCount ?? 0}
+                </span>
+                개의 마음 조각을 모았어요!
+              </h2>
+              <LinearBar fragmentSummary={fragmentSummary ?? null} />
+            </>
           )}
         </div>
         <div className="h-4 bg-gray-50"></div>
@@ -100,8 +99,17 @@ const RecordHomePage = () => {
               </button>
             )}
           </div>
-          {dailyDetail?.timelineSummary &&
-          dailyDetail.timelineSummary.length > 0 ? (
+          {isDailyDetailLoading ? (
+            <div className="flex flex-col gap-1.5">
+              {[...Array(3)].map((_, i) => (
+                <UniversalSkeleton
+                  key={i}
+                  className="h-21.5 w-full rounded-xl"
+                />
+              ))}
+            </div>
+          ) : dailyDetail?.timelineSummary &&
+            dailyDetail.timelineSummary.length > 0 ? (
             <div className="flex flex-col gap-1.5">
               {dailyDetail.timelineSummary.map((item) => (
                 <button

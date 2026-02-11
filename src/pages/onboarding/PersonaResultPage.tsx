@@ -66,10 +66,7 @@ const PersonaResultPage = () => {
     ? nickname || '핀리대장'
     : signupData.nickname || '핀리대장';
 
-  const currentUI =
-    PERSONA_UI_DATA[resultType ?? ''] ?? PERSONA_UI_DATA['TURTLE'];
-
-  useEffect(() => {
+    useEffect(() => {
     const fetchResult = async () => {
       try {
         const payload = {
@@ -91,15 +88,14 @@ const PersonaResultPage = () => {
     fetchResult();
   }, [isRetest, signupData.personaAnswers]);
 
+  const currentUI =
+    PERSONA_UI_DATA[resultType ?? ''] ?? PERSONA_UI_DATA['TURTLE'];
+
   const handleNext = () => {
     if (isRetest) {
       navigate('/mypersona');
     } else {
-      if (isRetest) {
-        navigate('/mypersona');
-      } else {
-        navigate('/terms');
-      }
+      navigate('/terms')
     }
   };
 
@@ -112,25 +108,22 @@ const PersonaResultPage = () => {
       </div>
     );
   }
+
   return (
     <div className="flex h-full w-full flex-col items-center bg-white px-4">
-      {/* 헤더 */}
       <header className="relative mt-[16px] flex h-[60px] w-full shrink-0 items-center">
-        <h1 className="text-[18px] font-semibold text-gray-900">
+        <p className="text-[18px] font-semibold text-gray-900">
           페르소나 결과
-        </h1>
+        </p>
       </header>
 
       <div className="mt-[67px] flex w-full flex-1 flex-col items-center">
         <div className="flex flex-col items-center">
-          {/* 이름표 */}
           <img
             src={currentUI.nameTag}
             alt="이름표"
             className="mb-[10px] block h-[31px] object-contain"
           />
-
-          {/* 닉네임 */}
           <div className="flex flex-col items-center">
             <h1 className="text-[24px] font-bold text-gray-900">
               {userNickname}
@@ -138,7 +131,6 @@ const PersonaResultPage = () => {
           </div>
         </div>
 
-        {/* 캐릭터 */}
         <div className="relative mt-[21px] mb-[67px] flex h-[182px] w-[285px] items-center justify-center">
           <div className="absolute inset-0 z-0 flex items-center justify-center">
             <BackgroundEffect />
@@ -156,7 +148,6 @@ const PersonaResultPage = () => {
           </div>
         </div>
 
-        {/*  설명 박스 */}
         <div
           className={`h-[100px] w-[279px] shrink-0 rounded-[18px] bg-gradient-to-b px-[20px] py-[28px] text-center text-[14px] leading-[22px] font-medium whitespace-pre-wrap text-gray-600 ${currentUI.bgGradient}`}
         >
@@ -164,7 +155,6 @@ const PersonaResultPage = () => {
         </div>
       </div>
 
-      {/* 안내 문구 */}
       <div className="mb-13 w-full shrink-0">
         <div className="flex w-full justify-center">
           <p className="font-regular mb-[12px] text-[12px] text-gray-300">
@@ -172,7 +162,6 @@ const PersonaResultPage = () => {
           </p>
         </div>
 
-        {/*  다음 버튼  */}
         <div className="w-full">
           <Button onClick={handleNext}>{isRetest ? '저장' : '다음'}</Button>
         </div>

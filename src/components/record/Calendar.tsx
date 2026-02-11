@@ -4,6 +4,8 @@ import ArrowRight from '@/assets/icons/arrow-right.svg';
 import { EMOTIONS } from '@/constants/emotions';
 import { useNavigate } from 'react-router-dom';
 import { useCalendarFragment } from '@/hooks/useCalendarFragment';
+import CalendarSkeleton from '@/components/record/CalendarSkeleton';
+import { apiRenderGuard } from '@/utils/renderGuard';
 
 interface CalendarProps {
   onClose?: () => void;
@@ -21,7 +23,11 @@ const Calendar = ({ onClose }: CalendarProps) => {
 
   const yearMonth = `${baseDate.getFullYear()}-${String(baseDate.getMonth() + 1).padStart(2, '0')}`;
 
-  const { data: calendarData } = useCalendarFragment(yearMonth);
+  const {
+    data: calendarData,
+    isLoading,
+    isError,
+  } = useCalendarFragment(yearMonth);
 
   const getDayRecord = (date: Date) => {
     const year = date.getFullYear();
@@ -125,7 +131,14 @@ const Calendar = ({ onClose }: CalendarProps) => {
 
     if (onClose) onClose();
   };
+  const guardUI = apiRenderGuard(
+    isLoading,
+    isError,
+    calendarData,
+    <CalendarSkeleton />,
+  );
 
+  if (guardUI !== undefined) return guardUI;
   return (
     <div
       ref={calendarRef}

@@ -120,7 +120,7 @@ const FeedbackPage = () => {
           오늘의 Finly Talk
         </span>
       </div>
-      <div className="w-[339px] rounded-[20px] bg-[#ffffff]/60 p-6 shadow-[0px_3px_10px_0px_rgba(191,195,209,0.2)]">
+      <div className="mb-5 w-[339px] rounded-[20px] bg-[#ffffff]/60 p-6 shadow-[0px_3px_10px_0px_rgba(191,195,209,0.2)]">
         <div className="mb-6 flex justify-center gap-1 text-[13px] font-semibold text-gray-500/80">
           <p>
             {stockName}{' '}

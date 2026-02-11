@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import TextField from "@/components/auth/TextField";
-import backIcon from "@/assets/icons/Vector.svg";
-import { useSignupStore } from "@/store/signupStore";
-import { authApi } from "../../apis/authApi";
+import TextField from '@/components/auth/TextField';
+import backIcon from '@/assets/icons/Vector.svg';
+import { useSignupStore } from '@/store/signupStore';
+import { authApi } from '../../apis/authApi';
 
 const REGEX = {
   EMAIL: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
@@ -15,24 +15,26 @@ type Step = "email" | "password" | "nickname";
 
 const SignupPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { email, setEmail, password, setPassword, nickname, setNickname } = useSignupStore();
-  // 2. 로컬 전용 상태 관리 (서버 체크 결과 및 로딩)
-  const [step, setStep] = useState<Step>("email");
+
+  const VALID_STEPS: Step[] = ["email", "password", "nickname"];
+  const rawStep = location.state?.step;
+  const initialStep: Step = VALID_STEPS.includes(rawStep) ? rawStep : "email";
+  const [step, setStep] = useState<Step>(initialStep);
+ 
   const [pwConfirm, setPwConfirm] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
 
   // 이메일 서버 체크 상태
   const [emailChecked, setEmailChecked] = useState<"idle" | "ok" | "taken" | "error">("idle");
   const [serverError, setServerError] = useState("");
 
-  // ===== 검증 =====
   const isEmailFormatValid = REGEX.EMAIL.test(email);
   const isPwValid = REGEX.PASSWORD.test(password);
   const isMatch = pwConfirm.length > 0 && password === pwConfirm;
   const isNicknameValid = (name: string) => REGEX.NICKNAME.test(name) && name.length >= 2;
 
- 
   const emailIsValidForUI =
     email.length === 0
       ? undefined
@@ -60,29 +62,29 @@ const SignupPage = () => {
     setServerError("");
 
     try {
-      
-      const res = await authApi.checkEmail(email);
-
-      
-      if (res.isSuccess) {
-        if (res.result.available){
-           setEmailChecked("ok");
-        setStep("password");
-      } else {
+      const res= await authApi.checkEmail(email);
+      if (res.result && res.result.available === false) {
         setEmailChecked("taken");
+        return;
       }
-        }
-      else {
+      setEmailChecked("ok");
+      setStep("password")
+      await authApi.checkEmail(email);
+
+      setEmailChecked("ok");
+      setStep("password");
+
+    } catch (e: any) {
+      if (e.response && e.response.status === 409) {
+        setEmailChecked("taken");
+      } else {
         setEmailChecked("error");
-        setServerError("이메일 확인에 실패했습니다. 다시 시도해 주세요.");
+        setServerError("서버와 통신 중 오류가 발생했습니다. 다시 시도해 주세요.");
       }
-    } catch (e) {
-      setEmailChecked("error");
-      setServerError("서버 통신 중 오류가 발생했습니다.");
     } finally {
       setIsLoading(false);
     }
-  };
+ };
 
   const handlePasswordNext = () => {
     if (!isPwValid || !isMatch) return;
@@ -94,16 +96,14 @@ const SignupPage = () => {
     navigate("/persona"); 
   };
 
-
   return (
     <div className="mt-[16px] flex h-dvh w-full flex-col px-4">
       {/* 헤더 */}
       <header className="relative flex h-[60px] w-full items-center justify-center">
         <button
           onClick={() => {
-
             if (step === "email") {
-              navigate(-1); 
+              navigate('/onboarding'); 
             } else if (step === "password") {
               setStep("email");
             } else if (step === "nickname") {
@@ -224,13 +224,11 @@ const SignupPage = () => {
       <div className="mb-[52px] w-full">
         {step === 'email' && (
           <button
-
             disabled={!isEmailFormatValid || isLoading}
             onClick={handleEmailNext}
             className={`w-full h-[50px] rounded-[12px] font-medium text-lg text-white transition-colors cursor-pointer
               ${isEmailFormatValid && !isLoading ? "bg-secondary" : "bg-gray-200 text-gray-400 cursor-not-allowed"}
             `}
-
           >
             {isLoading ? "확인 중..." : "다음"}
           </button>
@@ -242,7 +240,6 @@ const SignupPage = () => {
             className={`w-full h-[50px] rounded-[12px] font-medium text-lg text-white transition-colors cursor-pointer
               ${isPwValid && isMatch ? "bg-secondary" : "bg-gray-200 text-gray-400 cursor-not-allowed"}
             `}
-
           >
             다음
           </button>
@@ -254,7 +251,6 @@ const SignupPage = () => {
             className={`w-full h-[50px] rounded-[12px] font-medium text-lg text-white transition-colors cursor-pointer
               ${isNicknameValid(nickname) ? "bg-secondary" : "bg-gray-200 text-gray-400 cursor-not-allowed"}
             `}
-
           >
             다음
           </button>
