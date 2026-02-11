@@ -95,11 +95,7 @@ const PersonaResultPage = () => {
     if (isRetest) {
       navigate('/mypersona');
     } else {
-      if (isRetest) {
-        navigate('/mypersona');
-      } else {
-        navigate('/terms');
-      }
+      navigate('/terms')
     }
   };
 
