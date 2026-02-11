@@ -19,8 +19,7 @@ const LoginPage = () => {
   const isPasswordInputValid = password.length >= 6;
   const isFormValid = isEmailInputValid && isPasswordInputValid;
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleLogin = async () => {
     if (!isFormValid) return;
     setIsLoading(true);
     setLoginError(false);
