@@ -62,9 +62,12 @@ const Profile = () => {
               personaName={personaName}
             />
           </div>
-          <div className="shadow-card1 flex-1">
+          <button
+            onClick={() => navigate('/mindscore')}
+            className="shadow-card1 flex-1 cursor-pointer"
+          >
             <MindscoreCard score={mindScore} />
-          </div>
+          </button>
         </div>
         <div>
           <div className="shadow-card1 mx-[16px] mt-[20px] flex h-[78px] flex-row rounded-[12px] border-[1.2px] border-gray-100 bg-[#E9F0FA99] px-[12px]">
