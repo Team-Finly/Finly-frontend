@@ -70,7 +70,7 @@ const AnalysisPage = () => {
 
   if (isLoading) {
     return (
-      <div className="flex w-full flex-1 flex-col bg-white">
+      <div className="flex h-screen w-full flex-1 flex-col bg-white">
         <header className="relative flex h-[60px] w-full flex-row items-center justify-center border-b border-gray-100 pt-4">
           <div className="px-4 text-[18px] font-semibold text-gray-900">
             심층 분석
@@ -100,8 +100,8 @@ const AnalysisPage = () => {
   const hasRecords = analysisData.records && analysisData.records.length > 0;
 
   return (
-    <div className="flex w-full flex-1 flex-col">
-      <header className="relative flex h-[60px] w-full flex-row items-center justify-center border-b border-gray-100 pt-4">
+    <div className="flex h-screen w-full flex-1 flex-col">
+      <header className="relative flex h-[60px] w-full shrink-0 flex-row items-center justify-center border-b border-gray-100 pt-4">
         <div className="px-4 text-[18px] font-semibold text-gray-900">
           심층 분석
         </div>
@@ -113,7 +113,7 @@ const AnalysisPage = () => {
           onClick={() => navigate(-1)}
         />
       </header>
-      <div className="relative w-full">
+      <div className="relative w-full shrink-0">
         <button
           onClick={() => setIsCalendarOpen(true)}
           className="absolute top-5 left-5 z-10 flex items-center gap-1.5 rounded-[6px] bg-gray-100/80 px-2 py-1.5"
@@ -125,40 +125,42 @@ const AnalysisPage = () => {
         </button>
         <AnalysisChart data={chartData} onDataSelect={setSelectedData} />
       </div>
-      {hasRecords && selectedData ? (
-        <>
-          <AnalysisCard data={selectedData} />
-          {selectedData.record && (
-            <FinlyTalk
-              recordId={selectedData.record.recordId}
-              content={selectedData.record.finlyTalk}
-              status="COMPLETED"
-            />
-          )}
-        </>
-      ) : (
-        <div className="mt-11.25 flex flex-col items-center gap-11.5 px-4">
-          <div className="flex flex-col items-center gap-2">
-            <img
-              className="h-[26px] w-[29px]"
-              src={NoIcon}
-              alt="기록 없음 아이콘"
-            />
-            <div className="text-[14px] font-medium text-gray-300">
-              해당 일에 기록된 조각이 없어요
+      <div className="scrollbar-hide flex-1 overflow-y-auto pb-10">
+        {hasRecords && selectedData ? (
+          <>
+            <AnalysisCard data={selectedData} />
+            {selectedData.record && (
+              <FinlyTalk
+                recordId={selectedData.record.recordId}
+                content={selectedData.record.finlyTalk}
+                status="COMPLETED"
+              />
+            )}
+          </>
+        ) : (
+          <div className="mt-11.25 flex flex-col items-center gap-11.5 px-4">
+            <div className="flex flex-col items-center gap-2">
+              <img
+                className="h-[26px] w-[29px]"
+                src={NoIcon}
+                alt="기록 없음 아이콘"
+              />
+              <div className="text-[14px] font-medium text-gray-300">
+                해당 일에 기록된 조각이 없어요
+              </div>
             </div>
+            <button
+              onClick={() => setIsCalendarOpen(true)}
+              className="bg-secondary flex items-center justify-center gap-1.5 rounded-[8px] px-3 py-2"
+            >
+              <img src={WCalIcon} alt="캘린더" className="w-[12px]" />
+              <span className="text-[14px] font-semibold text-white">
+                다른 날짜 선택
+              </span>
+            </button>
           </div>
-          <button
-            onClick={() => setIsCalendarOpen(true)}
-            className="bg-secondary flex items-center justify-center gap-1.5 rounded-[8px] px-3 py-2"
-          >
-            <img src={WCalIcon} alt="캘린더" className="w-[12px]" />
-            <span className="text-[14px] font-semibold text-white">
-              다른 날짜 선택
-            </span>
-          </button>
-        </div>
-      )}
+        )}
+      </div>
       <SelectDateModal
         isOpen={isCalendarOpen}
         onClose={() => setIsCalendarOpen(false)}

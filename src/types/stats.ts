@@ -97,6 +97,7 @@ export interface SessionItem {
 }
 
 export interface GoldenTimeResult {
+  nickname: string;
   stock: {
     symbol: string;
     name: string;

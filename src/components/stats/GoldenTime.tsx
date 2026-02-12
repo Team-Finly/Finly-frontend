@@ -2,7 +2,6 @@ import TimeIcon from '@/assets/icons/stats_time.svg';
 import TimeModal from '@/components/stats/TimeModal';
 import { useState } from 'react';
 import { useStatsStore } from '@/store/statsStockStore';
-import { useUserStore } from '@/store/userStore';
 import { useGoldenTime } from '@/hooks/useEmotionTab';
 import { apiRenderGuard } from '@/utils/renderGuard';
 import type { GoldenTimeResult } from '@/types/stats';
@@ -29,7 +28,6 @@ const GoldenTime = () => {
   const { currentStock } = useStatsStore();
   const { data, isLoading, isError } = useGoldenTime(currentStock?.symbol);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const nickname = useUserStore((state) => state.nickname);
 
   const guardUI = apiRenderGuard(
     isLoading,
@@ -40,7 +38,7 @@ const GoldenTime = () => {
   if (guardUI !== undefined) return guardUI;
 
   const result = data as GoldenTimeResult;
-  const { summary, session } = result;
+  const { summary, session, nickname } = result;
 
   return (
     <div className="flex flex-col gap-4 rounded-xl border-[1.2px] border-gray-100 bg-white p-5">
