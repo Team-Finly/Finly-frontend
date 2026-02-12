@@ -41,6 +41,8 @@ export default function TermContentRenderer({ content }: Props) {
         const type = classifyLine(rawLine);
         const line = rawLine.trim();
 
+        if (type === "empty") return null;
+  
         if (type === "title") {
           return (
             <div key={idx} className="mt-[24px] mb-[8px] text-[14px] font-semibold text-gray-700">
@@ -63,7 +65,7 @@ export default function TermContentRenderer({ content }: Props) {
           const textPart = match ? match[2] : line;
 
           return (
-            <div key={idx} className="flex items-start mb-1 pl-1 ${bodyStyle}">
+            <div key={idx} className="flex items-start mb-1 pl-1">
               <span className="mr-2 text-[14px] leading-[22px] text-gray-700 flex-shrink-0">
                 {numberPart}
               </span>
