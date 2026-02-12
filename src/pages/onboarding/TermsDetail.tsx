@@ -51,7 +51,7 @@ const TermsDetail = () => {
         </p>
         <img src={line} alt="" className="mb-[6px] w-full" />
         <div className="mb-[24px]">
-          <TermContentRenderer content={term.content} />
+          <TermContentRenderer content={term.content ?? ""} />
         </div>
       </div>
       <div className="mt-[60px] mb-[60px] px-4">
