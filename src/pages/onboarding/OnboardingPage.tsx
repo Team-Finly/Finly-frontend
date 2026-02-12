@@ -9,7 +9,7 @@ const OnboardingPage = () => {
   return (
     <div className="bg-blue-bg flex flex-1 flex-col items-center pt-54">
       <div className="flex items-start gap-[19px]">
-        <img src={Logo} alt="핀리 로고 이미지" />
+        <img src={Logo} alt="핀리 로고 이미지" className="h-12.5 w-12.5" />
         <img src={Finly} alt="핀리 텍스트 로고 이미지" />
       </div>
       <p className="mt-4.5 text-sm text-gray-300">
