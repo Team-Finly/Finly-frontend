@@ -5,6 +5,7 @@ import { useSignupStore } from '@/store/signupStore';
 import checkblue from '@/assets/icons/isvalid.svg';
 import checkgray from '@/assets/icons/unchecked.svg';
 import { useTermDetail } from '@/hooks/useTermsDetail';
+import TermContentRenderer from '@/components/auth/TermContentRenderer'
 
 const TermsDetail = () => {
   const { id } = useParams();
@@ -48,9 +49,9 @@ const TermsDetail = () => {
         <p className="mt-[30px] mb-[20px] text-[20px] leading-[26px] font-semibold text-gray-900">
           {term.title}
         </p>
-        <img src={line} alt="" className="mb-[30px] w-full" />
-        <div className="text-regular mb-[24px] text-[14px] leading-[20px] whitespace-pre-line text-gray-600">
-          {term.content}
+        <img src={line} alt="" className="mb-[6px] w-full" />
+        <div className="mb-[24px]">
+          <TermContentRenderer content={term.content} />
         </div>
       </div>
       <div className="mt-[60px] mb-[60px] px-4">
