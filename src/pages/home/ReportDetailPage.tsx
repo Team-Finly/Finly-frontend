@@ -13,11 +13,22 @@ const ReportDetailPage = () => {
   const { yearMonth, week } = useParams<{ yearMonth: string; week?: string }>();
 
   const isWeekly = !!week;
-  const currentData = isWeekly 
-    ? REPORT_DUMMY_DATA.weekly[week as keyof typeof REPORT_DUMMY_DATA.weekly] 
-    : REPORT_DUMMY_DATA.monthly;
+  const monthData = yearMonth ? REPORT_DUMMY_DATA.reports[yearMonth as keyof typeof REPORT_DUMMY_DATA.reports] : null;
 
-  const reportTitle = isWeekly ? '위클리 리포트' : `${yearMonth?.slice(6, 8)}월 리포트`;
+  if (!monthData) {
+    return <div className="text-white">데이터를 찾을 수 없습니다.</div>;
+  }
+
+ const currentData = isWeekly 
+    ? monthData.weekly[week as keyof typeof monthData.weekly] 
+    : monthData.monthly;
+
+  if (!currentData) {
+    return <div className="text-white">리포트 상세 데이터를 찾을 수 없습니다.</div>;
+  }
+
+  const monthTitle = yearMonth?.split('-')[1].replace(/^0/, '');
+  const reportTitle = isWeekly ? '위클리 리포트' : `${monthTitle}월 리포트`;
   const displayGreeting = currentData.greeting.replace("%s", nickname || "핀리");
 
   return (
@@ -30,8 +41,8 @@ const ReportDetailPage = () => {
         
           <h2 className="text-[20px] font-bold leading-snug whitespace-pre-line">{displayGreeting}</h2>
 
-          <MindPiece type={isWeekly ? 'weekly' : 'monthly'} week={week} />
-          <AIFeedBack type={isWeekly ? 'weekly' : 'monthly'} week={week} />
+          <MindPiece type={isWeekly ? 'weekly' : 'monthly'} week={week} yearMonth={yearMonth} />
+          <AIFeedBack type={isWeekly ? 'weekly' : 'monthly'} week={week} yearMonth={yearMonth} />
 
           <section className="mt-[50px]">
             <h3 className="mb-[20px] text-[17px] font-bold">{currentData.sectionTitle}</h3>
@@ -48,10 +59,19 @@ const ReportDetailPage = () => {
                   </div>
                 ))
               ) : (
-                <>
-                  <BestDecisionCard emoji="😎" emojiBgColor="#FFDCDC" title="삼성전자" action="매도" date="2월 20일" holdingWeeks={2} price="152,400원" rate="50%" />
-                  <BestDecisionCard emoji="🧘‍♂️" emojiBgColor="#ECF7FF" title="엔비디아" action="매도" date="2월 20일" holdingWeeks={2} price="273,300원" rate="20%" />
-                </>
+                (currentData as any).bestDecisions?.map((item: any, i: number) => (
+                  <BestDecisionCard 
+                    key={i}
+                    emoji={item.emoji}
+                    emojiBgColor={item.emojiBgColor}
+                    title={item.title}
+                    action={item.action}
+                    date={item.date}
+                    holdingWeeks={item.holdingWeeks}
+                    price={item.price}
+                    rate={item.rate}
+                  />
+                ))
               )}
             </div>
           </section>

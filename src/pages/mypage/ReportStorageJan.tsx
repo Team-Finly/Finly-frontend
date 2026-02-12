@@ -11,7 +11,7 @@ import { useUserStore } from "@/store/userStore";
 const ReportStorage = () => {
   const navigate = useNavigate();
   const { nickname } = useUserStore();
-  const currentYM = "2026-01"; 
+  const currentYM = "2026-01";
 
   const handleNavigate = (week?: string) => {
     const path = week ? `/reports/${currentYM}/${week}` : `/reports/${currentYM}`;
@@ -35,7 +35,7 @@ const ReportStorage = () => {
 
       <div className="relative px-6 mt-[50px] z-10">
         <div className="flex items-center gap-2 text-[20px] font-bold">
-            <span>{nickname}님, 이번 달</span>
+          <span>{nickname}님, 이번 달</span>
           <img src={star} alt="별" className="w-[18px] rotate-[15deg] mix-blend-overlay" />
         </div>
         <p className="text-[20px] font-bold">
@@ -55,7 +55,7 @@ const ReportStorage = () => {
           </div>
 
           {/* 4주차 */}
-          <div className="absolute top-[40%] left-[72%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center cursor-pointer">
+          <div onClick={() => handleNavigate("4")} className="absolute top-[40%] left-[72%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center cursor-pointer">
             <div className="relative cursor-pointer w-[60px] h-[60px] bg-white rounded-full shadow-[0_0_10px_theme(colors.secondary/20%)] flex items-center justify-center">
               <img src={run} alt="run" className="relative z-10 w-[27px]" />
               <img src={check} alt="" className="absolute bottom-0 right-0 " />
@@ -64,7 +64,7 @@ const ReportStorage = () => {
           </div>
 
           {/* 3주차 */}
-          <div className="absolute top-[55%] left-[15%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center cursor-pointer">
+          <div onClick={() => handleNavigate("3")} className="absolute top-[55%] left-[15%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center cursor-pointer">
             <div className="relative cursor-pointer w-[60px] h-[60px] bg-white rounded-full shadow-[0_0_10px_theme(colors.secondary/20%)] flex items-center justify-center">
               <img src={run} alt="run" className="relative z-10 w-[27px]" />
               <img src={check} alt="" className="absolute bottom-0 right-0 " />

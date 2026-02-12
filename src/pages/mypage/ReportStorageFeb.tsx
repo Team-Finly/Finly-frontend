@@ -8,7 +8,6 @@ import road from '@/assets/icons/road.svg';
 import cloud from '@/assets/images/cloud.png';
 import star from '@/assets/icons/star.svg';
 import check from '@/assets/icons/checkround.svg';
-import next from '@/assets/icons/rightarrow.svg';
 import { useUserStore } from "@/store/userStore";
 
 const ReportStorage = () => {
