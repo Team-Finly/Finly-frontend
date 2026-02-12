@@ -74,7 +74,9 @@ const TextField = ({
         )}
       </div>
       {helperText && (
-        <p className="mt-[8px] text-xs text-red-500">{helperText}</p>
+        <p className="absolute bottom-[-22px] text-xs text-red-500">
+          {helperText}
+        </p>
       )}
     </div>
   );
