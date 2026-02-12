@@ -5,7 +5,7 @@ import { useSignupStore } from '@/store/signupStore';
 import checkblue from '@/assets/icons/isvalid.svg';
 import checkgray from '@/assets/icons/unchecked.svg';
 import { useTermDetail } from '@/hooks/useTermsDetail';
-import TermContentRenderer from '@/components/auth/TermContentRenderer'
+import TermContentRenderer from '@/components/auth/TermContentRenderer';
 
 const TermsDetail = () => {
   const { id } = useParams();

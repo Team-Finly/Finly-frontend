@@ -41,7 +41,7 @@ export default function TermContentRenderer({ content }: Props) {
         const type = classifyLine(rawLine);
         const line = rawLine.trim();
 
-        if (type === "empty") return null;
+        if (type === "empty") return null; 
   
         if (type === "title") {
           return (
