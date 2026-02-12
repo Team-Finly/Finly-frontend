@@ -168,7 +168,11 @@ const ProfileSettings = () => {
                 <button
                   onClick={actions.handleComplete}
                   disabled={!!state.errorMessage || !isChanged}
-                  className="bg-secondary w-full rounded-[12px] py-4 font-semibold text-white disabled:bg-gray-100 disabled:text-gray-300"
+                  className={`w-full rounded-[12px] py-4 font-semibold ${
+                    !!state.errorMessage || !isChanged
+                      ? 'cursor-default bg-gray-100 text-gray-300'
+                      : 'bg-secondary cursor-pointer text-white'
+                  }`}
                 >
                   완료
                 </button>
