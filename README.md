@@ -1,7 +1,8 @@
 # Finly
 
 > **감정과 투자 데이터를 연결해 사용자가 자신의 금융 성향을 이해하도록 돕는 서비스**
-> <img width="700" alt="00_표지" src="https://github.com/user-attachments/assets/4f3445ad-d7b4-4dfc-9ba9-8211f05d824e" />
+
+<img width="700" alt="00_표지" src="https://github.com/user-attachments/assets/4f3445ad-d7b4-4dfc-9ba9-8211f05d824e" />
 
 ## 👥 Frontend Team
 
