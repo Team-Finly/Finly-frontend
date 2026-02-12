@@ -31,6 +31,13 @@ const ReportDetailPage = () => {
   const reportTitle = isWeekly ? '위클리 리포트' : `${monthTitle}월 리포트`;
   const displayGreeting = currentData.greeting.replace("%s", nickname || "핀리");
 
+  const reportListPath =
+  yearMonth === "2026-01"
+    ? '/reportsjan'
+    : yearMonth === "2026-02"
+    ? '/reportsfeb'
+    : '/reports';
+
   return (
     <div className="relative flex h-full flex-col bg-[#05101D] overflow-hidden text-white">
       <ReportDetailHeader title={reportTitle} />
@@ -77,7 +84,7 @@ const ReportDetailPage = () => {
           </section>
 
           <button
-            onClick={() => navigate('/reports')}
+            onClick={() => navigate(reportListPath)}
             className="flex items-center justify-center mx-auto text-[16px] font-semibold mt-[40px] pb-[50px] text-white cursor-pointer"
           >
             지난 리포트 전체보기
