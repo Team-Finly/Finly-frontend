@@ -28,7 +28,7 @@ useEffect(() => {
   }, [isRetest, userNickname, fetchMainProfile]);
 
   const activeNickname = isRetest ? userNickname : signupNickname;
-  const fallbackNickname = activeNickname || "사용자";
+  const fallbackNickname = activeNickname || "핀리대장";
   const displayContent = currentQ.content.replace('{nickname}', fallbackNickname);
 
   const handleSelect = (optionId: number) => {
