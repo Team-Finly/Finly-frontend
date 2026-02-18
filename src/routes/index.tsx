@@ -9,6 +9,7 @@ import userRoutes from "./userRoutes";
 import ProtectedRoute from "./ProtectedRoute";
 import ErrorPage from "@/pages/home/ErrorPage";
 import PublicRoute from "./PublicRoute";
+import boothRoutes from "./boothRoutes";
 
 const routes: RouteObject[] = [
   {
@@ -16,6 +17,7 @@ const routes: RouteObject[] = [
     element: <AppLayout /> ,
     children: [
       ...onboardingRoutes,
+      ...boothRoutes,
       {
         element: <PublicRoute />,
         children: [
