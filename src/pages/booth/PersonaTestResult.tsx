@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation} from 'react-router-dom';
 import turtleImg from '@/assets/icons/nametag1.svg';
 import deerImg from '@/assets/icons/nametag2.svg';
 import eagleImg from '@/assets/icons/nametag3.svg';

@@ -1,5 +1,5 @@
 import type { RouteObject } from "react-router-dom";
-import PersonaTest from "@/pages/booth/PesoanaTest";
+import PersonaTest from "@/pages/booth/PersoanaTest";
 import PersonaResult from "@/pages/booth/PersonaTestResult";
 
 const boothRoutes: RouteObject[] = [
